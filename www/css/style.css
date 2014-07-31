@@ -28,7 +28,17 @@
 .text-white {
     color: white !important;
 }
-.menu-list ion-item, .menu-list ion-item a {
+.menu-list ion-item,
+.menu-list ion-item a {
     background-color: #3c3c3b !important;
     color: white !important;
+}
+.home-tabs .tabs {
+    top: 44px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #47772b !important;
+}
+.home-tabs-content {
+    top: 74px !important;
 }
