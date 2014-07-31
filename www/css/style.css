@@ -1,1 +1,34 @@
 /* Empty. Add your own CSS if you like */
+
+.bar-title {
+    margin-left: 10px;
+    padding-left: 25px;
+    background-image: url("../img/ionic.png");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+}
+.background-green-middle {
+    background-color: #63ac3d !important;
+}
+.background-green-light {
+    background-color: #8de058 !important;
+}
+.background-green-dark {
+    background-color: #47772b !important;
+}
+.background-grey-middle {
+    background-color: #eeeeee !important;
+}
+.background-grey-light {
+    background-color: #cecece !important;
+}
+.background-grey-dark {
+    background-color: #3c3c3b !important;
+}
+.text-white {
+    color: white !important;
+}
+.menu-list ion-item, .menu-list ion-item a {
+    background-color: #3c3c3b !important;
+    color: white !important;
+}

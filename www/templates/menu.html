@@ -1,31 +1,98 @@
 <ion-side-menus>
 
-  <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
-      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-  </ion-pane>
+    <ion-header-bar class="bar-balanced background-green-middle">
+        <div class="buttons">
+            <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+                <span class="bar-title">100% Riciclo</span>
+                <!--Come cambia l' immagine del secondo bottone sarà necessario cambiare il testo di questo-->
+            </button>
+        </div>
+        <h1 class="title"></h1>
+        <!-- Per allineare il secondo bottone a destra-->
+        <div class="buttons">
+            <button ng-click="click()" class="button button-clear button-light icon-left {{$root.icon}}"></button>
+        </div>
+    </ion-header-bar>
 
-  <ion-side-menu side="left">
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
-    </header>
-    <ion-content class="has-header">
-      <ion-list>
-        <ion-item nav-clear menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+    <ion-pane ion-side-menu-content>
+        <!--<ion-nav-bar class="bar-stable nav-title-slide-ios7">
+            <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i></ion-nav-back-button>
+        </ion-nav-bar>-->
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-pane>
+
+    <ion-side-menu side="left">
+        <ion-content class="has-header background-grey-dark" scroll="false">
+            <ion-list>
+                <label class="item item-radio text-white">
+                    <input type="radio" name="group">
+                    <div class="item-content background-grey-dark text-white">
+                        Casa
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                </label>
+                <label class="item item-radio text-white">
+                    <input type="radio" name="group">
+                    <div class="item-content background-grey-dark text-white">
+                        Ufficio
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                </label>
+            </ion-list>
+            <ion-content has-bouncing="false" style="top:{{2*54}}px">
+                <!--Lo stile è in linea per poter utilizzare le espressioni '{{}}'-->
+                <!--style="top:{{2*54}}px"-->
+                <!--(2) è il numero di profili, quando verrà implementato il caricamento è necessario sostituirlo con una variabile-->
+                <!--Controllare che 54 sia fisso anche se si cambia il telefono !!! -->
+                <!-- RICORDATI DI RIMUOVERE LO STILE IN LINEA !!! -->
+                <ion-list class="menu-list">
+                    <!--ion-list dentro ion-content, per utilizzare lo scorrimento del content, e perchè così la lista visualizza anche il margine superiore non avendo oggetti direttamente sopra di essa-->
+                    <!--<ion-item nav-clear menu-close ng-click="login()">
+                        Login
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/search">
+                        Search
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/browse">
+                        Browse
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/playlists">
+                        Playlists
+                    </ion-item>-->
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-home"></i>
+                        Home
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-android-location"></i>
+                        Punti di raccolta
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-trash-b"></i>
+                        Tipi di raccolta
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-person"></i>
+                        Gestione profili
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-edit"></i>
+                        Segnala
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-at"></i>
+                        Contatti
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-android-hand"></i>
+                        Tutorial
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="">
+                        <i class="ion-ios7-information"></i>
+                        Info
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-content>
+    </ion-side-menu>
 </ion-side-menus>
