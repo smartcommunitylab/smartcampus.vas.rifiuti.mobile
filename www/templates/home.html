@@ -1,30 +1,5 @@
 <ion-view>
-    <!--<ion-slide-box show-pager="false" on-slide-changed="slideChanged(index)" class="slider" delegate-handle="home-slider">
-            <ion-slide>
-                <ion-content class="has-header" has-bouncing="false">
-                    <p>nota 1</p>
-                    <p>nota 2</p>
-                </ion-content>
-            </ion-slide>
-            <ion-slide>
-                <ion-content class="has-header" has-bouncing="false">
-                    <label class="item item-input">
-                        <input type="text" ng-model="" placeholder="Che rifiuto vuoi buttare?">
-                        <i class="ion-search" style="margin-right: 15px"></i>
-                        RICORDATI DI RIMUOVERE LO STILE IN LINEA!!!
-                    </label>
-                    <p>testo...</p>
-                    <p>...</p>
-                </ion-content>
-            </ion-slide>
-            <ion-slide>
-                <ion-content class="has-header" has-bouncing="false">
-                    -Calendario-
-                </ion-content>
-            </ion-slide>
-        </ion-slide-box>-->
-    <!--    <ion-content class="has-header">-->
-    <ion-tabs class="tabs-balanced home-tabs" delegate-handle="home-tabs">
+    <ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
 
         <ion-tab title="1" on-select="slideChanged(0)">
             <ion-content class="home-tabs-content" has-bouncing="false">
@@ -32,67 +7,35 @@
         </ion-tab>
 
         <ion-tab title="2" on-select="slideChanged(1)">
-            <ion-content class="home-tabs-content" has-bouncing="false">
-                <!--
-                <label class="item item-input" ng-init="searchQuery = ''">
-                    <input type="search" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?"/>
-                    <button class="button button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable' : searchQuery.length != 0}" ng-click="searchReset(searchQuery)"></button>
-                    ng-click non funziona!
-                </label>
--->
-                <div class="list">
+            <ion-content class="home-tabs-content home-content" has-bouncing="false">
+                <div class="list list-inset home-search-bar">
                     <div class="item item-input-inset">
                         <label class="item-input-wrapper">
                             <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
                         </label>
                         <button class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
                     </div>
-                </div>
-                <ion-list>
                     <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
                         {{item}}
                     </ion-item>
-                    <div ng-init="v = [4,8,21,67,3,7,54,8000,46,78,13,12,766,9,'k',0,170,-65,89,'l',45,900,123,132,654,97,44,34,20,'p']">
-                        <!--'v' rappresenta il vettore degli id, PER ORA. in seguito bisognerà aggiungere le rpopietà v.text, v.image, v.link etc...-->
-                        <div ng-init="f = oneInThree(v)">
-                            <div class="row" ng-repeat="item in f">
-                                <div class="col home-grid">{{item}}</div>
-                                <div class="col home-grid">{{v[f.indexOf(item)*3+1]}}</div>
-                                <div class="col home-grid">{{v[f.indexOf(item)*3+2]}}</div>
-                            </div>
+                </div>
+                <div ng-init="v = [4,8,21,67,3,7,54,8000,46,78,13,12,766,9,'k',0,170,-65,89,'l',45,900,123,132,654,97,44,34,20,'p']">
+                    <!--'v' rappresenta il vettore degli id, PER ORA. in seguito bisognerà aggiungere le rpopietà v.text, v.image, v.link etc...-->
+                    <div ng-init="f = oneInThree(v)">
+                        <div class="row" ng-repeat="item in f">
+                            <div class="col home-grid">{{item}}</div>
+                            <div class="col home-grid">{{v[f.indexOf(item)*3+1]}}</div>
+                            <div class="col home-grid">{{v[f.indexOf(item)*3+2]}}</div>
                         </div>
                     </div>
-                </ion-list>
+                </div>
             </ion-content>
-            </ion-tab>
-<!--
-            =======
-            <ion-tab title="2" on-select="slideChanged(1)">
-                <ion-content class="home-tabs-content" has-bouncing="false">
-                    <div class="list">
-                        <div class="item item-input-inset">
-                            <label class="item-input-wrapper">
-                                <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
-                            </label>
-                            <button class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
-                        </div>
-                    </div>
-                    <ion-list>
-                        <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
-                            {{item}}
-                        </ion-item>
-                    </ion-list>
-                </ion-content>
-            </ion-tab>
-            >>>>>>> origin/master
--->
-
-            <ion-tab title="3" on-select="slideChanged(2)">
-                <ion-content class="home-tabs-content" scroll="false">
-                    <p>-placeholder-</p>
-                </ion-content>
-            </ion-tab>
+        </ion-tab>
+        <ion-tab title="3" on-select="slideChanged(2)">
+            <ion-content class="home-tabs-content" scroll="false">
+                <p>-placeholder-</p>
+            </ion-content>
+        </ion-tab>
 
     </ion-tabs>
-    <!--    </ion-content>-->
 </ion-view>
