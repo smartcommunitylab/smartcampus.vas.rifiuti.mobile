@@ -1,133 +1,114 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
-    // Form data for the login modal
-    $scope.loginData = {};
+  // Form data for the login modal
+  $scope.loginData = {};
 
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/login.html', {
+    scope: $scope
+  }).then(function (modal) {
+    $scope.modal = modal;
+  });
 
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-        $scope.modal.hide();
-    };
+  // Triggered in the login modal to close it
+  $scope.closeLogin = function () {
+    $scope.modal.hide();
+  };
 
-    // Open the login modal
-    $scope.login = function () {
-        $scope.modal.show();
-    };
+  // Open the login modal
+  $scope.login = function () {
+    $scope.modal.show();
+  };
 
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-        console.log('Doing login', $scope.loginData);
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function () {
+    console.log('Doing login', $scope.loginData);
 
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function () {
-            $scope.closeLogin();
-        }, 1000);
-    };
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function () {
+      $scope.closeLogin();
+    }, 1000);
+  };
 
-    $rootScope.activePage = 'base';
-    $rootScope.icon = '';
+  $rootScope.activePage = 'base';
+  $rootScope.icon = '';
 
-    $scope.click = function () {
-        //Da implementare!
-    };
+  $scope.click = function () {
+    //Da implementare!
+  };
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $timeout) {
 
-    var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
+  var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
 
-    $timeout(function () {
-        delegate.select(1);
-    }, 50);
+  $timeout(function () {
+    delegate.select(1);
+  }, 50);
 
-    //delegate.select(1);
-
-    $scope.slideChanged = function (index) {
-        switch (index) {
-        case 0:
-            $rootScope.activePage = 'home-note';
-            $rootScope.icon = 'ion-plus';
-            break;
-        case 2:
-            $rootScope.activePage = 'home-calendar';
-            $rootScope.icon = 'ion-calendar';
-            break;
-        default:
-            $rootScope.activePage = 'home-main';
-            $rootScope.icon = '';
-            break;
-        }
-    };
-
-    $scope.chooseIcon = function (length) {
-        if (length > 0)
-            return 'ion-close';
-        else
-            return 'ion-search';
+  $scope.slideChanged = function (index) {
+    switch (index) {
+    case 0:
+      $rootScope.activePage = 'home-note';
+      $rootScope.icon = 'ion-plus';
+      break;
+    case 2:
+      $rootScope.activePage = 'home-calendar';
+      $rootScope.icon = 'ion-calendar';
+      break;
+    default:
+      $rootScope.activePage = 'home-main';
+      $rootScope.icon = '';
     }
+  };
 
-    $scope.chooseColor = function (length) {
-        if (length > 0)
-            return 'button-stable';
-        else
-            return 'button-balanced';
+  $scope.match = function (query) {
+    if (query == '') {
+      return function (item) {
+        return false;
+      }
+    } else {
+      return function (item) {
+        return item.indexOf(query) != -1;
+      }
     }
-
-    $scope.match = function ( query )
-    {
-        if (query == '')
-            return function ( item ) {return false;}
-        else
-            return function ( item ) {return item.indexOf(query) != -1}
-    }
-
-    $scope.searchReset = function (q) {
-        alert('prova');
-        q = '';
-    }
-
+  }
 })
 
 .controller('PlaylistsCtrl', function ($scope, $rootScope) {
-    $rootScope.activePage = 'playlists';
-    $rootScope.icon = 'ion-chevron-right';
-    $scope.playlists = [
-        {
-            title: 'Reggae',
-            id: 1
+  $rootScope.activePage = 'playlists';
+  $rootScope.icon = 'ion-chevron-right';
+  $scope.playlists = [
+    {
+      title: 'Reggae',
+      id: 1
         },
-        {
-            title: 'Chill',
-            id: 2
+    {
+      title: 'Chill',
+      id: 2
         },
-        {
-            title: 'Dubstep',
-            id: 3
+    {
+      title: 'Dubstep',
+      id: 3
         },
-        {
-            title: 'Indie',
-            id: 4
+    {
+      title: 'Indie',
+      id: 4
         },
-        {
-            title: 'Rap',
-            id: 5
+    {
+      title: 'Rap',
+      id: 5
         },
-        {
-            title: 'Cowbell',
-            id: 6
+    {
+      title: 'Cowbell',
+      id: 6
         }
   ];
 })
 
 .controller('PlaylistCtrl', function ($scope, $rootScope, $stateParams) {
-    $rootScope.activePage = 'playlist';
-    $rootScope.icon = '';
+  $rootScope.activePage = 'playlist';
+  $rootScope.icon = '';
 })
