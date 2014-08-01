@@ -33,15 +33,25 @@
 
         <ion-tab title="2" on-select="slideChanged(1)">
             <ion-content class="home-tabs-content" has-bouncing="false">
-                <label class="item item-input">
-                    <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
-                    <button class="button {{chooseIcon(searchQuery.length)}} button-clear {{chooseColor(searchQuery.length)}}" ng-click="searchReset(searchQuery)"></button>
+                <label class="item item-input" ng-init="searchQuery = ''">
+                    <input type="search" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?"/>
+                    <button class="button button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable' : searchQuery.length != 0}" ng-click="searchReset(searchQuery)"></button>
                     <!--ng-click non funziona!-->
                 </label>
                 <ion-list>
                     <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
                         {{item}}
                     </ion-item>
+                    <div ng-init="v = [4,8,21,67,3,7,54,8000,46,78,13,12,766,9,'k',0,170,-65,89,'l',45,900,123,132,654,97,44,34,20,'p']">
+                        <!--'v' rappresenta il vettore degli id, PER ORA. in seguito bisognerà aggiungere le rpopietà v.text, v.image, v.link etc...-->
+                        <div ng-init="f = oneInThree(v)">
+                            <div class="row" ng-repeat="item in f">
+                                <div class="col home-grid">{{item}}</div>
+                                <div class="col home-grid">{{v[f.indexOf(item)*3+1]}}</div>
+                                <div class="col home-grid">{{v[f.indexOf(item)*3+2]}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </ion-list>
             </ion-content>
         </ion-tab>

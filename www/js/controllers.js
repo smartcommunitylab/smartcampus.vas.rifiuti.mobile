@@ -67,31 +67,46 @@ angular.module('starter.controllers', [])
         }
     };
 
-    $scope.chooseIcon = function (length) {
-        if (length > 0)
-            return 'ion-close';
-        else
-            return 'ion-search';
-    }
-
-    $scope.chooseColor = function (length) {
-        if (length > 0)
-            return 'button-stable';
-        else
-            return 'button-balanced';
-    }
-
-    $scope.match = function ( query )
-    {
-        if (query == '')
-            return function ( item ) {return false;}
-        else
-            return function ( item ) {return item.indexOf(query) != -1}
+    $scope.match = function (query) {
+        if (query == '') {
+            return function (item) {
+                return false;
+            }
+        } else {
+            return function (item) {
+                return item.indexOf(query) != -1
+            }
+        }
     }
 
     $scope.searchReset = function (q) {
         alert('prova');
         q = '';
+    }
+
+    $scope.firstCol = function (item, v) {
+        if (v.indexOf(item) % 3 == 0) return item;
+        else return '';
+    }
+
+    $scope.secondCol = function (item, v) {
+        if (v.indexOf(item) % 3 == 1) return item;
+        else return '';
+    }
+
+    $scope.thirdCol = function (item, v) {
+        if (v.indexOf(item) % 3 == 2) return item;
+        else return '';
+    }
+
+    $scope.oneInThree = function (v)
+    {
+        var f = [];
+        for(var i = 0; i < v.length; i = i + 3)
+        {
+            f[i/3] = v[i];
+        }
+        return f;
     }
 
 })

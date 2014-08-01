@@ -42,3 +42,12 @@
 .home-tabs-content {
     top: 74px !important;
 }
+.home-grid
+{
+    background-color: #cecece;
+    height: 80px;
+    font-family: sans-serif;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 55px;
+}
