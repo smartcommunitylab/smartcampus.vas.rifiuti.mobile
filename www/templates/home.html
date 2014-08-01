@@ -33,11 +33,21 @@
 
         <ion-tab title="2" on-select="slideChanged(1)">
             <ion-content class="home-tabs-content" has-bouncing="false">
+                <!--
                 <label class="item item-input" ng-init="searchQuery = ''">
                     <input type="search" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?"/>
                     <button class="button button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable' : searchQuery.length != 0}" ng-click="searchReset(searchQuery)"></button>
-                    <!--ng-click non funziona!-->
+                    ng-click non funziona!
                 </label>
+-->
+                <div class="list">
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
+                        </label>
+                        <button class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
+                    </div>
+                </div>
                 <ion-list>
                     <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
                         {{item}}
@@ -54,13 +64,34 @@
                     </div>
                 </ion-list>
             </ion-content>
-        </ion-tab>
+            </ion-tab>
+<!--
+            =======
+            <ion-tab title="2" on-select="slideChanged(1)">
+                <ion-content class="home-tabs-content" has-bouncing="false">
+                    <div class="list">
+                        <div class="item item-input-inset">
+                            <label class="item-input-wrapper">
+                                <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
+                            </label>
+                            <button class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
+                        </div>
+                    </div>
+                    <ion-list>
+                        <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
+                            {{item}}
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+            </ion-tab>
+            >>>>>>> origin/master
+-->
 
-        <ion-tab title="3" on-select="slideChanged(2)">
-            <ion-content class="home-tabs-content" scroll="false">
-                <p>-placeholder-</p>
-            </ion-content>
-        </ion-tab>
+            <ion-tab title="3" on-select="slideChanged(2)">
+                <ion-content class="home-tabs-content" scroll="false">
+                    <p>-placeholder-</p>
+                </ion-content>
+            </ion-tab>
 
     </ion-tabs>
     <!--    </ion-content>-->

@@ -48,8 +48,6 @@ angular.module('starter.controllers', [])
         delegate.select(1);
     }, 50);
 
-    //delegate.select(1);
-
     $scope.slideChanged = function (index) {
         switch (index) {
         case 0:
@@ -63,7 +61,6 @@ angular.module('starter.controllers', [])
         default:
             $rootScope.activePage = 'home-main';
             $rootScope.icon = '';
-            break;
         }
     };
 
@@ -74,14 +71,9 @@ angular.module('starter.controllers', [])
             }
         } else {
             return function (item) {
-                return item.indexOf(query) != -1
+                return item.indexOf(query) != -1;
             }
         }
-    }
-
-    $scope.searchReset = function (q) {
-        alert('prova');
-        q = '';
     }
 
     $scope.firstCol = function (item, v) {
@@ -99,12 +91,10 @@ angular.module('starter.controllers', [])
         else return '';
     }
 
-    $scope.oneInThree = function (v)
-    {
+    $scope.oneInThree = function (v) {
         var f = [];
-        for(var i = 0; i < v.length; i = i + 3)
-        {
-            f[i/3] = v[i];
+        for (var i = 0; i < v.length; i = i + 3) {
+            f[i / 3] = v[i];
         }
         return f;
     }
