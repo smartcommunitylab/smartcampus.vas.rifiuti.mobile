@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 
     $scope.click = function () {
         //Da implementare!
-        if($rootScope.noteSelected && $rootScope.activePage == 'home-note')
+        if($rootScope.activePage && $rootScope.noteSelected == 'home-note')
         {
             $rootScope.noteSelected = 'false';
         }
@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $timeout) {
 
     var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
+    var notes = [];
 
     $timeout(function () {
         delegate.select(1);
@@ -79,5 +80,11 @@ angular.module('starter.controllers', [])
         }
         return f;
     }
+})
 
+.controller('InfoCtrl', function ($scope, $rootScope) {
+
+    $rootScope.activePage = 'info';
+    $rootScope.icon = '';
+    $rootScope.noteSelected = 'false';
 })

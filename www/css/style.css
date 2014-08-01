@@ -33,16 +33,19 @@
     background-color: #3c3c3b !important;
     color: white !important;
 }
-.menu-edit-button{
+.menu-list ion-item i {
+    margin-right: 10px;
+}
+.menu-edit-button {
     left: -70px;
 }
-.menu-delete-button{
+.menu-delete-button {
     left: -35px;
 }
-.visible{
+.visible {
     visibility: visible;
 }
-.hidden{
+.hidden {
     visibility: hidden;
 }
 .home-tabs .tabs {
@@ -70,4 +73,10 @@
 }
 .home-grid:hover {
     background-color: #8de058;
+}
+.centred-text {
+    text-align: center;
+}
+.left-text{
+    text-align: left;
 }
