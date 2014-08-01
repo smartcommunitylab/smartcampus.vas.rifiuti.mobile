@@ -33,6 +33,18 @@
     background-color: #3c3c3b !important;
     color: white !important;
 }
+.menu-edit-button{
+    left: -70px;
+}
+.menu-delete-button{
+    left: -35px;
+}
+.visible{
+    visibility: visible;
+}
+.hidden{
+    visibility: hidden;
+}
 .home-tabs .tabs {
     height: 30px;
     line-height: 30px;

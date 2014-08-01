@@ -1,8 +1,8 @@
 <ion-side-menus>
-
     <ion-header-bar class="bar-balanced background-green-middle">
         <div class="buttons">
             <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+                <!--menu-toggle="left" -->
                 <span class="bar-title">100% Riciclo</span>
                 <!--Come cambia l' immagine del secondo bottone sarà necessario cambiare il testo di questo-->
             </button>
@@ -12,6 +12,17 @@
         <div class="buttons">
             <button ng-click="click()" class="button button-clear button-light icon-left {{$root.icon}}"></button>
         </div>
+        <h1 class="title"></h1>
+        <!-- Per allineare il secondo bottone a destra-->
+        <div class="buttons">
+            <button ng-click="delete()" class="button button-clear button-light icon-left ion-trash-b menu-delete-button" ng-class="{'visible': !noteSelected, 'hidden': noteSelected}"></button>
+        </div>
+        <h1 class="title"></h1>
+        <!-- Per allineare il secondo bottone a destra-->
+        <div class="buttons">
+            <button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button" ng-class="{'visible': !noteSelected, 'hidden': noteSelected}"></button>
+        </div>
+        <!--E' tutto al contratio...-->
     </ion-header-bar>
 
     <ion-pane ion-side-menu-content edge-drag-threshold="30">

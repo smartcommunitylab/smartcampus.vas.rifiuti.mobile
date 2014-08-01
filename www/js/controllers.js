@@ -34,10 +34,20 @@ angular.module('starter.controllers', [])
 
     $rootScope.activePage = 'base';
     $rootScope.icon = '';
+    $rootScope.noteSelected = 'false';
 
     $scope.click = function () {
         //Da implementare!
+        if($rootScope.noteSelected && $rootScope.activePage == 'home-note')
+        {
+            $rootScope.noteSelected = 'false';
+        }
+
     };
+
+    $scope.delete = function () {};
+
+    $scope.edit = function () {};
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $timeout) {
@@ -49,6 +59,7 @@ angular.module('starter.controllers', [])
     }, 50);
 
     $scope.slideChanged = function (index) {
+        $rootScope.noteSelected = 'false';
         switch (index) {
         case 0:
             $rootScope.activePage = 'home-note';
