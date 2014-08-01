@@ -14,8 +14,8 @@
         </div>
     </ion-header-bar>
 
-    <ion-pane ion-side-menu-content>
-        <!--edge-drag-threshold="20", può servire a qualcosa ?-->
+    <ion-pane ion-side-menu-content edge-drag-threshold="30">
+        <!--edge-drag-threshold="30", può servire a qualcosa ?-->
         <!--<ion-nav-bar class="bar-stable nav-title-slide-ios7">
             <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i></ion-nav-back-button>
         </ion-nav-bar>-->
@@ -45,7 +45,6 @@
                 <!--style="top:{{2*54}}px"-->
                 <!--(2) è il numero di profili, quando verrà implementato il caricamento è necessario sostituirlo con una variabile-->
                 <!--Controllare che 54 sia fisso anche se si cambia il telefono !!! -->
-                <!-- RICORDATI DI RIMUOVERE LO STILE IN LINEA !!! -->
                 <ion-list class="menu-list">
                     <!--ion-list dentro ion-content, per utilizzare lo scorrimento del content, e perchè così la lista visualizza anche il margine superiore non avendo oggetti direttamente sopra di essa-->
                     <!--<ion-item nav-clear menu-close ng-click="login()">

@@ -66,6 +66,34 @@ angular.module('starter.controllers', [])
             break;
         }
     };
+
+    $scope.chooseIcon = function (length) {
+        if (length > 0)
+            return 'ion-close';
+        else
+            return 'ion-search';
+    }
+
+    $scope.chooseColor = function (length) {
+        if (length > 0)
+            return 'button-stable';
+        else
+            return 'button-balanced';
+    }
+
+    $scope.match = function ( query )
+    {
+        if (query == '')
+            return function ( item ) {return false;}
+        else
+            return function ( item ) {return item.indexOf(query) != -1}
+    }
+
+    $scope.searchReset = function (q) {
+        alert('prova');
+        q = '';
+    }
+
 })
 
 .controller('PlaylistsCtrl', function ($scope, $rootScope) {

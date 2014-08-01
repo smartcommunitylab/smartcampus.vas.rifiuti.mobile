@@ -23,26 +23,35 @@
                 </ion-content>
             </ion-slide>
         </ion-slide-box>-->
-<!--    <ion-content class="has-header">-->
-        <ion-tabs class="tabs-balanced home-tabs" delegate-handle="home-tabs">
+    <!--    <ion-content class="has-header">-->
+    <ion-tabs class="tabs-balanced home-tabs" delegate-handle="home-tabs">
 
-            <ion-tab title="1">
-                <ion-content class="home-tabs-content" has-bouncing="false">
-                </ion-content>
-            </ion-tab>
+        <ion-tab title="1" on-select="slideChanged(0)">
+            <ion-content class="home-tabs-content" has-bouncing="false">
+            </ion-content>
+        </ion-tab>
 
-            <ion-tab title="2">
-                <ion-content class="home-tabs-content" has-bouncing="false">
-                    <p>prova</p>
-                </ion-content>
-            </ion-tab>
+        <ion-tab title="2" on-select="slideChanged(1)">
+            <ion-content class="home-tabs-content" has-bouncing="false">
+                <label class="item item-input">
+                    <input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Che rifiuto vuoi buttare?">
+                    <button class="button {{chooseIcon(searchQuery.length)}} button-clear {{chooseColor(searchQuery.length)}}" ng-click="searchReset(searchQuery)"></button>
+                    <!--ng-click non funziona!-->
+                </label>
+                <ion-list>
+                    <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
+                        {{item}}
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-tab>
 
-            <ion-tab title="3">
-                <ion-content class="home-tabs-content" scroll="false">
-                    <p>-placeholder-</p>
-                </ion-content>
-            </ion-tab>
+        <ion-tab title="3" on-select="slideChanged(2)">
+            <ion-content class="home-tabs-content" scroll="false">
+                <p>-placeholder-</p>
+            </ion-content>
+        </ion-tab>
 
-        </ion-tabs>
-<!--    </ion-content>-->
+    </ion-tabs>
+    <!--    </ion-content>-->
 </ion-view>
