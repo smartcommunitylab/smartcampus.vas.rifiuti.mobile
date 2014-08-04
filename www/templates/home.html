@@ -1,12 +1,33 @@
 <ion-view>
+<!--
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+            <span class="bar-title">100% Riciclo</span>
+        </button>
+    </ion-nav-buttons>
+-->
+    <ion-nav-buttons side="left">
+        <button ng-click="leftClick()" class="button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
+            <span ng-class="{'bar-title': !noteSelected}">{{titleText()}}</span>
+        </button>
+    </ion-nav-buttons>
+
     <ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
 
-        <ion-tab title="1" on-select="slideChanged(0)">
-            <ion-content class="home-tabs-content" has-bouncing="false">
+        <ion-tab title="1" on-deselect="noteReset()">
+            <ion-nav-buttons side="right">
+                <button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}" style="left:auto"></button>
+                <button ng-click="click()" class="button button-clear button-light icon-left" ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}" style="left:auto"></button>
+                <!--RICORDATI DI RIMUOVERE GLI STILI IN LINEA!!!-->
+            </ion-nav-buttons>
+            <ion-content class="home-tabs-content background-grey-light" has-bouncing="false">
+                <ion-item ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
+                    {{item.note}}
+                </ion-item>
             </ion-content>
         </ion-tab>
 
-        <ion-tab title="2" on-select="slideChanged(1)">
+        <ion-tab title="2">
             <ion-content class="home-tabs-content home-content" has-bouncing="false">
                 <div class="list list-inset home-search-bar">
                     <div class="item item-input-inset">
@@ -31,7 +52,10 @@
                 </div>
             </ion-content>
         </ion-tab>
-        <ion-tab title="3" on-select="slideChanged(2)">
+        <ion-tab title="3">
+            <ion-nav-buttons side="right">
+                <button ng-click="click()" class="button button-clear button-light icon-left ion-calendar"></button>
+            </ion-nav-buttons>
             <ion-content class="home-tabs-content" scroll="false">
                 <p>-placeholder-</p>
             </ion-content>

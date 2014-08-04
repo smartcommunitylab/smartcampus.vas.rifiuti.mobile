@@ -1,9 +1,15 @@
 <ion-view>
-    <ion-content class="has-header centred-text background-grey-light" scroll="false">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+            <span class="bar-title">100% Riciclo</span>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header centred-text background-grey-light" has-bouncing="false">
         </br>
         <p>100% Riciclo è un app realizzata da:</p>
         <img src="http://placehold.it/140x60">
         <img src="http://placehold.it/140x60">
+        </br>
         <img src="http://placehold.it/140x60">
         <p>con il patrocinio del</p>
         <img src="http://placehold.it/140x60">
@@ -13,7 +19,7 @@
         </div>
         <div class="list item-input-inset text-left">
             <p>Per segnalare un problema con la raccolta dei rifiuti shiaccia qui:</p>
-            <a class="button button-icon icon ion-edit" style="color:#63ac3d; width:60px;"></a>
+            <a class="button button-icon icon ion-edit" style="color:#63ac3d; width:60px;" href="#/app/segnala"></a>
         </div>
     </ion-content>
 </ion-view>
