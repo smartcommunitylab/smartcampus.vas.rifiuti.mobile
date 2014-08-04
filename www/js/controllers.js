@@ -15,7 +15,6 @@ angular.module('starter.controllers', [])
         id: 2,
         note: 'tre'
     }];
-    // nota{ID,nota}
     $scope.selectedNotes = [];
 
     $scope.noteSelected = false;

@@ -16,9 +16,8 @@
 
         <ion-tab title="1" on-deselect="noteReset()">
             <ion-nav-buttons side="right">
-                <button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}" style="left:auto"></button>
-                <button ng-click="click()" class="button button-clear button-light icon-left" ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}" style="left:auto"></button>
-                <!--RICORDATI DI RIMUOVERE GLI STILI IN LINEA!!!-->
+                <button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button nav-bar-buttons-alignment" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}"></button>
+                <button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment" ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"></button>
             </ion-nav-buttons>
             <ion-content class="home-tabs-content background-grey-light" has-bouncing="false">
                 <ion-item ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
