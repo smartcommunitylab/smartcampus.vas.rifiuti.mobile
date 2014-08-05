@@ -40,6 +40,56 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
     })
 
+    .state('app.puntiDiRaccolta', {
+        url: "/puntiDiRaccolta",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/puntiDiRaccolta.html",
+                controller: 'PDRCtrl'
+            }
+        }
+    })
+
+    .state('app.tipiDiRaccolta', {
+        url: "/tipiDiRaccolta",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/tipiDiRaccolta.html",
+                controller: 'TDRCtrl'
+            }
+        }
+    })
+
+    .state('app.profili', {
+        url: "/profili",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/profili.html",
+                controller: 'ProfiliCtrl'
+            }
+        }
+    })
+
+    .state('app.segnala', {
+        url: "/segnala",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/segnala.html",
+                controller: 'SegnalaCtrl'
+            }
+        }
+    })
+
+    .state('app.contatti', {
+        url: "/contatti",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/contatti.html",
+                controller: 'ContattiCtrl'
+            }
+        }
+    })
+
     .state('app.info', {
         url: "/info",
         views: {
