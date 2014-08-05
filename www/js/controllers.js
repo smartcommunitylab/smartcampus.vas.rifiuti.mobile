@@ -2,9 +2,13 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function ($scope) {})
 
-.controller('HomeCtrl', function ($scope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup) {
+.controller('HomeCtrl', function ($scope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http) {
 
     var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
+
+    $scope.rifiuti = [];
+    $scope.f = [];
+
     $scope.notes = [{
         id: 0,
         note: 'uno'
@@ -19,6 +23,16 @@ angular.module('starter.controllers', [])
 
     $scope.noteSelected = false;
     $scope.multipleNoteSelected = false;
+
+    $scope.readJson = function () {
+        $http.get('data/dati.json').success(function (data) {
+            $scope.rifiuti = data.trash;
+            $scope.f = $scope.oneInThree($scope.rifiuti);
+        });
+    };
+
+    $scope.readJson();
+    console.log($scope.rifiuti);
 
     $timeout(function () {
         delegate.select(1);
@@ -175,21 +189,6 @@ angular.module('starter.controllers', [])
         }
     };
 
-    $scope.firstCol = function (item, v) {
-        if (v.indexOf(item) % 3 == 0) return item;
-        else return '';
-    };
-
-    $scope.secondCol = function (item, v) {
-        if (v.indexOf(item) % 3 == 1) return item;
-        else return '';
-    };
-
-    $scope.thirdCol = function (item, v) {
-        if (v.indexOf(item) % 3 == 2) return item;
-        else return '';
-    };
-
     $scope.oneInThree = function (v) {
         var f = [];
         for (var i = 0; i < v.length; i = i + 3) {
@@ -198,5 +197,4 @@ angular.module('starter.controllers', [])
         return f;
     };
 })
-
 .controller('InfoCtrl', function ($scope) {})

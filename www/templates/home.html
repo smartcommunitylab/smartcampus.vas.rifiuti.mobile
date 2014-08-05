@@ -1,5 +1,5 @@
 <ion-view>
-<!--
+    <!--
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
             <span class="bar-title">100% Riciclo</span>
@@ -39,16 +39,14 @@
                         {{item}}
                     </ion-item>
                 </div>
-                <div ng-init="v = [4,8,21,67,3,7,54,8000,46,78,13,12,766,9,'k',0,170,-65,89,'l',45,900,123,132,654,97,44,34,20,'p']">
-                    <!--'v' rappresenta il vettore degli id, PER ORA. in seguito bisognerà aggiungere le rpopietà v.text, v.image, v.link etc...-->
-                    <div ng-init="f = oneInThree(v)">
-                        <div class="row" ng-repeat="item in f">
-                            <div class="col home-grid">{{item}}</div>
-                            <div class="col home-grid">{{v[f.indexOf(item)*3+1]}}</div>
-                            <div class="col home-grid">{{v[f.indexOf(item)*3+2]}}</div>
-                        </div>
+                    <div class="row" ng-repeat="item in f">
+                        <div class="col home-grid">
+                            <img src="{{item.image}}" />{{item.name}}</div>
+                        <div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+1] == undefined}">
+                            <img src="{{rifiuti[f.indexOf(item)*3+1].image}}" />{{rifiuti[f.indexOf(item)*3+1].name}}</div>
+                        <div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+2] == undefined}">
+                            <img src="{{rifiuti[f.indexOf(item)*3+2].image}}" />{{rifiuti[f.indexOf(item)*3+2].name}}</div>
                     </div>
-                </div>
             </ion-content>
         </ion-tab>
         <ion-tab title="3">
