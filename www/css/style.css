@@ -1,92 +1,122 @@
 /* Empty. Add your own CSS if you like */
 
 .bar-title {
-    margin-left: 10px;
-    padding-left: 35px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-image: url("../img/ic_launcher.png");
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
+	margin-left: 10px;
+	padding-left: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-image: url("../img/ic_launcher.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
 }
 .background-green-middle {
-    background-color: #63ac3d !important;
+	background-color: #63ac3d !important;
 }
 .background-green-light {
-    background-color: #8de058 !important;
+	background-color: #8de058 !important;
 }
 .background-green-dark {
-    background-color: #47772b !important;
+	background-color: #47772b !important;
 }
 .background-grey-light {
-    background-color: #eeeeee !important;
+	background-color: #eeeeee !important;
 }
 .background-grey-middle {
-    background-color: #cecece !important;
+	background-color: #cecece !important;
 }
 .background-grey-dark {
-    background-color: #3c3c3b !important;
+	background-color: #3c3c3b !important;
 }
 .text-white {
-    color: white !important;
+	color: white !important;
 }
 .menu-list ion-item,
 .menu-list ion-item a {
-    background-color: #3c3c3b !important;
-    color: white !important;
+	background-color: #3c3c3b !important;
+	color: white !important;
 }
 .menu-list ion-item i {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 .menu-edit-button {
-    left: -70px;
+	left: -70px;
 }
 .menu-delete-button {
-    left: -35px;
+	left: -35px;
 }
 .visible {
-    visibility: visible;
+	visibility: visible;
 }
 .hidden {
-    visibility: hidden;
+	visibility: hidden;
 }
 .home-tabs .tabs {
-    height: 30px;
-    line-height: 30px;
-    background-color: #47772b !important;
+	height: 30px;
+	line-height: 30px;
+	background-color: #47772b !important;
 }
 .home-tabs .has-tabs-top {
-    top: 74px;
+	top: 74px;
 }
 .home-search-bar {
-    margin-top: 10px;
-    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .home-content {
-    background-color: #eeeeee;
+	background-color: #eeeeee;
 }
 .home-grid {
-    background-color: #eeeeee;
-    height: 80px;
-    font-family: sans-serif;
-    font-size: 12px;
-    text-align: center;
-    line-height: 14px;
+	background-color: #eeeeee;
+	height: 80px;
+	font-family: sans-serif;
+	font-size: 12px;
+	text-align: center;
+	line-height: 14px;
 }
-.home-grid img{
-    height: 40px;
-    margin: 0 auto;
-    display: block;
+.home-grid img {
+	height: 40px;
+	margin: 0 auto;
+	display: block;
 }
 .home-grid:hover {
-    background-color: #8de058;
+	background-color: #8de058;
 }
 .centred-text {
-    text-align: center;
+	text-align: center;
 }
-.left-text{
-    text-align: left;
+.left-text {
+	text-align: left;
 }
-.nav-bar-buttons-alignment{
-    left: auto;
+.nav-bar-buttons-alignment {
+	left: auto;
+}
+.contatti-tabs .tabs {
+	background-color: #47772b !important;
+}
+.contatti-title {
+	background-color: #cecece !important;
+}
+.contatti-title h1 {
+	color: #47772b !important;
+	text-align: left !important;
+	font-weight: bold;
+}
+.contatti-border {
+	border-style: solid !important;
+	border-bottom-width: 1px;
+	border-color: #cecece;
+	margin-bottom: 5px;
+}
+.contatti-icon-color {
+	color: #47772b !important;
+}
+.contatti-content {
+	margin-top: 1px;
+}
+.contatti-items {
+	padding: 1px;
+}
+.info-button {
+	color: #63ac3d !important;
+	width: 60px;
 }

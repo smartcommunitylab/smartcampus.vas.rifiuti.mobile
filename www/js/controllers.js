@@ -32,7 +32,6 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.readJson();
-	console.log($scope.rifiuti);
 
 	$timeout(function () {
 		delegate.select(1);
@@ -202,4 +201,37 @@ angular.module('starter.controllers', [])
 	.controller('TDRCtrl', function ($scope) {})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
-	.controller('ContattiCtrl', function ($scope) {})
+	.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
+		$scope.v = [
+			{
+				title: "Servizio TIA e informatica",
+				t1: "Per informazioni in merito alla Tariffa di Igene Urbana",
+				t2: "Via Padre Gnesotti, 2 38079 Tione di Trento TN",
+				t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
+				web: "www.comunitadellegiudicarie.it",
+				tel: "0465/339532",
+				email: "serviziotiaeinformatica@comunedellegiudicarie.it",
+				pec: "c.giudicarie.legamail.it",
+				fax: "0465/339548",
+				aperto: false
+			},
+			{
+				title: "Ufficio Igene Ambientale",
+				t1: "Per informazioni in merito alla raccolta differenziata",
+				t2: "Centro Integrato, Loc. Zuclo 38079 Zuclo TN",
+				t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
+				web: "www.comunitadellegiudicarie.it",
+				tel: "0465/325038",
+				email: "rifiuti@comunitadellegiudicarie.it",
+				pec: "c.giudicarie.legamail.it",
+				fax: "0465/329043",
+				aperto: false
+			},
+		];
+		$scope.toggle = function (obj) {
+			obj.aperto = true;
+		};
+		$scope.mainScrollResize = function () {
+			$ionicScrollDelegate.$getByHandle('mainScroll').resize();
+		}
+	})
