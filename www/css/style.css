@@ -9,6 +9,14 @@
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
 }
+.bar-back {
+	padding-left: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-image: url("../img/ic_launcher.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+}
 .background-green-middle {
 	background-color: #63ac3d !important;
 }
@@ -119,4 +127,11 @@
 .info-button {
 	color: #63ac3d !important;
 	width: 60px;
+}
+.contatti-item-list ion-item {
+	border-color: #cecece !important;
+}
+.contatti-item-list ion-item a {
+	background-color: #eeeeee !important;
+	padding: 0 !important;
 }

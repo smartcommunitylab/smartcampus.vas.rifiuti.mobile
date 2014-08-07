@@ -198,7 +198,37 @@ angular.module('starter.controllers', [])
 })
 	.controller('InfoCtrl', function ($scope) {})
 	.controller('PDRCtrl', function ($scope) {})
-	.controller('TDRCtrl', function ($scope) {})
+	.controller('TDRCtrl', function ($scope) {
+		$scope.v = [{
+			name: "Residuo",
+			icons: ["img/ic_isola_eco_olivegreen.png"]
+		}, {
+			name: "Imballaggi di verto",
+			icons: [
+				"img/ic_isola_eco_green.png",
+				"img/ic_crm_grey.png"
+			]
+		}, {
+			name: "Medicinali scaduti",
+			icons: [
+				"img/ic_farmacia_red.png",
+				"img/ic_crm_grey.png"
+			]
+		}, {
+			name: "Pile",
+			icons: [
+				"img/ic_isola_eco_green.png",
+				"img/ic_rivenditore_red.png"
+			]
+		}];
+	})
+	.controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate) {
+		$scope.id = $stateParams.id;
+		$scope.back = function()
+		{
+			$ionicNavBarDelegate.$getByHandle('navBar').back();
+		}
+	})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
 	.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {

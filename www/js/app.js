@@ -60,6 +60,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
     })
 
+	.state('app.raccolta', {
+        url: "/raccolta/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/raccolta.html",
+                controller: 'RaccoltaCtrl'
+            }
+        }
+    })
+
     .state('app.profili', {
         url: "/profili",
         views: {
