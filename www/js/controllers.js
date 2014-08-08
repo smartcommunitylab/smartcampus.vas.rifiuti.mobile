@@ -233,6 +233,26 @@ angular.module('starter.controllers', [])
 		};
 		$scope.readJson();
 	})
+	.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+		$scope.id = $stateParams.id;
+		$scope.back = function () {
+			$ionicNavBarDelegate.$getByHandle('navBar').back();
+		}
+		$scope.pdr = [];
+		$scope.readJson = function () {
+			$http.get('data/pdr.json').success(function (data) {
+				for (var i = 0; i < data.length; i++)
+				{
+					if(data[i].name == $scope.id)
+					{
+						$pdr = data[i];
+						break;
+					}
+				}
+			});
+		};
+		$scope.readJson();
+	})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
 	.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {

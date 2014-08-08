@@ -1,0 +1,18 @@
+{
+	"pdr": [{
+			"name": "Fiavè Scuola",
+			"info": "In quest isola trovi la raccolta separata del cartone con apposito gazebo"
+			"latitude": "45",
+			"longitude": "33",
+			"tdr": [
+				"Carta, cartone e cartoni per bevande",
+				"Imballaggi in plastica e metallo",
+				"Imballaggi in vetro",
+				"Organico",
+				"Residuo"
+			]
+		}, {
+			"name": "Fiavè Strimiga"
+		}
+	}]
+}

@@ -160,14 +160,14 @@
 .subpage-title{
 	background-color: #47772b !important;
 	height: 30px;
-
 }
 .subpage-title h1{
 	color: #eeeeee !important;
-	text-align: left !important;
+	padding-left: 5px;
+	font-size: 20px;
 	line-height: 30px !important;
 }
-.has-header-30px{
-	position: absolute;
-	top: 30px !important;
-}
+.hidden-link{
+	color: inherit !important;
+	text-decoration: inherit !important;
+};

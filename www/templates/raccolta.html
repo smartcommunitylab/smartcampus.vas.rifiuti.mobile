@@ -50,11 +50,13 @@
 							</div>
 						</div>
 						<div ng-show="item.aperto">
-							<div class="row" ng-repeat="loc in item.locs">
-								<div class="col background-grey-light">
-									{{loc}}
+							<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc}}">
+								<div class="row background-grey-light">
+									<div class="col">
+										{{loc}}
+									</div>
 								</div>
-							</div>
+							</a>
 						</div>
 					</div>
 				</div>

@@ -80,6 +80,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
     })
 
+	.state('app.puntoDiRaccolta', {
+        url: "/puntoDiRaccolta/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/puntoDiRaccolta.html",
+                controller: 'PuntoDiRaccoltaCtrl'
+            }
+        }
+    })
+
     .state('app.profili', {
         url: "/profili",
         views: {
