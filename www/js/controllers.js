@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
 	$scope.multipleNoteSelected = false;
 
 	$scope.readJson = function () {
-		$http.get('data/dati.json').success(function (data) {
+		$http.get('data/trash.json').success(function (data) {
 			$scope.rifiuti = data.trash;
 			$scope.f = $scope.oneInThree($scope.rifiuti);
 		});
@@ -198,74 +198,40 @@ angular.module('starter.controllers', [])
 })
 	.controller('InfoCtrl', function ($scope) {})
 	.controller('PDRCtrl', function ($scope) {})
-	.controller('TDRCtrl', function ($scope) {
-		$scope.v = [{
-			name: "Residuo",
-			icons: ["img/ic_isola_eco_olivegreen.png"]
-		}, {
-			name: "Imballaggi di verto",
-			icons: [
-				"img/ic_isola_eco_green.png",
-				"img/ic_crm_grey.png"
-			]
-		}, {
-			name: "Medicinali scaduti",
-			icons: [
-				"img/ic_farmacia_red.png",
-				"img/ic_crm_grey.png"
-			]
-		}, {
-			name: "Pile",
-			icons: [
-				"img/ic_isola_eco_green.png",
-				"img/ic_rivenditore_red.png"
-			]
-		}];
-	})
-	.controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate) {
-		$scope.id = $stateParams.id;
-		$scope.back = function () {
-			$ionicNavBarDelegate.$getByHandle('navBar').back();
-		}
-		$scope.v = {
-			rifiuti: ["Accendini", "Radiografie", "Feltrini"],
-			pdr: [{
-				title: "Isola Ecologica",
-				rifiuto: "Residuo",
-				desc: "Nel contenitore del RESIDUO, utilizzando l'apposita chiave eletronica",
-				icon: "img/ic_isola_eco_green.png",
-				locs: ["Fiavè Scuola", "Fiavè Stumiaga"],
-				aperto: false // per grafica (lo dovrò aggiungere io ?)
-			}, {
-				title: "Isola",
-				rifiuto: "Residuo",
-				desc: "",
-				icon: "img/ic_isola_eco_blue.png",
-				locs: ["Fiavè Cimitero", "Fiavè Doss"],
-				aperto: false
-			}]
+	.controller('TDRCtrl', function ($scope, $http) {
+		$scope.v = [];
+		$scope.readJson = function () {
+			$http.get('data/tdr.json').success(function (data) {
+				$scope.v = data.tdr;
+			});
 		};
+		$scope.readJson();
 	})
-	.controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate) {
+	.controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
 		$scope.id = $stateParams.id;
 		$scope.back = function () {
 			$ionicNavBarDelegate.$getByHandle('navBar').back();
 		}
-		$scope.pdr = [{
-			title: "Isola Ecologica",
-			rifiuto: "Residuo",
-			desc: "Nel contenitore del RESIDUO, utilizzando l'apposita chiave eletronica",
-			icon: "img/ic_isola_eco_green.png",
-			locs: ["Fiavè Scuola", "Fiavè Stumiaga"],
-			aperto: false
-		}, {
-			title: "Isola",
-			rifiuto: "Residuo",
-			desc: "",
-			icon: "img/ic_isola_eco_blue.png",
-			locs: ["Fiavè Cimitero", "Fiavè Doss"],
-			aperto: false
-		}];
+		$scope.v = [];
+		$scope.readJson = function () {
+			$http.get('data/residuo.json').success(function (data) {
+				$scope.v = data.residuo;
+			});
+		};
+		$scope.readJson();
+	})
+	.controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+		$scope.id = $stateParams.id;
+		$scope.back = function () {
+			$ionicNavBarDelegate.$getByHandle('navBar').back();
+		}
+		$scope.v = [];
+		$scope.readJson = function () {
+			$http.get('data/residuo.json').success(function (data) {
+				$scope.pdr = data.residuo.pdr;
+			});
+		};
+		$scope.readJson();
 	})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
