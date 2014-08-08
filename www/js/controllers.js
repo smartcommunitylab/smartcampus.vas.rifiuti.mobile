@@ -246,6 +246,27 @@ angular.module('starter.controllers', [])
 			}]
 		};
 	})
+	.controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate) {
+		$scope.id = $stateParams.id;
+		$scope.back = function () {
+			$ionicNavBarDelegate.$getByHandle('navBar').back();
+		}
+		$scope.pdr = [{
+			title: "Isola Ecologica",
+			rifiuto: "Residuo",
+			desc: "Nel contenitore del RESIDUO, utilizzando l'apposita chiave eletronica",
+			icon: "img/ic_isola_eco_green.png",
+			locs: ["Fiavè Scuola", "Fiavè Stumiaga"],
+			aperto: false
+		}, {
+			title: "Isola",
+			rifiuto: "Residuo",
+			desc: "",
+			icon: "img/ic_isola_eco_blue.png",
+			locs: ["Fiavè Cimitero", "Fiavè Doss"],
+			aperto: false
+		}];
+	})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
 	.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
@@ -275,9 +296,6 @@ angular.module('starter.controllers', [])
 				aperto: false
 			},
 		];
-		$scope.toggle = function (obj) {
-			obj.aperto = true;
-		};
 		$scope.mainScrollResize = function () {
 			$ionicScrollDelegate.$getByHandle('mainScroll').resize();
 		}

@@ -26,7 +26,8 @@
 .background-green-dark {
 	background-color: #47772b !important;
 }
-.background-grey-light {
+.background-grey-light,
+.background-grey-light a{
 	background-color: #eeeeee !important;
 }
 .background-grey-middle {
@@ -155,4 +156,18 @@
 	position: absolute;
 	top: 19px;
 	left: 50px;
+}
+.subpage-title{
+	background-color: #47772b !important;
+	height: 30px;
+
+}
+.subpage-title h1{
+	color: #eeeeee !important;
+	text-align: left !important;
+	line-height: 30px !important;
+}
+.has-header-30px{
+	position: absolute;
+	top: 30px !important;
 }

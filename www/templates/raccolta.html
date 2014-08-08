@@ -10,7 +10,7 @@
 		<ion-tab title="LISTA RIFIUTI">
 			<ion-content class="background-grey-light" has-bouncing="false">
 				<ion-list class="background-grey-light">
-					<ion-item ng-repeat="item in v.rifiuti" class="background-grey-light">
+					<ion-item ng-repeat="item in v.rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item}}">
 						{{item}}
 					</ion-item>
 				</ion-list>

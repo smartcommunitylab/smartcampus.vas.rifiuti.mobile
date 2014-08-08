@@ -70,6 +70,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
     })
 
+	.state('app.rifiuto', {
+        url: "/rifiuto/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/rifiuto.html",
+                controller: 'RifiutoCtrl'
+            }
+        }
+    })
+
     .state('app.profili', {
         url: "/profili",
         views: {
