@@ -11,11 +11,11 @@
 }
 .bar-back {
 	padding-left: 35px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 	background-image: url("../img/ic_launcher.png");
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
+	vertical-align: top;
 }
 .background-green-middle {
 	background-color: #63ac3d !important;
@@ -104,12 +104,17 @@
 .contatti-title {
 	background-color: #cecece !important;
 }
-.contatti-title h1 {
+.contatti-title h1,
+.expandable-list-title {
 	color: #47772b !important;
 	text-align: left !important;
 	font-weight: bold;
 }
-.contatti-border {
+.expandable-list-desc {
+	font-size: 10px;
+	line-height: 12px;
+}
+.bottom-border {
 	border-style: solid !important;
 	border-bottom-width: 1px;
 	border-color: #cecece;
@@ -121,8 +126,8 @@
 .contatti-content {
 	margin-top: 1px;
 }
-.contatti-items {
-	padding: 1px;
+.expandable-list-items {
+	padding-bottom: 1px;
 }
 .info-button {
 	color: #63ac3d !important;
@@ -134,4 +139,20 @@
 .contatti-item-list ion-item a {
 	background-color: #eeeeee !important;
 	padding: 0 !important;
+}
+.no-vertical-padding {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+.only-bottom-vertical-padding {
+	padding-top: 0 !important;
+}
+.sub-page-button {
+	line-height: 12px !important;
+}
+.title-subtext {
+	font-size: 12px;
+	position: absolute;
+	top: 19px;
+	left: 50px;
 }

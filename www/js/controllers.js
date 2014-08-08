@@ -224,10 +224,27 @@ angular.module('starter.controllers', [])
 	})
 	.controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate) {
 		$scope.id = $stateParams.id;
-		$scope.back = function()
-		{
+		$scope.back = function () {
 			$ionicNavBarDelegate.$getByHandle('navBar').back();
 		}
+		$scope.v = {
+			rifiuti: ["Accendini", "Radiografie", "Feltrini"],
+			pdr: [{
+				title: "Isola Ecologica",
+				rifiuto: "Residuo",
+				desc: "Nel contenitore del RESIDUO, utilizzando l'apposita chiave eletronica",
+				icon: "img/ic_isola_eco_green.png",
+				locs: ["Fiavè Scuola", "Fiavè Stumiaga"],
+				aperto: false // per grafica (lo dovrò aggiungere io ?)
+			}, {
+				title: "Isola",
+				rifiuto: "Residuo",
+				desc: "",
+				icon: "img/ic_isola_eco_blue.png",
+				locs: ["Fiavè Cimitero", "Fiavè Doss"],
+				aperto: false
+			}]
+		};
 	})
 	.controller('ProfiliCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})

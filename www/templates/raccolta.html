@@ -1,10 +1,64 @@
 <ion-nav-viev>
 	<ion-nav-buttons side="left">
-        <button ng-click="back()" class="button button-clear button-light ion-chevron-left">
-            <span class="bar-back">Tipo di raccolta</span>
-        </button>
-    </ion-nav-buttons>
-	<ion-content>
-		{{id}}
-	</ion-content>
+		<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+			<span class="bar-back">Tipo di raccolta</span>
+			</br>
+			<p class="title-subtext">{{id}}</p>
+		</button>
+	</ion-nav-buttons>
+	<ion-tabs class="tabs-balanced tabs-top contatti-tabs">
+		<ion-tab title="LISTA RIFIUTI">
+			<ion-content class="background-grey-light" has-bouncing="false">
+				<ion-list class="background-grey-light">
+					<ion-item ng-repeat="item in v.rifiuti" class="background-grey-light">
+						{{item}}
+					</ion-item>
+				</ion-list>
+			</ion-content>
+		</ion-tab>
+		<ion-tab title="PUNTI DI RACCOLTA">
+			<ion-content class="background-grey-light" scroll="false">
+				<div class="bottom-border">
+					<div class="expandable-list-items" ng-repeat="item in v.pdr">
+						<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
+							<div class="col col-10 col-center">
+								<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+							</div>
+							<div class="col col-75">
+								<div class="row only-bottom-vertical-padding expandable-list-title">
+									<div class="col no-vertical-padding">
+										{{item.title}}
+									</div>
+								</div>
+								<div class="row only-bottom-vertical-padding">
+									<div class="col no-vertical-padding">
+										{{item.rifiuto}}
+									</div>
+								</div>
+								<div class="row no-vertical-padding expandable-list-desc">
+									<div class="col no-vertical-padding">
+										{{item.desc}}
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="row">
+									<div class="col">
+										<img src="{{item.icon}}" width="25" height="25">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-show="item.aperto">
+							<div class="row" ng-repeat="loc in item.locs">
+								<div class="col background-grey-light">
+									{{loc}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ion-content>
+		</ion-tab>
+	</ion-tabs>
 </ion-nav-viev>
