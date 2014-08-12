@@ -6,12 +6,12 @@
 			<p class="title-subtext">{{id}}</p>
 		</button>
 	</ion-nav-buttons>
-	<ion-content class="background-grey-ligh" has-bouncing="false">
+	<ion-content class="background-grey-light" has-bouncing="false">
 		<div class="subpage-title">
 			<h1 class="title">Tipo di raccolta</h1>
 		</div>
 		<div class="bottom-border">
-			<div class="expandable-list-items" ng-repeat="item in pdr">
+			<div class="expandable-list-items" ng-repeat="item in v">
 				<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
 					<div class="col col-10 col-center">
 						<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
@@ -19,17 +19,17 @@
 					<div class="col col-75">
 						<div class="row only-bottom-vertical-padding expandable-list-title">
 							<div class="col no-vertical-padding">
-								{{item.title}}
+								{{item.tipologiaPuntoRaccolta}}
 							</div>
 						</div>
 						<div class="row only-bottom-vertical-padding">
 							<div class="col no-vertical-padding">
-								{{item.rifiuto}}
+								{{item.tipologiaRifiuto}}
 							</div>
 						</div>
 						<div class="row no-vertical-padding expandable-list-desc">
 							<div class="col no-vertical-padding">
-								{{item.desc}}
+								{{item.infoRaccolta}}
 							</div>
 						</div>
 					</div>
@@ -42,11 +42,13 @@
 					</div>
 				</div>
 				<div ng-show="item.aperto">
-					<div class="row" ng-repeat="loc in item.locs">
-						<div class="col background-grey-light">
-							{{loc}}
+					<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+						<div class="row background-grey-light">
+							<div class="col">
+								{{loc.dettaglioIndirizzo || loc.indirizzo}}
+							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>

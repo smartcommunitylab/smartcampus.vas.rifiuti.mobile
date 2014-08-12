@@ -8,6 +8,7 @@ angular.module('starter.controllers', [])
 
 	$scope.rifiuti = [];
 	$scope.f = [];
+	$scope.listaRifiuti = [];
 
 	$scope.notes = [{
 		id: 0,
@@ -24,10 +25,32 @@ angular.module('starter.controllers', [])
 	$scope.noteSelected = false;
 	$scope.multipleNoteSelected = false;
 
+	$scope.readNotes = function () {
+		$http.get('data/saves/notes.json').success(function (notes) {
+			$scope.notes = notes;
+		});
+	};
+
+	$scope.saveNotes = function () {
+		//$http.post('data/saves/notes.json', $scope.notes).success(function () { alert('salvataggio riuscito!');});
+	};
+
 	$scope.readJson = function () {
-		$http.get('data/trash.json').success(function (data) {
-			$scope.rifiuti = data.trash;
-			$scope.f = $scope.oneInThree($scope.rifiuti);
+		$http.get('data/db/riciclabolario.json').success(function (data) {
+			$scope.listaRifiuti = data;
+		});
+		$http.get('data/db/tipologiaRifiuto.json').success(function (tdr) {
+			$scope.rifiuti = tdr;
+			$http.get('data/support/tipologiaRifiutoImmagini.json').success(function (tdri) {
+				for (var i = 0; i < $scope.rifiuti.length; i++) {
+					for (var j = 0; j < tdri.length; j++) {
+						if ($scope.rifiuti[i].valore == tdri[j].valore) {
+							$scope.rifiuti[i].immagine = tdri[j].immagine;
+						}
+					}
+				}
+				$scope.f = $scope.oneInThree($scope.rifiuti);
+			});
 		});
 	};
 
@@ -55,6 +78,7 @@ angular.module('starter.controllers', [])
 			},
 			note: nota
 		});
+		$scope.saveNotes();
 	};
 
 	$scope.removeNote = function (id) {
@@ -63,6 +87,7 @@ angular.module('starter.controllers', [])
 				$scope.notes.splice(i, 1);
 			}
 		}
+		$scope.saveNotes();
 	};
 
 	$scope.noteSelect = function (nota) {
@@ -150,6 +175,7 @@ angular.module('starter.controllers', [])
 			if (res != null && res != undefined) {
 				$scope.notes[$scope.notes.indexOf($scope.selectedNotes[0])].note = res;
 				$scope.noteSelect($scope.selectedNotes[0]);
+				$scope.saveNotes();
 			}
 		});
 	};
@@ -177,13 +203,13 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.match = function (query) {
-		if (query == '') {
+		if (query.length < 3) {
 			return function (item) {
 				return false;
 			}
 		} else {
 			return function (item) {
-				return item.indexOf(query) != -1;
+				return item.nome.indexOf(query) != -1;
 			}
 		}
 	};
@@ -201,8 +227,8 @@ angular.module('starter.controllers', [])
 	.controller('TDRCtrl', function ($scope, $http) {
 		$scope.v = [];
 		$scope.readJson = function () {
-			$http.get('data/tdr.json').success(function (data) {
-				$scope.v = data.tdr;
+			$http.get('data/support/tipologieDiRaccolta.json').success(function (data) {
+				$scope.v = data;
 			});
 		};
 		$scope.readJson();
@@ -212,12 +238,77 @@ angular.module('starter.controllers', [])
 		$scope.back = function () {
 			$ionicNavBarDelegate.$getByHandle('navBar').back();
 		}
-		$scope.v = [];
+		$scope.rifiuti = [];
+		$scope.locs = [];
 		$scope.readJson = function () {
-			$http.get('data/residuo.json').success(function (data) {
-				$scope.v = data.residuo;
+			$http.get('data/db/riciclabolario.json').success(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].tipologiaRifiuto == $scope.id) {
+						$scope.rifiuti.push(data[i]);
+					}
+				}
+			});
+			$http.get('data/db/raccolta.json').success(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].tipologiaRifiuto == $scope.id) {
+						$scope.locs.push(data[i]);
+					}
+				}
+				for (var i = 0; i < $scope.locs.length; i++) {
+					$scope.locs[i].aperto = false;
+					$scope.locs[i].locs = [];
+				}
+				$http.get('data/db/puntiRaccolta.json').success(function (loc) {
+					var profiloProva = "Comano Terme";
+					for (var i = 0; i < loc.length; i++) {
+						if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1) {
+							for (var j = 0; j < $scope.locs.length; j++) {
+								if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
+									$scope.locs[j].locs.push(loc[i]);
+									//console.log('area: ' + loc[i].area + '\n tipologiaPuntiRaccolta: ' + loc[i].tipologiaPuntiRaccolta + '\n tipologiaUtenza: ' + loc[i].tipologiaUtenza + '\n localizzazione: ' + loc[i].localizzazione + '\n indirizzo: ' + loc[i].indirizzo + '\n dettaglioIndirizzo: ' + loc[i].dettaglioIndirizzo + '\n dataDa: ' + loc[i].dataDa + '\n dataA: ' + loc[i].dataA + '\n il: ' + loc[i].il + '\n dalle: ' + loc[i].dalle + '\n alle: ' + loc[i].alle + '\n' + '\n');
+								}
+							}
+						}
+					}
+				});
 			});
 		};
+
+		$scope.containsIndirizzo = function (array, item) {
+			for (var k = 0; k < array.length; k++) {
+				if (array[k].indirizzo == item.indirizzo) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		//		{
+		//			"area": "Zuclo",
+		//			"tipologiaPuntiRaccolta": "CRM",
+		//			"tipologiaUtenza": "utenza domestica",
+		//			"localizzazione": "46.036666762973304,10.73291132695351",
+		//			"indirizzo": "Tione di Trento",
+		//			"dettaglioIndirizzo": "Tione di Trento, Loc. Vat",
+		//			"dataDa": "2014-01-01",
+		//			"dataA": "2014-12-31",
+		//			"il": "sabato",
+		//			"dalle": "13:30",
+		//			"alle": "17:00"
+		//		}, {
+		//			"area": "Bersone",
+		//			"tipologiaPuntiRaccolta": "Isola Ecologica",
+		//			"tipologiaUtenza": "utenza domestica",
+		//			"localizzazione": "45.94645210967276,10.632630507236849",
+		//			"indirizzo": "Bersone Fraz Formino",
+		//			"dettaglioIndirizzo": "",
+		//			"dataDa": "",
+		//			"dataA": "",
+		//			"il": "",
+		//			"dalle": "",
+		//			"alle": ""
+		//		}
+
 		$scope.readJson();
 	})
 	.controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
@@ -226,34 +317,105 @@ angular.module('starter.controllers', [])
 			$ionicNavBarDelegate.$getByHandle('navBar').back();
 		}
 		$scope.v = [];
+
 		$scope.readJson = function () {
-			$http.get('data/residuo.json').success(function (data) {
-				$scope.pdr = data.residuo.pdr;
-			});
-		};
-		$scope.readJson();
-	})
-	.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
-		$scope.id = $stateParams.id;
-		$scope.back = function () {
-			$ionicNavBarDelegate.$getByHandle('navBar').back();
-		}
-		$scope.pdr = [];
-		$scope.readJson = function () {
-			$http.get('data/pdr.json').success(function (data) {
-				for (var i = 0; i < data.length; i++)
-				{
-					if(data[i].name == $scope.id)
-					{
-						$pdr = data[i];
+			$http.get('data/db/riciclabolario.json').success(function (base) {
+				for (var i = 0; i < base.length; i++) {
+					if (base[i].nome == $scope.id) {
+						$http.get('data/db/raccolta.json').success(function (data) {
+							for (var k = 0; k < data.length; k++) {
+								if (data[k].tipologiaRifiuto == base[i].tipologiaRifiuto) {
+									$scope.v.push(data[k]);
+								}
+							}
+							for (var k = 0; k < $scope.v.length; k++) {
+								$scope.v[k].aperto = false;
+								$scope.v[k].locs = [];
+							}
+							$http.get('data/db/puntiRaccolta.json').success(function (loc) {
+								var profiloProva = "Comano Terme";
+								for (var k = 0; k < loc.length; k++) {
+									if (loc[k].area == profiloProva && loc[k].indirizzo.indexOf(profiloProva) != -1) {
+										for (var j = 0; j < $scope.v.length; j++) {
+											if ($scope.v[j].tipologiaPuntoRaccolta == loc[k].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.v[j].locs, loc[k])) {
+												$scope.v[j].locs.push(loc[k]);
+											}
+										}
+									}
+								}
+							});
+						});
 						break;
 					}
 				}
 			});
 		};
+
+		$scope.containsIndirizzo = function (array, item) {
+			for (var k = 0; k < array.length; k++) {
+				if (array[k].indirizzo == item.indirizzo) {
+					return false;
+				}
+			}
+			return true;
+		}
 		$scope.readJson();
 	})
-	.controller('ProfiliCtrl', function ($scope) {})
+	.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+		$scope.id = $stateParams.id;
+		$scope.isCRM = false;
+		$scope.rifiuti = [];
+		$scope.back = function () {
+			$ionicNavBarDelegate.$getByHandle('navBar').back();
+		}
+		$scope.pdr = [];
+		$scope.readJson = function () {
+			$http.get('data/db/puntiRaccolta.json').success(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].indirizzo == $scope.id || data[i].dettaglioIndirizzo == $scope.id) {
+						$scope.pdr.push(data[i]);
+						break;
+					}
+				}
+				if ($scope.pdr[0].tipologiaPuntiRaccolta == 'CRM') {
+					$scope.isCRM = true;
+				}
+				$http.get('data/db/raccolta.json').success(function (raccolta) {
+					for (var i = 0; i < raccolta.length; i++) {
+						if (raccolta[i].tipologiaPuntoRaccolta == $scope.pdr[0].tipologiaPuntiRaccolta && $scope.rifiuti.indexOf(raccolta[i].tipologiaRaccolta) == -1) {
+							$scope.rifiuti.push(raccolta[i].tipologiaRaccolta);
+						}
+					}
+				});
+			});
+		};
+		$scope.readJson();
+
+		$scope.indirizzoIfIsCRM = function () {
+			if ($scope.isCRM) {
+				return $scope.pdr[0].indirizzo;
+			} else {
+				return 'Area Giudicarie';
+			}
+		};
+	})
+	.controller('ProfiliCtrl', function ($scope) {
+		$scope.p = [{
+			name: "Casa",
+			type: "Utenza domestica",
+			loc: "fiavè"
+		}, {
+			name: "Ufficio",
+			type: "Utenza non domestica",
+			loc: "fiavè"
+		}, {
+			name: "Random",
+			type: "Utenza occasionale",
+			loc: "fiavè"
+		}];
+	})
+	.controller('AggiungiProfiloCtrl', function ($scope) {})
+	.controller('ModificaProfiloCtrl', function ($scope) {})
 	.controller('SegnalaCtrl', function ($scope) {})
 	.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
 		$scope.v = [

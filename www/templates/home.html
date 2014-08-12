@@ -14,7 +14,7 @@
 
     <ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
 
-        <ion-tab title="1" on-deselect="noteReset()">
+        <ion-tab title="1" on-select="readNotes()" on-deselect="noteReset()">
             <ion-nav-buttons side="right">
                 <button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button nav-bar-buttons-alignment" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}"></button>
                 <button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment" ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"></button>
@@ -35,17 +35,17 @@
                         </label>
                         <button class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
                     </div>
-                    <ion-item ng-repeat="item in ['carta','cartone','plastica'] | filter:match(searchQuery)">
-                        {{item}}
+                    <ion-item ng-repeat="item in listaRifiuti | filter:match(searchQuery)" ng-href="#/app/rifiuto/{{item.nome}}">
+                        {{item.nome}}
                     </ion-item>
                 </div>
                     <div class="row" ng-repeat="item in f">
                         <div class="col home-grid">
-                            <img src="{{item.image}}" />{{item.name}}</div>
+                            <img src="{{item.immagine}}" />{{item.valore}}</div>
                         <div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+1] == undefined}">
-                            <img src="{{rifiuti[f.indexOf(item)*3+1].image}}" />{{rifiuti[f.indexOf(item)*3+1].name}}</div>
+                            <img src="{{rifiuti[f.indexOf(item)*3+1].immagine}}" />{{rifiuti[f.indexOf(item)*3+1].valore}}</div>
                         <div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+2] == undefined}">
-                            <img src="{{rifiuti[f.indexOf(item)*3+2].image}}" />{{rifiuti[f.indexOf(item)*3+2].name}}</div>
+                            <img src="{{rifiuti[f.indexOf(item)*3+2].immagine}}" />{{rifiuti[f.indexOf(item)*3+2].valore}}</div>
                     </div>
             </ion-content>
         </ion-tab>

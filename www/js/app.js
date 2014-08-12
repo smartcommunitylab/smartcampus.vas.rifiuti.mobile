@@ -100,6 +100,26 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
     })
 
+	.state('app.aggProfilo', {
+        url: "/aggProfilo",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/aggProfilo.html",
+                controller: 'AggiungiProfiloCtrl'
+            }
+        }
+    })
+
+	.state('app.modificaProfilo', {
+        url: "/modificaProfilo/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/modificaProfilo.html",
+                controller: 'ModificaProfiloCtrl'
+            }
+        }
+    })
+
     .state('app.segnala', {
         url: "/segnala",
         views: {

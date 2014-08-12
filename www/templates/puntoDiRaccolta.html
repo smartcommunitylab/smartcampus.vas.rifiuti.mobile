@@ -3,21 +3,27 @@
 		<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
 			<span class="bar-back">Punto di raccolta</span>
 			</br>
-			<p class="title-subtext">###:::???!!!</p>
+			<p class="title-subtext">{{pdr[0].tipologiaPuntiRaccolta}} {{indirizzoIfIsCRM()}}</p>
 		</button>
 	</ion-nav-buttons>
-	<ion-content class="has-header background-grey-ligh" has-bouncing="false">
+	<ion-content class="background-grey-ligh" has-bouncing="false">
 		<div class="subpage-title">
 			<h1 class="title">DETTAGLI</h1>
 		</div>
-		<div>
-
+		<div class="row low-padding no-vertical-padding">
+			<div class="col col-67 no-left-padding no-vertical-padding">
+				<div class="row no-left-padding" style="text-decoration: bold;">{{pdr[0].dettaglioIndirizzo || pdr[0].indirizzo}}</div>
+				<div class="row no-left-padding" style="font-size: 10px; line-height: 11px;"></div> <!--per ora niente...-->
+			</div>
+			<div class="col no-left-padding no-vertical-padding" style="position:relative;"><img src="img/ic_map_green.png" haight="35" width="35" class="absolute-center"></div>
+			<div class="col no-left-padding no-vertical-padding" style="position:relative;"><img src="img/ic_directions.png" haight="35" width="35" class="absolute-center"></div>
 		</div>
 		<div class="subpage-title">
 			<h1 class="title">TIPOLOGIE DI RACCOLTA</h1>
 		</div>
 		<ion-list>
-			<ion-item>
+			<ion-item class="low-padding" ng-repeat="rifiuto in rifiuti">
+				{{rifiuto}}
 			</ion-item>
 		</ion-list>
 	</ion-content>

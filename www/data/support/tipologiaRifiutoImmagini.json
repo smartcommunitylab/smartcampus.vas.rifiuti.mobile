@@ -1,0 +1,102 @@
+[
+        {
+            "valore": "Accumulatori",
+            "immagine": "img/rif_ic_accumulatori.png"
+        },
+        {
+            "valore": "Carta",
+            "immagine": "img/rif_ic_carta.png"
+        },
+        {
+            "valore": "Cartone",
+            "immagine": "img/rif_ic_cartone.png"
+        },
+        {
+            "valore": "Cartoni per bevande",
+            "immagine": "img/rif_ic_cartoni_bevande.png"
+        },
+        {
+            "valore": "Cartucce toner esaurite",
+            "immagine": "img/rif_ic_cartucce_toner_esaurite.png"
+        },
+        {
+            "valore": "imballaggi in metallo",
+            "immagine": "img/rif_ic_imballaggi_metallo.png"
+        },
+        {
+            "valore": "Imballaggi in plastica",
+            "immagine": "img/rif_ic_imballaggi_plastica.png"
+        },
+        {
+            "valore": "Imballaggi in vetro",
+            "immagine": "img/rif_ic_imballaggi_vetro.png"
+        },
+        {
+            "valore": "Indumenti usati",
+            "immagine": "img/rif_ic_indumenti_usati.png"
+        },
+        {
+            "valore": "Inerti",
+            "immagine": "img/rif_ic_inerti.png"
+        },
+        {
+            "valore": "Ingombranti",
+            "immagine": "img/rif_ic_ingombranti.png"
+        },
+        {
+            "valore": "Legno",
+            "immagine": "img/rif_ic_legno.png"
+        },
+        {
+            "valore": "Medicinali scaduti",
+            "immagine": "img/rif_ic_medicinali_scaduti.png"
+        },
+        {
+            "valore": "Oggetti in metallo",
+            "immagine": "img/rif_ic_oggetti_metallo.png"
+        },
+        {
+            "valore": "Oggetti in plastica",
+            "immagine": "img/rif_ic_oggetti_plastica.png"
+        },
+        {
+            "valore": "Oggetti in vetro",
+            "immagine": "img/rif_ic_oggetti_vetro.png"
+        },
+        {
+            "valore": "Olio vegetale",
+            "immagine": "img/rif_ic_oli_vegetali.png"
+        },
+        {
+            "valore": "Olio minerale",
+            "immagine": "img/rif_ic_oli_minerali.png"
+        },
+        {
+            "valore": "Organico",
+            "immagine": "img/rif_ic_organico.png"
+        },
+        {
+            "valore": "Pericolosi",
+            "immagine": "img/rif_ic_pericolosi.png"
+        },
+        {
+            "valore": "Pile",
+            "immagine": "img/rif_ic_pile.png"
+        },
+        {
+            "valore": "Pneumatici",
+            "immagine": "img/rif_ic_pneumatici.png"
+        },
+        {
+            "valore": "Raee",
+            "immagine": "img/rif_ic_raee.png"
+        },
+        {
+            "valore": "Residuo",
+            "immagine": "img/rif_ic_residuo.png"
+        },
+        {
+            "valore": "Verde e ramaglie",
+            "immagine": "img/rif_ic_verde_ramaglie.png"
+        }
+    ]

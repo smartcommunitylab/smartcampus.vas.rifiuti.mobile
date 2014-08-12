@@ -27,7 +27,7 @@
 	background-color: #47772b !important;
 }
 .background-grey-light,
-.background-grey-light a{
+.background-grey-light a {
 	background-color: #eeeeee !important;
 }
 .background-grey-middle {
@@ -35,6 +35,9 @@
 }
 .background-grey-dark {
 	background-color: #3c3c3b !important;
+}
+.backgorund-white {
+	background-color: white !important;
 }
 .text-white {
 	color: white !important;
@@ -155,19 +158,40 @@
 	font-size: 12px;
 	position: absolute;
 	top: 19px;
-	left: 50px;
+	left: 52px;
+	text-align: left;
+	white-space: nowrap;
 }
-.subpage-title{
+.subpage-title {
 	background-color: #47772b !important;
 	height: 30px;
 }
-.subpage-title h1{
+.subpage-title h1 {
 	color: #eeeeee !important;
 	padding-left: 5px;
 	font-size: 20px;
 	line-height: 30px !important;
 }
-.hidden-link{
+.hidden-link {
 	color: inherit !important;
 	text-decoration: inherit !important;
-};
+}
+.low-padding {
+	padding: 5px !important;
+}
+.no-left-padding {
+	padding-left: 0px !important;
+}
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+.profili-title{
+	padding-top: 0px;
+	font-size: 17px;
+}
+.profili-info{
+	padding-bottom: 0px;
+	font-size: 11px;
+}
