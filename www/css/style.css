@@ -1,5 +1,11 @@
 /* Empty. Add your own CSS if you like */
 
+.scroll-content > #map1{
+  height: 100%;
+}
+.angular-google-map-container {
+  height: 200px;
+}
 .bar-title {
 	margin-left: 10px;
 	padding-left: 35px;
