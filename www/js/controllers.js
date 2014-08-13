@@ -365,35 +365,67 @@ angular.module('starter.controllers', [])
 		$scope.id = $stateParams.id;
 		$scope.isCRM = false;
 		$scope.rifiuti = [];
+		$scope.orari = [];
+		//[{giorno:"lunedì",orari:["12.00-14.00","15.30-17.30"...]}...]
 		$scope.back = function () {
 			$ionicNavBarDelegate.$getByHandle('navBar').back();
 		}
-		$scope.pdr = [];
+		$scope.pdr = {};
 		$scope.readJson = function () {
 			$http.get('data/db/puntiRaccolta.json').success(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					if (data[i].indirizzo == $scope.id || data[i].dettaglioIndirizzo == $scope.id) {
-						$scope.pdr.push(data[i]);
+						$scope.pdr = data[i];
 						break;
 					}
 				}
-				if ($scope.pdr[0].tipologiaPuntiRaccolta == 'CRM') {
+				if ($scope.pdr.tipologiaPuntiRaccolta == 'CRM') {
 					$scope.isCRM = true;
 				}
 				$http.get('data/db/raccolta.json').success(function (raccolta) {
 					for (var i = 0; i < raccolta.length; i++) {
-						if (raccolta[i].tipologiaPuntoRaccolta == $scope.pdr[0].tipologiaPuntiRaccolta && $scope.rifiuti.indexOf(raccolta[i].tipologiaRaccolta) == -1) {
+						if (raccolta[i].tipologiaPuntoRaccolta == $scope.pdr.tipologiaPuntiRaccolta && $scope.rifiuti.indexOf(raccolta[i].tipologiaRaccolta) == -1) {
 							$scope.rifiuti.push(raccolta[i].tipologiaRaccolta);
 						}
 					}
 				});
+				if (!!$scope.pdr.dalle) {
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].indirizzo == $scope.id || data[i].dettaglioIndirizzo == $scope.id) {
+							var j = $scope.checkGiorni(data[i].il);
+							if (j == -1) {
+								$scope.orari.push({
+									giorno: data[i].il,
+									orari: [data[i].dalle + "-" + data[i].alle]
+								});
+							} else {
+								if ($scope.orari[j].orari.indexOf(data[i].dalle + "-" + data[i].alle) == -1) {
+									$scope.orari[j].orari.push(data[i].dalle + "-" + data[i].alle);
+								}
+							}
+						}
+					}
+				}
 			});
 		};
 		$scope.readJson();
 
+		$scope.checkGiorni = function (item) {
+			for (var j = 0; j < $scope.orari.length; j++) {
+				if ($scope.orari[j].giorno == item) {
+					return j;
+				}
+			}
+			return -1;
+		};
+
+		//{"area":"Dorsino","tipologiaPuntiRaccolta":"CRM","tipologiaUtenza":"utenza domestica","localizzazione":"46.034259734401125,10.858212180193288","indirizzo":"Comano Terme","dettaglioIndirizzo":"Comano Terme, Loc. Dos dei Larici","dataDa":"2014-01-01","dataA":"2014-01-31","il":"lunedì","dalle":"13:00","alle":"17:00"}
+
+		//{"area":"Comano Terme","tipologiaPuntiRaccolta":"CRM","tipologiaUtenza":"utenza domestica","localizzazione":"46.034259734401125,10.858212180193288","indirizzo":"Comano Terme","dettaglioIndirizzo":"Comano Terme, Loc. Dos dei Larici","dataDa":"2014-01-01","dataA":"2014-01-31","il":"lunedì","dalle":"13:00","alle":"17:00"}
+
 		$scope.indirizzoIfIsCRM = function () {
 			if ($scope.isCRM) {
-				return $scope.pdr[0].indirizzo;
+				return $scope.pdr.indirizzo;
 			} else {
 				return 'Area Giudicarie';
 			}
