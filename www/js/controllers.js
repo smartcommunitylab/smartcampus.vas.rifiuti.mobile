@@ -225,28 +225,23 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('InfoCtrl', function ($scope) {})
 
-.controller('PDRCtrl', function ($scope, $http, $location) {
+.controller('PDRCtrl', function ($scope, $http, $location, $stateParams) {
+
+	$scope.id = $stateParams.id != '!' ? $stateParams.id : null;
 
 	$scope.init = function () {
-		//var mapHeight = 10; // or any other calculated value
-		//mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-		//angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
 		$http.get('data/db/puntiRaccolta.json').success(function (loc) {
 			var profiloProva = "Comano Terme";
 			var points = [];
 			for (var i = 0; i < loc.length; i++) {
-				if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1 && $scope.containsIndirizzo(points, loc[i])) {
+				var indirizzo = loc[i].dettaglioIndirizzo != "" ? loc[i].dettaglioIndirizzo : loc[i].indirizzo;
+				if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
 					points.push({
 						id: loc[i].dettaglioIndirizzo != '' ? loc[i].dettaglioIndirizzo : loc[i].indirizzo,
 						latitude: loc[i].localizzazione.split(',')[0],
 						longitude: loc[i].localizzazione.split(',')[1],
 						icon: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png'
 					});
-					//for (var j = 0; j < $scope.locs.length; j++) {
-					//	if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
-					//		$scope.locs[j].locs.push(loc[i]);
-					//	}
-					//}
 				}
 			}
 			$scope.markers.models = points;
@@ -263,8 +258,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.openMarkerClick = function ($markerModel) {
-		var current = $location.absUrl();
-		var final = current.split('#')[0] + '#/app/puntoDiRaccolta/' + $markerModel.id;
+		$location.url('/app/puntoDiRaccolta/' + $markerModel.id);
 	};
 
 	$scope.map = {
@@ -298,18 +292,6 @@ angular.module('starter.controllers', ['google-maps'])
 		angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
 		//$scope.map.control.refresh();
 	});
-	/*var pippo = [{
-			id: 1,
-			latitude: 46.0,
-			longitude: 11.0,
-			icon: 'img/ic_poi_isolaeco.png'
-    	}, {
-			id: 2,
-			latitude: 47.0,
-			longitude: 12.0,
-			icon: 'img/ic_poi_isolaeco.png'
-    	}
-	];*/
 
 	$scope.init();
 })

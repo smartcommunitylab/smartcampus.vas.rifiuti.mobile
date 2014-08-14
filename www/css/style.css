@@ -201,3 +201,6 @@
 	padding-bottom: 0;
 	font-size: 11px;
 }
+.no-link-padding a{
+	padding: 0 !important;
+}

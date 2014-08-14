@@ -17,7 +17,9 @@
 				<!--per ora niente...-->
 			</div>
 			<div class="col no-left-padding no-vertical-padding" style="position:relative;">
-				<img src="img/ic_map_green.png" haight="35" width="35" class="absolute-center">
+				<a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
+					<img src="img/ic_map_green.png" haight="35" width="35" class="absolute-center">
+				</a>
 			</div>
 			<div class="col no-left-padding no-vertical-padding" style="position:relative;">
 				<img src="img/ic_directions.png" haight="35" width="35" class="absolute-center">
@@ -37,7 +39,7 @@
 			<h1 class="title">TIPOLOGIE DI RACCOLTA</h1>
 		</div>
 		<ion-list>
-			<ion-item class="low-padding" ng-repeat="rifiuto in rifiuti">
+			<ion-item class="low-padding no-link-padding" ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
 				{{rifiuto}}
 			</ion-item>
 		</ion-list>

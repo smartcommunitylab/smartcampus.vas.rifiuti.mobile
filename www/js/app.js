@@ -41,7 +41,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'google-maps'])
     })
 
     .state('app.puntiDiRaccolta', {
-        url: "/puntiDiRaccolta",
+        url: "/puntiDiRaccolta/:id",
         views: {
             'menuContent': {
                 templateUrl: "templates/puntiDiRaccolta.html",
