@@ -562,7 +562,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 })
 
-.controller('ProfiliCtrl', function ($scope) {
+.controller('ProfiliCtrl', function ($scope, $location) {
 	$scope.p = [{
 		name: "Casa",
 		type: "Utenza domestica",
@@ -576,6 +576,10 @@ angular.module('starter.controllers', ['google-maps'])
 		type: "Utenza occasionale",
 		loc: "fiavè"
 		}];
+
+	$scope.changePage = function () {
+		$location.url('/app/aggProfilo');
+	};
 })
 
 .controller('AggiungiProfiloCtrl', function ($scope) {})

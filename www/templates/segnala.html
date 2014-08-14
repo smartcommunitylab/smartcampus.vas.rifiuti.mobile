@@ -1,9 +1,19 @@
 <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-            <span class="bar-title">Segnalazione</span>
-        </button>
-    </ion-nav-buttons>
+	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+		<span class="bar-title">Segnalazione</span>
+	</button>
+</ion-nav-buttons>
 <ion-content>
-    Segnala
-    -placeholder-
+	<div>
+		Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.
+	</div>
+	<div class="item item-input-inset">
+		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Inserisci qui il testo della segnalazione">
+	</div>
+	<div>Scatta una foto</div>
+	<div>Allega la tua posizione</div>
 </ion-content>
+<div class="bar bar-footer">
+	<button class="button button-block" style="top: -15px; height: 35px;">Segnala!</button>
+	<!--RIMUOVERE GLI STILI IN LINEA !!!!-->
+</div>
