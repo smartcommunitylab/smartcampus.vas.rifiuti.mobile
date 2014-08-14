@@ -225,9 +225,13 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('InfoCtrl', function ($scope) {})
 
-.controller('PDRCtrl', function ($scope, $http, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $timeout, $http, $location, $stateParams) {
+
+	$scope.mapView = true;
 
 	$scope.id = $stateParams.id != '!' ? $stateParams.id : null;
+
+	$scope.list = [];
 
 	$scope.init = function () {
 		$http.get('data/db/puntiRaccolta.json').success(function (loc) {
@@ -242,9 +246,25 @@ angular.module('starter.controllers', ['google-maps'])
 						longitude: loc[i].localizzazione.split(',')[1],
 						icon: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png'
 					});
+					$scope.addToList(loc[i]);
 				}
 			}
 			$scope.markers.models = points;
+		});
+	};
+
+	$scope.addToList = function (item) {
+		for (var i = 0; i < $scope.list.length; i++) {
+			if ($scope.list[i].tipologiaPuntoRaccolta == item.tipologiaPuntiRaccolta) {
+				$scope.list[i].locs.push(item);
+				return;
+			}
+		}
+		$scope.list.push({
+			aperto: false,
+			tipologiaPuntoRaccolta: item.tipologiaPuntiRaccolta,
+			icon: item.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_crm_grey.png' : 'img/ic_isola_eco_grey.png',
+			locs: [item]
 		});
 	};
 
@@ -273,7 +293,14 @@ angular.module('starter.controllers', ['google-maps'])
 		options: {
 			'streetViewControl': false,
 			'zoomControl': true,
-			'mapTypeControl': false
+			'mapTypeControl': false,
+			styles: [{
+				featureType: "poi",
+				elementType: "labels",
+				stylers: [{
+					visibility: "off"
+        		}]
+      		}]
 		}
 	};
 
@@ -286,10 +313,21 @@ angular.module('starter.controllers', ['google-maps'])
 		doCluster: true
 	};
 
+	$scope.click = function () {
+		$scope.mapView = !$scope.mapView;
+		$timeout(function () {
+			var mapHeight = 10; // or any other calculated value
+			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+			angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+		}, 50);
+	};
+
 	$scope.$on('$viewContentLoaded', function () {
-		var mapHeight = 10; // or any other calculated value
-		mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-		angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+		$timeout(function () {
+			var mapHeight = 10; // or any other calculated value
+			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+			angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+		}, 50);
 		//$scope.map.control.refresh();
 	});
 
@@ -338,8 +376,16 @@ angular.module('starter.controllers', ['google-maps'])
 						for (var j = 0; j < $scope.locs.length; j++) {
 							if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
 								$scope.locs[j].locs.push(loc[i]);
-								//console.log('area: ' + loc[i].area + '\n tipologiaPuntiRaccolta: ' + loc[i].tipologiaPuntiRaccolta + '\n tipologiaUtenza: ' + loc[i].tipologiaUtenza + '\n localizzazione: ' + loc[i].localizzazione + '\n indirizzo: ' + loc[i].indirizzo + '\n dettaglioIndirizzo: ' + loc[i].dettaglioIndirizzo + '\n dataDa: ' + loc[i].dataDa + '\n dataA: ' + loc[i].dataA + '\n il: ' + loc[i].il + '\n dalle: ' + loc[i].dalle + '\n alle: ' + loc[i].alle + '\n' + '\n');
 							}
+						}
+					}
+				}
+			});
+			$http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
+				for (var i = 0; i < $scope.locs.length; i++) {
+					for (var j = 0; j < group.length; j++) {
+						if ($scope.locs[i].tipologiaRifiuto == group[j].name) {
+							$scope.locs[i].icon = group[j].icons[i];
 						}
 					}
 				}
@@ -414,6 +460,15 @@ angular.module('starter.controllers', ['google-maps'])
 										if ($scope.v[j].tipologiaPuntoRaccolta == loc[k].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.v[j].locs, loc[k])) {
 											$scope.v[j].locs.push(loc[k]);
 										}
+									}
+								}
+							}
+						});
+						$http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
+							for (var i = 0; i < $scope.v.length; i++) {
+								for (var j = 0; j < group.length; j++) {
+									if ($scope.v[i].tipologiaRifiuto == group[j].name) {
+										$scope.v[i].icon = group[j].icons[i];
 									}
 								}
 							}
