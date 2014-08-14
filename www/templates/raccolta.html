@@ -1,66 +1,64 @@
-<ion-nav-viev>
-	<ion-nav-buttons side="left">
-		<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
-			<span class="bar-back">Tipo di raccolta</span>
-			</br>
-			<p class="title-subtext">{{id}}</p>
-		</button>
-	</ion-nav-buttons>
-	<ion-tabs class="tabs-balanced tabs-top contatti-tabs">
-		<ion-tab title="LISTA RIFIUTI">
-			<ion-content class="background-grey-light" has-bouncing="false">
-				<ion-list class="background-grey-light">
-					<ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
-						{{item.nome}}
-					</ion-item>
-				</ion-list>
-			</ion-content>
-		</ion-tab>
-		<ion-tab title="PUNTI DI RACCOLTA">
-			<ion-content class="background-grey-light" has-bouncing="false">
-				<div class="bottom-border">
-					<div class="expandable-list-items" ng-repeat="item in locs">
-						<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
-							<div class="col col-10 col-center">
-								<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-							</div>
-							<div class="col col-75">
-								<div class="row only-bottom-vertical-padding expandable-list-title">
-									<div class="col no-vertical-padding">
-										{{item.tipologiaPuntoRaccolta}}
-									</div>
-								</div>
-								<div class="row only-bottom-vertical-padding">
-									<div class="col no-vertical-padding">
-										{{item.tipologiaRifiuto}}
-									</div>
-								</div>
-								<div class="row no-vertical-padding expandable-list-desc">
-									<div class="col no-vertical-padding">
-										{{item.infoRaccolta}}
-									</div>
+<ion-nav-buttons side="left">
+	<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+		<span class="bar-back">Tipo di raccolta</span>
+		</br>
+		<p class="title-subtext">{{id}}</p>
+	</button>
+</ion-nav-buttons>
+<ion-tabs class="tabs-balanced tabs-top contatti-tabs">
+	<ion-tab title="LISTA RIFIUTI">
+		<ion-content class="background-grey-light" has-bouncing="false">
+			<ion-list class="background-grey-light">
+				<ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
+					{{item.nome}}
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</ion-tab>
+	<ion-tab title="PUNTI DI RACCOLTA">
+		<ion-content class="background-grey-light" has-bouncing="false">
+			<div class="bottom-border">
+				<div class="expandable-list-items" ng-repeat="item in locs">
+					<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
+						<div class="col col-10 col-center">
+							<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+						</div>
+						<div class="col col-75">
+							<div class="row only-bottom-vertical-padding expandable-list-title">
+								<div class="col no-vertical-padding">
+									{{item.tipologiaPuntoRaccolta}}
 								</div>
 							</div>
-							<div class="col">
-								<div class="row">
-									<div class="col">
-										<img src="{{item.icon}}" width="25" height="25">
-									</div>
+							<div class="row only-bottom-vertical-padding">
+								<div class="col no-vertical-padding">
+									{{item.tipologiaRifiuto}}
+								</div>
+							</div>
+							<div class="row no-vertical-padding expandable-list-desc">
+								<div class="col no-vertical-padding">
+									{{item.infoRaccolta}}
 								</div>
 							</div>
 						</div>
-						<div ng-show="item.aperto">
-							<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-								<div class="row background-grey-light">
-									<div class="col">
-										{{loc.dettaglioIndirizzo || loc.indirizzo}}
-									</div>
+						<div class="col">
+							<div class="row">
+								<div class="col">
+									<img src="{{item.icon}}" width="25" height="25">
 								</div>
-							</a>
+							</div>
 						</div>
 					</div>
+					<div ng-show="item.aperto">
+						<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+							<div class="row background-grey-light">
+								<div class="col">
+									{{loc.dettaglioIndirizzo || loc.indirizzo}}
+								</div>
+							</div>
+						</a>
+					</div>
 				</div>
-			</ion-content>
-		</ion-tab>
-	</ion-tabs>
-</ion-nav-viev>
+			</div>
+		</ion-content>
+	</ion-tab>
+</ion-tabs>

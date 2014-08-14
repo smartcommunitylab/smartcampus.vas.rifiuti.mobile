@@ -1,56 +1,54 @@
-<ion-nav-viev>
-	<ion-nav-buttons side="left">
-		<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-			<span class="bar-title">Punti di raccolta</span>
-		</button>
-	</ion-nav-buttons>
-	<ion-nav-buttons side="right">
-		<button ng-click="click()" class="button button-clear button-light icon-left ion-clipboard"></button>
-	</ion-nav-buttons>
-	<div ng-if="mapView">
-		<ion-content class="has-header" scroll="false" id="map-container">
-			<div id="map1">
-				<google-map pan="map.pan" center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" options="map.options">
-					<markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
-					</markers>
-				</google-map>
-			</div>
-		</ion-content>
-	</div>
-	<div  ng-if="!mapView">
-		<ion-content class="has-header background-grey-light" has-bouncing="false">
-			<div class="bottom-border">
-				<div class="expandable-list-items" ng-repeat="item in list">
-					<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
-						<div class="col col-10 col-center">
-							<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-						</div>
-						<div class="col col-75">
-							<div class="row only-bottom-vertical-padding expandable-list-title">
-								<div class="col no-vertical-padding">
-									{{item.tipologiaPuntoRaccolta}}
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="row">
-								<div class="col">
-									<img src="{{item.icon}}" width="25" height="25">
-								</div>
+<ion-nav-buttons side="left">
+	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
+		<span class="bar-title">Punti di raccolta</span>
+	</button>
+</ion-nav-buttons>
+<ion-nav-buttons side="right">
+	<button ng-click="click()" class="button button-clear button-light icon-left ion-clipboard"></button>
+</ion-nav-buttons>
+<div ng-if="mapView">
+	<ion-content class="has-header" scroll="false" id="map-container">
+		<div id="map1">
+			<google-map pan="map.pan" center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" options="map.options">
+				<markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
+				</markers>
+			</google-map>
+		</div>
+	</ion-content>
+</div>
+<div ng-if="!mapView">
+	<ion-content class="has-header background-grey-light" has-bouncing="false">
+		<div class="bottom-border">
+			<div class="expandable-list-items" ng-repeat="item in list">
+				<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
+					<div class="col col-10 col-center">
+						<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+					</div>
+					<div class="col col-75">
+						<div class="row only-bottom-vertical-padding expandable-list-title">
+							<div class="col no-vertical-padding">
+								{{item.tipologiaPuntoRaccolta}}
 							</div>
 						</div>
 					</div>
-					<div ng-show="item.aperto">
-						<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-							<div class="row background-grey-light">
-								<div class="col">
-									{{loc.dettaglioIndirizzo || loc.indirizzo}}
-								</div>
+					<div class="col">
+						<div class="row">
+							<div class="col">
+								<img src="{{item.icon}}" width="25" height="25">
 							</div>
-						</a>
+						</div>
 					</div>
 				</div>
+				<div ng-show="item.aperto">
+					<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+						<div class="row background-grey-light">
+							<div class="col">
+								{{loc.dettaglioIndirizzo || loc.indirizzo}}
+							</div>
+						</div>
+					</a>
+				</div>
 			</div>
-		</ion-content>
-	</div>
-</ion-nav-viev>
+		</div>
+	</ion-content>
+</div>

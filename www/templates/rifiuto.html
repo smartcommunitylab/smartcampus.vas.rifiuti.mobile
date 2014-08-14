@@ -1,56 +1,54 @@
-<ion-nav-viev>
-	<ion-nav-buttons side="left">
-		<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
-			<span class="bar-back">Rifiuto</span>
-			</br>
-			<p class="title-subtext">{{id}}</p>
-		</button>
-	</ion-nav-buttons>
-	<ion-content class="background-grey-light" has-bouncing="false">
-		<div class="subpage-title">
-			<h1 class="title">Tipo di raccolta</h1>
-		</div>
-		<div class="bottom-border">
-			<div class="expandable-list-items" ng-repeat="item in v">
-				<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
-					<div class="col col-10 col-center">
-						<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-					</div>
-					<div class="col col-75">
-						<div class="row only-bottom-vertical-padding expandable-list-title">
-							<div class="col no-vertical-padding">
-								{{item.tipologiaPuntoRaccolta}}
-							</div>
-						</div>
-						<div class="row only-bottom-vertical-padding">
-							<div class="col no-vertical-padding">
-								{{item.tipologiaRifiuto}}
-							</div>
-						</div>
-						<div class="row no-vertical-padding expandable-list-desc">
-							<div class="col no-vertical-padding">
-								{{item.infoRaccolta}}
-							</div>
+<ion-nav-buttons side="left">
+	<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+		<span class="bar-back">Rifiuto</span>
+		</br>
+		<p class="title-subtext">{{id}}</p>
+	</button>
+</ion-nav-buttons>
+<ion-content class="background-grey-light" has-bouncing="false">
+	<div class="subpage-title">
+		<h1 class="title">Tipo di raccolta</h1>
+	</div>
+	<div class="bottom-border">
+		<div class="expandable-list-items" ng-repeat="item in v">
+			<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
+				<div class="col col-10 col-center">
+					<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+				</div>
+				<div class="col col-75">
+					<div class="row only-bottom-vertical-padding expandable-list-title">
+						<div class="col no-vertical-padding">
+							{{item.tipologiaPuntoRaccolta}}
 						</div>
 					</div>
-					<div class="col">
-						<div class="row">
-							<div class="col">
-								<img src="{{item.icon}}" width="25" height="25">
-							</div>
+					<div class="row only-bottom-vertical-padding">
+						<div class="col no-vertical-padding">
+							{{item.tipologiaRifiuto}}
+						</div>
+					</div>
+					<div class="row no-vertical-padding expandable-list-desc">
+						<div class="col no-vertical-padding">
+							{{item.infoRaccolta}}
 						</div>
 					</div>
 				</div>
-				<div ng-show="item.aperto">
-					<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-						<div class="row background-grey-light">
-							<div class="col">
-								{{loc.dettaglioIndirizzo || loc.indirizzo}}
-							</div>
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<img src="{{item.icon}}" width="25" height="25">
 						</div>
-					</a>
+					</div>
 				</div>
 			</div>
+			<div ng-show="item.aperto">
+				<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+					<div class="row background-grey-light">
+						<div class="col">
+							{{loc.dettaglioIndirizzo || loc.indirizzo}}
+						</div>
+					</div>
+				</a>
+			</div>
 		</div>
-	</ion-content>
-</ion-nav-viev>
+	</div>
+</ion-content>
