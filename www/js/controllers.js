@@ -6,6 +6,16 @@ angular.module('starter.controllers', ['google-maps'])
 
 	var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
 
+	$scope.variableIMG = "img/ic_add.png";
+
+	$scope.updateIMG = function () {
+		if (!$scope.noteSelected) {
+			$scope.variableIMG = "img/ic_add.png";
+		} else {
+			$scope.variableIMG = "img/ic_menu_delete.png";
+		}
+	};
+
 	$scope.rifiuti = [];
 	$scope.f = [];
 	$scope.listaRifiuti = [];
@@ -31,9 +41,7 @@ angular.module('starter.controllers', ['google-maps'])
 		});
 	};
 
-	$scope.saveNotes = function () {
-		//$http.post('data/saves/notes.json', $scope.notes).success(function () { alert('salvataggio riuscito!');});
-	};
+	$scope.saveNotes = function () {};
 
 	$scope.readJson = function () {
 		$http.get('data/db/riciclabolario.json').success(function (data) {
@@ -107,6 +115,7 @@ angular.module('starter.controllers', ['google-maps'])
 				$scope.noteSelected = false;
 			}
 		}
+		$scope.updateIMG();
 	};
 
 	$scope.click = function () {
@@ -435,7 +444,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.id = $stateParams.id;
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
-	}
+	};
 	$scope.v = [];
 
 	$scope.readJson = function () {
@@ -562,7 +571,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 })
 
-.controller('ProfiliCtrl', function ($scope, $location) {
+.controller('ProfiliCtrl', function ($scope) {
 	$scope.p = [{
 		name: "Casa",
 		type: "Utenza domestica",
@@ -576,15 +585,19 @@ angular.module('starter.controllers', ['google-maps'])
 		type: "Utenza occasionale",
 		loc: "fiavè"
 		}];
+})
 
-	$scope.changePage = function () {
-		$location.url('/app/aggProfilo');
+.controller('AggiungiProfiloCtrl', function ($scope, $ionicNavBarDelegate) {
+	$scope.back = function () {
+		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
 })
 
-.controller('AggiungiProfiloCtrl', function ($scope) {})
-
-.controller('ModificaProfiloCtrl', function ($scope) {})
+.controller('ModificaProfiloCtrl', function ($scope, $ionicNavBarDelegate) {
+	$scope.back = function () {
+		$ionicNavBarDelegate.$getByHandle('navBar').back();
+	};
+})
 
 .controller('SegnalaCtrl', function ($scope) {})
 

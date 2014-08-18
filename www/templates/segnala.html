@@ -3,17 +3,30 @@
 		<span class="bar-title">Segnalazione</span>
 	</button>
 </ion-nav-buttons>
-<ion-content>
-	<div>
+<ion-content has-bouncing="false" class="background-grey-light">
+	<div class="high-padding" style="font-size: 12px; line-height: 13px;">
 		Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.
 	</div>
-	<div class="item item-input-inset">
-		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Inserisci qui il testo della segnalazione">
+	<div class="item item-input-inset no-border background-grey-light">
+		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Inserisci qui il testo della segnalazione" class="border-underline background-grey-light">
 	</div>
-	<div>Scatta una foto</div>
-	<div>Allega la tua posizione</div>
+	<div class="row high-padding">
+		<div class="col col-10">
+			<i class="icon ion-camera"></i>
+			<!--<button class="button button-icon icon ion-camera info-button"></button>-->
+		</div>
+		<div class="col" style="font-size: 16px; margin:auto;">Scatta una foto</div>
+	</div>
+	<ul class="list">
+		<li class="item item-checkbox no-border background-grey-light">
+			<label class="checkbox">
+				<input type="checkbox">
+			</label>
+			Allega la tua posizione
+		</li>
+	</ul>
 </ion-content>
 <div class="bar bar-footer">
-	<button class="button button-block" style="top: -15px; height: 35px;">Segnala!</button>
+	<button class="button button-balanced button-block background-green-dark" style="top: -15px; height: 35px;">Segnala!</button>
 	<!--RIMUOVERE GLI STILI IN LINEA !!!!-->
 </div>

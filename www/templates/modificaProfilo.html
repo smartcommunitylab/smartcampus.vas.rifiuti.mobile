@@ -1,20 +1,10 @@
 <ion-nav-buttons side="left">
-	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-		<span class="bar-title">MODIFICA</span>
+	<button ng-click="back()" class="button button-clear button-light ion-chevron-left">
+		<span class="bar-back-center">Profili</span>
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
 	<button ng-href="#/app/aggProfilo" class="button button-clear button-light icon-left nav-bar-buttons-alignment ion-plus"></button>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div class="row background-grey-light" style="padding-top:5px;" ng-repeat="profilo in p">
-		<div class="col backgorund-white">
-			<div class="row profili-title">
-				{{profilo.name}}
-			</div>
-			<div class="row profili-info">
-				{{profilo.type}}: {{profilo.loc}}
-			</div>
-		</div>
-	</div>
 </ion-content>

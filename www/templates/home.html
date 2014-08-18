@@ -9,8 +9,13 @@
 
 		<ion-tab title="1" on-select="readNotes()" on-deselect="noteReset()">
 			<ion-nav-buttons side="right">
-				<button ng-click="edit()" class="button button-clear button-light icon-left ion-edit menu-edit-button nav-bar-buttons-alignment" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}"></button>
-				<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment" ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"></button>
+				<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}">
+				<img ng-src="img/ic_edit.png" class="standard-size"/>
+				</button>
+				<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
+					<img ng-src="{{variableIMG}}" class="standard-size"/>
+				</button>
+				<!--ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"-->
 			</ion-nav-buttons>
 			<ion-content class="home-tabs-content background-grey-light" has-bouncing="false">
 				<ion-item ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
@@ -36,30 +41,33 @@
 					<div class="col home-grid">
 						<a class="hidden-link" ng-href="#/app/rifiuto/{{item.valore}}">
 							<div>
-								<img src="{{item.immagine}}" />{{item.valore}}
+								<img ng-src="{{item.immagine}}" />{{item.valore}}
 							</div>
 						</a>
 					</div>
 					<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+1] == undefined}">
 						<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+1].valore}}">
 							<div>
-								<img src="{{rifiuti[f.indexOf(item)*3+1].immagine}}" />{{rifiuti[f.indexOf(item)*3+1].valore}}
+								<img ng-src="{{rifiuti[f.indexOf(item)*3+1].immagine}}" />{{rifiuti[f.indexOf(item)*3+1].valore}}
 							</div>
 						</a>
 					</div>
 					<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+2] == undefined}">
 						<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+2].valore}}">
 							<div>
-								<img src="{{rifiuti[f.indexOf(item)*3+2].immagine}}" />{{rifiuti[f.indexOf(item)*3+2].valore}}
+								<img ng-src="{{rifiuti[f.indexOf(item)*3+2].immagine}}" />{{rifiuti[f.indexOf(item)*3+2].valore}}
 							</div>
 						</a>
 					</div>
 				</div>
 			</ion-content>
 		</ion-tab>
+
 		<ion-tab title="3">
 			<ion-nav-buttons side="right">
-				<button ng-click="click()" class="button button-clear button-light icon-left ion-calendar"></button>
+				<button ng-click="click()" class="button button-clear button-light icon-left">
+					<img src="img/ic_go_to_today.png" class="standard-size"/>
+				</button>
 			</ion-nav-buttons>
 			<ion-content class="home-tabs-content" scroll="false">
 				<p>-placeholder-</p>

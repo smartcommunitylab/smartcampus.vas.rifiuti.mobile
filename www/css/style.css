@@ -1,10 +1,10 @@
 /* Empty. Add your own CSS if you like */
 
-.scroll-content > #map1{
-  height: 100%;
+.scroll-content > #map1 {
+	height: 100%;
 }
 .angular-google-map-container {
-  height: 200px;
+	height: 200px;
 }
 .bar-title {
 	margin-left: 10px;
@@ -22,6 +22,31 @@
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
 	vertical-align: top;
+}
+.bar-back-center {
+	padding-left: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-image: url("../img/ic_launcher.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	vertical-align: top;
+}
+.standard-size {
+	height: 35px;
+	width: 35px;
+}
+.menu-size {
+	height: 30px;
+	width: 30px;
+}
+.bar-button::after {
+	position: relative;
+}
+.border-underline {
+	border-bottom: #63ac3d !important;
+	border-bottom-style: solid !important;
+	border-bottom-width: thin !important;
 }
 .background-green-middle {
 	background-color: #63ac3d !important;
@@ -52,6 +77,9 @@
 .menu-list ion-item a {
 	background-color: #3c3c3b !important;
 	color: white !important;
+}
+.menu-list ion-item a {
+	padding: 0 !important;
 }
 .menu-list ion-item i {
 	margin-right: 10px;
@@ -130,6 +158,9 @@
 	border-color: #cecece;
 	margin-bottom: 5px;
 }
+.no-border {
+	border-style: none;
+}
 .contatti-icon-color {
 	color: #47772b !important;
 }
@@ -185,22 +216,37 @@
 .low-padding {
 	padding: 5px !important;
 }
+.high-padding {
+	padding: 10px !important;
+}
 .no-left-padding {
 	padding-left: 0 !important;
 }
 .absolute-center {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
-.profili-title{
+.profili-title {
 	padding-top: 0;
 	font-size: 17px;
 }
-.profili-info{
+.profili-info {
 	padding-bottom: 0;
 	font-size: 11px;
 }
-.no-link-padding a{
+.no-link-padding a {
 	padding: 0 !important;
+}
+.col-15 {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 15%;
+	-moz-box-flex: 0;
+	-moz-flex: 0 0 15%;
+	-ms-flex: 0 0 15%;
+	flex: 0 0 15%;
+	max-width: 15%;
 }
