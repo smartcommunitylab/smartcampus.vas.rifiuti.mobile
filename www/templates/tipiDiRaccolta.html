@@ -5,13 +5,13 @@
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
 	<ion-list class="contatti-item-list">
-		<ion-item ng-repeat="item in v" ng-href="#/app/raccolta/{{item.name}}" style="padding-bottom:0; padding-top:0">
-			<div class="row" style="padding-bottom:0; padding-top:0">
-				<div class="col" style="padding-bottom:0;">
+		<ion-item ng-repeat="item in v" ng-href="#/app/raccolta/{{item.name}}" class="no-vertical-padding">
+			<div class="row no-vertical-padding">
+				<div class="col only-top-vertical-padding">
 					{{item.name}}
 				</div>
 			</div>
-			<div class="row" style="padding-bottom:0">
+			<div class="row only-top-vertical-padding">
 				<div class="col col-10" ng-repeat="icon in item.icons">
 					<img src="{{icon}}" height="30" width="30">
 				</div>

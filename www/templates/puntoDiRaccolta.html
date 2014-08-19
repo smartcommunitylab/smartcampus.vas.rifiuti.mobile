@@ -11,16 +11,16 @@
 	</div>
 	<div class="row low-padding no-vertical-padding">
 		<div class="col col-67 no-left-padding no-vertical-padding">
-			<div class="row no-left-padding" style="text-decoration: bold;">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
-			<div class="row no-left-padding" style="font-size: 10px; line-height: 11px;"></div>
+			<div class="row no-left-padding pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
+			<div class="row no-left-padding pdr-specifica"></div>
 			<!--per ora niente...-->
 		</div>
-		<div class="col no-left-padding no-vertical-padding" style="position:relative;">
+		<div class="col no-left-padding no-vertical-padding position-relative">
 			<a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
 				<img src="img/ic_map_green.png" class="standard-size absolute-center">
 			</a>
 		</div>
-		<div class="col no-left-padding no-vertical-padding" style="position:relative;">
+		<div class="col no-left-padding no-vertical-padding position-relative">
 			<img src="img/ic_directions.png" class="standard-size absolute-center">
 		</div>
 	</div>

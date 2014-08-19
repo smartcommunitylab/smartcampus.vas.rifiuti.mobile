@@ -4,7 +4,18 @@
 	</ion-pane>
 	<ion-side-menu side="left">
 		<ion-content class="background-grey-dark" scroll="false">
-			<ion-list>
+			<ion-list class="menu-list">
+				<ion-item ng-repeat="item in profili" ng-click="selectProfile({{profili.indexOf(item)}})" class="no-border no-padding">
+					<div class="row">
+						<div class="col col-10 no-vertical-padding position-relative">
+							<img ng-src="{{item.image}}" class="absolute-center menu-size"/>
+						</div>
+						<div class="col no-vertical-padding auto-center">
+							{{item.name}}
+						</div>
+					</div>
+				</ion-item>
+<!--
 				<label class="item item-radio text-white">
 					<input type="radio" name="group">
 					<div class="item-content background-grey-dark text-white">
@@ -19,8 +30,9 @@
 					</div>
 					<i class="radio-icon ion-checkmark"></i>
 				</label>
+-->
 			</ion-list>
-			<ion-content has-bouncing="false" style="top:{{2*54}}px">
+			<ion-content has-bouncing="false" style="top:{{profili.length * 30}}px">
 				<!--Lo stile è in linea per poter utilizzare le espressioni '{{}}'-->
 				<!--style="top:{{2*54}}px"-->
 				<!--(2) è il numero di profili, quando verrà implementato il caricamento è necessario sostituirlo con una variabile-->
@@ -28,66 +40,66 @@
 				<ion-list class="menu-list">
 					<ion-item nav-clear menu-close href="#/app/home">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_home.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Home</div>
+							<div class="col auto-center">Home</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/puntiDiRaccolta/!">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_punti_raccolta.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Punti di raccolta</div>
+							<div class="col auto-center">Punti di raccolta</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/tipiDiRaccolta">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_tipi_raccolta.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Tipi di raccolta</div>
+							<div class="col auto-center">Tipi di raccolta</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/profili">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_profilo.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Gestione profili</div>
+							<div class="col auto-center">Gestione profili</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/segnala">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_segnala.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Segnala</div>
+							<div class="col auto-center">Segnala</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/contatti">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_contatti.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Contatti</div>
+							<div class="col auto-center">Contatti</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_tutorial.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Tutorial</div>
+							<div class="col auto-center">Tutorial</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/info">
 						<div class="row">
-							<div class="col col-15" style="position:relative;">
+							<div class="col col-15 position-relative">
 								<img src="img/ic_info.png" class="absolute-center menu-size" />
 							</div>
-							<div class="col" style="margin:auto;">Info</div>
+							<div class="col auto-center">Info</div>
 						</div>
 					</ion-item>
 				</ion-list>

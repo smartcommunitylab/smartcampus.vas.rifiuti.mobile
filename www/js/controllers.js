@@ -1,6 +1,40 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('AppCtrl', function ($scope) {})
+.controller('AppCtrl', function ($scope, $rootScope) {
+	$scope.profili = [{
+		name: "casa",
+		type: "utenza domestica",
+		place: "Fiavè",
+		image: "img/rifiuti_btn_radio_off_holo_light.png"
+	}, {
+		name: "ufficio",
+		type: "utenza non domestica",
+		place: "Fiavè",
+		image: "img/rifiuti_btn_radio_off_holo_light.png"
+	}, {
+		name: "random",
+		type: "utenza domestica",
+		place: "Montagne",
+		image: "img/rifiuti_btn_radio_off_holo_light.png"
+	}, {
+		name: "pippo",
+		type: "utenza domestica",
+		place: "Comano terme",
+		image: "img/rifiuti_btn_radio_off_holo_light.png"
+	}];
+
+	$rootScope.selectedProfile = null;
+
+	$scope.selectProfile = function (index) {
+		if (!!$rootScope.selectedProfile) {
+			$scope.profili[$scope.profili.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_light.png";
+		}
+		$scope.profili[index].image = "img/rifiuti_btn_radio_on_holo_light.png";
+		$rootScope.selectedProfile = $scope.profili[index];
+	};
+
+	$scope.selectProfile(0);
+})
 
 .controller('HomeCtrl', function ($scope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location) {
 
