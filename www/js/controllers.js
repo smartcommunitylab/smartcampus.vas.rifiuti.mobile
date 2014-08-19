@@ -50,7 +50,17 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.f = [];
 	$scope.listaRifiuti = [];
 
-	$scope.notes = [{
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	$scope.notes = [];
+
+	/*$scope.notes = [{
 		id: 0,
 		note: 'uno'
     }, {
@@ -59,19 +69,55 @@ angular.module('starter.controllers', ['google-maps'])
     }, {
 		id: 2,
 		note: 'tre'
-    }];
+    }];*/
+
 	$scope.selectedNotes = [];
 
 	$scope.noteSelected = false;
 	$scope.multipleNoteSelected = false;
 
 	$scope.readNotes = function () {
-		$http.get('data/saves/notes.json').success(function (notes) {
-			$scope.notes = notes;
-		});
+		//		$http.get('data/saves/notes.json').success(function (notes) {
+		//			$scope.notes = notes;
+		//		});
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		$scope.notes = [];
+		var stringNote = localStorage.getItem("notes");
+		if (!!stringNote && stringNote != "!!-null") {
+			var rawNotes = [];
+			rawNotes = stringNote.split("[[;");
+			for (var i = 0; i < rawNotes.length; i++) {
+				$scope.notes.push({
+					id: parseInt(rawNotes[i].split("([;")[0], 10),
+					note: rawNotes[i].split("([;")[1]
+				});
+			}
+		}
 	};
 
-	$scope.saveNotes = function () {};
+	$scope.saveNotes = function () {
+		//localStorage.setItem("notes", $scope.notes);
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		var stringNote = "";
+		for (var i = 0; i < $scope.notes.length; i++) {
+			if (stringNote != "") {
+				stringNote = stringNote + "[[;" + $scope.notes[i].id + "([;" + $scope.notes[i].note;
+			} else {
+				stringNote = $scope.notes[i].id + "([;" + $scope.notes[i].note;
+			}
+			// [[; : separatore tra le note
+			// ([; : separatore tra l' id e la nota
+		}
+		if (stringNote != "") {
+			localStorage.setItem("notes", stringNote);
+		} else {
+			localStorage.setItem("notes", "!!-null")
+		}
+	};
 
 	$scope.readJson = function () {
 		$http.get('data/db/riciclabolario.json').success(function (data) {
@@ -99,24 +145,29 @@ angular.module('starter.controllers', ['google-maps'])
 	}, 50);
 
 	$scope.addNote = function (nota) {
+		var idAvailable = $scope.findNextId();
 		$scope.notes.push({
-			id: function () {
-				for (var i = 0; i <= $scope.notes.length; i = i + 1) {
-					if (function (i) {
-						for (var j = 0; j < $scope.notes.length; j = j + 1) {
-							if ($scope.notes[j].id == i) {
-								return false;
-							}
-						}
-						return true;
-					}) {
-						return i;
-					}
-				}
-			},
+			id: idAvailable,
 			note: nota
 		});
 		$scope.saveNotes();
+	};
+
+	$scope.findNextId = function () {
+		for (var i = 0; i <= $scope.notes.length; i++) {
+			if ($scope.idExists(i)) {
+				return i;
+			}
+		}
+	};
+
+	$scope.idExists = function (i) {
+		for (var j = 0; j < $scope.notes.length; j++) {
+			if ($scope.notes[j].id == i) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	$scope.removeNote = function (id) {
@@ -391,12 +442,13 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+
 	$scope.id = $stateParams.id;
-	$scope.back = function () {
-		$ionicNavBarDelegate.$getByHandle('navBar').back();
-	}
+
 	$scope.rifiuti = [];
+
 	$scope.locs = [];
+
 	$scope.readJson = function () {
 		$http.get('data/db/riciclabolario.json').success(function (data) {
 			for (var i = 0; i < data.length; i++) {
@@ -448,40 +500,17 @@ angular.module('starter.controllers', ['google-maps'])
 		return true;
 	};
 
-	//		{
-	//			"area": "Zuclo",
-	//			"tipologiaPuntiRaccolta": "CRM",
-	//			"tipologiaUtenza": "utenza domestica",
-	//			"localizzazione": "46.036666762973304,10.73291132695351",
-	//			"indirizzo": "Tione di Trento",
-	//			"dettaglioIndirizzo": "Tione di Trento, Loc. Vat",
-	//			"dataDa": "2014-01-01",
-	//			"dataA": "2014-12-31",
-	//			"il": "sabato",
-	//			"dalle": "13:30",
-	//			"alle": "17:00"
-	//		}, {
-	//			"area": "Bersone",
-	//			"tipologiaPuntiRaccolta": "Isola Ecologica",
-	//			"tipologiaUtenza": "utenza domestica",
-	//			"localizzazione": "45.94645210967276,10.632630507236849",
-	//			"indirizzo": "Bersone Fraz Formino",
-	//			"dettaglioIndirizzo": "",
-	//			"dataDa": "",
-	//			"dataA": "",
-	//			"il": "",
-	//			"dalle": "",
-	//			"alle": ""
-	//		}
-
 	$scope.readJson();
 })
 
 .controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+
 	$scope.id = $stateParams.id;
+
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
+
 	$scope.v = [];
 
 	$scope.readJson = function () {

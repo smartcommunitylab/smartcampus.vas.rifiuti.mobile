@@ -5,7 +5,7 @@
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
 	<button ng-click="click()" class="button button-clear button-light icon-left">
-		<img ng-src="{{variableIMG}}" class="standard-size"/>
+		<img ng-src="{{variableIMG}}" class="standard-size" />
 	</button>
 </ion-nav-buttons>
 <div ng-if="mapView">
@@ -34,11 +34,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<div class="row">
-							<div class="col">
-								<img src="{{item.icon}}" width="25" height="25">
-							</div>
-						</div>
+						<img ng-src="{{item.icon}}" width="25" height="25">
 					</div>
 				</div>
 				<div ng-show="item.aperto">

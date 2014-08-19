@@ -1,9 +1,9 @@
 <ion-nav-buttons side="left">
-	<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+	<a href="#/app/tipiDiRaccolta" class="button button-clear button-light ion-chevron-left sub-page-button">
 		<span class="bar-back">Tipo di raccolta</span>
 		</br>
 		<p class="title-subtext">{{id}}</p>
-	</button>
+	</a>
 </ion-nav-buttons>
 <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
 	<ion-tab title="LISTA RIFIUTI">
@@ -43,7 +43,7 @@
 						<div class="col">
 							<div class="row">
 								<div class="col">
-									<img src="{{item.icon}}" width="25" height="25">
+									<img ng-src="{{item.icon}}" width="25" height="25">
 								</div>
 							</div>
 						</div>
