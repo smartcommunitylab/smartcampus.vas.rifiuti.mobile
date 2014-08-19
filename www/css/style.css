@@ -254,7 +254,7 @@
 	font-size: 11px;
 }
 .profili-profilo {
-	padding-top: 5px;
+	padding-top: 5px !important;
 }
 .no-link-padding a {
 	padding: 0 !important;

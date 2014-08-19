@@ -336,11 +336,16 @@ angular.module('starter.controllers', ['google-maps'])
 			for (var i = 0; i < loc.length; i++) {
 				var indirizzo = loc[i].dettaglioIndirizzo != "" ? loc[i].dettaglioIndirizzo : loc[i].indirizzo;
 				if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
+					var icon = {
+						url: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
+						scaledSize: new google.maps.Size(45,45)
+					};
 					points.push({
 						id: loc[i].dettaglioIndirizzo != '' ? loc[i].dettaglioIndirizzo : loc[i].indirizzo,
 						latitude: loc[i].localizzazione.split(',')[0],
 						longitude: loc[i].localizzazione.split(',')[1],
-						icon: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png'
+						//icon: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png'
+						icon: icon
 					});
 					$scope.addToList(loc[i]);
 				}
