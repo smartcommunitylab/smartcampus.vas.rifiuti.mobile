@@ -43,11 +43,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.variableIMG = "img/ic_add.png";
 
 	$scope.updateIMG = function () {
-		if (!$scope.noteSelected) {
-			$scope.variableIMG = "img/ic_add.png";
-		} else {
-			$scope.variableIMG = "img/ic_menu_delete.png";
-		}
+		$scope.variableIMG = !$scope.noteSelected ? "img/ic_add.png" : "img/ic_menu_delete.png";
 	};
 
 	$scope.rifiuti = [];
@@ -276,6 +272,12 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.list = [];
 
+	$scope.variableIMG = "img/ic_list.png";
+
+	$scope.updateIMG = function () {
+		$scope.variableIMG = $scope.mapView ? "img/ic_list.png" : "img/ic_map.png";
+	};
+
 	$scope.init = function () {
 		$http.get('data/db/puntiRaccolta.json').success(function (loc) {
 			var profiloProva = "Comano Terme";
@@ -358,6 +360,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.click = function () {
 		$scope.mapView = !$scope.mapView;
+		$scope.updateIMG();
 		$timeout(function () {
 			var mapHeight = 10; // or any other calculated value
 			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
@@ -535,15 +538,22 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+
 	$scope.id = $stateParams.id;
+
 	$scope.isCRM = false;
+
 	$scope.rifiuti = [];
+
 	$scope.orari = [];
 	//[{giorno:"lunedì",orari:["12.00-14.00","15.30-17.30"...]}...]
+
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	}
+
 	$scope.pdr = {};
+
 	$scope.readJson = function () {
 		$http.get('data/db/puntiRaccolta.json').success(function (data) {
 			for (var i = 0; i < data.length; i++) {
@@ -581,6 +591,7 @@ angular.module('starter.controllers', ['google-maps'])
 			}
 		});
 	};
+
 	$scope.readJson();
 
 	$scope.checkGiorni = function (item) {
@@ -633,7 +644,15 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 })
 
-.controller('SegnalaCtrl', function ($scope) {})
+.controller('SegnalaCtrl', function ($scope) {
+	$scope.checked = true;
+	$scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
+
+	$scope.toggleCheck = function () {
+		$scope.checked = !$scope.checked;
+		$scope.checkboxImage = $scope.checked ? "img/rifiuti_btn_check_on_holo_light.png" : "img/rifiuti_btn_check_off_holo_light.png";
+	};
+})
 
 .controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
 	$scope.v = [

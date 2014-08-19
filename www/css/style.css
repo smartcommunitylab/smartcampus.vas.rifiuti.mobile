@@ -228,6 +228,9 @@
 .no-left-padding {
 	padding-left: 0 !important;
 }
+.no-margin {
+	margin: 0 !important;
+}
 .position-relative {
 	position: relative !important;
 }

@@ -4,7 +4,9 @@
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
-	<button ng-click="click()" class="button button-clear button-light icon-left ion-clipboard"></button>
+	<button ng-click="click()" class="button button-clear button-light icon-left">
+		<img ng-src="{{variableIMG}}" class="standard-size"/>
+	</button>
 </ion-nav-buttons>
 <div ng-if="mapView">
 	<ion-content class="has-header" scroll="false" id="map-container">
