@@ -5,16 +5,35 @@
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
 	<button ng-href="#/app/aggProfilo" class="button button-clear button-light icon-left nav-bar-buttons-alignment">
-		<img src="img/ic_add.png" class="standard-size"/>
+		<img src="img/ic_save.png" class="standard-size" />
 	</button>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div>Nome del profilo</div>
-	<div class="item item-input-inset no-border">
-		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Nome del profilo" class="border-underline">
+	<div class="high-padding">Nome del profilo</div>
+	<div class="item item-input-inset no-border background-grey-light">
+		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Nome del profilo" class="border-underline background-grey-light">
 	</div>
-	<div>Tipo di utenza</div>
-	<div>utenza domestica</div>
-	<div>Comune/Località</div>
-	<div>Selezionare</div>
+	<div class="list background-grey-light">
+		<label class="item item-input item-select background-grey-light">
+			<div class="input-label">
+				Tipo di utenza
+			</div>
+			<select class="background-grey-light">
+				<option selected>utenza domestica</option>
+				<option>utenza non domestica</option>
+				<option>utenza occasionale</option>
+			</select>
+		</label>
+	</div>
+	<div class="list background-grey-light">
+		<label class="item item-input item-select background-grey-light">
+			<div class="input-label">
+				Comune/Località
+			</div>
+			<select class="background-grey-light">
+				<option selected>Selezionare</option>
+				<option ng-repeat="item in locs">{{item}}</option>
+			</select>
+		</label>
+	</div>
 </ion-content>

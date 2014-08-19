@@ -5,31 +5,31 @@ angular.module('starter.controllers', ['google-maps'])
 		name: "casa",
 		type: "utenza domestica",
 		place: "Fiavè",
-		image: "img/rifiuti_btn_radio_off_holo_light.png"
+		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "ufficio",
 		type: "utenza non domestica",
 		place: "Fiavè",
-		image: "img/rifiuti_btn_radio_off_holo_light.png"
+		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "random",
 		type: "utenza domestica",
 		place: "Montagne",
-		image: "img/rifiuti_btn_radio_off_holo_light.png"
+		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "pippo",
 		type: "utenza domestica",
 		place: "Comano terme",
-		image: "img/rifiuti_btn_radio_off_holo_light.png"
+		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}];
 
 	$rootScope.selectedProfile = null;
 
 	$scope.selectProfile = function (index) {
 		if (!!$rootScope.selectedProfile) {
-			$scope.profili[$scope.profili.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_light.png";
+			$scope.profili[$scope.profili.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_dark.png";
 		}
-		$scope.profili[index].image = "img/rifiuti_btn_radio_on_holo_light.png";
+		$scope.profili[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
 		$rootScope.selectedProfile = $scope.profili[index];
 	};
 
@@ -338,7 +338,7 @@ angular.module('starter.controllers', ['google-maps'])
 				if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
 					var icon = {
 						url: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
-						scaledSize: new google.maps.Size(45,45)
+						scaledSize: new google.maps.Size(45, 45)
 					};
 					points.push({
 						id: loc[i].dettaglioIndirizzo != '' ? loc[i].dettaglioIndirizzo : loc[i].indirizzo,
@@ -666,16 +666,45 @@ angular.module('starter.controllers', ['google-maps'])
 		}];
 })
 
-.controller('AggiungiProfiloCtrl', function ($scope, $ionicNavBarDelegate) {
+.controller('AggiungiProfiloCtrl', function ($scope, $ionicNavBarDelegate, $http) {
+
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
+
+	$scope.locs = [];
+
+	$scope.init = function () {
+		$http.get('data/db/aree.json').success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+				if (!!data[i].comune) {
+					$scope.locs.push(data[i].comune);
+				}
+			}
+		});
+	};
+
+	$scope.init();
 })
 
-.controller('ModificaProfiloCtrl', function ($scope, $ionicNavBarDelegate) {
+.controller('ModificaProfiloCtrl', function ($scope, $ionicNavBarDelegate, $http) {
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
+
+	$scope.locs = [];
+
+	$scope.init = function () {
+		$http.get('data/db/aree.json').success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+				if (!!data[i].comune) {
+					$scope.locs.push(data[i].comune);
+				}
+			}
+		});
+	};
+
+	$scope.init();
 })
 
 .controller('SegnalaCtrl', function ($scope) {

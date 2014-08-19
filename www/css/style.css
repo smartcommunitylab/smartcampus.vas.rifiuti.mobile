@@ -44,7 +44,7 @@
 	position: relative;
 }
 .border-underline {
-	border-bottom: #63ac3d !important;
+	border-bottom: #cecece !important;
 	border-bottom-style: solid !important;
 	border-bottom-width: thin !important;
 }
@@ -270,12 +270,15 @@
 	font-size: 12px;
 	line-height: 13px;
 }
-.segnala-foto {
-	font-size: 16px;
+.segnala-testo {
+	font-size: 15px;
 }
 .segnala-button {
 	top: -15px;
 	height: 35px;
+}
+.profili-titolo{
+
 }
 .col-15 {
 	-webkit-box-flex: 0;
