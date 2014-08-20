@@ -277,8 +277,22 @@
 	top: -15px;
 	height: 35px;
 }
-.profili-titolo{
-
+.profili-titolo {
+	font-weight: bold;
+	font-size: 14px;
+	color: #444444;
+}
+.fixed-height {
+	height: 44px;
+}
+.max-width {
+	max-width: 100% !important;
+}
+.popup-title {
+	color: teal;
+	text-align: left;
+	font-size: 16px;
+	padding-left: 10px;
 }
 .col-15 {
 	-webkit-box-flex: 0;
@@ -288,4 +302,13 @@
 	-ms-flex: 0 0 15%;
 	flex: 0 0 15%;
 	max-width: 15%;
+}
+.loading-container .loading {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+.fill {
+	width: 100%;
+	height: 100%;
 }

@@ -1,39 +1,99 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('AppCtrl', function ($scope, $rootScope) {
-	$scope.profili = [{
+.controller('AppCtrl', function ($scope, $rootScope, $ionicLoading) {
+	/*$scope.p = [{
 		name: "casa",
 		type: "utenza domestica",
-		place: "Fiavè",
+		loc: "Fiavè",
 		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "ufficio",
 		type: "utenza non domestica",
-		place: "Fiavè",
+		loc: "Fiavè",
 		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "random",
 		type: "utenza domestica",
-		place: "Montagne",
+		loc: "Montagne",
 		image: "img/rifiuti_btn_radio_off_holo_dark.png"
 	}, {
 		name: "pippo",
 		type: "utenza domestica",
-		place: "Comano terme",
+		loc: "Comano terme",
 		image: "img/rifiuti_btn_radio_off_holo_dark.png"
-	}];
+	}];*/
+
+	$rootScope.menuProfilesUpdate = false;
+
+	$scope.p = [];
+
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	$scope.readProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		$scope.p = [];
+		var stringP = localStorage.getItem("profiles");
+		if (!!stringP && stringP != "!!-null") {
+			var rawP = [];
+			rawP = stringP.split("[[;");
+			for (var i = 0; i < rawP.length; i++) {
+				$scope.p.push({
+					name: rawP[i].split("([;")[0],
+					type: rawP[i].split("([;")[1],
+					loc: rawP[i].split("([;")[2],
+					image: "img/rifiuti_btn_radio_off_holo_dark.png"
+				});
+			}
+		}
+	};
+
+	$scope.readProfiles();
 
 	$rootScope.selectedProfile = null;
 
-	$scope.selectProfile = function (index) {
-		if (!!$rootScope.selectedProfile) {
-			$scope.profili[$scope.profili.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_dark.png";
+	$scope.selectProfile = function (index) { // NON FUNZIONAAAAAAA!!!!
+		if (index >= $scope.p.length) {
+			return;
 		}
-		$scope.profili[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
-		$rootScope.selectedProfile = $scope.profili[index];
+		if (!!$rootScope.selectedProfile) {
+			$scope.p[$scope.p.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_dark.png";
+		}
+		$scope.p[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
+		$rootScope.selectedProfile = $scope.p[index];
 	};
 
+	var shown;
+
 	$scope.selectProfile(0);
+
+	$scope.show = function () {
+		if (!!shown) {
+			return;
+		}
+		$ionicLoading.show({
+			template: '<img src="img/splash_screen.png" class="fill"/>',
+			duration: 2500
+		});
+		shown = true;
+	};
+
+	//$scope.show();
+	//decommenta per attivare lo splash screen iniziale
+
+	$rootScope.$watch('menuProfilesUpdate', function (newValue, oldValue) {
+		if (!!newValue) {
+			$scope.readProfiles();
+			$rootScope.menuProfileUpdate = false;
+		}
+	});
 })
 
 .controller('HomeCtrl', function ($scope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location) {
@@ -310,6 +370,14 @@ angular.module('starter.controllers', ['google-maps'])
 			f[i / 3] = v[i];
 		}
 		return f;
+	};
+
+	$scope.reset = function () {
+		alert("Resetting!");
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		localStorage.clear();
 	};
 })
 
@@ -650,8 +718,8 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 })
 
-.controller('ProfiliCtrl', function ($scope) {
-	$scope.p = [{
+.controller('ProfiliCtrl', function ($scope, $rootScope) {
+	/*$scope.p = [{
 		name: "Casa",
 		type: "Utenza domestica",
 		loc: "fiavè"
@@ -663,16 +731,158 @@ angular.module('starter.controllers', ['google-maps'])
 		name: "Random",
 		type: "Utenza occasionale",
 		loc: "fiavè"
-		}];
+		}];*/
+
+	$scope.p = [];
+
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	$scope.readProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		$scope.p = [];
+		var stringP = localStorage.getItem("profiles");
+		if (!!stringP && stringP != "!!-null") {
+			var rawP = [];
+			rawP = stringP.split("[[;");
+			for (var i = 0; i < rawP.length; i++) {
+				$scope.p.push({
+					name: rawP[i].split("([;")[0],
+					type: rawP[i].split("([;")[1],
+					loc: rawP[i].split("([;")[2]
+				});
+			}
+		}
+	};
+
+	$scope.saveProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		var stringP = "";
+		for (var i = 0; i < $scope.p.length; i++) {
+			if (stringP != "") {
+				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			} else {
+				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			}
+			// [[; : separatore tra i profili
+			// ([; : separatore tra il nome, la tipologia di utenza e il comune
+		}
+		if (stringP != "") {
+			localStorage.setItem("profiles", stringP);
+		} else {
+			localStorage.setItem("profiles", "!!-null");
+		}
+		$rootScope.menuProfilesUpdate = true;
+	};
+
+	$scope.readProfiles();
 })
 
-.controller('AggiungiProfiloCtrl', function ($scope, $ionicNavBarDelegate, $http) {
+.controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http) {
+
+	$scope.p = [];
+
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	$scope.readProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		$scope.p = [];
+		var stringP = localStorage.getItem("profiles");
+		if (!!stringP && stringP != "!!-null") {
+			var rawP = [];
+			rawP = stringP.split("[[;");
+			for (var i = 0; i < rawP.length; i++) {
+				$scope.p.push({
+					name: rawP[i].split("([;")[0],
+					type: rawP[i].split("([;")[1],
+					loc: rawP[i].split("([;")[2]
+				});
+			}
+		}
+	};
+
+	$scope.saveProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		var stringP = "";
+		for (var i = 0; i < $scope.p.length; i++) {
+			if (stringP != "") {
+				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			} else {
+				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			}
+			// [[; : separatore tra i profili
+			// ([; : separatore tra il nome, la tipologia di utenza e il comune
+		}
+		if (stringP != "") {
+			localStorage.setItem("profiles", stringP);
+		} else {
+			localStorage.setItem("profiles", "!!-null");
+		}
+		$rootScope.menuProfilesUpdate = true;
+	};
 
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
 
 	$scope.locs = [];
+
+	$scope.tipologiaUtenza = [
+		"utenza domestica",
+		"utenza non domestica",
+		"utenza occasionale"
+	];
+
+	$scope.profilo = {
+		name: "",
+		utenza: $scope.tipologiaUtenza[0],
+		comune: "Selezionare"
+	};
+
+	$scope.save = function () {
+		//alert($scope.profilo.name + "\n" + $scope.profilo.utenza + "\n" + $scope.profilo.comune);
+		if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
+			$scope.readProfiles();
+			if (!$scope.containsName($scope.p, $scope.profilo.name)) {
+				return;
+			}
+			$scope.p.push({
+				name: $scope.profilo.name,
+				type: $scope.profilo.utenza,
+				loc: $scope.profilo.comune
+			});
+			$scope.saveProfiles();
+			$scope.back();
+		}
+	};
+
+	$scope.containsName = function (array, item) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i].name == item) {
+				return false;
+			}
+		}
+		return true;
+	};
 
 	$scope.init = function () {
 		$http.get('data/db/aree.json').success(function (data) {
@@ -687,12 +897,134 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.init();
 })
 
-.controller('ModificaProfiloCtrl', function ($scope, $ionicNavBarDelegate, $http) {
+.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup) {
+
+	$scope.id = $stateParams.id;
+
 	$scope.back = function () {
 		$ionicNavBarDelegate.$getByHandle('navBar').back();
 	};
 
 	$scope.locs = [];
+
+	$scope.tipologiaUtenza = [
+		"utenza domestica",
+		"utenza non domestica",
+		"utenza occasionale"
+	];
+
+	$scope.profilo = {
+		name: "",
+		utenza: $scope.tipologiaUtenza[0],
+		comune: "Selezionare"
+	};
+
+	$scope.isCurrentProfile = true;
+
+	$scope.editMode = false;
+
+	$scope.editIMG = "img/ic_edit.png";
+
+	$scope.p = [];
+
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	$scope.readProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		$scope.p = [];
+		var stringP = localStorage.getItem("profiles");
+		if (!!stringP && stringP != "!!-null") {
+			var rawP = [];
+			rawP = stringP.split("[[;");
+			for (var i = 0; i < rawP.length; i++) {
+				$scope.p.push({
+					name: rawP[i].split("([;")[0],
+					type: rawP[i].split("([;")[1],
+					loc: rawP[i].split("([;")[2]
+				});
+			}
+		}
+	};
+
+	$scope.saveProfiles = function () {
+		if (!$scope.supports_html5_storage) {
+			return;
+		}
+		var stringP = "";
+		for (var i = 0; i < $scope.p.length; i++) {
+			if (stringP != "") {
+				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			} else {
+				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+			}
+			// [[; : separatore tra i profili
+			// ([; : separatore tra il nome, la tipologia di utenza e il comune
+		}
+		if (stringP != "") {
+			localStorage.setItem("profiles", stringP);
+		} else {
+			localStorage.setItem("profiles", "!!-null");
+		}
+		$rootScope.menuProfilesUpdate = true;
+	};
+
+	$scope.edit = function () {
+		if (!$scope.editMode) {
+			$scope.editMode = true;
+			$scope.editIMG = "img/ic_save.png";
+		} else {
+			var p = $scope.findProfileById($scope.id);
+			if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.comune != p.loc) {
+				if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
+					var index = $scope.p.indexOf(p);
+					$scope.p[index].name = $scope.profilo.name;
+					$scope.p[index].type = $scope.profilo.utenza;
+					$scope.p[index].loc = $scope.profilo.comune;
+					$scope.saveProfiles();
+					$scope.editMode = false;
+					$scope.editIMG = "img/ic_edit.png";
+				}
+			} else {
+				$scope.editMode = false;
+				$scope.editIMG = "img/ic_edit.png";
+			}
+		}
+	};
+
+	$scope.click = function () {
+		var popup = $ionicPopup.show({
+			title: '<b class="popup-title">Avviso<b/>',
+			template: 'Premendo OK cancellerai definitivamente questo profilo, incluse le eventuali note personali. Confermi?',
+			scope: $scope,
+			buttons: [
+				{
+					text: 'Annulla'
+                    },
+				{
+					text: 'OK',
+					onTap: function (e) {
+						return true;
+					}
+				}
+			]
+		});
+		popup.then(function (res) {
+			if (!!res) {
+				var p = $scope.findProfileById($scope.id);
+				$scope.p.splice($scope.p.indexOf(p), 1);
+				$scope.saveProfiles();
+				$scope.back();
+			}
+		});
+	};
 
 	$scope.init = function () {
 		$http.get('data/db/aree.json').success(function (data) {
@@ -702,6 +1034,27 @@ angular.module('starter.controllers', ['google-maps'])
 				}
 			}
 		});
+		var p = $scope.findProfileById($scope.id);
+		if (!!p) {
+			$scope.profilo.name = p.name;
+			$scope.profilo.utenza = p.type;
+			$scope.profilo.comune = p.loc;
+		}
+		if ($rootScope.selectedProfile.name == $scope.profilo.name) {
+			$scope.isCurrentProfile = true;
+		} else {
+			$scope.isCurrentProfile = false;
+		}
+	};
+
+	$scope.findProfileById = function (id) {
+		$scope.readProfiles();
+		for (var i = 0; i < $scope.p.length; i++) {
+			if ($scope.p[i].name == id) {
+				return $scope.p[i];
+			}
+		}
+		return null;
 	};
 
 	$scope.init();

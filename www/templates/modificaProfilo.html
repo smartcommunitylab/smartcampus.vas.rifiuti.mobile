@@ -4,36 +4,34 @@
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
-	<button ng-href="#/app/aggProfilo" class="button button-clear button-light icon-left nav-bar-buttons-alignment">
-		<img src="img/ic_edit.png" class="standard-size" />
+	<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment">
+		<img ng-src="{{editIMG}}" class="standard-size" />
+	</button>
+	<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button" ng-show="!isCurrentProfile">
+		<img ng-src="img/ic_menu_delete.png" class="standard-size" />
 	</button>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div class="high-padding">Nome del profilo</div>
-	<div class="item item-input-inset no-border background-grey-light">
-		<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="Nome del profilo" class="border-underline background-grey-light">
+	<div class="high-padding profili-titolo">Nome del profilo</div>
+	<div class="item item-input-inset no-border background-grey-light" ng-show="editMode">
+		<input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
 	</div>
+	<p class="low-padding" ng-show="!editMode">{{profilo.name}}</p>
 	<div class="list background-grey-light">
-		<label class="item item-input item-select background-grey-light">
-			<div class="input-label">
-				Tipo di utenza
-			</div>
-			<select class="background-grey-light">
-				<option selected>utenza domestica</option>
-				<option>utenza non domestica</option>
-				<option>utenza occasionale</option>
+		<div class="high-padding profili-titolo">Tipo di utenza</div>
+		<label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
+			<select ng-model="profilo.utenza" ng-options="item for item in tipologiaUtenza" class="background-grey-light max-width">
 			</select>
 		</label>
+		<p class="low-padding"  ng-show="!editMode">{{profilo.utenza}}</p>
 	</div>
 	<div class="list background-grey-light">
-		<label class="item item-input item-select background-grey-light">
-			<div class="input-label">
-				Comune/Località
-			</div>
-			<select class="background-grey-light">
-				<option selected>Selezionare</option>
-				<option ng-repeat="item in locs">{{item}}</option>
+		<div class="high-padding profili-titolo">Comune/Località</div>
+		<label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
+			<select ng-model="profilo.comune" ng-options="item for item in locs" class="background-grey-light max-width">
+				<option value="">Selezionare</option>
 			</select>
 		</label>
+		<p class="low-padding"  ng-show="!editMode">{{profilo.comune}}</p>
 	</div>
 </ion-content>

@@ -9,7 +9,7 @@
 
 		<ion-tab title="1" on-select="readNotes()" on-deselect="noteReset()">
 			<ion-nav-buttons side="right">
-				<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-class="{'visible': noteSelected && !multipleNoteSelected, 'hidden': !noteSelected || multipleNoteSelected}">
+				<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-show="noteSelected && !multipleNoteSelected">
 				<img ng-src="img/ic_edit.png" class="standard-size"/>
 				</button>
 				<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
@@ -71,6 +71,8 @@
 			</ion-nav-buttons>
 			<ion-content class="home-tabs-content" scroll="false">
 				<p>-placeholder-</p>
+				<br/>
+				<button ng-click="reset()">Emergency Reset!!!</button>
 			</ion-content>
 		</ion-tab>
 
