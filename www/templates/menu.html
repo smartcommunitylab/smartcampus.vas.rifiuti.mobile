@@ -4,8 +4,7 @@
 	</ion-pane>
 	<ion-side-menu side="left">
 		<ion-content class="background-grey-dark" scroll="false">
-
-			<!--<ion-list class="menu-list">
+			<ion-list class="menu-list">
 				<ion-item ng-repeat="item in p" ng-click="selectProfile({{p.indexOf(item)}})" class="no-border no-padding">
 					<div class="row">
 						<div class="col col-10 no-vertical-padding position-relative">
@@ -16,7 +15,7 @@
 						</div>
 					</div>
 				</ion-item>
-			</ion-list>-->
+			</ion-list>
 			<ion-content class="background-grey-dark" has-bouncing="false" style="top:{{p.length * 30}}px">
 				<ion-list class="menu-list">
 					<ion-item nav-clear menu-close href="#/app/home">
@@ -67,7 +66,7 @@
 							<div class="col auto-center">Contatti</div>
 						</div>
 					</ion-item>
-					<ion-item nav-clear menu-close href="">
+					<ion-item nav-clear menu-close ng-click="showTutorial()" href="#/app/home">
 						<div class="row">
 							<div class="col col-15 position-relative">
 								<img src="img/ic_tutorial.png" class="absolute-center menu-size" />
@@ -85,7 +84,6 @@
 					</ion-item>
 				</ion-list>
 			</ion-content>
-			<div>prova</div>
 		</ion-content>
 	</ion-side-menu>
 </ion-side-menus>

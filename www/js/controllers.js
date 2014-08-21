@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('AppCtrl', function ($scope, $rootScope, $ionicLoading) {
+.controller('AppCtrl', function ($scope, $rootScope) {
 	/*$scope.p = [{
 		name: "casa",
 		type: "utenza domestica",
@@ -24,6 +24,10 @@ angular.module('starter.controllers', ['google-maps'])
 	}];*/
 
 	$rootScope.menuProfilesUpdate = false;
+
+	$scope.showTutorial = function () {
+		$rootScope.showTutorial = true;
+	};
 
 	$scope.p = [];
 
@@ -80,23 +84,7 @@ angular.module('starter.controllers', ['google-maps'])
 		return null;
 	};
 
-	var shown;
-
 	$scope.selectProfile(0);
-
-	$scope.show = function () {
-		if (!!shown) {
-			return;
-		}
-		$ionicLoading.show({
-			template: '<img src="img/splash_screen.png" class="fill"/>',
-			duration: 2500
-		});
-		shown = true;
-	};
-
-	//$scope.show();
-	//decommenta per attivare lo splash screen iniziale
 
 	$rootScope.$watch('menuProfilesUpdate', function (newValue, oldValue) {
 		if (!!newValue) {
@@ -107,7 +95,7 @@ angular.module('starter.controllers', ['google-maps'])
 	});
 })
 
-.controller('HomeCtrl', function ($scope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading) {
 
 	var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
 
@@ -120,6 +108,24 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.rifiuti = [];
 	$scope.f = [];
 	$scope.listaRifiuti = [];
+
+	$rootScope.showTutorial = true;
+
+	$scope.show = function () {
+		if (!!!$rootScope.showTutorial) {
+			return;
+		}
+		$ionicLoading.show({
+			templateUrl: 'templates/tutorial.html',
+		});
+		$rootScope.showTutorial = false;
+	};
+
+	$rootScope.$watch('showTutorial', function (newValue, oldValue) {
+		if (!!newValue) {
+			$scope.show();
+		}
+	});
 
 	$scope.supports_html5_storage = function () {
 		try {
@@ -1106,9 +1112,79 @@ angular.module('starter.controllers', ['google-maps'])
 			pec: "c.giudicarie.legamail.it",
 			fax: "0465/329043",
 			aperto: false
-			},
+			}
 		];
 	$scope.mainScrollResize = function () {
 		$ionicScrollDelegate.$getByHandle('mainScroll').resize();
 	}
+})
+
+.controller('TutorialCtrl', function ($scope, $ionicLoading) {
+
+	$scope.close = function () {
+		$ionicLoading.hide();
+	};
+
+	$scope.index = 0;
+
+	$scope.next = function () {
+		if ($scope.tutorial[$scope.index].skippable) {
+			$scope.index++;
+		} else {
+			$scope.close();
+		}
+	};
+
+	$scope.tutorial = [
+		{
+			index: 1,
+			title: "Benvenuto!",
+			x: 3,
+			y: 40,
+			text: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare una specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
+			imgX: 72,
+			imgY: 11,
+			skippable: true
+		},
+		{
+			index: 1,
+			title: "Tipologie di rifiuto",
+			x: 3,
+			y: 17,
+			text: "Scopri quali rifiuti appartengono ad una certa categoria e dove devono essere conferiti.",
+			imgX: 34,
+			imgY: 37,
+			skippable: true
+		},
+		{
+			index: 1,
+			title: "Scadenze e note",
+			x: 3,
+			y: 40,
+			text: "Tieni sotto controllo le scadenze della raccolta porta a porta e aggiungi delle note personali.",
+			imgX: 0,
+			imgY: 2,
+			skippable: true
+		},
+		{
+			index: 1,
+			title: "Calendario",
+			x: 3,
+			y: 40,
+			text: "Verifica quali rifiuti vengono raccolti oggi e quali punti di raccolta sono aperti.",
+			imgX: 68,
+			imgY: 2,
+			skippable: true
+		},
+		{
+			index: 1,
+			title: "Menù laterale",
+			x: 3,
+			y: 40,
+			text: "Premi qui per aprire il menù laterale e scoprire ulteriori funzionalità",
+			imgX: 0,
+			imgY: -4,
+			skippable: false
+		}
+	];
 })
