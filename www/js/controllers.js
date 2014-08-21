@@ -95,7 +95,7 @@ angular.module('starter.controllers', ['google-maps'])
 		shown = true;
 	};
 
-	$scope.show();
+	//$scope.show();
 	//decommenta per attivare lo splash screen iniziale
 
 	$rootScope.$watch('menuProfilesUpdate', function (newValue, oldValue) {
