@@ -5,7 +5,7 @@
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
 	<a href="#/app/aggProfilo" class="button button-clear button-light icon-left nav-bar-buttons-alignment">
-		<img ng-src="img/ic_add.png" class="standard-size"/>
+		<img ng-src="img/ic_add.png" class="standard-size" />
 	</a>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
@@ -14,10 +14,14 @@
 			<a class="hidden-link" ng-href="#app/modificaProfilo/{{profilo.name}}">
 				<div>
 					<div class="row profili-title">
-						{{profilo.name}}
+						<div class="col no-border">
+							{{profilo.name}}
+						</div>
 					</div>
 					<div class="row profili-info">
-						{{profilo.type}}: {{profilo.loc}}
+						<div class="col no-border">
+							{{profilo.type}}: {{profilo.loc}}
+						</div>
 					</div>
 				</div>
 			</a>

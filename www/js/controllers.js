@@ -59,15 +59,25 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$rootScope.selectedProfile = null;
 
-	$scope.selectProfile = function (index) { // NON FUNZIONAAAAAAA!!!!
+	$scope.selectProfile = function (index) {
 		if (index >= $scope.p.length) {
 			return;
 		}
 		if (!!$rootScope.selectedProfile) {
-			$scope.p[$scope.p.indexOf($rootScope.selectedProfile)].image = "img/rifiuti_btn_radio_off_holo_dark.png";
+			$scope.findProfileById($rootScope.selectedProfile.name).image = "img/rifiuti_btn_radio_off_holo_dark.png";
 		}
 		$scope.p[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
 		$rootScope.selectedProfile = $scope.p[index];
+	};
+
+	$scope.findProfileById = function (id) {
+		$scope.readProfiles();
+		for (var i = 0; i < $scope.p.length; i++) {
+			if ($scope.p[i].name == id) {
+				return $scope.p[i];
+			}
+		}
+		return null;
 	};
 
 	var shown;
@@ -85,12 +95,13 @@ angular.module('starter.controllers', ['google-maps'])
 		shown = true;
 	};
 
-	//$scope.show();
+	$scope.show();
 	//decommenta per attivare lo splash screen iniziale
 
 	$rootScope.$watch('menuProfilesUpdate', function (newValue, oldValue) {
 		if (!!newValue) {
 			$scope.readProfiles();
+			$scope.findProfileById($rootScope.selectedProfile.name).image = "img/rifiuti_btn_radio_on_holo_dark.png";
 			$rootScope.menuProfileUpdate = false;
 		}
 	});
