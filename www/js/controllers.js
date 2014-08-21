@@ -428,7 +428,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('InfoCtrl', function ($scope) {})
 
-.controller('PDRCtrl', function ($scope, $timeout, $http, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {
 
 	$scope.mapView = true;
 
@@ -444,11 +444,11 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.init = function () {
 		$http.get('data/db/puntiRaccolta.json').success(function (loc) {
-			var profiloProva = "Comano Terme";
+			var profilo = $rootScope.selectedProfile.loc;
 			var points = [];
 			for (var i = 0; i < loc.length; i++) {
 				var indirizzo = loc[i].dettaglioIndirizzo != "" ? loc[i].dettaglioIndirizzo : loc[i].indirizzo;
-				if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
+				if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
 					var icon = {
 						url: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
 						scaledSize: new google.maps.Size(45, 45)
@@ -559,7 +559,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.readJson();
 })
 
-.controller('RaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+.controller('RaccoltaCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http) {
 
 	$scope.id = $stateParams.id;
 
@@ -586,9 +586,9 @@ angular.module('starter.controllers', ['google-maps'])
 				$scope.locs[i].locs = [];
 			}
 			$http.get('data/db/puntiRaccolta.json').success(function (loc) {
-				var profiloProva = "Comano Terme";
+				var profilo = $rootScope.selectedProfile.loc;
 				for (var i = 0; i < loc.length; i++) {
-					if (loc[i].area == profiloProva && loc[i].indirizzo.indexOf(profiloProva) != -1) {
+					if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1) {
 						for (var j = 0; j < $scope.locs.length; j++) {
 							if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
 								$scope.locs[j].locs.push(loc[i]);
@@ -621,7 +621,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.readJson();
 })
 
-.controller('RifiutoCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+.controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http) {
 
 	$scope.id = $stateParams.id;
 
@@ -646,9 +646,9 @@ angular.module('starter.controllers', ['google-maps'])
 							$scope.v[k].locs = [];
 						}
 						$http.get('data/db/puntiRaccolta.json').success(function (loc) {
-							var profiloProva = "Comano Terme";
+							var profilo = $rootScope.selectedProfile.loc;
 							for (var k = 0; k < loc.length; k++) {
-								if (loc[k].area == profiloProva && loc[k].indirizzo.indexOf(profiloProva) != -1) {
+								if (loc[k].area == profilo && loc[k].indirizzo.indexOf(profilo) != -1) {
 									for (var j = 0; j < $scope.v.length; j++) {
 										if ($scope.v[j].tipologiaPuntoRaccolta == loc[k].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.v[j].locs, loc[k])) {
 											$scope.v[j].locs.push(loc[k]);
