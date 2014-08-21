@@ -105,11 +105,46 @@ angular.module('starter.controllers', ['google-maps'])
 		$scope.variableIMG = !$scope.noteSelected ? "img/ic_add.png" : "img/ic_menu_delete.png";
 	};
 
+	$scope.supports_html5_storage = function () {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
 	$scope.rifiuti = [];
 	$scope.f = [];
 	$scope.listaRifiuti = [];
 
-	$rootScope.showTutorial = true;
+	$rootScope.showTutorial;
+
+	$scope.doTutorial = function(){
+		if(!$scope.supports_html5_storage())
+		{
+			$rootScope.showTutorial = false;
+			return;
+		}
+		var stringTutorial = localStorage.getItem("tutorial");
+		if(stringTutorial == "false")
+		{
+			$rootScope.showTutorial = false;
+		}
+		else
+		{
+			$rootScope.showTutorial = true;
+		}
+	};
+
+	$scope.doTutorial();
+
+	$scope.stopTutorial = function() {
+		if(!$scope.supports_html5_storage())
+		{
+			return;
+		}
+		localStorage.setItem("tutorial", "false");
+	};
 
 	$scope.show = function () {
 		if (!!!$rootScope.showTutorial) {
@@ -119,6 +154,7 @@ angular.module('starter.controllers', ['google-maps'])
 			templateUrl: 'templates/tutorial.html',
 		});
 		$rootScope.showTutorial = false;
+		$scope.stopTutorial();
 	};
 
 	$rootScope.$watch('showTutorial', function (newValue, oldValue) {
@@ -126,14 +162,6 @@ angular.module('starter.controllers', ['google-maps'])
 			$scope.show();
 		}
 	});
-
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
 
 	$scope.notes = [];
 
@@ -192,7 +220,7 @@ angular.module('starter.controllers', ['google-maps'])
 		if (stringNote != "") {
 			localStorage.setItem("notes", stringNote);
 		} else {
-			localStorage.setItem("notes", "!!-null")
+			localStorage.setItem("notes", "!!-null");
 		}
 	};
 
