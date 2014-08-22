@@ -922,45 +922,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 })
 
-.controller('ProfiliCtrl', function ($scope, $rootScope) {
-	/*$scope.p = [{
-		name: "Casa",
-		type: "Utenza domestica",
-		loc: "fiavè"
-		}, {
-		name: "Ufficio",
-		type: "Utenza non domestica",
-		loc: "fiavè"
-		}, {
-		name: "Random",
-		type: "Utenza occasionale",
-		loc: "fiavè"
-		}];*/
-
-	$scope.saveProfiles = function () {
-		if (!$rootScope.supports_html5_storage()) {
-			return;
-		}
-		var stringP = "";
-		for (var i = 0; i < $scope.p.length; i++) {
-			if (stringP != "") {
-				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
-			} else {
-				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
-			}
-			// [[; : separatore tra i profili
-			// ([; : separatore tra il nome, la tipologia di utenza e il comune
-		}
-		if (stringP != "") {
-			localStorage.setItem("profiles", stringP);
-		} else {
-			localStorage.setItem("profiles", "!!-null");
-		}
-		$rootScope.menuProfilesUpdate();
-	};
-
-	$rootScope.readProfiles();
-})
+.controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
 .controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $ionicPopup) {
 
@@ -969,11 +931,11 @@ angular.module('starter.controllers', ['google-maps'])
 			return;
 		}
 		var stringP = "";
-		for (var i = 0; i < $scope.p.length; i++) {
+		for (var i = 0; i < $rootScope.p.length; i++) {
 			if (stringP != "") {
-				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+				stringP = stringP + "[[;" + $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
 			} else {
-				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+				stringP = $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
 			}
 			// [[; : separatore tra i profili
 			// ([; : separatore tra il nome, la tipologia di utenza e il comune
@@ -1005,10 +967,9 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.save = function () {
-		//alert($scope.profilo.name + "\n" + $scope.profilo.utenza + "\n" + $scope.profilo.comune);
 		if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
 			$rootScope.readProfiles();
-			if (!$scope.containsName($scope.p, $scope.profilo.name)) {
+			if (!$scope.containsName($rootScope.p, $scope.profilo.name)) {
 				var popup = $ionicPopup.show({
 					title: '<b class="popup-title">Attenzione !<b/>',
 					template: 'Il nome del profilo è già in uso!',
@@ -1020,7 +981,7 @@ angular.module('starter.controllers', ['google-maps'])
 				});
 				return;
 			}
-			$scope.p.push({
+			$rootScope.p.push({
 				name: $scope.profilo.name,
 				type: $scope.profilo.utenza,
 				loc: $scope.profilo.comune
@@ -1096,11 +1057,11 @@ angular.module('starter.controllers', ['google-maps'])
 			return;
 		}
 		var stringP = "";
-		for (var i = 0; i < $scope.p.length; i++) {
+		for (var i = 0; i < $rootScope.p.length; i++) {
 			if (stringP != "") {
-				stringP = stringP + "[[;" + $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+				stringP = stringP + "[[;" + $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
 			} else {
-				stringP = $scope.p[i].name + "([;" + $scope.p[i].type + "([;" + $scope.p[i].loc;
+				stringP = $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
 			}
 			// [[; : separatore tra i profili
 			// ([; : separatore tra il nome, la tipologia di utenza e il comune
@@ -1121,7 +1082,7 @@ angular.module('starter.controllers', ['google-maps'])
 			var p = $rootScope.findProfileById($scope.id);
 			if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.comune != p.loc) {
 				if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
-					var index = $scope.p.indexOf(p);
+					var index = $rootScope.findIndexById(p.name);
 					if ($scope.profilo.name != p.name && $scope.findProfileById($scope.profilo.name) != null) {
 						var popup = $ionicPopup.show({
 							title: '<b class="popup-title">Attenzione !<b/>',
@@ -1134,9 +1095,9 @@ angular.module('starter.controllers', ['google-maps'])
 						});
 						return;
 					}
-					$scope.p[index].name = $scope.profilo.name;
-					$scope.p[index].type = $scope.profilo.utenza;
-					$scope.p[index].loc = $scope.profilo.comune;
+					$rootScope.p[index].name = $scope.profilo.name;
+					$rootScope.p[index].type = $scope.profilo.utenza;
+					$rootScope.p[index].loc = $scope.profilo.comune;
 					$scope.saveProfiles();
 					$scope.editMode = false;
 					$scope.editIMG = "img/ic_edit.png";
@@ -1178,8 +1139,9 @@ angular.module('starter.controllers', ['google-maps'])
 		});
 		popup.then(function (res) {
 			if (!!res) {
-				var p = $rootScope.findProfileById($scope.id);
-				$scope.p.splice($scope.p.indexOf(p), 1);
+				var v = $rootScope.p;
+				v.splice($rootScope.findIndexById($scope.id), 1);
+				$rootScope.p = v;
 				$scope.saveProfiles();
 				$scope.back();
 			}
