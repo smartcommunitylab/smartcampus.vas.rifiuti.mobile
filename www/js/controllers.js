@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('AppCtrl', function ($scope, $rootScope) {
+.controller('AppCtrl', function ($scope, $rootScope, $location) {
 	/*$scope.p = [{
 		name: "casa",
 		type: "utenza domestica",
@@ -95,6 +95,17 @@ angular.module('starter.controllers', ['google-maps'])
 			$rootScope.menuProfileUpdate = false;
 		}
 	});
+
+	$scope.createOneProfile = function () {
+		if (!$scope.supports_html5_storage()) {
+			return;
+		}
+		if (!localStorage.getItem("profiles")) {
+			$location.url("app/aggProfilo");
+		}
+	};
+
+	$scope.createOneProfile();
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading) {
@@ -1087,7 +1098,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.readProfiles();
 })
 
-.controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http) {
+.controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $ionicPopup) {
 
 	$scope.p = [];
 
@@ -1163,6 +1174,15 @@ angular.module('starter.controllers', ['google-maps'])
 		if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
 			$scope.readProfiles();
 			if (!$scope.containsName($scope.p, $scope.profilo.name)) {
+				var popup = $ionicPopup.show({
+					title: '<b class="popup-title">Attenzione !<b/>',
+					template: 'Il nome del profilo è già in uso!',
+					buttons: [
+						{
+							text: 'OK'
+                    }
+				]
+				});
 				return;
 			}
 			$scope.p.push({
@@ -1172,6 +1192,17 @@ angular.module('starter.controllers', ['google-maps'])
 			});
 			$scope.saveProfiles();
 			$scope.back();
+		} else {
+			var popup = $ionicPopup.show({
+				title: '<b class="popup-title">Attenzione !<b/>',
+				template: 'Per completare il tuo prifilo devi scegliere un nome e un comune!',
+				scope: $scope,
+				buttons: [
+					{
+						text: 'OK'
+                    }
+				]
+			});
 		}
 	};
 
@@ -1285,12 +1316,35 @@ angular.module('starter.controllers', ['google-maps'])
 			if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.comune != p.loc) {
 				if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
 					var index = $scope.p.indexOf(p);
+					if ($scope.profilo.name != p.name && $scope.findProfileById($scope.profilo.name) != null) {
+						var popup = $ionicPopup.show({
+							title: '<b class="popup-title">Attenzione !<b/>',
+							template: 'Il nome del profilo è già in uso!',
+							buttons: [
+								{
+									text: 'OK'
+                    			}
+							]
+						});
+						return;
+					}
 					$scope.p[index].name = $scope.profilo.name;
 					$scope.p[index].type = $scope.profilo.utenza;
 					$scope.p[index].loc = $scope.profilo.comune;
 					$scope.saveProfiles();
 					$scope.editMode = false;
 					$scope.editIMG = "img/ic_edit.png";
+				} else {
+					var popup = $ionicPopup.show({
+						title: '<b class="popup-title">Attenzione !<b/>',
+						template: 'Per completare il tuo prifilo devi scegliere un nome e un comune!',
+						scope: $scope,
+						buttons: [
+							{
+								text: 'OK'
+                    		}
+						]
+					});
 				}
 			} else {
 				$scope.editMode = false;

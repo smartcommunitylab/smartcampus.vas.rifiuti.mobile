@@ -7,7 +7,7 @@
 	<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment">
 		<img ng-src="{{editIMG}}" class="standard-size" />
 	</button>
-	<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button" ng-show="!isCurrentProfile">
+	<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button" ng-show="!isCurrentProfile && !editMode">
 		<img ng-src="img/ic_menu_delete.png" class="standard-size" />
 	</button>
 </ion-nav-buttons>
