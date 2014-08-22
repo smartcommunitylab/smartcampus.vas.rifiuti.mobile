@@ -1,111 +1,12 @@
 angular.module('starter.controllers', ['google-maps'])
 
 .controller('AppCtrl', function ($scope, $rootScope, $location) {
-	/*$scope.p = [{
-		name: "casa",
-		type: "utenza domestica",
-		loc: "Fiavè",
-		image: "img/rifiuti_btn_radio_off_holo_dark.png"
-	}, {
-		name: "ufficio",
-		type: "utenza non domestica",
-		loc: "Fiavè",
-		image: "img/rifiuti_btn_radio_off_holo_dark.png"
-	}, {
-		name: "random",
-		type: "utenza domestica",
-		loc: "Montagne",
-		image: "img/rifiuti_btn_radio_off_holo_dark.png"
-	}, {
-		name: "pippo",
-		type: "utenza domestica",
-		loc: "Comano terme",
-		image: "img/rifiuti_btn_radio_off_holo_dark.png"
-	}];*/
-
-	$rootScope.menuProfilesUpdate = false;
-
 	$scope.showTutorial = function () {
 		$rootScope.showTutorial = true;
 	};
 
-	$scope.p = [];
-
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-
-	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
-			return;
-		}
-		$scope.p = [];
-		var stringP = localStorage.getItem("profiles");
-		if (!!stringP && stringP != "!!-null") {
-			var rawP = [];
-			rawP = stringP.split("[[;");
-			//$scope.$apply(function (scope) {
-			for (var i = 0; i < rawP.length; i++) {
-				$scope.p.push({
-					name: rawP[i].split("([;")[0],
-					type: rawP[i].split("([;")[1],
-					loc: rawP[i].split("([;")[2],
-					image: "img/rifiuti_btn_radio_off_holo_dark.png"
-				});
-			}
-			//});
-		}
-	};
-
-	$scope.readProfiles();
-
-	$rootScope.selectedProfile = null;
-
-	$scope.selectProfile = function (index) {
-		if (index >= $scope.p.length) {
-			return;
-		}
-		if (!!$rootScope.selectedProfile) {
-			$scope.findProfileById($rootScope.selectedProfile.name).image = "img/rifiuti_btn_radio_off_holo_dark.png";
-		}
-		$scope.p[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
-		$rootScope.selectedProfile = $scope.p[index];
-	};
-
-	$scope.findProfileById = function (id) {
-		$scope.readProfiles();
-		for (var i = 0; i < $scope.p.length; i++) {
-			if ($scope.p[i].name == id) {
-				return $scope.p[i];
-			}
-		}
-		return null;
-	};
-
-	$scope.selectProfile(0);
-
-	$rootScope.$watch('menuProfilesUpdate', function (newValue, oldValue) {
-		if (!!newValue) {
-			$scope.readProfiles();
-			$scope.findProfileById($rootScope.selectedProfile.name).image = "img/rifiuti_btn_radio_on_holo_dark.png";
-			$rootScope.menuProfileUpdate = false;
-		}
-	});
-
-	$scope.createOneProfile = function () {
-		if (!$scope.supports_html5_storage()) {
-			return;
-		}
-		if (!localStorage.getItem("profiles")) {
-			$location.url("app/aggProfilo");
-		}
-	};
-
-	$scope.createOneProfile();
+	$rootScope.readProfiles();
+	$rootScope.selectProfile(0);
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading) {
@@ -118,14 +19,6 @@ angular.module('starter.controllers', ['google-maps'])
 		$scope.variableIMG = !$scope.noteSelected ? "img/ic_add.png" : "img/ic_menu_delete.png";
 	};
 
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-
 	$scope.rifiuti = [];
 	$scope.f = [];
 	$scope.listaRifiuti = [];
@@ -133,7 +26,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$rootScope.showTutorial;
 
 	$scope.doTutorial = function () {
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			$rootScope.showTutorial = false;
 			return;
 		}
@@ -148,7 +41,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.doTutorial();
 
 	$scope.stopTutorial = function () {
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		localStorage.setItem("tutorial", "false");
@@ -193,7 +86,7 @@ angular.module('starter.controllers', ['google-maps'])
 		//		$http.get('data/saves/notes.json').success(function (notes) {
 		//			$scope.notes = notes;
 		//		});
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		$scope.notes = [];
@@ -212,7 +105,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.saveNotes = function () {
 		//localStorage.setItem("notes", $scope.notes);
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		var stringNote = "";
@@ -427,7 +320,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.reset = function () {
 		alert("Resetting!");
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		localStorage.clear();
@@ -1044,37 +937,8 @@ angular.module('starter.controllers', ['google-maps'])
 		loc: "fiavè"
 		}];*/
 
-	$scope.p = [];
-
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-
-	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
-			return;
-		}
-		$scope.p = [];
-		var stringP = localStorage.getItem("profiles");
-		if (!!stringP && stringP != "!!-null") {
-			var rawP = [];
-			rawP = stringP.split("[[;");
-			for (var i = 0; i < rawP.length; i++) {
-				$scope.p.push({
-					name: rawP[i].split("([;")[0],
-					type: rawP[i].split("([;")[1],
-					loc: rawP[i].split("([;")[2]
-				});
-			}
-		}
-	};
-
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
@@ -1092,45 +956,16 @@ angular.module('starter.controllers', ['google-maps'])
 		} else {
 			localStorage.setItem("profiles", "!!-null");
 		}
-		$rootScope.menuProfilesUpdate = true;
+		$rootScope.menuProfilesUpdate();
 	};
 
-	$scope.readProfiles();
+	$rootScope.readProfiles();
 })
 
 .controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $ionicPopup) {
 
-	$scope.p = [];
-
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-
-	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
-			return;
-		}
-		$scope.p = [];
-		var stringP = localStorage.getItem("profiles");
-		if (!!stringP && stringP != "!!-null") {
-			var rawP = [];
-			rawP = stringP.split("[[;");
-			for (var i = 0; i < rawP.length; i++) {
-				$scope.p.push({
-					name: rawP[i].split("([;")[0],
-					type: rawP[i].split("([;")[1],
-					loc: rawP[i].split("([;")[2]
-				});
-			}
-		}
-	};
-
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
@@ -1148,7 +983,7 @@ angular.module('starter.controllers', ['google-maps'])
 		} else {
 			localStorage.setItem("profiles", "!!-null");
 		}
-		$rootScope.menuProfilesUpdate = true;
+		$rootScope.menuProfilesUpdate();
 	};
 
 	$scope.back = function () {
@@ -1172,7 +1007,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.save = function () {
 		//alert($scope.profilo.name + "\n" + $scope.profilo.utenza + "\n" + $scope.profilo.comune);
 		if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
-			$scope.readProfiles();
+			$rootScope.readProfiles();
 			if (!$scope.containsName($scope.p, $scope.profilo.name)) {
 				var popup = $ionicPopup.show({
 					title: '<b class="popup-title">Attenzione !<b/>',
@@ -1256,37 +1091,8 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.editIMG = "img/ic_edit.png";
 
-	$scope.p = [];
-
-	$scope.supports_html5_storage = function () {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-
-	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
-			return;
-		}
-		$scope.p = [];
-		var stringP = localStorage.getItem("profiles");
-		if (!!stringP && stringP != "!!-null") {
-			var rawP = [];
-			rawP = stringP.split("[[;");
-			for (var i = 0; i < rawP.length; i++) {
-				$scope.p.push({
-					name: rawP[i].split("([;")[0],
-					type: rawP[i].split("([;")[1],
-					loc: rawP[i].split("([;")[2]
-				});
-			}
-		}
-	};
-
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage()) {
+		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
@@ -1304,7 +1110,7 @@ angular.module('starter.controllers', ['google-maps'])
 		} else {
 			localStorage.setItem("profiles", "!!-null");
 		}
-		$rootScope.menuProfilesUpdate = true;
+		$rootScope.menuProfilesUpdate();
 	};
 
 	$scope.edit = function () {
@@ -1312,7 +1118,7 @@ angular.module('starter.controllers', ['google-maps'])
 			$scope.editMode = true;
 			$scope.editIMG = "img/ic_save.png";
 		} else {
-			var p = $scope.findProfileById($scope.id);
+			var p = $rootScope.findProfileById($scope.id);
 			if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.comune != p.loc) {
 				if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
 					var index = $scope.p.indexOf(p);
@@ -1372,7 +1178,7 @@ angular.module('starter.controllers', ['google-maps'])
 		});
 		popup.then(function (res) {
 			if (!!res) {
-				var p = $scope.findProfileById($scope.id);
+				var p = $rootScope.findProfileById($scope.id);
 				$scope.p.splice($scope.p.indexOf(p), 1);
 				$scope.saveProfiles();
 				$scope.back();
@@ -1388,7 +1194,7 @@ angular.module('starter.controllers', ['google-maps'])
 				}
 			}
 		});
-		var p = $scope.findProfileById($scope.id);
+		var p = $rootScope.findProfileById($scope.id);
 		if (!!p) {
 			$scope.profilo.name = p.name;
 			$scope.profilo.utenza = p.type;
@@ -1399,16 +1205,6 @@ angular.module('starter.controllers', ['google-maps'])
 		} else {
 			$scope.isCurrentProfile = false;
 		}
-	};
-
-	$scope.findProfileById = function (id) {
-		$scope.readProfiles();
-		for (var i = 0; i < $scope.p.length; i++) {
-			if ($scope.p[i].name == id) {
-				return $scope.p[i];
-			}
-		}
-		return null;
 	};
 
 	$scope.init();
