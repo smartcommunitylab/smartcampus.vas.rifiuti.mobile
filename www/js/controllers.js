@@ -119,28 +119,23 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$rootScope.showTutorial;
 
-	$scope.doTutorial = function(){
-		if(!$scope.supports_html5_storage())
-		{
+	$scope.doTutorial = function () {
+		if (!$scope.supports_html5_storage()) {
 			$rootScope.showTutorial = false;
 			return;
 		}
 		var stringTutorial = localStorage.getItem("tutorial");
-		if(stringTutorial == "false")
-		{
+		if (stringTutorial == "false") {
 			$rootScope.showTutorial = false;
-		}
-		else
-		{
+		} else {
 			$rootScope.showTutorial = true;
 		}
 	};
 
 	$scope.doTutorial();
 
-	$scope.stopTutorial = function() {
-		if(!$scope.supports_html5_storage())
-		{
+	$scope.stopTutorial = function () {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		localStorage.setItem("tutorial", "false");
@@ -423,6 +418,228 @@ angular.module('starter.controllers', ['google-maps'])
 			return;
 		}
 		localStorage.clear();
+	};
+
+	$scope.firstDayIndex = function (week) {
+		switch (week[0].day) {
+		case "LUN":
+			return 0;
+		case "MAR":
+			return 1;
+		case "MER":
+			return 2;
+		case "GIO":
+			return 3;
+		case "VEN":
+			return 4;
+		case "SAB":
+			return 5;
+		case "DOM":
+			return 6;
+		}
+	};
+
+	$scope.lastDayIndex = function (week) {
+		switch (week[week.length - 1].day) {
+		case "LUN":
+			return 0;
+		case "MAR":
+			return 1;
+		case "MER":
+			return 2;
+		case "GIO":
+			return 3;
+		case "VEN":
+			return 4;
+		case "SAB":
+			return 5;
+		case "DOM":
+			return 6;
+		}
+	};
+
+	$scope.getEmptyArrayByLenght = function (lenght) {
+		var array = [];
+		for (var i = 0; i < lenght; i++) {
+			array.push(i);
+		}
+		return array;
+	};
+
+	$scope.month = {
+		name: "agosto 2014",
+		weeks: [
+			[
+				{
+					date: 1,
+					day: "VEN",
+					events: []
+				},
+				{
+					date: 2,
+					day: "SAB",
+					events: []
+				},
+				{
+					date: 3,
+					day: "DOM",
+					events: []
+				}
+			],
+			[
+				{
+					date: 4,
+					day: "LUN",
+					events: []
+				},
+				{
+					date: 5,
+					day: "MAR",
+					events: []
+				},
+				{
+					date: 6,
+					day: "MER",
+					events: []
+				},
+				{
+					date: 7,
+					day: "GIO",
+					events: []
+				},
+				{
+					date: 8,
+					day: "VEN",
+					events: []
+				},
+				{
+					date: 9,
+					day: "SAB",
+					events: []
+				},
+				{
+					date: 10,
+					day: "DOM",
+					events: []
+				}
+			]
+			,
+			[
+				{
+					date: 11,
+					day: "LUN",
+					events: []
+				},
+				{
+					date: 12,
+					day: "MAR",
+					events: []
+				},
+				{
+					date: 13,
+					day: "MER",
+					events: []
+				},
+				{
+					date: 14,
+					day: "GIO",
+					events: []
+				},
+				{
+					date: 15,
+					day: "VEN",
+					events: []
+				},
+				{
+					date: 16,
+					day: "SAB",
+					events: []
+				},
+				{
+					date: 17,
+					day: "DOM",
+					events: []
+				}
+			]
+			,
+			[
+				{
+					date: 18,
+					day: "LUN",
+					events: []
+				},
+				{
+					date: 19,
+					day: "MAR",
+					events: []
+				},
+				{
+					date: 20,
+					day: "MER",
+					events: []
+				},
+				{
+					date: 21,
+					day: "GIO",
+					events: []
+				},
+				{
+					date: 22,
+					day: "VEN",
+					events: []
+				},
+				{
+					date: 23,
+					day: "SAB",
+					events: []
+				},
+				{
+					date: 24,
+					day: "DOM",
+					events: []
+				}
+			]
+			,
+			[
+				{
+					date: 25,
+					day: "LUN",
+					events: []
+				},
+				{
+					date: 26,
+					day: "MAR",
+					events: []
+				},
+				{
+					date: 27,
+					day: "MER",
+					events: []
+				},
+				{
+					date: 28,
+					day: "GIO",
+					events: []
+				},
+				{
+					date: 29,
+					day: "VEN",
+					events: []
+				},
+				{
+					date: 30,
+					day: "SAB",
+					events: []
+				}
+				/*,
+				{
+					date: 31,
+					day: "DOM",
+					events: []
+				}*/
+				//Omissis: il 31 viene nascosto per testare la visualizzazione dell' ultima settimana.
+			]
+		]
 	};
 })
 

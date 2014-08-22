@@ -10,10 +10,10 @@
 		<ion-tab title="1" on-select="readNotes()" on-deselect="noteReset()">
 			<ion-nav-buttons side="right">
 				<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-show="noteSelected && !multipleNoteSelected">
-				<img ng-src="img/ic_edit.png" class="standard-size"/>
+					<img ng-src="img/ic_edit.png" class="standard-size" />
 				</button>
 				<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
-					<img ng-src="{{variableIMG}}" class="standard-size"/>
+					<img ng-src="{{variableIMG}}" class="standard-size" />
 				</button>
 				<!--ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"-->
 			</ion-nav-buttons>
@@ -66,13 +66,58 @@
 		<ion-tab title="3">
 			<ion-nav-buttons side="right">
 				<button ng-click="" class="button button-clear button-light icon-left">
-					<img src="img/ic_go_to_today.png" class="standard-size"/>
+					<img src="img/ic_go_to_today.png" class="standard-size" />
 				</button>
 			</ion-nav-buttons>
-			<ion-content class="home-tabs-content" scroll="false">
+			<ion-content class="home-tabs-content background-grey-light" scroll="false">
+				<button ng-click="reset()">Emergency Reset!!!</button>
 				<p>-placeholder-</p>
 				<br/>
-				<button ng-click="reset()">Emergency Reset!!!</button>
+
+				<div class="month">
+					<div class="row">
+						<div class="col col-10"><i class="icon icon-left ion-chevron-left"></i>
+						</div>
+						<div class="col">{{month.name}}</div><!--da aggiungere lo stile-->
+						<div class="col col-10"><i class="icon icon-right ion-chevron-right"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">LUN</div>
+						<div class="col">MAR</div>
+						<div class="col">MER</div>
+						<div class="col">GIO</div>
+						<div class="col">VEN</div>
+						<div class="col">SAB</div>
+						<div class="col">DOM</div>
+					</div>
+					<div class="row week" ng-repeat="week in month.weeks">
+						<div class="col day" ng-repeat="item in getEmptyArrayByLenght(firstDayIndex(week))"></div>
+						<div class="col day background-white" ng-repeat="day in week">{{day.date}}</div>
+						<div class="col day" ng-repeat="item in getEmptyArrayByLenght(6 - lastDayIndex(week))"></div>
+					</div>
+				</div>
+
+<!--
+				<div class="row week">
+					<div class="col day"></div>
+					<div class="col day"></div>
+					<div class="col day"></div>
+					<div class="col day background-white">4</div>
+					<div class="col day background-white">5</div>
+					<div class="col day background-white">6</div>
+					<div class="col day background-white">7</div>
+				</div>
+				<div class="row week">
+					<div class="col day background-white">1</div>
+					<div class="col day background-white">2</div>
+					<div class="col day background-white">3</div>
+					<div class="col day background-white">4</div>
+					<div class="col day background-white">5</div>
+					<div class="col day background-white">6</div>
+					<div class="col day background-white">7</div>
+				</div>
+-->
 			</ion-content>
 		</ion-tab>
 
