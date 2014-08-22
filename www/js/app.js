@@ -76,9 +76,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'google-maps'])
 		$rootScope.selectedProfile = $rootScope.p[index];
 	};
 	$rootScope.menuProfilesUpdate = function () {
-		//$rootScope.readProfiles();
 		$rootScope.selectProfile($rootScope.findIndexById($rootScope.selectedProfile.name));
-		//$rootScope.selectProfile(0);
 	};
 })
 

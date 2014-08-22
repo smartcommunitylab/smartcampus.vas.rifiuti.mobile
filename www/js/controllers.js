@@ -5,6 +5,18 @@ angular.module('starter.controllers', ['google-maps'])
 		$rootScope.showTutorial = true;
 	};
 
+	$scope.createOneProfile = function () {
+		if (!$rootScope.supports_html5_storage()) {
+			return;
+		}
+		if (!localStorage.getItem("profiles")) {
+			$rootScope.promptedToProfile = true;
+			$location.url("app/aggProfilo");
+		}
+	};
+
+	$scope.createOneProfile();
+
 	$rootScope.readProfiles();
 	$rootScope.selectProfile(0);
 })
@@ -31,7 +43,7 @@ angular.module('starter.controllers', ['google-maps'])
 			return;
 		}
 		var stringTutorial = localStorage.getItem("tutorial");
-		if (stringTutorial == "false") {
+		if (stringTutorial == "false" || !!$rootScope.promptedToProfile) {
 			$rootScope.showTutorial = false;
 		} else {
 			$rootScope.showTutorial = true;
@@ -66,26 +78,12 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.notes = [];
 
-	/*$scope.notes = [{
-		id: 0,
-		note: 'uno'
-    }, {
-		id: 1,
-		note: 'due'
-    }, {
-		id: 2,
-		note: 'tre'
-    }];*/
-
 	$scope.selectedNotes = [];
 
 	$scope.noteSelected = false;
 	$scope.multipleNoteSelected = false;
 
 	$scope.readNotes = function () {
-		//		$http.get('data/saves/notes.json').success(function (notes) {
-		//			$scope.notes = notes;
-		//		});
 		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
@@ -104,7 +102,6 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.saveNotes = function () {
-		//localStorage.setItem("notes", $scope.notes);
 		if (!$rootScope.supports_html5_storage()) {
 			return;
 		}
@@ -616,7 +613,6 @@ angular.module('starter.controllers', ['google-maps'])
 						id: loc[i].dettaglioIndirizzo != '' ? loc[i].dettaglioIndirizzo : loc[i].indirizzo,
 						latitude: loc[i].localizzazione.split(',')[0],
 						longitude: loc[i].localizzazione.split(',')[1],
-						//icon: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png'
 						icon: icon
 					});
 					$scope.addToList(loc[i]);
@@ -702,7 +698,6 @@ angular.module('starter.controllers', ['google-maps'])
 			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
 			angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
 		}, 50);
-		//$scope.map.control.refresh();
 	});
 
 	$scope.init();
@@ -908,10 +903,6 @@ angular.module('starter.controllers', ['google-maps'])
 		}
 		return -1;
 	};
-
-	//{"area":"Dorsino","tipologiaPuntiRaccolta":"CRM","tipologiaUtenza":"utenza domestica","localizzazione":"46.034259734401125,10.858212180193288","indirizzo":"Comano Terme","dettaglioIndirizzo":"Comano Terme, Loc. Dos dei Larici","dataDa":"2014-01-01","dataA":"2014-01-31","il":"lunedì","dalle":"13:00","alle":"17:00"}
-
-	//{"area":"Comano Terme","tipologiaPuntiRaccolta":"CRM","tipologiaUtenza":"utenza domestica","localizzazione":"46.034259734401125,10.858212180193288","indirizzo":"Comano Terme","dettaglioIndirizzo":"Comano Terme, Loc. Dos dei Larici","dataDa":"2014-01-01","dataA":"2014-01-31","il":"lunedì","dalle":"13:00","alle":"17:00"}
 
 	$scope.indirizzoIfIsCRM = function () {
 		if ($scope.isCRM) {
@@ -1236,7 +1227,7 @@ angular.module('starter.controllers', ['google-maps'])
 			title: "Benvenuto!",
 			x: 3,
 			y: 40,
-			text: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare una specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
+			text: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare uno specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
 			imgX: 72,
 			imgY: 11,
 			skippable: true
