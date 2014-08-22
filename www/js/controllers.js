@@ -40,7 +40,7 @@ angular.module('starter.controllers', ['google-maps'])
 	}
 
 	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		$scope.p = [];
@@ -180,7 +180,7 @@ angular.module('starter.controllers', ['google-maps'])
 		//		$http.get('data/saves/notes.json').success(function (notes) {
 		//			$scope.notes = notes;
 		//		});
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		$scope.notes = [];
@@ -199,7 +199,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.saveNotes = function () {
 		//localStorage.setItem("notes", $scope.notes);
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		var stringNote = "";
@@ -414,7 +414,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.reset = function () {
 		alert("Resetting!");
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		localStorage.clear();
@@ -1044,7 +1044,7 @@ angular.module('starter.controllers', ['google-maps'])
 	}
 
 	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		$scope.p = [];
@@ -1063,7 +1063,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
@@ -1100,7 +1100,7 @@ angular.module('starter.controllers', ['google-maps'])
 	}
 
 	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		$scope.p = [];
@@ -1119,7 +1119,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
@@ -1236,7 +1236,7 @@ angular.module('starter.controllers', ['google-maps'])
 	}
 
 	$scope.readProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		$scope.p = [];
@@ -1255,7 +1255,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.saveProfiles = function () {
-		if (!$scope.supports_html5_storage) {
+		if (!$scope.supports_html5_storage()) {
 			return;
 		}
 		var stringP = "";
