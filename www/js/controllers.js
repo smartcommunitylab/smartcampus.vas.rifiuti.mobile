@@ -466,6 +466,8 @@ angular.module('starter.controllers', ['google-maps'])
 		return array;
 	};
 
+	$scope.today = 22;
+
 	$scope.month = {
 		name: "agosto 2014",
 		weeks: [
@@ -478,7 +480,11 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 2,
 					day: "SAB",
-					events: []
+					events: [
+						{
+							color: "blue"
+						}
+					]
 				},
 				{
 					date: 3,
@@ -495,7 +501,12 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 5,
 					day: "MAR",
-					events: []
+					events: [
+						{
+							/*Dati del evento*/
+							color: "red"
+						}
+					]
 				},
 				{
 					date: 6,
@@ -510,12 +521,20 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 8,
 					day: "VEN",
-					events: []
+					events: [
+						{
+							color: "blue"
+						}, {
+							color: "blue"
+						}
+					]
 				},
 				{
 					date: 9,
 					day: "SAB",
-					events: []
+					events: [{
+						color: "green"
+						}]
 				},
 				{
 					date: 10,
@@ -528,7 +547,9 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 11,
 					day: "LUN",
-					events: []
+					events: [{
+						color: "yellow"
+						}]
 				},
 				{
 					date: 12,
@@ -538,7 +559,15 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 13,
 					day: "MER",
-					events: []
+					events: [
+						{
+							color: "blue"
+						},
+						{
+							color: "red"
+						}, {
+							color: "brown"
+						}]
 				},
 				{
 					date: 14,
@@ -609,17 +638,26 @@ angular.module('starter.controllers', ['google-maps'])
 				{
 					date: 26,
 					day: "MAR",
-					events: []
+					events: [{
+							color: "blue"
+						},
+						{
+							color: "red"
+						}]
 				},
 				{
 					date: 27,
 					day: "MER",
-					events: []
+					events: [{
+						color: "blue"
+						}]
 				},
 				{
 					date: 28,
 					day: "GIO",
-					events: []
+					events: [{
+						color: "blue"
+						}]
 				},
 				{
 					date: 29,

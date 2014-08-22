@@ -185,6 +185,10 @@
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 }
+.no-orizontal-padding {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
 .only-bottom-vertical-padding {
 	padding-top: 0 !important;
 }
@@ -330,6 +334,25 @@
 	padding-right: 0;
 	margin-bottom: 5px;
 }
+.month-name {
+	text-align: center;
+	color: #63ac3d;
+	font-size: 16px;
+	line-height: 16px;
+	font-weight: bold;
+}
+.week-day {
+	text-align: center;
+	font-size: 12px;
+	line-height: 12px;
+	font-weight: bold;
+}
+.day-date {
+	text-align: left;
+	font-size: 11px;
+	line-height: 11px;
+	padding-bottom: 5px;
+}
 .day {
 	-webkit-box-flex: 0;
 	-webkit-flex: 0 0 13%;
@@ -346,4 +369,11 @@
 	border-style: solid;
 	border-width: 3px;
 	border-color: #47772b;
+}
+.separation-padding {
+	padding: 1px;
+}
+.fixed-size {
+	height: 5px;
+	width: 5px;
 }

@@ -70,19 +70,15 @@
 				</button>
 			</ion-nav-buttons>
 			<ion-content class="home-tabs-content background-grey-light" scroll="false">
-				<button ng-click="reset()">Emergency Reset!!!</button>
-				<p>-placeholder-</p>
-				<br/>
-
 				<div class="month">
 					<div class="row">
 						<div class="col col-10"><i class="icon icon-left ion-chevron-left"></i>
 						</div>
-						<div class="col">{{month.name}}</div><!--da aggiungere lo stile-->
+						<div class="col month-name">{{month.name}}</div><!--da aggiungere lo stile-->
 						<div class="col col-10"><i class="icon icon-right ion-chevron-right"></i>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row week-day">
 						<div class="col">LUN</div>
 						<div class="col">MAR</div>
 						<div class="col">MER</div>
@@ -93,31 +89,23 @@
 					</div>
 					<div class="row week" ng-repeat="week in month.weeks">
 						<div class="col day" ng-repeat="item in getEmptyArrayByLenght(firstDayIndex(week))"></div>
-						<div class="col day background-white" ng-repeat="day in week">{{day.date}}</div>
+						<div class="col day background-white" ng-class="{'today' : day.date == today}" ng-repeat="day in week">
+							<div class="day-date">
+								{{day.date}}
+							</div>
+							<div class="row no-orizontal-padding">
+								<div class="separation-padding" ng-repeat="event in day.events">
+									<div class="fixed-size" style="background-color:{{event.color}};"></div>
+								</div>
+								<div class="separation-padding" ng-if="day.events.length == 0">
+									<div class="fixed-size"></div>
+								</div>
+							</div>
+						</div>
 						<div class="col day" ng-repeat="item in getEmptyArrayByLenght(6 - lastDayIndex(week))"></div>
 					</div>
 				</div>
-
-<!--
-				<div class="row week">
-					<div class="col day"></div>
-					<div class="col day"></div>
-					<div class="col day"></div>
-					<div class="col day background-white">4</div>
-					<div class="col day background-white">5</div>
-					<div class="col day background-white">6</div>
-					<div class="col day background-white">7</div>
-				</div>
-				<div class="row week">
-					<div class="col day background-white">1</div>
-					<div class="col day background-white">2</div>
-					<div class="col day background-white">3</div>
-					<div class="col day background-white">4</div>
-					<div class="col day background-white">5</div>
-					<div class="col day background-white">6</div>
-					<div class="col day background-white">7</div>
-				</div>
--->
+				<button ng-click="reset()">Emergency Reset!!! (PER DEBUG)</button>
 			</ion-content>
 		</ion-tab>
 
