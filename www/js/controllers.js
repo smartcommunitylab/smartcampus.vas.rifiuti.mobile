@@ -48,6 +48,7 @@ angular.module('starter.controllers', ['google-maps'])
 		if (!!stringP && stringP != "!!-null") {
 			var rawP = [];
 			rawP = stringP.split("[[;");
+			//$scope.$apply(function (scope) {
 			for (var i = 0; i < rawP.length; i++) {
 				$scope.p.push({
 					name: rawP[i].split("([;")[0],
@@ -56,6 +57,7 @@ angular.module('starter.controllers', ['google-maps'])
 					image: "img/rifiuti_btn_radio_off_holo_dark.png"
 				});
 			}
+			//});
 		}
 	};
 
@@ -668,14 +670,12 @@ angular.module('starter.controllers', ['google-maps'])
 					date: 30,
 					day: "SAB",
 					events: []
-				}
-				/*,
+				},
 				{
 					date: 31,
 					day: "DOM",
 					events: []
-				}*/
-				//Omissis: il 31 viene nascosto per testare la visualizzazione dell' ultima settimana.
+				}
 			]
 		]
 	};
@@ -786,7 +786,7 @@ angular.module('starter.controllers', ['google-maps'])
 		$scope.mapView = !$scope.mapView;
 		$scope.updateIMG();
 		$timeout(function () {
-			var mapHeight = 10; // or any other calculated value
+			var mapHeight = 800; // or any other calculated value
 			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
 			angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
 		}, 50);
@@ -794,7 +794,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.$on('$viewContentLoaded', function () {
 		$timeout(function () {
-			var mapHeight = 10; // or any other calculated value
+			var mapHeight = 800; // or any other calculated value
 			mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
 			angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
 		}, 50);
