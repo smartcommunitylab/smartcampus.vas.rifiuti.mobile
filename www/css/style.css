@@ -68,7 +68,24 @@
 	background-color: #3c3c3b !important;
 }
 .background-white {
-	background-color: white !important;
+	background-color: white;
+    color: black;
+}
+.background-note {
+    <!--background-image: url("");    
+    background-repeat: no-repeat;-->
+    background-position: center;
+    background-color: #eeeeee;
+}
+.background-note-noimg {
+    background-color: #eeeeee;
+}
+
+.fill-div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
 }
 .text-white {
 	color: white !important;
@@ -148,6 +165,11 @@
 	text-align: left !important;
 	font-weight: bold;
 }
+.note-text {
+    color: #BFBFBF;
+    text-align: center;
+}
+
 .expandable-list-desc {
 	font-size: 10px;
 	line-height: 12px;
@@ -165,7 +187,7 @@
 	color: #47772b !important;
 }
 .contatti-content {
-	margin-top: 1px;
+	margin-top: 0px;
 }
 .expandable-list-items {
 	padding-bottom: 1px;
@@ -206,6 +228,14 @@
 	position: absolute;
 	top: 19px;
 	left: 52px;
+	text-align: left;
+	white-space: nowrap;
+}
+.title-subtext1 {
+	font-size: 11px;
+	position: absolute;
+	top: 12px;
+	left: 72px;
 	text-align: left;
 	white-space: nowrap;
 }
@@ -361,11 +391,11 @@
 	-ms-flex: 0 0 13%;
 	flex: 0 0 13%;
 	max-width: 13%;
-	margin-right: auto;
+	margin-right: 1.2%;
 }
 .today {
-	padding: 2px;
-	margin-right: auto;
+	padding: 0px;
+	margin-right: 1.2%;
 	border-style: solid;
 	border-width: 3px;
 	border-color: #47772b;

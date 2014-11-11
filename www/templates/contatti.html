@@ -2,16 +2,17 @@
 	<ion-nav-buttons side="left">
 		<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
 			<span class="bar-title">Contatti</span>
+            <div class= "title-subtext1">{{selectedProfile.name}}</div>
 		</button>
 	</ion-nav-buttons>
 
-	<ion-tabs class="tabs-balanced tabs-top contatti-tabs">
-		<ion-tab title="COMUNITA' DI VALLE">
-			<ion-content class="background-grey-light" scroll="false">
-				<div class="bar bar-header bar-stable contatti-title">
+	<!--<ion-tabs ng-show="true" class="tabs-balanced tabs-top contatti-tabs">
+		<ion-tab>-->
+			<!--<ion-content has-bouncing="true" class="background-grey-light" scroll="false">-->
+				<!-- <div class="bar bar-header bar-stable contatti-title">
 					<h1 class="title">Comunità delle Giudicarie</h1>
-				</div>
-				<ion-content class="has-header contatti-content" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+				</div>-->
+				<ion-content class="contatti-content background-grey-light"  has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
 					<div class="expandable-list-items" ng-repeat="item in v">
 						<div class="row background-grey-middle" ng-click="item.aperto=!item.aperto">
 							<div class="col col-10">
@@ -30,7 +31,7 @@
 									{{item.t2}}
 								</div>
 							</div>
-							<div class="row bottom-border">
+							<div class="row bottom-border" ng-if="item.t3 != null">
 								<div class="col background-grey-light">
 									{{item.t3}}
 								</div>
@@ -56,21 +57,23 @@
 								</button>
 							</div>
 							<div class="row">
-								<div class="col col-80 col-center">PEC: <a href="{{item.pec}}">{{item.pec}}</a>
+								<div class="col col-80 col-center" ng-if="item.pec!=null">PEC: <a href="{{item.pec}}">{{item.pec}}</a>
 								</div>
-								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
+								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative"  ng-if="item.pec!=null">
 									<img src="img/ic_mail.png" class="standard-size absolute-center">
 								</button>
 							</div>
 							<div class="row">
-								<div class="col col-center">FAX: {{item.fax}}</div>
+								<div class="col col-80 col-center">FAX: {{item.fax}}</div>
+                                <button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
+									<img src="img/ic_fax.png" class="standard-size absolute-center">
+								</button>
 							</div>
 						</div>
 					</div>
 				</ion-content>
-			</ion-content>
 		</ion-tab>
-		<ion-tab title="GESTORE">
+		<!-- <ion-tab title="GESTORE">
 			<ion-content class="background-grey-light" scroll="false">
 				<div class="bar bar-header bar-stable contatti-title">
 					<h1 class="title">SOGAP SRL</h1>
@@ -109,5 +112,5 @@
 				</ion-content>
 			</ion-content>
 		</ion-tab>
-	</ion-tabs>
+	</ion-tabs> -->
 </ion-view>

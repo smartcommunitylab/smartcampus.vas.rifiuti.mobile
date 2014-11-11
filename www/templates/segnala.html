@@ -1,6 +1,7 @@
 <ion-nav-buttons side="left">
 	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
 		<span class="bar-title">Segnalazione</span>
+        <div class= "title-subtext1">{{selectedProfile.name}}</div>
 	</button>
 </ion-nav-buttons>
 <ion-content has-bouncing="false" class="background-grey-light">
@@ -12,14 +13,14 @@
 	</div>
 	<div class="row high-padding">
 		<div class="col col-15 position-relative">
-			<img ng-src="img/ic_camera.png" class="absolute-center standard-size" />
+			<img ng-src="img/ic_camera.png" class="standard-size" />
 			<!--<button class="button button-icon icon ion-camera info-button"></button>-->
 		</div>
-		<div class="col segnala-testo auto-center">Scatta una foto</div>
+		<div class="col segnala-testo auto-center"><input type="file" accept="image/*;capture=camera"></div>
 	</div>
 	<div class="row high-padding" ng-click="toggleCheck()">
 		<div class="col col-10 no-vertical-padding position-relative">
-			<img ng-src="{{checkboxImage}}" class="absolute-center menu-size" />
+			<img ng-src="{{checkboxImage}}" class="menu-size" />
 		</div>
 		<div class="col segnala-testo no-vertical-padding auto-center">
 			Allega la tua posizione

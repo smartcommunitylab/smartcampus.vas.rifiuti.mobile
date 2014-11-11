@@ -1,27 +1,30 @@
 <ion-view>
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-            <span class="bar-title">INFO</span>
+            <span class="bar-title">Informazioni</span>
+            <div class= "title-subtext1">{{selectedProfile.name}}</div>
         </button>
     </ion-nav-buttons>
     <ion-content class="centred-text background-grey-light" has-bouncing="false">
         </br>
-        <p>100% Riciclo è un app realizzata da:</p>
+        <img src="/img/ic_launcher.png" class="standard-size">
+        <p>"100% Riciclo" è un progetto di:</p>
         <img src="img/smart_campus_credits.png" width="140" height="42">
         <img src="img/ladurnerenergy.png" width="140" height="42">
         </br>
         <img src="img/fbk_credits.png" width="140" height="39">
-        <p>con il patrocinio del</p>
+        <p>con la collaborazione di:</p>
         <img src="img/autonomie_locali.png" width="140" height="55">
-        <div class="list item-input-inset text-left">
+        <!--<div class="list item-input-inset text-left">
+        </div>-->
+            <p></p>
             <p>Per eventuali segnalazioni o richieste di informazioni contattateci scrivendo a <a href="http://riciclo@smartcampuslab.it">riciclo@smartcampuslab.it</a>
             </p>
-        </div>
         <div class="list item-input-inset text-left">
-            <p class="no-margin">Per segnalare un problema con la raccolta dei rifiuti shiaccia qui:</p>
+            <!--<p class="no-margin">Per segnalare un problema con la raccolta dei rifiuti shiaccia qui:</p>
             <a class="button button-icon icon info-button position-relative" href="#/app/segnala">
 				<img src="img/ic_segnala.png" class="standard-size absolute-center">
-			</a>
+			</a>-->
         </div>
     </ion-content>
 </ion-view>

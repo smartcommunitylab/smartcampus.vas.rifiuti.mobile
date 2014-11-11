@@ -5,6 +5,8 @@ angular.module('starter.controllers', ['google-maps'])
 		$rootScope.showTutorial = true;
 	};
 
+    
+    
 	$scope.createOneProfile = function () {
 		if (!$rootScope.supports_html5_storage()) {
 			return;
@@ -23,6 +25,9 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading) {
 
+    $scope.height  = window.innerHeight;
+    $scope.width  = window.innerWidth;
+    
 	var delegate = $ionicTabsDelegate.$getByHandle('home-tabs');
 
 	$scope.variableIMG = "img/ic_add.png";
@@ -36,7 +41,20 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.listaRifiuti = [];
 
 	$rootScope.showTutorial;
+    
+        
+    $scope.click2 = function () {
+		$scope.calendarView = !$scope.calendarView;
+		$scope.updateIMG2();
+    }
+    
+    $scope.variableIMG2 = "img/ic_list.png";
 
+	$scope.updateIMG2 = function () {
+		$scope.variableIMG2 = $scope.calendarView ? "img/ic_map.png"  :"img/ic_list.png" ;
+	};
+    
+    
 	$scope.doTutorial = function () {
 		if (!$rootScope.supports_html5_storage()) {
 			$rootScope.showTutorial = false;
@@ -98,7 +116,10 @@ angular.module('starter.controllers', ['google-maps'])
 					note: rawNotes[i].split("([;")[1]
 				});
 			}
-		}
+		}//else  $scope.noteImg= "img/ic_note.png";
+            
+            //if (!!stringNote && stringNote != "!!-null"){ //////////
+           // }
 	};
 
 	$scope.saveNotes = function () {
@@ -155,6 +176,7 @@ angular.module('starter.controllers', ['google-maps'])
 		});
 		$scope.saveNotes();
 	};
+    
 
 	$scope.findNextId = function () {
 		for (var i = 0; i <= $scope.notes.length; i++) {
@@ -286,12 +308,30 @@ angular.module('starter.controllers', ['google-maps'])
 			return '';
 		}
 	};
-
+    
+    $scope.subTitleText = function () {
+		if (!$scope.noteSelected) {
+			return $scope.selectedProfile.name;
+		} else {
+			return '';
+		}
+	};
+    
+   /* $rootScope.prova = function () {
+        delegate.select(1);
+    }*/
+    
+    $rootScope.delegateHome = function () {
+        delegate.select(1);
+    };
+    
 	$scope.leftClick = function () {
 		if (!$scope.noteSelected) {
-			$ionicSideMenuDelegate.toggleLeft();
+            $ionicSideMenuDelegate.toggleLeft();
+            //delegate.select(1); //serve perchè altrimenti se è su calendario con home non torna su "dove lo butto?"
 		} else {
 			$scope.noteReset();
+           // delegate.select(1);
 		}
 	};
 
@@ -368,61 +408,205 @@ angular.module('starter.controllers', ['google-maps'])
 		}
 		return array;
 	};
+    
+    $scope.DayDiff = function()
+    {
+            var CurrentDate = new Date();
+            var TYear=CurrentDate.getFullYear();
+            var nextYear = "January, 01, "+(TYear+1)
+            var TDay=new Date(nextYear);
+            TDay.getFullYear(TYear);
+            var DayCount=(TDay-CurrentDate)/(1000*60*60*24);
+            DayCount=Math.round(DayCount); 
+        return(DayCount+8);
+    }
 
-	$scope.today = 22;
+	//$scope.today = 22;
+    
+        var mesi = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+    
+    var giorni=["DOM","LUN","MAR","MER","GIO","VEN","SAB"];
+    var giorniC=["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+    
+    $scope.counterGiorniMese=0;  
+    
+    function isLastDay(dt) { //controlla se è l'ultimo giorno del mese
+    return new Date(dt.getTime() + 86400000).getDate() === 1;
+    }
+    
+    $scope.giornoCounter=0;
+    
+    function giorniMese (mm,yyyy) {
+        //if (month[][week].index!=1) $scope.giornoCounter=0;
+        if ($scope.giornoCounter!=0) return null;
+        $scope.counterGiorniMese++; 
+        datax= new Date(yyyy,mm,$scope.counterGiorniMese,0,0,0,0);
+        if(isLastDay(datax)){
+            tmp= $scope.counterGiorniMese;
+            $scope.counterGiorniMese=0;
+            $scope.giornoCounter=-1;
+            return tmp;
+        }
+        else
+            return $scope.counterGiorniMese;
+    }
+    
+    function firstGiorniMese (mm,yyyy) {
+        $scope.giornoCounter=0;
+        $scope.counterGiorniMese++; 
+        datax= new Date(yyyy,mm,$scope.counterGiorniMese,0,0,0,0);
+        
+            return $scope.counterGiorniMese;
+    }
+    
+    $scope.mm;
+    $scope.yyyy;
+    
+    var oggi = new Date();
+    $scope.today = oggi.getDate();
+    mm = oggi.getMonth(); //January is 0!
+    yyyy = oggi.getFullYear();
+    $scope.giornoSettimanaOggi = oggi.getDay();
+    
+    function daysInMonth(month,year) {
+    return new Date(year, month+1, 0).getDate();
+}
+    function monthYear(){return currentMonth+" "+currentYear}; //novembre 2014
+    
+    /*$scope.dayDayMonthYear= function(date) { //es.: Martedì 12 settembre 2014
+        var day = giorniC[date.getDay()];
+        var Day = date.getDate();
+        var month = mesi[date.getMonth()];
+        var year = date.getFullYear();
+        
+        return day+" "+Day+" "+month+" "+year;
+    }*/
+    
+    $scope.dayDayMonthYear= function(giorno) { //es.: Martedì 12 settembre 2014
+        var date = giorno;
+        var day = giorniC[date.getDay()];
+        var Day = date.getDate();
+        var month = mesi[date.getMonth()];
+        var year = date.getFullYear();
+        return day+" "+Day+" "+month+" "+year;
+    }
+    
+    
+    function returnDayName (day,month,year){ // es.: LUN
+        if ($scope.giornoCounter!=0) return null;
+        var oo = new Date(year,month,day,0,0,0,0);
+        var tt = oo.getDay();
+        var ui = giorni[tt];
+        if (tt==0) $scope.giornoCounter++;
+        return  ui;
+    }
+    
+    
+    $scope.aggiungiMese = function (){
+        if (mm==11){
+            mm++; yyyy++;
+        }
+        else mm++;
+    }
+    
+   /* $scope.aggiungiGiorno = function (date) {
+        if (getDate(date) == 31 && getMonth(date) == 11) return null;
+        else date.setDate(date.getDate() + 1);
+        return date;
+    }*/
+    
+    $scope.aggiungiGiorni = function (i){
+        var d = new Date();
+        a = d.getDate();
+        d.setDate(a + i);
+        return d;
+    }
 
+    var currentMonth = mesi[mm];
+    var currentYear = yyyy;
 	$scope.month = {
-		name: "agosto 2014",
-		weeks: [
-			[
-				{
-					date: 1,
-					day: "VEN",
+		name:  monthYear(),
+		weeks: [ 
+			[ //for(int i=0;i<daysInMonth($scope.mm,$scope.yyyy);i++)
+                {
+					date: firstGiorniMese(mm,yyyy),
+					day: returnDayName(1,mm,yyyy), 
 					events: []
-				},
+				}
+            ,{
+					date:giorniMese(mm,yyyy),
+					day: returnDayName(2,mm,yyyy), 
+					events: []
+				}
+            ,{
+                    date: giorniMese(mm,yyyy),
+					day: returnDayName(3,mm,yyyy), 
+					events: []
+				}
+            ,{      
+					date: giorniMese(mm,yyyy),
+					day: returnDayName(4,mm,yyyy), 
+					events: []
+				}
+            ,
 				{
-					date: 2,
-					day: "SAB",
+                    date: giorniMese(mm,yyyy),
+					day: returnDayName(5,mm,yyyy), 
+					events: []
+				}
+            , 
+				{
+                    date: giorniMese(mm,yyyy),
+					day: returnDayName(6,mm,yyyy),
 					events: [
 						{
 							color: "blue"
 						}
 					]
 				},
-				{
-					date: 3,
-					day: "DOM",
-					events: []
+                {
+                    date: giorniMese(mm,yyyy),
+					day: returnDayName(7,mm,yyyy),
+					events: [
+						{
+							color: "blue"
+						}
+					]
 				}
+				//{
+				//	date: 3,
+				//	day: "DOM",
+				//	events: []
+				//}
 			],
 			[
 				{
-					date: 4,
+					date: firstGiorniMese(mm,yyyy),
 					day: "LUN",
 					events: []
 				},
 				{
-					date: 5,
+					date: giorniMese(mm,yyyy),
 					day: "MAR",
 					events: [
 						{
-							/*Dati del evento*/
+							//Dati del evento
 							color: "red"
 						}
 					]
 				},
 				{
-					date: 6,
+					date: giorniMese(mm,yyyy),
 					day: "MER",
 					events: []
 				},
 				{
-					date: 7,
+					date: giorniMese(mm,yyyy),
 					day: "GIO",
 					events: []
 				},
 				{
-					date: 8,
+					date: giorniMese(mm,yyyy),
 					day: "VEN",
 					events: [
 						{
@@ -433,14 +617,14 @@ angular.module('starter.controllers', ['google-maps'])
 					]
 				},
 				{
-					date: 9,
+					date: giorniMese(mm,yyyy),
 					day: "SAB",
 					events: [{
 						color: "green"
 						}]
 				},
 				{
-					date: 10,
+					date: giorniMese(mm,yyyy),
 					day: "DOM",
 					events: []
 				}
@@ -448,19 +632,19 @@ angular.module('starter.controllers', ['google-maps'])
 			,
 			[
 				{
-					date: 11,
+					date: firstGiorniMese(mm,yyyy),
 					day: "LUN",
 					events: [{
 						color: "yellow"
 						}]
 				},
 				{
-					date: 12,
+					date: giorniMese(mm,yyyy),
 					day: "MAR",
 					events: []
 				},
 				{
-					date: 13,
+					date: giorniMese(mm,yyyy),
 					day: "MER",
 					events: [
 						{
@@ -473,22 +657,22 @@ angular.module('starter.controllers', ['google-maps'])
 						}]
 				},
 				{
-					date: 14,
+					date: giorniMese(mm,yyyy),
 					day: "GIO",
 					events: []
 				},
 				{
-					date: 15,
+					date: giorniMese(mm,yyyy),
 					day: "VEN",
 					events: []
 				},
 				{
-					date: 16,
+					date: giorniMese(mm,yyyy),
 					day: "SAB",
 					events: []
 				},
 				{
-					date: 17,
+					date: giorniMese(mm,yyyy),
 					day: "DOM",
 					events: []
 				}
@@ -496,37 +680,37 @@ angular.module('starter.controllers', ['google-maps'])
 			,
 			[
 				{
-					date: 18,
+					date: firstGiorniMese(mm,yyyy),
 					day: "LUN",
 					events: []
 				},
 				{
-					date: 19,
+					date: giorniMese(mm,yyyy),
 					day: "MAR",
 					events: []
 				},
 				{
-					date: 20,
+					date: giorniMese(mm,yyyy),
 					day: "MER",
 					events: []
 				},
 				{
-					date: 21,
+					date: giorniMese(mm,yyyy),
 					day: "GIO",
 					events: []
 				},
 				{
-					date: 22,
+					date: giorniMese(mm,yyyy),
 					day: "VEN",
 					events: []
 				},
 				{
-					date: 23,
+					date: giorniMese(mm,yyyy),
 					day: "SAB",
 					events: []
 				},
 				{
-					date: 24,
+					date: giorniMese(mm,yyyy),
 					day: "DOM",
 					events: []
 				}
@@ -534,46 +718,89 @@ angular.module('starter.controllers', ['google-maps'])
 			,
 			[
 				{
-					date: 25,
+					index:5,
+					date: firstGiorniMese(mm,yyyy),
 					day: "LUN",
 					events: []
 				},
 				{
-					date: 26,
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "MAR",
-					events: [{
-							color: "blue"
-						},
-						{
-							color: "red"
-						}]
+					events: []
 				},
 				{
-					date: 27,
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "MER",
-					events: [{
-						color: "blue"
-						}]
+					events: []
 				},
 				{
-					date: 28,
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "GIO",
-					events: [{
-						color: "blue"
-						}]
+					events: []
 				},
 				{
-					date: 29,
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "VEN",
 					events: []
 				},
 				{
-					date: 30,
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "SAB",
 					events: []
 				},
 				{
-					date: 31,
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "DOM",
+					events: []
+				}
+            ]
+            ,
+			[
+				{
+					index:5,
+					date: firstGiorniMese(mm,yyyy),
+					day: "LUN",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "MAR",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "MER",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "GIO",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "VEN",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
+					day: "SAB",
+					events: []
+				},
+				{
+					index:5,
+					date: giorniMese(mm,yyyy),
 					day: "DOM",
 					events: []
 				}
@@ -776,6 +1003,66 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http) {
+    //////////////////
+    $scope.id = $stateParams.id;
+
+	$scope.rifiuti = [];
+
+	$scope.locs = [];
+
+	$scope.readJson = function () {
+		$http.get('data/db/riciclabolario.json').success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+				if (data[i].tipologiaRifiuto == $scope.id) {
+					$scope.rifiuti.push(data[i]);
+				}
+			}
+		});
+		$http.get('data/db/raccolta.json').success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+				if (data[i].tipologiaRifiuto == $scope.id) {
+					$scope.locs.push(data[i]);
+				}
+			}
+			for (var i = 0; i < $scope.locs.length; i++) {
+				$scope.locs[i].aperto = false;
+				$scope.locs[i].locs = [];
+			}
+			$http.get('data/db/puntiRaccolta.json').success(function (loc) {
+				var profilo = $rootScope.selectedProfile.loc;
+				for (var i = 0; i < loc.length; i++) {
+					if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1) {
+						for (var j = 0; j < $scope.locs.length; j++) {
+							if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
+								$scope.locs[j].locs.push(loc[i]);
+							}
+						}
+					}
+				}
+			});
+			$http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
+				for (var i = 0; i < $scope.locs.length; i++) {
+					for (var j = 0; j < group.length; j++) {
+						if ($scope.locs[i].tipologiaRifiuto == group[j].name) {
+							$scope.locs[i].icon = group[j].icons[i];
+						}
+					}
+				}
+			});
+		});
+	};
+
+	$scope.containsIndirizzo = function (array, item) {
+		for (var k = 0; k < array.length; k++) {
+			if (array[k].indirizzo == item.indirizzo) {
+				return false;
+			}
+		}
+		return true;
+	};
+
+	$scope.readJson();
+    ///////////////////////////// bisogna togliere delle cose
 
 	$scope.id = $stateParams.id;
 
@@ -946,9 +1233,12 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.locs = [];
 
 	$scope.tipologiaUtenza = [
-		"utenza domestica",
-		"utenza non domestica",
-		"utenza occasionale"
+		"Residente",
+		"Azienda standard",
+		"Turista occasionale",
+        "Turista stagionale",
+        "Azienda con porta a porta"
+        
 	];
 
 	$scope.profilo = {
@@ -982,7 +1272,7 @@ angular.module('starter.controllers', ['google-maps'])
 		} else {
 			var popup = $ionicPopup.show({
 				title: '<b class="popup-title">Attenzione !<b/>',
-				template: 'Per completare il tuo prifilo devi scegliere un nome e un comune!',
+				template: 'Per completare il tuo profilo devi scegliere un nome e un comune!',
 				scope: $scope,
 				buttons: [
 					{
@@ -1026,9 +1316,11 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.locs = [];
 
 	$scope.tipologiaUtenza = [
-		"utenza domestica",
-		"utenza non domestica",
-		"utenza occasionale"
+		"Residente",
+		"Azienda standard",
+		"Turista occasionale",
+        "Turista stagionale",
+        "Azienda con porta a porta"
 	];
 
 	$scope.profilo = {
@@ -1177,7 +1469,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.v = [
 		{
 			title: "Servizio TIA e informatica",
-			t1: "Per informazioni in merito alla Tariffa di Igene Urbana",
+			t1: "Per informazioni in merito alla Tariffa di Igiene Urbana",
 			t2: "Via Padre Gnesotti, 2 38079 Tione di Trento TN",
 			t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
 			web: "www.comunitadellegiudicarie.it",
@@ -1188,7 +1480,7 @@ angular.module('starter.controllers', ['google-maps'])
 			aperto: false
 			},
 		{
-			title: "Ufficio Igene Ambientale",
+			title: "Ufficio Igiene Ambientale",
 			t1: "Per informazioni in merito alla raccolta differenziata",
 			t2: "Centro Integrato, Loc. Zuclo 38079 Zuclo TN",
 			t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
@@ -1198,6 +1490,18 @@ angular.module('starter.controllers', ['google-maps'])
 			pec: "c.giudicarie.legamail.it",
 			fax: "0465/329043",
 			aperto: false
+			},
+		{
+			title: "SOGAP SRL",
+			t1: "Il gestore dei rifiuti per la Comunità delle Giudicarie",
+			t2: "Via Cesena 13 38070 Preore (TN)",
+			//t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
+			web: "www.sogap.net",
+			tel: "0465/322755",
+			email: "info@sogap.net",
+			//pec: "c.giudicarie.legamail.it",
+			fax: "0465/323194",
+			aperto: false
 			}
 		];
 	$scope.mainScrollResize = function () {
@@ -1206,6 +1510,11 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('TutorialCtrl', function ($scope, $ionicLoading) {
+    
+    
+   $scope.prova= function (){
+            delegate.select(1);
+    }
 
 	$scope.close = function () {
 		$ionicLoading.hide();
@@ -1220,26 +1529,40 @@ angular.module('starter.controllers', ['google-maps'])
 			$scope.close();
 		}
 	};
+    
+    var getX = function(id) {
+        //toggleLeft([isOpen]);
+        var div = document.getElementById(id);
+        var rect = div.getBoundingClientRect();
+        return rect.left+0.5*(rect.right-rect.left);
+        var width  = window.innerWidth; 
+    };
+    var getY = function(id) {
+        var div = document.getElementById(id);
+        var rect = div.getBoundingClientRect();
+        return rect.top+0.5*(rect.bottom-rect.top);
+    };
 
 	$scope.tutorial = [
-		{
+		{   
 			index: 1,
+            primo: 44,
 			title: "Benvenuto!",
 			x: 3,
 			y: 40,
 			text: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare uno specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
-			imgX: 72,
-			imgY: 11,
+			imgX: function(){var width  = window.innerWidth; return width-80}, //getX("searchButton")-320},
+			imgY: function(){return getY("searchButton")-50},
 			skippable: true
 		},
 		{
 			index: 1,
 			title: "Tipologie di rifiuto",
-			x: 3,
-			y: 17,
+			x: 3,//3
+			y: 40,
 			text: "Scopri quali rifiuti appartengono ad una certa categoria e dove devono essere conferiti.",
-			imgX: 34,
-			imgY: 37,
+			imgX: function(){return getX("rifiutoId")-45},
+			imgY: function(){return getY("rifiutoId")-40},
 			skippable: true
 		},
 		{
@@ -1248,8 +1571,8 @@ angular.module('starter.controllers', ['google-maps'])
 			x: 3,
 			y: 40,
 			text: "Tieni sotto controllo le scadenze della raccolta porta a porta e aggiungi delle note personali.",
-			imgX: 0,
-			imgY: 2,
+			imgX: function(){return getX("noteId")+25},
+			imgY: function(){return getY("noteId")-50},
 			skippable: true
 		},
 		{
@@ -1258,8 +1581,8 @@ angular.module('starter.controllers', ['google-maps'])
 			x: 3,
 			y: 40,
 			text: "Verifica quali rifiuti vengono raccolti oggi e quali punti di raccolta sono aperti.",
-			imgX: 68,
-			imgY: 2,
+			imgX: function(){var width  = window.innerWidth; return 0.5*width+80},//return getX("calendarioId")+305},
+			imgY: function(){return getY("calendarioId")-50},
 			skippable: true
 		},
 		{
@@ -1268,8 +1591,8 @@ angular.module('starter.controllers', ['google-maps'])
 			x: 3,
 			y: 40,
 			text: "Premi qui per aprire il menù laterale e scoprire ulteriori funzionalità",
-			imgX: 0,
-			imgY: -4,
+			imgX: function(){return getX("menuId")-120},
+			imgY: function(){return getY("menuId")-50},
 			skippable: false
 		}
 	];

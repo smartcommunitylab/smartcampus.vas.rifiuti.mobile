@@ -139,6 +139,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'google-maps'])
 			}
 		}
 	})
+    
+    .state('app.prova', {
+		url: "/rifiutoS/:id",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/srifiuto.html",
+				controller: 'RifiutoCtrl'
+			}
+		}
+	})
 
 	.state('app.puntoDiRaccolta', {
 		url: "/puntoDiRaccolta/:id",
