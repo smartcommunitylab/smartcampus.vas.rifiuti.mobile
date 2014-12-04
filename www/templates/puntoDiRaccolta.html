@@ -1,13 +1,13 @@
 <ion-nav-buttons side="left">
 	<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
-		<span class="bar-back">Punto di raccolta</span>
+		<span class="bar-back">{{"Punto di raccolta"|translate}}</span>
 		</br>
 		<p class="title-subtext">{{pdr.tipologiaPuntiRaccolta}} {{indirizzoIfIsCRM()}}</p>
 	</button>
 </ion-nav-buttons>
 <ion-content class="background-grey-ligh" has-bouncing="false">
 	<div class="subpage-title">
-		<h1 class="title">DETTAGLI</h1>
+		<h1 class="title">{{"DETTAGLI"|translate}}</h1>
 	</div>
 	<div class="row low-padding no-vertical-padding">
 		<div class="col col-67 no-left-padding no-vertical-padding">
@@ -35,11 +35,11 @@
 		</div>
 	</div>
 	<div class="subpage-title">
-		<h1 class="title">TIPOLOGIE DI RACCOLTA</h1>
+		<h1 class="title">{{"TIPOLOGIE DI RACCOLTA"|translate}}</h1>
 	</div>
 	<ion-list>
 		<ion-item class="low-padding no-link-padding" ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
-			{{rifiuto}}
+			{{rifiuto|translate}}
 		</ion-item>
 	</ion-list>
 </ion-content>

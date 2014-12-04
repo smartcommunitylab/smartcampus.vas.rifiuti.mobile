@@ -1,5 +1,29 @@
 angular.module('starter.controllers', ['google-maps'])
 
+.controller("ExampleController", function($scope, $cordovaCamera) {
+ 
+    $scope.takePicture = function() {
+        var options = { 
+            quality : 75, 
+            destinationType : Camera.DestinationType.DATA_URL, 
+            sourceType : Camera.PictureSourceType.CAMERA, 
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+ 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
+    }
+ 
+})
+
 .controller('AppCtrl', function ($scope, $rootScope, $location) {
 	$scope.showTutorial = function () {
 		$rootScope.showTutorial = true;
@@ -23,7 +47,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$rootScope.selectProfile(0);
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading, $ionicScrollDelegate) {
 
     $scope.height  = window.innerHeight;
     $scope.width  = window.innerWidth;
@@ -39,19 +63,33 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.rifiuti = [];
 	$scope.f = [];
 	$scope.listaRifiuti = [];
+    $scope.calendarClick = null;
+    $scope.calendarView = false;
 
 	$rootScope.showTutorial;
     
         
     $scope.click2 = function () {
+        
+        $scope.calendarClick = null;
 		$scope.calendarView = !$scope.calendarView;
 		$scope.updateIMG2();
+        
+        $ionicScrollDelegate.scrollTop();
     }
     
-    $scope.variableIMG2 = "img/ic_list.png";
+    $scope.click3 = function (i) {
+        
+        $scope.calendarClick = i;
+		$scope.calendarView = !$scope.calendarView;
+		$scope.updateIMG2();
+        
+    }
+    
+    $scope.variableIMG2 = "img/listView.png";
 
 	$scope.updateIMG2 = function () {
-		$scope.variableIMG2 = $scope.calendarView ? "img/ic_map.png"  :"img/ic_list.png" ;
+		$scope.variableIMG2 = $scope.calendarView ? "img/tableView.png"  :"img/listView.png" ;
 	};
     
     
@@ -328,10 +366,8 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.leftClick = function () {
 		if (!$scope.noteSelected) {
             $ionicSideMenuDelegate.toggleLeft();
-            //delegate.select(1); //serve perchè altrimenti se è su calendario con home non torna su "dove lo butto?"
 		} else {
 			$scope.noteReset();
-           // delegate.select(1);
 		}
 	};
 
@@ -403,25 +439,30 @@ angular.module('starter.controllers', ['google-maps'])
 
 	$scope.getEmptyArrayByLenght = function (lenght) {
 		var array = [];
+        if(lenght < 100){}
+        else lenght = 100;
 		for (var i = 0; i < lenght; i++) {
 			array.push(i);
 		}
 		return array;
 	};
     
+    
     $scope.DayDiff = function()
     {
-            var CurrentDate = new Date();
+            if ($scope.calendarClick == null)
+                var CurrentDate = new Date();
+            else
+                var CurrentDate = new Date(y,m,$scope.calendarClick,0,0,0,0);
             var TYear=CurrentDate.getFullYear();
             var nextYear = "January, 01, "+(TYear+1)
             var TDay=new Date(nextYear);
             TDay.getFullYear(TYear);
             var DayCount=(TDay-CurrentDate)/(1000*60*60*24);
-            DayCount=Math.round(DayCount); 
-        return(DayCount+8);
+            //DayCount=Math.round(DayCount); 
+        return(DayCount+14);
     }
 
-	//$scope.today = 22;
     
         var mesi = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
     
@@ -438,7 +479,17 @@ angular.module('starter.controllers', ['google-maps'])
     
     function giorniMese (mm,yyyy) {
         //if (month[][week].index!=1) $scope.giornoCounter=0;
-        if ($scope.giornoCounter!=0) return null;
+        if ($scope.giornoCounter!=0 || $scope.counterGiorniMese>31) return null;
+        for(var i=1; i<7; i+=2)
+            if ($scope.counterGiorniMese >= 30 && mm==i) return null;
+        for(var k=8; k<11; k+=2)
+            if ($scope.counterGiorniMese >= 30 && mm==k) return null;
+        for(var i=0; i<7; i+=2)
+            if ($scope.counterGiorniMese >= 31 && mm==i) return null;
+        for(var i=7; i<12; i+=2)
+            if ($scope.counterGiorniMese >= 31 && mm==i) return null;
+        if (mm==1 && yyyy%4==0 && $scope.counterGiorniMese >=29) return null;
+        if (mm==1 && yyyy%4!=0 && $scope.counterGiorniMese >=28) return null;
         $scope.counterGiorniMese++; 
         datax= new Date(yyyy,mm,$scope.counterGiorniMese,0,0,0,0);
         if(isLastDay(datax)){
@@ -453,25 +504,43 @@ angular.module('starter.controllers', ['google-maps'])
     
     function firstGiorniMese (mm,yyyy) {
         $scope.giornoCounter=0;
+        
+        if ($scope.counterGiorniMese>31) return null;
+        
+        if (mm==1 && yyyy%4==0 && $scope.counterGiorniMese >=29) return null;
+        if (mm==1 && yyyy%4!=0 && $scope.counterGiorniMese >=28) return null;
         $scope.counterGiorniMese++; 
         datax= new Date(yyyy,mm,$scope.counterGiorniMese,0,0,0,0);
-        
-            return $scope.counterGiorniMese;
+        tmp= $scope.counterGiorniMese;
+        //$scope.counterGiorniMese=0;
+            return tmp;
     }
     
     $scope.mm;
     $scope.yyyy;
     
+    $scope.counterVerde = 0;
+    
     var oggi = new Date();
     $scope.today = oggi.getDate();
+    $scope.meseN = oggi.getMonth();
     mm = oggi.getMonth(); //January is 0!
+    costante = oggi.getMonth();
     yyyy = oggi.getFullYear();
     $scope.giornoSettimanaOggi = oggi.getDay();
+    var m=mm;
+    var y=yyyy;
     
     function daysInMonth(month,year) {
     return new Date(year, month+1, 0).getDate();
 }
-    function monthYear(){return currentMonth+" "+currentYear}; //novembre 2014
+    
+    //function monthYear(){return mesi[mm]+" "+yyyy};//es Novembre 2014
+    
+    function monthYear(a,b){return mesi[a]+" "+b};
+    
+   
+   
     
     /*$scope.dayDayMonthYear= function(date) { //es.: Martedì 12 settembre 2014
         var day = giorniC[date.getDay()];
@@ -516,16 +585,21 @@ angular.module('starter.controllers', ['google-maps'])
     }*/
     
     $scope.aggiungiGiorni = function (i){
-        var d = new Date();
+        
+        if($scope.calendarClick!=null)
+            var d = new Date(y,m,$scope.calendarClick,0,0,0,0);
+        else
+            var d = new Date();
         a = d.getDate();
         d.setDate(a + i);
         return d;
     }
 
+    
     var currentMonth = mesi[mm];
     var currentYear = yyyy;
 	$scope.month = {
-		name:  monthYear(),
+		name:  monthYear(mm,yyyy),
 		weeks: [ 
 			[ //for(int i=0;i<daysInMonth($scope.mm,$scope.yyyy);i++)
                 {
@@ -807,6 +881,91 @@ angular.module('starter.controllers', ['google-maps'])
 			]
 		]
 	};
+    
+        $scope.lastMonth = function (){
+            $scope.counterVerde--;
+            $scope.giornoCounter=0;
+            $scope.counterGiorniMese=0;
+            
+            if(m==0){
+                m=11; y--;
+            }
+            else
+                m--;
+            
+            $scope.month.name = monthYear(m,y);
+            
+            for (var i =0; i<6;i++){
+                for( var k=0; k<7;k++){
+                    if(k==0)
+                        $scope.month.weeks[i][k].date = firstGiorniMese(m,y);
+                    else
+                        $scope.month.weeks[i][k].date = giorniMese(m,y);
+                    if (i==0){
+                        $scope.month.weeks[i][k].day =  returnDayName(k+1,m,y); 
+                    }
+                        
+                    }
+            }
+            
+        }
+        
+        $scope.nextMonth = function (){
+            $scope.counterVerde++;
+            $scope.giornoCounter=0;
+            $scope.counterGiorniMese=0;
+            
+            if(m==11){
+                m=0; y++;
+            }
+            else
+                m++;
+            
+            $scope.month.name = monthYear(m,y);
+            for (var i =0; i<6;i++){
+                for( var k=0; k<7;k++){
+                    if(k==0)
+                        $scope.month.weeks[i][k].date = firstGiorniMese(m,y);
+                    else
+                        $scope.month.weeks[i][k].date = giorniMese(m,y);
+                    if (i==0){
+                        $scope.month.weeks[i][k].day =  returnDayName(k+1,m,y); 
+                    }
+                        
+                    }
+            }
+        }
+        
+        $scope.goToToday = function (){
+            if($scope.calendarView==false){   
+                $scope.counterGiorniMese=0;
+                $scope.counterVerde=0;
+                m=mm; y=yyyy; 
+                $scope.month.name = monthYear(m,y);
+
+                for (var i =0; i<6;i++){
+                    for( var k=0; k<7;k++){
+                        if(k==0)
+                            $scope.month.weeks[i][k].date = firstGiorniMese(m,y);
+                        else
+                            $scope.month.weeks[i][k].date = giorniMese(m,y);
+                        if (i==0){
+                            $scope.month.weeks[i][k].day =  returnDayName(k+1,m,y); 
+                        }
+
+                    }
+                }   
+            }
+            else if($scope.calendarView==true){
+                $scope.calendarClick = null;
+                $ionicScrollDelegate.scrollTop();
+                
+               
+                
+            }
+        }
+        
+    
 })
 
 .controller('InfoCtrl', function ($scope) {})
@@ -1062,7 +1221,7 @@ angular.module('starter.controllers', ['google-maps'])
 	};
 
 	$scope.readJson();
-    ///////////////////////////// bisogna togliere delle cose
+    ///////////////////////////// forse bisogna togliere delle cose
 
 	$scope.id = $stateParams.id;
 
@@ -1199,6 +1358,10 @@ angular.module('starter.controllers', ['google-maps'])
 		}
 	};
 })
+
+
+
+
 
 .controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
@@ -1468,22 +1631,22 @@ angular.module('starter.controllers', ['google-maps'])
 .controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
 	$scope.v = [
 		{
-			title: "Servizio TIA e informatica",
-			t1: "Per informazioni in merito alla Tariffa di Igiene Urbana",
-			t2: "Via Padre Gnesotti, 2 38079 Tione di Trento TN",
-			t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
-			web: "www.comunitadellegiudicarie.it",
-			tel: "0465/339532",
-			email: "serviziotiaeinformatica@comunedellegiudicarie.it",
-			pec: "c.giudicarie.legamail.it",
-			fax: "0465/339548",
+			title: "y1",
+			t1: "y2",
+			t2: "y3",
+			t3: "y4",
+			web: "y5",
+			tel: "y6",
+			email: "y7",
+			pec: "y8",
+			fax: "y9",
 			aperto: false
 			},
 		{
-			title: "Ufficio Igiene Ambientale",
-			t1: "Per informazioni in merito alla raccolta differenziata",
-			t2: "Centro Integrato, Loc. Zuclo 38079 Zuclo TN",
-			t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
+			title: "u1",
+			t1: "u2",
+			t2: "u3",
+			t3: "u4",
 			web: "www.comunitadellegiudicarie.it",
 			tel: "0465/325038",
 			email: "rifiuti@comunitadellegiudicarie.it",
@@ -1493,13 +1656,11 @@ angular.module('starter.controllers', ['google-maps'])
 			},
 		{
 			title: "SOGAP SRL",
-			t1: "Il gestore dei rifiuti per la Comunità delle Giudicarie",
+			t1: "i2",
 			t2: "Via Cesena 13 38070 Preore (TN)",
-			//t3: "lunedì - giovedì 8.30-12.30 14.00-17.00 venerdì 8.30-12.30",
 			web: "www.sogap.net",
 			tel: "0465/322755",
 			email: "info@sogap.net",
-			//pec: "c.giudicarie.legamail.it",
 			fax: "0465/323194",
 			aperto: false
 			}
@@ -1547,51 +1708,51 @@ angular.module('starter.controllers', ['google-maps'])
 		{   
 			index: 1,
             primo: 44,
-			title: "Benvenuto!",
+			title: "TTUno",
 			x: 3,
 			y: 40,
-			text: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare uno specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
+			text: "TutorialUno",
 			imgX: function(){var width  = window.innerWidth; return width-80}, //getX("searchButton")-320},
 			imgY: function(){return getY("searchButton")-50},
 			skippable: true
 		},
 		{
 			index: 1,
-			title: "Tipologie di rifiuto",
+			title: "TTDue",
 			x: 3,//3
 			y: 40,
-			text: "Scopri quali rifiuti appartengono ad una certa categoria e dove devono essere conferiti.",
+			text: "TutorialDue",
 			imgX: function(){return getX("rifiutoId")-45},
 			imgY: function(){return getY("rifiutoId")-40},
 			skippable: true
 		},
 		{
 			index: 1,
-			title: "Scadenze e note",
+			title: "TTTre",
 			x: 3,
 			y: 40,
-			text: "Tieni sotto controllo le scadenze della raccolta porta a porta e aggiungi delle note personali.",
+			text: "TutorialTre",
 			imgX: function(){return getX("noteId")+25},
 			imgY: function(){return getY("noteId")-50},
 			skippable: true
 		},
 		{
 			index: 1,
-			title: "Calendario",
+			title: "TTQuattro",
 			x: 3,
 			y: 40,
-			text: "Verifica quali rifiuti vengono raccolti oggi e quali punti di raccolta sono aperti.",
+			text: "TutorialQuattro",
 			imgX: function(){var width  = window.innerWidth; return 0.5*width+80},//return getX("calendarioId")+305},
 			imgY: function(){return getY("calendarioId")-50},
 			skippable: true
 		},
 		{
 			index: 1,
-			title: "Menù laterale",
+			title: "TTCinque",
 			x: 3,
 			y: 40,
-			text: "Premi qui per aprire il menù laterale e scoprire ulteriori funzionalità",
-			imgX: function(){return getX("menuId")-120},
+			text: "TutorialCinque",
+			imgX: function(){return getX("menuId")-66},
 			imgY: function(){return getY("menuId")-50},
 			skippable: false
 		}

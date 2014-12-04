@@ -1,7 +1,18 @@
 <ion-nav-buttons side="left">
-	<button ng-click="back()" class="button button-clear button-light ion-chevron-left">
-		<span class="bar-back-center">Profili</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>
+	<button ng-click="back()" class="row button button-clear button-light ion-chevron-left">
+        <img class="img-menu" style="position:absolute;display:block;top:-0px;" src="/img/ic_launcher.png">
+        <div  class="prova" style="margin-left:36px">
+            <span class="prova2">{{"Profili"|translate}}</span>
+            <div class="prova3">{{selectedProfile.name}}
+            </div>
+        </div>
+        <!--<span class="bar-back-center">Profili</span>
+        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
+		<!-- ##style="position:absolute;display:block;top:-5px;"##<img ng-if="!noteSelected" class="img-menu" src="/img/ic_launcher.png">
+        <div  class="prova">
+            <span class="prova2" style="display:block; width:166px;">Profili</span>
+            <div class="prova3" style="display:block; margin-left:62px;">{{selectedProfile.name}}</div>
+        </div>-->
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
@@ -10,22 +21,22 @@
 	</button>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div class="high-padding profili-titolo">Nome del profilo</div>
+	<div class="high-padding profili-titolo">{{"Nome del profilo" | translate}}</div>
 	<div class="item item-input-inset no-border background-grey-light">
-		<input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
+		<input type="search" ng-model="profilo.name" placeholder="{{'Nome del profilo'|translate}}" class="border-underline background-grey-light">
 	</div>
 	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">Tipo di utenza</div>
+		<div class="high-padding profili-titolo">{{"Tipo di utenza" | translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height">
 			<select ng-model="profilo.utenza" ng-options="item for item in tipologiaUtenza" class="background-grey-light max-width">
 			</select>
 		</label>
 	</div>
 	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">Comune/Località</div>
+		<div class="high-padding profili-titolo">{{"Comune o Località" | translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height">
 			<select ng-model="profilo.comune" ng-options="item for item in locs" class="background-grey-light max-width">
-				<option value="">Selezionare</option>
+				<option value="">{{"Selezionare" | translate}}</option>
 			</select>
 		</label>
 	</div>

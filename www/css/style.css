@@ -6,14 +6,26 @@
 .angular-google-map-container {
 	height: 800px;
 }
-.bar-title {
+.bar-title {  
+	margin-left: 10px;
+	padding-left: 35px;
+	padding-bottom: 5px;
+	background-image: url("../img/ic_launcher.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+}
+<!--.bar-title {
+display:block;
+    width:140px;
+    position:absolute;
+    top:0px;
 	margin-left: 10px;
 	padding-left: 35px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-image: url("../img/ic_launcher.png");
 	background-size: 30px 30px;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat;-->
 }
 .bar-back {
 	padding-left: 35px;
@@ -40,6 +52,13 @@
 	height: 30px;
 	width: 30px;
 }
+
+.img-menu {
+    margin-left: 5px;
+	height: 30px;
+	width: 30px;
+}
+
 .bar-button::after {
 	position: relative;
 }
@@ -407,3 +426,45 @@
 	height: 5px;
 	width: 5px;
 }
+
+.prova {
+}
+
+.prova2 {
+    
+    padding-left:3px;
+    position:absolute;
+    display: block;
+    top:-5px;
+    width: 200px;
+    text-align: left
+}
+
+.prova3 {
+    display: block;
+    padding-left: 3px;    
+    top:10px;
+    position:absolute;
+    height:10px;
+    font-size: 13px;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

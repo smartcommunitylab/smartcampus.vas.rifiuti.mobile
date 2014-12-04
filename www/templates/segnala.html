@@ -1,32 +1,49 @@
 <ion-nav-buttons side="left">
-	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-		<span class="bar-title">Segnalazione</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>
+	<button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+        <img ng-if="!noteSelected" class="img-menu" src="/img/ic_launcher.png">
+            <div  class="prova">
+                <span class="prova2">{{"Segnalazione"|translate}}</span>
+                <div class="prova3">{{selectedProfile.name}}</div>
+            </div>
+		<!--<span class="bar-title">Segnalazione</span>
+        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
 	</button>
 </ion-nav-buttons>
-<ion-content has-bouncing="false" class="background-grey-light">
+<ion-content ng-controller="ExampleController" has-bouncing="false" class="background-grey-light">
 	<div class="high-padding segnala-descrizione">
-		Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.
+        {{"Invia"|translate}}
 	</div>
 	<div class="item item-input-inset no-border background-grey-light">
-		<input type="search" ng-init="text = ''" ng-model="text" placeholder="Inserisci qui il testo della segnalazione" class="border-underline background-grey-light">
+		<input type="search" ng-init="text = ''" ng-model="text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light">
 	</div>
 	<div class="row high-padding">
 		<div class="col col-15 position-relative">
-			<img ng-src="img/ic_camera.png" class="standard-size" />
+			<!--<img ng-src="img/ic_camera.png" class="standard-size" />-->
 			<!--<button class="button button-icon icon ion-camera info-button"></button>-->
 		</div>
-		<div class="col segnala-testo auto-center"><input type="file" accept="image/*;capture=camera"></div>
+		<!--<div class="col segnala-testo auto-center"><input type="file" accept="image/*;capture=camera"></div>-->
+         
+            
 	</div>
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+                <img ng-show="imgURI === undefined" >
+                <button style="background-image: url('img/ic_camera.png');background-size: 50px 50px;
+	background-repeat: no-repeat;" class="button" ng-click="takePicture()"></button>
+    
 	<div class="row high-padding" ng-click="toggleCheck()">
 		<div class="col col-10 no-vertical-padding position-relative">
 			<img ng-src="{{checkboxImage}}" class="menu-size" />
 		</div>
 		<div class="col segnala-testo no-vertical-padding auto-center">
-			Allega la tua posizione
+            {{"Allega la tua posizione"|translate}}
 		</div>
 	</div>
 </ion-content>
+<!--<ion-content ng-controller="ExampleController">
+                <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+                <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+                <button class="button" ng-click="takePicture()">Take Picture</button>
+            </ion-content>-->
 <div class="bar bar-footer">
-	<button class="button button-balanced button-block background-green-dark segnala-button">Segnala!</button>
+	<button class="button button-balanced button-block background-green-dark segnala-button">{{"Segnala!"|translate }}</button>
 </div>

@@ -1,6 +1,6 @@
 <ion-nav-buttons side="left">
 	<button ng-click="back()" class="button button-clear button-light ion-chevron-left">
-		<span class="bar-back-center">Profili</span>
+		<span class="bar-back-center">{{"Profili"|translate}}</span>
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
@@ -12,24 +12,24 @@
 	</button>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div class="high-padding profili-titolo">Nome del profilo</div>
+	<div class="high-padding profili-titolo">{{"Nome del profilo"|translate}}</div>
 	<div class="item item-input-inset no-border background-grey-light" ng-show="editMode">
 		<input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
 	</div>
 	<p class="low-padding" ng-show="!editMode">{{profilo.name}}</p>
 	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">Tipo di utenza</div>
+		<div class="high-padding profili-titolo">{{"Tipo di utenza"|translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
 			<select ng-model="profilo.utenza" ng-options="item for item in tipologiaUtenza" class="background-grey-light max-width">
 			</select>
 		</label>
-		<p class="low-padding"  ng-show="!editMode">{{profilo.utenza}}</p>
+		<p class="low-padding"  ng-show="!editMode">{{profilo.utenza|translate}}</p>
 	</div>
 	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">Comune/Località</div>
+		<div class="high-padding profili-titolo">{{"Comune o Località"|translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
 			<select ng-model="profilo.comune" ng-options="item for item in locs" class="background-grey-light max-width">
-				<option value="">Selezionare</option>
+				<option value="">{{"Selezionare"|translate}}</option>
 			</select>
 		</label>
 		<p class="low-padding"  ng-show="!editMode">{{profilo.comune}}</p>

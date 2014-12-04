@@ -1,13 +1,13 @@
 <div ng-controller="TutorialCtrl">
-	<button class="button button-energized position-absolute tutorial-button" style="bottom:15px; left:15px;" ng-show="tutorial[index].skippable" ng-click="close()">Salta</button>
-	<button class="button button-energized position-absolute tutorial-button" style="bottom:15px; right:15px;" ng-click="next()">{{tutorial[index].skippable ? 'Avanti' : 'OK'}}</button>
+	<button class="button button-energized position-absolute tutorial-button" style="bottom:15px; left:15px;" ng-show="tutorial[index].skippable" ng-click="close()">{{"Salta"|translate}}</button>
+	<button class="button button-energized position-absolute tutorial-button" style="bottom:15px; right:15px;" ng-click="next()">{{tutorial[index].skippable ? 'Avanti' : 'OK'|translate}}</button>
 	<div class="position-absolute" style="top:{{tutorial[index].y}}%; left:{{tutorial[index].x}}%;">
-		<h1>{{tutorial[index].title}}</h1>
-		<p>{{tutorial[index].text}}</p>
+		<h1>{{tutorial[index].title|translate}}</h1>
+		<p>{{tutorial[index].text|translate}}</p>
 	</div ng-app="">
 	<img  class="position-absolute" style="top:{{tutorial[index].imgY()}}px; left:{{tutorial[index].imgX()}}px;" src="img/rifiuti_tutorial.png"/>
     
     
 	<!--NB: l' immagine andrà cambiata !-->
-	<!--NB: le coordinate andranno date in px e non in percentuale, e bisognerà avere 2 set di coordinate, uno per il telefono dritto, e uno per il telefono messo sul fianco.Filippo: le coordinate dell'icona search andranno aggiustate: per il momento il cerchio viene spostato di tanti pixel quanta è la larghezza del menù. bisognerà mettere un controllo per vedere se il menù è aperto o chiuso.-->
+	<!--NB: le coordinate andranno date in px e non in percentuale, e bisognerà avere 2 set di coordinate, uno per il telefono dritto, e uno per il telefono messo sul fianco.-->
 </div>

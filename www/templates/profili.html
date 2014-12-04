@@ -1,7 +1,12 @@
 <ion-nav-buttons side="left">
-	<button menu-toggle="left" class="button button-clear button-light icon-left ion-navicon">
-		<span class="bar-title">Profili</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>
+	<button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+        <img ng-if="!noteSelected" class="img-menu" src="/img/ic_launcher.png">
+        <div  class="prova">
+            <span class="prova2" >{{"Profili" | translate}}</span>
+            <div class="prova3">{{selectedProfile.name}}</div>
+        </div>
+		<!--<span class="bar-title">Profili</span>
+        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">
@@ -21,7 +26,7 @@
 					</div>
 					<div class="row profili-info">
 						<div class="col no-border">
-							{{profilo.type}}: {{profilo.loc}}
+							{{profilo.type | translate}}: {{profilo.loc}}
 						</div>
 					</div>
 				</div>
