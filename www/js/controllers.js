@@ -47,7 +47,7 @@ angular.module('starter.controllers', ['google-maps'])
 	$rootScope.selectProfile(0);
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading, $ionicScrollDelegate) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicTabsDelegate, $ionicSideMenuDelegate, $timeout, $ionicPopup, $http, $location, $ionicLoading, $ionicScrollDelegate, $translate) {
 
     $scope.height  = window.innerHeight;
     $scope.width  = window.innerWidth;
@@ -437,15 +437,17 @@ angular.module('starter.controllers', ['google-maps'])
 		}
 	};
 
+    
 	$scope.getEmptyArrayByLenght = function (lenght) {
 		var array = [];
         if(lenght < 100){}
         else lenght = 100;
 		for (var i = 0; i < lenght; i++) {
-			array.push(i);
+			array.push(i-1);
 		}
 		return array;
 	};
+    
     
     
     $scope.DayDiff = function()
@@ -459,9 +461,12 @@ angular.module('starter.controllers', ['google-maps'])
             var TDay=new Date(nextYear);
             TDay.getFullYear(TYear);
             var DayCount=(TDay-CurrentDate)/(1000*60*60*24);
-            //DayCount=Math.round(DayCount); 
+            DayCount=Math.round(DayCount);
         return(DayCount+14);
     }
+    
+    
+    $scope.arrayD = $scope.getEmptyArrayByLenght($scope.DayDiff());
 
     
         var mesi = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
@@ -557,7 +562,9 @@ angular.module('starter.controllers', ['google-maps'])
         var Day = date.getDate();
         var month = mesi[date.getMonth()];
         var year = date.getFullYear();
+        
         return day+" "+Day+" "+month+" "+year;
+        
     }
     
     
@@ -590,8 +597,8 @@ angular.module('starter.controllers', ['google-maps'])
             var d = new Date(y,m,$scope.calendarClick,0,0,0,0);
         else
             var d = new Date();
-        a = d.getDate();
-        d.setDate(a + i);
+        //a = d.getDate();
+        d.setDate(d.getDate() + i);
         return d;
     }
 

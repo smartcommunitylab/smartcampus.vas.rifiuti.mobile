@@ -727,6 +727,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
         'Isola Ecologica':"Recycling depot",
         CRM:"Dump",
         Rivenditore:"Seller",
+        'Cosa vuoi ricordare?':"What do you want to remember?",
         
          
         
@@ -737,7 +738,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
     });
     $translateProvider.preferredLanguage(current_lang);
     //debug only
-    $translateProvider.preferredLanguage("en"); // solo lingua inglese, commentare per attivare il riconoscimento della lingua
+    //$translateProvider.preferredLanguage("en"); // solo lingua inglese, commentare per attivare il riconoscimento della lingua automatico
     //end debug only
     
     $translateProvider.fallbackLanguage("it");

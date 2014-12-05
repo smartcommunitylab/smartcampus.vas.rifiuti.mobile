@@ -360,6 +360,12 @@ display:block;
 .tutorial-button {
 	width: 105px;
 }
+
+.my-item {
+    left:0;
+    right:0;
+}
+
 .col-15 {
 	-webkit-box-flex: 0;
 	-webkit-flex: 0 0 15%;
@@ -436,7 +442,7 @@ display:block;
     position:absolute;
     display: block;
     top:-5px;
-    width: 200px;
+    width: 150px;
     text-align: left
 }
 

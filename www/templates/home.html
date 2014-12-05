@@ -126,8 +126,8 @@
 				</div>
 				<!--<button  ng-if="!calendarView" ng-click="reset()">Emergency Reset!!! (PER DEBUG)</button>-->    
                 <div  ng-if="calendarView">
-                <ion-list  id="listaCalendario" ng-if="$index<100" ng-repeat="day in getEmptyArrayByLenght(DayDiff())" >
-                    <ion-item style="text-align:center;" class="background-grey-light">
+                <ion-list  id="listaCalendario" ng-if="$index<100" ng-repeat="day in arrayD" >
+                    <ion-item style="text-align:center;" class="my-item background-grey-light">
                         {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[0] | translate}}
                         {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[1] | translate}}
                         {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[2] | translate}}
