@@ -100,6 +100,9 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
 
 
 
+
+
+
 /*.config(function ($translateProvider){
     $translateProvider.translations("en",{
         hello_message: "ciao",
@@ -710,7 +713,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
         'Zanzariere':"Mosquito net",
         'Zerbini':"Doormat",
         'Zoccoli':"Clogs",
-
+        'Scatta una foto':"Take a photo",
                 
        
      
@@ -742,6 +745,12 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
     //end debug only
     
     $translateProvider.fallbackLanguage("it");
+    
+   
+    
+    
+    
+    
     
     
     

@@ -1,5 +1,26 @@
 angular.module('starter.controllers', ['google-maps'])
 
+
+.controller("emailController", function ($scope){
+    
+    
+    sendEmail= function() {
+        cordova.plugins.email.open({
+        to:          "prova", // email addresses for TO field
+        cc:          "prova", // email addresses for CC field
+        bcc:         "prova", // email addresses for BCC field
+        attachments: "prova", // file paths or base64 data streams
+        subject:    "prova", // subject of the email
+        body:       "prova", // email body (for HTML, set isHtml to true)
+        isHtml:    false, // indicats if the body is HTML or plain text
+    }, callback, scope);
+    
+     
+}    
+    
+    
+})
+
 .controller("ExampleController", function($scope, $cordovaCamera) {
  
     $scope.takePicture = function() {
@@ -9,8 +30,8 @@ angular.module('starter.controllers', ['google-maps'])
             sourceType : Camera.PictureSourceType.CAMERA, 
             allowEdit : true,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 300,
-            targetHeight: 300,
+            targetWidth: 200,
+            targetHeight: 200,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
         };
@@ -1625,6 +1646,10 @@ angular.module('starter.controllers', ['google-maps'])
 	$scope.init();
 })
 
+
+
+
+
 .controller('SegnalaCtrl', function ($scope) {
 	$scope.checked = true;
 	$scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
@@ -1633,7 +1658,39 @@ angular.module('starter.controllers', ['google-maps'])
 		$scope.checked = !$scope.checked;
 		$scope.checkboxImage = $scope.checked ? "img/rifiuti_btn_check_on_holo_light.png" : "img/rifiuti_btn_check_off_holo_light.png";
 	};
+    
+     
+    
+    function opzInCasoDiErrore(error){ 
+  alert( "Errore " + error.code + ": " + error.message);
+}
+    var GPScoords;
+    
+    $scope.posizioneG = function (){
+     //navigator.geolocation.getCurrentPosition(success);
+        //if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        alert("your position is: "
+                + position.coords.latitude + ", "
+                + position.coords.longitude);
+            GPScoords = position.coords.latitude + ", " + position.coords.longitude;
+    });
+     // } else {
+      //  showError("Your browser does not support Geolocation!");
+     // }
+    }
+    
+    
+    
+    
 })
+
+
+
+
+
+
+
 
 .controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
 	$scope.v = [
