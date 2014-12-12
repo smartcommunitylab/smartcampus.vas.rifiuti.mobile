@@ -80,12 +80,12 @@
 		</ion-tab>
 
 		<ion-tab id="calendarioId" title="{{'CALENDARIO'|translate}}">
-			<ion-nav-buttons class="row" side="right">
+			<ion-nav-buttons side="right">
 				<button ng-click="goToToday()" class="button button-clear button-light menu-edit-button nav-bar-buttons-alignment">
 					<img src="img/today.png" class="standard-size" />
 				</button>
-                <button ng-click="click2()" class="button button-clear button-light nav-bar-buttons-alignment bar-button">
-					<img src="{{variableIMG2}}" class="standard-size" />
+                <button ng-click="click2()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
+					<img ng-src="{{variableIMG2}}" class="standard-size" />
 				</button>
 			</ion-nav-buttons>
 			<ion-content has-bouncing="false" class="home-tabs-content background-grey-light">
