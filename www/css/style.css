@@ -48,6 +48,11 @@ display:block;
 	height: 35px;
 	width: 35px;
 }
+.big-size {
+    margin-bottom: 10px;
+	height: 45px;
+	width: 45px;    
+}
 .menu-size {
 	height: 30px;
 	width: 30px;
@@ -58,6 +63,8 @@ display:block;
 	height: 30px;
 	width: 30px;
 }
+
+
 
 .bar-button::after {
 	position: relative;
@@ -436,7 +443,7 @@ display:block;
     position:absolute;
     display: block;
     top:-5px;
-    width: 150px;
+    width: 180px;
     text-align: left
 }
 

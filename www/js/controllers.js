@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['google-maps'])
     
     
     sendEmail= function() {
-        cordova.plugins.email.open({
+        window.plugins.email.open({
         to:          "prova", // email addresses for TO field
         cc:          "prova", // email addresses for CC field
         bcc:         "prova", // email addresses for BCC field

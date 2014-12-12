@@ -140,7 +140,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
         Invia:"Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
          Progetto:'"100% Riciclo" è un progetto di:',
         Collaborazione:"con la collaborazione di:",
-        Eventuali:"Per eventuali segnalazioni o richieste di informazioni contattateci scrivendo a ",
+        Eventuali:"Per informazioni:",
         
         TutorialUno:"Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare uno specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
         TutorialDue:"Scopri quali rifiuti appartengono ad una determinata categoria e scopri dove devono essere conferiti",
@@ -271,7 +271,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
         
         Progetto:'"100% Riciclo" is a project by:',
         Collaborazione:"with the collaboration of:",
-        Eventuali:"For any report or request of informations please contact us sending an email to ",
+        Eventuali:"For informations:",
         Informazioni:"Informations",
         
         TutorialUno:"This tutorial will show you the features of this app. To know where to throw a specific type of garbage, write its name here and click the magnifying glass",
