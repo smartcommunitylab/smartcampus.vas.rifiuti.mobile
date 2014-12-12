@@ -91,7 +91,13 @@ angular.module('starter', ['ionic',  'starter.controllers', 'google-maps','pasca
 		$rootScope.selectedProfile = $rootScope.p[index];
 	};
 	$rootScope.menuProfilesUpdate = function () {
-		$rootScope.selectProfile($rootScope.findIndexById($rootScope.selectedProfile.name));
+    var profileIndex;
+    if ($rootScope.selectedProfile) {
+      profileIndex=$rootScope.findIndexById($rootScope.selectedProfile.name);
+    } else {
+      profileIndex=0;
+    }
+		$rootScope.selectProfile(profileIndex);
 	};
 })
 

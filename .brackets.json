@@ -1,6 +1,8 @@
 {
     "jscodehints.detectedExclusions": [
         "/Users/enrico/Desktop/fbk/dev/smartcampus.vas.rifiuti.mobile.git/platforms/android/assets/www/plugins/org.apache.cordova.statusbar/www/statusbar.js",
-        "/Users/enrico/Desktop/fbk/dev/smartcampus.vas.rifiuti.mobile.git/www/js/app.js"
+        "/Users/enrico/Desktop/fbk/dev/smartcampus.vas.rifiuti.mobile.git/www/js/app.js",
+        "/Users/enrico/Desktop/fbk/dev/smartcampus.vas.rifiuti.mobile.git/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/Camera.js",
+        "/Users/enrico/Desktop/fbk/dev/smartcampus.vas.rifiuti.mobile.git/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js"
     ]
 }
