@@ -6,12 +6,12 @@ angular.module('starter.controllers', ['google-maps'])
     
     sendEmail= function() {
         window.plugins.email.open({
-        to:          "prova", // email addresses for TO field
-        cc:          "prova", // email addresses for CC field
-        bcc:         "prova", // email addresses for BCC field
-        attachments: "prova", // file paths or base64 data streams
-        subject:    "prova", // subject of the email
-        body:       "prova", // email body (for HTML, set isHtml to true)
+        to:          "sample", // email addresses for TO field
+        cc:          "sample", // email addresses for CC field
+        bcc:         "sample", // email addresses for BCC field
+        attachments: "sample", // file paths or base64 data streams
+        subject:    "sample", // subject of the email
+        body:       "sample", // email body (for HTML, set isHtml to true)
         isHtml:    false, // indicats if the body is HTML or plain text
     }, callback, scope);
     
@@ -375,10 +375,6 @@ angular.module('starter.controllers', ['google-maps'])
 			return '';
 		}
 	};
-    
-   /* $rootScope.prova = function () {
-        delegate.select(1);
-    }*/
     
     $rootScope.delegateHome = function () {
         delegate.select(1);
@@ -1736,11 +1732,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('TutorialCtrl', function ($scope, $ionicLoading) {
     
-    
-   $scope.prova= function (){
-            delegate.select(1);
-    }
-
+   
 	$scope.close = function () {
 		$ionicLoading.hide();
 	};
@@ -1756,7 +1748,6 @@ angular.module('starter.controllers', ['google-maps'])
 	};
     
     var getX = function(id) {
-        //toggleLeft([isOpen]);
         var div = document.getElementById(id);
         var rect = div.getBoundingClientRect();
         return rect.left+0.5*(rect.right-rect.left);

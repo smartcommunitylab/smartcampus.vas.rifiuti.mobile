@@ -4,39 +4,28 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-	<title></title>
+	<title>loading...</title>
 
 	<link href="lib/ionic/css/ionic.css" rel="stylesheet">
+	<script src="lib/ionic/js/ionic.bundle.js"></script>
+
+	<script src="lib/ng-cordova.min.js"></script>
+	<!-- cordova script (this will be a 404 during development) -->
+  <script  src="cordova.js"></script>
+
+	<script src="lib/angular-translate.min.js"></script>	
+	<script src="lib/lodash.underscore.min.js"></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false" type="text/javascript"></script>-->
+	<script src="lib/googleapis.js"></script>
+	<script src="lib/angular-google-maps.min.js"></script>
+
 	<link href="css/style.css" rel="stylesheet">
 
-	<!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-	<!-- ionic/angularjs js -->
-	<script src="lib/ionic/js/ionic.bundle.js"></script>
-    
-    
-
-	<!-- cordova script (this will be a 404 during development) -->
-    
-    <script src="js/ng-cordova.min.js"></script>
-	<script  src="cordova.js"></script>
-    
-    
-    
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-translate.min.js"></script>
-
-	<script src="lib/lodash.underscore.min.js"></script>
-    
-    
-    
-	<!--<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false" type="text/javascript"></script>-->
-	<script src="lib/angular-google-maps.min.js"></script>
-    
-    <script src="js/app.js"></script>
-
+	<script src="js/app.js"></script>
+	<script src="js/controllers/common.js"></script>
+	<script src="js/controllers/home.js"></script>
+	<script src="js/controllers/raccolta.js"></script>
+	<script src="js/controllers/profilo.js"></script>
 </head>
 
 <body onload="window.location = './main.html';">
