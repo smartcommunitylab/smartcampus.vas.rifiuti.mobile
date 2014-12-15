@@ -5,7 +5,8 @@ angular.module('starter.controllers.common', ['google-maps'])
 
 
   sendEmail = function () {
-    window.plugins.email.open({
+      
+    window.plugin.email.open({
       to: "sample", // email addresses for TO field
       cc: "sample", // email addresses for CC field
       bcc: "sample", // email addresses for BCC field
@@ -13,7 +14,7 @@ angular.module('starter.controllers.common', ['google-maps'])
       subject: "sample", // subject of the email
       body: "sample", // email body (for HTML, set isHtml to true)
       isHtml: false, // indicats if the body is HTML or plain text
-    }, callback, scope);
+    }); //}, callback, scope);
 
 
   }
@@ -30,8 +31,8 @@ angular.module('starter.controllers.common', ['google-maps'])
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: true,
       encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 200,
-      targetHeight: 200,
+      targetWidth: 150,
+      targetHeight: 150,
       popoverOptions: CameraPopoverOptions,
       saveToPhotoAlbum: false
     };
