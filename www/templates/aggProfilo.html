@@ -1,18 +1,11 @@
 <ion-nav-buttons side="left">
 	<button ng-click="back()" class="row button button-clear button-light ion-chevron-left">
         <img class="img-menu" style="position:absolute;display:block;top:-0px;" src="img/ic_launcher.png">
-        <div  class="prova" style="margin-left:36px">
-            <span class="prova2">{{"Profili"|translate}}</span>
-            <div class="prova3">{{selectedProfile.name}}
+        <div  class="wrap-title" style="margin-left:36px">
+            <span class="main-title">{{"Profili"|translate}}</span>
+            <div class="sub-title">{{selectedProfile.name}}
             </div>
         </div> 
-        <!--<span class="bar-back-center">Profili</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
-		<!-- ##style="position:absolute;display:block;top:-5px;"##<img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-        <div  class="prova">
-            <span class="prova2" style="display:block; width:166px;">Profili</span>
-            <div class="prova3" style="display:block; margin-left:62px;">{{selectedProfile.name}}</div>
-        </div>-->
 	</button>
 </ion-nav-buttons>
 <ion-nav-buttons side="right">

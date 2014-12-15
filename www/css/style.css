@@ -434,10 +434,10 @@ display:block;
 	width: 5px;
 }
 
-.prova {
+.wrap-title {
 }
 
-.prova2 {
+.main-title {
     
     padding-left:3px;
     position:absolute;
@@ -447,7 +447,7 @@ display:block;
     text-align: left
 }
 
-.prova3 {
+.sub-title {
     display: block;
     padding-left: 3px;    
     top:10px;
