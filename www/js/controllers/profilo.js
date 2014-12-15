@@ -231,26 +231,22 @@ angular.module('starter.controllers.profilo', [])
     });
   };
 
-  $scope.init = function () {
-    $http.get('data/db/aree.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (!!data[i].comune) {
-          $scope.locs.push(data[i].comune);
-        }
+  $http.get('data/db/aree.json').success(function (data) {
+    for (var i = 0; i < data.length; i++) {
+      if (!!data[i].comune) {
+        $scope.locs.push(data[i].comune);
       }
-    });
-    var p = $rootScope.findProfileById($scope.id);
-    if (!!p) {
-      $scope.profilo.name = p.name;
-      $scope.profilo.utenza = p.type;
-      $scope.profilo.comune = p.loc;
     }
-    if ($rootScope.selectedProfile.name == $scope.profilo.name) {
-      $scope.isCurrentProfile = true;
-    } else {
-      $scope.isCurrentProfile = false;
-    }
-  };
-
-  $scope.init();
+  });
+  var p = $rootScope.findProfileById($scope.id);
+  if (!!p) {
+    $scope.profilo.name = p.name;
+    $scope.profilo.utenza = p.type;
+    $scope.profilo.comune = p.loc;
+  }
+  if ($rootScope.selectedProfile.name == $scope.profilo.name) {
+    $scope.isCurrentProfile = true;
+  } else {
+    $scope.isCurrentProfile = false;
+  }
 })

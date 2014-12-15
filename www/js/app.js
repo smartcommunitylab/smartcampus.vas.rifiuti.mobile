@@ -11,6 +11,7 @@ angular.module('starter', [
 	'starter.controllers.home',
 	'starter.controllers.raccolta',
 	'starter.controllers.profilo',
+	'starter.services.profilo',
 	'pascalprecht.translate',
 	'google-maps'
 ])

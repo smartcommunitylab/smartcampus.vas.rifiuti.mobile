@@ -1,6 +1,6 @@
 angular.module('starter.controllers.raccolta', [])
 
-.controller('tipidirifiutiCtrl', function ($scope) {
+.controller('tipidirifiutiCtrl', function ($scope, Profilo) {
   $scope.match = function (query) {
     if (query.length < 3) {
       return function (item) {
@@ -12,6 +12,7 @@ angular.module('starter.controllers.raccolta', [])
       }
     }
   };
+  Profilo.aree();
 })
   
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {
