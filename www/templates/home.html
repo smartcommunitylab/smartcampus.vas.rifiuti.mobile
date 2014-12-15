@@ -1,143 +1,29 @@
 <ion-view>
-	<ion-nav-buttons side="left">
-		<button id="menuId" ng-click="leftClick()" class=" row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
-            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-                <div  class="wrap-title">
-                    <span class="main-title">{{titleText()}}</span>
-                    <div class="sub-title">{{subTitleText()}}</div>
-                </div>
-		</button><!--<span ng-class="{'bar-title': !noteSelected}" style="vertical-align:top" class="bar-title">{{titleText()}}</span>
-            <div ng-class="{'title-subtext1': !noteSelected}" class= "title-subtext1">{{subTitleText()}}
-            </div> -->
-	</ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button id="menuId" ng-click="leftClick()" class=" row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
+      <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+      <div class="wrap-title">
+        <span class="main-title">{{titleText()}}</span>
+        <div class="sub-title">{{subTitleText()}}</div>
+      </div>
+    </button>
+    <!--<span ng-class="{'bar-title': !noteSelected}" style="vertical-align:top" class="bar-title">{{titleText()}}</span>
+    <div ng-class="{'title-subtext1': !noteSelected}" class= "title-subtext1">{{subTitleText()}}</div> -->
+  </ion-nav-buttons>
 
-	<ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
+  <ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
 
-		<ion-tab id="noteId" title="{{'NOTE' | translate}}" on-select="readNotes()" on-deselect="noteReset()">            
-			<ion-nav-buttons side="right">
-				<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-show="noteSelected && !multipleNoteSelected">
-					<img ng-src="img/ic_edit.png" class="standard-size" />
-				</button>
-				<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
-					<img ng-src="{{variableIMG}}" class="standard-size" />
-				</button>
-				<!--ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"-->
-			</ion-nav-buttons>
-			<ion-content ng-class="{'background-note-noimg':notes[0]!=null, 'background-note': notes[0]==null}" class="home-tabs-content" has-bouncing="false">
-                <div class="position-relative" style="margin-top:{{(height-74)*0.5-130}}px;" class="note-text" ng-if="notes[0]==null">
-                    <p class="note-text">{{"Tocca" | translate}}</p>
-                    <img class="background-note" style="display:block; margin-left:auto; margin-right:auto" src="img/ic_note.png">
-                </div>
-                <div class="position-relative" style="margin-top:0px;" class="note-text" ng-if="notes[0]==null">
-                    <p class="note-text">{{"ad esempio" | translate}}<br><!-- {{(height-74)*0.5+40-((height-74)*0.5-100)}}px -->
-                        {{"Portare la tv al CRM"| translate}}<br>
-                        {{"Pagare la bolletta dei rifiuti"| translate}}
-                    </p>
-                </div>
-				<ion-item  ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
-					{{item.note}}
-				</ion-item>             
-			</ion-content>
-		</ion-tab>
+    <ion-tab id="noteId" title="{{'NOTE' | translate}}" href="#/app/home/note">
+      <ion-nav-view name="note"></ion-nav-view>
+    </ion-tab>
 
-		<ion-tab title="{{'DOVE LO BUTTO?'| translate}}" delegate-handle="home-qwe">
-			<ion-content class="home-tabs-content home-content" has-bouncing="false">
-				<div class="list list-inset home-search-bar">
-					<div class="item item-input-inset">
-						<label class="item-input-wrapper">
-							<input type="search" ng-init="searchQuery = ''" ng-model="searchQuery" placeholder="{{'Che rifiuto vuoi buttare?' | translate}}">
-						</label>
-						<button id="searchButton" class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
-					</div>
-					<ion-item ng-repeat="item in listaRifiuti | filter:match(searchQuery)" ng-href="#/app/rifiuto/{{item.nome}}">
-						{{item.nome | translate}}
-					</ion-item>
-				</div>
-				<div class="row" ng-repeat="item in f">
-					<div class="col home-grid">
-						<a  class="hidden-link" ng-href="#/app/rifiuto/{{item.valore}}">
-							<div>
-								<img   id=rifiutoId ng-src="{{item.immagine}}" />{{item.valore | translate}}
-							</div>
-						</a>
-					</div>
-					<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+1] == undefined}">
-						<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+1].valore}}">
-							<div>
-								<img ng-src="{{rifiuti[f.indexOf(item)*3+1].immagine}}" />{{rifiuti[f.indexOf(item)*3+1].valore | translate}}
-							</div>
-						</a>
-					</div>
-					<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+2] == undefined}">
-						<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+2].valore}}">
-							<div>
-								<img ng-src="{{rifiuti[f.indexOf(item)*3+2].immagine}}" />{{rifiuti[f.indexOf(item)*3+2].valore | translate}}
-							</div>
-						</a>
-					</div>
-				</div>
-			</ion-content>
-		</ion-tab>
+    <ion-tab title="{{'DOVE LO BUTTO?'| translate}}" href="#/app/home/tipidirifiuti" delegate-handle="home-qwe">
+      <ion-nav-view name="tipidirifiuti"></ion-nav-view>
+    </ion-tab>
 
-		<ion-tab id="calendarioId" title="{{'CALENDARIO'|translate}}">
-			<ion-nav-buttons side="right">
-				<button ng-click="goToToday()" class="button button-clear button-light menu-edit-button nav-bar-buttons-alignment">
-					<img src="img/today.png" class="standard-size" />
-				</button>
-                <button ng-click="click2()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
-					<img ng-src="{{variableIMG2}}" class="standard-size" />
-				</button>
-			</ion-nav-buttons>
-			<ion-content has-bouncing="false" class="home-tabs-content background-grey-light">
-				<div  ng-if="!calendarView" class="month">
-					<div class="row">
-						<div ng-click="lastMonth()" class="col col-10"><i class="icon icon-left ion-chevron-left"></i>
-						</div>
-						<div class="col month-name">{{month.name.split(" ")[0] |translate}} {{month.name.split(" ")[1] |translate}}</div><!--da aggiungere lo stile-->
-						<div  ng-click="nextMonth()" class="col col-10"><i style="float:right" class="icon icon-right ion-chevron-right"></i>
-						</div>
-					</div>
-					<div class="row week-day">
-						<div class="col">{{ "LUN" | translate}}</div>
-						<div class="col">{{ "MAR" | translate}}</div>
-						<div class="col">{{ "MER" | translate}}</div>
-						<div class="col">{{ "GIO" | translate}}</div>
-						<div class="col">{{ "VEN" | translate}}</div>
-						<div class="col">{{ "SAB" | translate}}</div>
-						<div class="col">{{ "DOM" | translate}}</div>
-					</div>
-					<div class="row week" ng-repeat="week in month.weeks">
-						<div  class="col day" ng-repeat="item in getEmptyArrayByLenght(firstDayIndex(week))"></div>
-						<div ng-click="click3(day.date)" class="col day" ng-class="{'today' : day.date == today && counterVerde==0, 'background-white' : day.date!=null}" ng-repeat="day in week"  ng-if="day.index!=5 || day.date>21 && day.date <32">
-							<div ng-if="day.date!=null" class="day-date">
-								{{day.date}}
-							</div>
-							<div class="row no-orizontal-padding">
-								<div class="separation-padding" ng-repeat="event in day.events">
-									<div class="fixed-size" style="background-color:{{event.color}};"></div>
-								</div>
-								<div class="separation-padding" ng-if="day.events.length == 0">
-									<div class="fixed-size"></div>
-								</div>
-							</div>
-						</div>
-						<!--<div class="col day" ng-repeat="item in getEmptyArrayByLenght(6 - lastDayIndex(week))"></div>-->
-					</div>
-				</div>
-				<!--<button  ng-if="!calendarView" ng-click="reset()">Emergency Reset!!! (PER DEBUG)</button>-->    
-                <div  ng-if="calendarView">
-                <ion-list  id="listaCalendario" ng-if="$index<100" ng-repeat="day in arrayD" >
-                    <ion-item style="text-align:center;" class="my-item background-grey-light">
-                        {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[0] | translate}}
-                        {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[1] | translate}}
-                        {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[2] | translate}}
-                        {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[3] | translate}}
-                        <ion-item ></ion-item>
-                    </ion-item>
-                </ion-list>
-                </div>
-            </ion-content>
-		</ion-tab>
+    <ion-tab id="calendarioId" title="{{'CALENDARIO'|translate}}" href="#/app/home/calendario">
+      <ion-nav-view name="calendario"></ion-nav-view>
+    </ion-tab>
 
-	</ion-tabs>
+  </ion-tabs>
 </ion-view>

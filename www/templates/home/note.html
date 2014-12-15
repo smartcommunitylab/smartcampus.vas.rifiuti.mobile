@@ -1,0 +1,24 @@
+<ion-nav-buttons side="right">
+  <button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-show="noteSelected && !multipleNoteSelected">
+    <img ng-src="img/ic_edit.png" class="standard-size" />
+  </button>
+  <button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
+    <img ng-src="{{variableIMG}}" class="standard-size" />
+  </button>
+  <!--ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"-->
+</ion-nav-buttons>
+<ion-content ng-class="{'background-note-noimg':notes[0]!=null, 'background-note': notes[0]==null}" class="home-tabs-content" has-bouncing="false">
+          <div class="position-relative" style="margin-top:{{(height-74)*0.5-130}}px;" class="note-text" ng-if="notes[0]==null">
+              <p class="note-text">{{"Tocca" | translate}}</p>
+              <img class="background-note" style="display:block; margin-left:auto; margin-right:auto" src="img/ic_note.png">
+          </div>
+          <div class="position-relative" style="margin-top:0px;" class="note-text" ng-if="notes[0]==null">
+              <p class="note-text">{{"ad esempio" | translate}}<br><!-- {{(height-74)*0.5+40-((height-74)*0.5-100)}}px -->
+                  {{"Portare la tv al CRM"| translate}}<br>
+                  {{"Pagare la bolletta dei rifiuti"| translate}}
+              </p>
+          </div>
+  <ion-item  ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
+    {{item.note}}
+  </ion-item>             
+</ion-content>

@@ -786,6 +786,33 @@ angular.module('starter', [
       }
     }
   })
+  .state('app.home.note', {
+    url: "/note",
+    views: {
+      'note': {
+        templateUrl: "templates/home/note.html",
+        controller: 'noteCtrl'
+      }
+    }
+  })
+  .state('app.home.tipidirifiuti', {
+    url: "/tipidirifiuti",
+    views: {
+      'tipidirifiuti': {
+        templateUrl: "templates/home/tipidirifiuti.html",
+        controller: 'tipidirifiutiCtrl'
+      }
+    }
+  })
+  .state('app.home.calendario', {
+    url: "/calendario",
+    views: {
+      'calendario': {
+        templateUrl: "templates/home/calendario.html",
+        controller: 'calendarioCtrl'
+      }
+    }
+  })
 
   .state('app.puntiDiRaccolta', {
     url: "/puntiDiRaccolta/:id",
@@ -906,5 +933,5 @@ angular.module('starter', [
       }
     }
   });
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/app/home/tipidirifiuti');
 });

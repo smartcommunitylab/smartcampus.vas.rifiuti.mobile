@@ -1,0 +1,57 @@
+<ion-nav-buttons side="right">
+  <button ng-click="goToToday()" class="button button-clear button-light menu-edit-button nav-bar-buttons-alignment">
+    <img src="img/today.png" class="standard-size" />
+  </button>
+          <button ng-click="click2()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
+    <img ng-src="{{variableIMG2}}" class="standard-size" />
+  </button>
+</ion-nav-buttons>
+<ion-content has-bouncing="false" class="home-tabs-content background-grey-light">
+  <div  ng-if="!calendarView" class="month">
+    <div class="row">
+      <div ng-click="lastMonth()" class="col col-10"><i class="icon icon-left ion-chevron-left"></i>
+      </div>
+      <div class="col month-name">{{month.name.split(" ")[0] |translate}} {{month.name.split(" ")[1] |translate}}</div><!--da aggiungere lo stile-->
+      <div  ng-click="nextMonth()" class="col col-10"><i style="float:right" class="icon icon-right ion-chevron-right"></i>
+      </div>
+    </div>
+    <div class="row week-day">
+      <div class="col">{{ "LUN" | translate}}</div>
+      <div class="col">{{ "MAR" | translate}}</div>
+      <div class="col">{{ "MER" | translate}}</div>
+      <div class="col">{{ "GIO" | translate}}</div>
+      <div class="col">{{ "VEN" | translate}}</div>
+      <div class="col">{{ "SAB" | translate}}</div>
+      <div class="col">{{ "DOM" | translate}}</div>
+    </div>
+    <div class="row week" ng-repeat="week in month.weeks">
+      <div  class="col day" ng-repeat="item in getEmptyArrayByLenght(firstDayIndex(week))"></div>
+      <div ng-click="click3(day.date)" class="col day" ng-class="{'today' : day.date == today && counterVerde==0, 'background-white' : day.date!=null}" ng-repeat="day in week"  ng-if="day.index!=5 || day.date>21 && day.date <32">
+        <div ng-if="day.date!=null" class="day-date">
+          {{day.date}}
+        </div>
+        <div class="row no-orizontal-padding">
+          <div class="separation-padding" ng-repeat="event in day.events">
+            <div class="fixed-size" style="background-color:{{event.color}};"></div>
+          </div>
+          <div class="separation-padding" ng-if="day.events.length == 0">
+            <div class="fixed-size"></div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="col day" ng-repeat="item in getEmptyArrayByLenght(6 - lastDayIndex(week))"></div>-->
+    </div>
+  </div>
+  <!--<button  ng-if="!calendarView" ng-click="reset()">Emergency Reset!!! (PER DEBUG)</button>-->    
+  <div  ng-if="calendarView">
+    <ion-list  id="listaCalendario" ng-if="$index<100" ng-repeat="day in arrayD" >
+      <ion-item style="text-align:center;" class="my-item background-grey-light">
+          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[0] | translate}}
+          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[1] | translate}}
+          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[2] | translate}}
+          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[3] | translate}}
+          <ion-item ></ion-item>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

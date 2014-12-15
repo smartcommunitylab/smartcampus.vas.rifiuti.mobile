@@ -1,5 +1,19 @@
 angular.module('starter.controllers.raccolta', [])
 
+.controller('tipidirifiutiCtrl', function ($scope) {
+  $scope.match = function (query) {
+    if (query.length < 3) {
+      return function (item) {
+        return false;
+      }
+    } else {
+      return function (item) {
+        return item.nome.indexOf(query) != -1;
+      }
+    }
+  };
+})
+  
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {
 
   $scope.mapView = true;
