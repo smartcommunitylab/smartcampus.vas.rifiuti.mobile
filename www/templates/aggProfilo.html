@@ -21,14 +21,14 @@
 	<div class="list background-grey-light">
 		<div class="high-padding profili-titolo">{{"Tipo di utenza" | translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height">
-			<select ng-model="profilo.utenza" ng-options="item|translate for item in tipologiaUtenza" class="background-grey-light max-width">
+			<select ng-model="profilo.utenza" ng-options="item.profilo|translate for item in tipologiaUtenza" class="background-grey-light max-width">
 			</select>
 		</label>
 	</div>
 	<div class="list background-grey-light">
 		<div class="high-padding profili-titolo">{{"Comune o Località" | translate}}</div>
 		<label class="item item-input item-select background-grey-light no-border fixed-height">
-			<select ng-model="profilo.comune" ng-options="item for item in locs" class="background-grey-light max-width">
+			<select ng-model="profilo.localita" ng-options="item for item in locs" class="background-grey-light max-width">
 				<option value="">{{"Selezionare" | translate}}</option>
 			</select>
 		</label>

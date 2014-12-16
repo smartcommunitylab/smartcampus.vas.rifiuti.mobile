@@ -36,7 +36,7 @@ angular.module('starter.controllers.home', [])
   };
   $scope.subTitleText = function () {
     if (!$rootScope.noteSelected) {
-      return $scope.selectedProfile.name;
+      return ($scope.selectedProfile ? $scope.selectedProfile.name : '');
     } else {
       return '';
     }

@@ -2,36 +2,18 @@ angular.module('starter.controllers.profilo', [])
 
 .controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
-.controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $ionicPopup) {
-
-  $scope.saveProfiles = function () {
-    if (!$rootScope.supports_html5_storage()) {
-      return;
-    }
-    var stringP = "";
-    for (var i = 0; i < $rootScope.p.length; i++) {
-      if (stringP != "") {
-        stringP = stringP + "[[;" + $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
-      } else {
-        stringP = $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
-      }
-      // [[; : separatore tra i profili
-      // ([; : separatore tra il nome, la tipologia di utenza e il comune
-    }
-    if (stringP != "") {
-      localStorage.setItem("profiles", stringP);
-    } else {
-      localStorage.setItem("profiles", "!!-null");
-    }
-    $rootScope.menuProfilesUpdate();
-  };
-
-  $scope.back = function () {
-    $ionicNavBarDelegate.$getByHandle('navBar').back();
-  };
-
+.controller('AggiungiProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $ionicPopup, Profili) {
   $scope.locs = [];
+  $scope.profilo = {
+    name: "",
+    localita: "Selezionare"
+  };
 
+  Profili.tipidiutenza().then(function(tipi){
+    $scope.tipologiaUtenza=tipi;
+    $scope.profilo.utenza=tipi[0];
+  });
+/*
   $scope.tipologiaUtenza = [
   "Residente",
   "Azienda standard",
@@ -40,63 +22,45 @@ angular.module('starter.controllers.profilo', [])
         "Azienda con porta a porta"
 
  ];
-
-  $scope.profilo = {
-    name: "",
-    utenza: $scope.tipologiaUtenza[0],
-    comune: "Selezionare"
-  };
+*/
 
   $scope.save = function () {
-    if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
-      $rootScope.readProfiles();
+    if ($scope.profilo.name != "" && $scope.profilo.localita != "Selezionare") {
+      Profili.read();
       if (!$scope.containsName($rootScope.p, $scope.profilo.name)) {
         var popup = $ionicPopup.show({
           title: '<b class="popup-title">Attenzione !<b/>',
           template: 'Il nome del profilo è già in uso!',
           buttons: [
-            {
-              text: 'OK'
-                    }
-    ]
+            { text: 'OK' }
+          ]
         });
         return;
       }
       $rootScope.p.push({
         name: $scope.profilo.name,
-        type: $scope.profilo.utenza,
-        loc: $scope.profilo.comune
+        utenza: $scope.profilo.utenza,
+        loc: $scope.profilo.localita
       });
-      $scope.saveProfiles();
+      Profili.save();
       $scope.back();
     } else {
       var popup = $ionicPopup.show({
         title: '<b class="popup-title">Attenzione !<b/>',
-        template: 'Per completare il tuo profilo devi scegliere un nome e un comune!',
+        template: 'Per completare il tuo profilo devi scegliere un nome e una località!',
         scope: $scope,
         buttons: [
-          {
-            text: 'OK'
-                    }
-    ]
+          { text: 'OK' }
+        ]
       });
     }
-  };
-
-  $scope.containsName = function (array, item) {
-    for (var i = 0; i < array.length; i++) {
-      if (array[i].name == item) {
-        return false;
-      }
-    }
-    return true;
   };
 
   $scope.init = function () {
     $http.get('data/db/aree.json').success(function (data) {
       for (var i = 0; i < data.length; i++) {
-        if (!!data[i].comune) {
-          $scope.locs.push(data[i].comune);
+        if (!!data[i].localita) {
+          $scope.locs.push(data[i].localita);
         }
       }
     });
@@ -105,95 +69,58 @@ angular.module('starter.controllers.profilo', [])
   $scope.init();
 })
 
-.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup) {
+.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup, Profili) {
+  $scope.locs = [];
+  $scope.profilo = {
+    name: "",
+    localita: "Selezionare"
+  };
+
+  Profili.tipidiutenza().then(function(tipi){
+    $scope.tipologiaUtenza=tipi;
+    $scope.profilo.utenza=tipi[0];
+  });
 
   $scope.id = $stateParams.id;
 
-  $scope.back = function () {
-    $ionicNavBarDelegate.$getByHandle('navBar').back();
-  };
-
-  $scope.locs = [];
-
-  $scope.tipologiaUtenza = [
-  "Residente",
-  "Azienda standard",
-  "Turista occasionale",
-        "Turista stagionale",
-        "Azienda con porta a porta"
- ];
-
-  $scope.profilo = {
-    name: "",
-    utenza: $scope.tipologiaUtenza[0],
-    comune: "Selezionare"
-  };
-
   $scope.isCurrentProfile = true;
-
   $scope.editMode = false;
-
   $scope.editIMG = "img/ic_edit.png";
-
-  $scope.saveProfiles = function () {
-    if (!$rootScope.supports_html5_storage()) {
-      return;
-    }
-    var stringP = "";
-    for (var i = 0; i < $rootScope.p.length; i++) {
-      if (stringP != "") {
-        stringP = stringP + "[[;" + $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
-      } else {
-        stringP = $rootScope.p[i].name + "([;" + $rootScope.p[i].type + "([;" + $rootScope.p[i].loc;
-      }
-      // [[; : separatore tra i profili
-      // ([; : separatore tra il nome, la tipologia di utenza e il comune
-    }
-    if (stringP != "") {
-      localStorage.setItem("profiles", stringP);
-    } else {
-      localStorage.setItem("profiles", "!!-null");
-    }
-    $rootScope.menuProfilesUpdate();
-  };
 
   $scope.edit = function () {
     if (!$scope.editMode) {
       $scope.editMode = true;
       $scope.editIMG = "img/ic_save.png";
     } else {
-      var p = $rootScope.findProfileById($scope.id);
-      if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.comune != p.loc) {
-        if ($scope.profilo.name != "" && $scope.profilo.comune != "Selezionare") {
-          var index = $rootScope.findIndexById(p.name);
-          if ($scope.profilo.name != p.name && $scope.findProfileById($scope.profilo.name) != null) {
-            var popup = $ionicPopup.show({
+      var p = Profili.byname($scope.id);
+      if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.localita != p.loc) {
+        if ($scope.profilo.name != "" && $scope.profilo.localita != "Selezionare") {
+          var editedprofile = $rootScope.byname($scope.id);
+          //TODO: gestire nome profilo già presente
+          /*if ($scope.profilo.name != p.name && selectedprofile != null) {
+            $ionicPopup.show({
               title: '<b class="popup-title">Attenzione !<b/>',
               template: 'Il nome del profilo è già in uso!',
               buttons: [
-                {
-                  text: 'OK'
-                       }
-       ]
+                { text: 'OK' }
+              ]
             });
-            return;
-          }
-          $rootScope.p[index].name = $scope.profilo.name;
-          $rootScope.p[index].type = $scope.profilo.utenza;
-          $rootScope.p[index].loc = $scope.profilo.comune;
-          $scope.saveProfiles();
+          } else {*/
+            editedprofile.name = $scope.profilo.name;
+            editedprofile.utenza = $scope.profilo.utenza;
+            editedprofile.loc = $scope.profilo.localita;
+            Profili.save();
+          //}
           $scope.editMode = false;
           $scope.editIMG = "img/ic_edit.png";
         } else {
-          var popup = $ionicPopup.show({
+          $ionicPopup.show({
             title: '<b class="popup-title">Attenzione !<b/>',
-            template: 'Per completare il tuo prifilo devi scegliere un nome e un comune!',
+            template: 'Per completare il tuo prifilo devi scegliere un nome e una località!',
             scope: $scope,
             buttons: [
-              {
-                text: 'OK'
-                      }
-      ]
+              { text: 'OK' }
+            ]
           });
         }
       } else {
@@ -206,26 +133,25 @@ angular.module('starter.controllers.profilo', [])
   $scope.click = function () {
     var popup = $ionicPopup.show({
       title: '<b class="popup-title">Avviso<b/>',
-      template: 'Premendo OK cancellerai definitivamente questo profilo, incluse le eventuali note personali. Confermi?',
+      template: 'Premendo OK cancellerai definitivamente questo profilo. Confermi?',
+//TODO: le note dovrebbero essere legate al profilo??? ora non lo sono!
+//      template: 'Premendo OK cancellerai definitivamente questo profilo, incluse tutte le eventuali note personali. Confermi?',
       scope: $scope,
       buttons: [
-        {
-          text: 'Annulla'
-                    },
+        { text: 'Annulla' },
         {
           text: 'OK',
           onTap: function (e) {
             return true;
           }
-    }
-   ]
-    });
-    popup.then(function (res) {
+        }
+      ]
+    }).then(function (res) {
       if (!!res) {
         var v = $rootScope.p;
-        v.splice($rootScope.findIndexById($scope.id), 1);
+        v.splice(Profili.indexof($scope.id), 1);
         $rootScope.p = v;
-        $scope.saveProfiles();
+        Profili.save();
         $scope.back();
       }
     });
@@ -233,16 +159,16 @@ angular.module('starter.controllers.profilo', [])
 
   $http.get('data/db/aree.json').success(function (data) {
     for (var i = 0; i < data.length; i++) {
-      if (!!data[i].comune) {
-        $scope.locs.push(data[i].comune);
+      if (!!data[i].localita) {
+        $scope.locs.push(data[i].localita);
       }
     }
   });
-  var p = $rootScope.findProfileById($scope.id);
+  var p = Profili.byname($scope.id);
   if (!!p) {
     $scope.profilo.name = p.name;
-    $scope.profilo.utenza = p.type;
-    $scope.profilo.comune = p.loc;
+    $scope.profilo.utenza = p.utenza;
+    $scope.profilo.localita = p.loc;
   }
   if ($rootScope.selectedProfile.name == $scope.profilo.name) {
     $scope.isCurrentProfile = true;

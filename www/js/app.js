@@ -11,7 +11,7 @@ angular.module('starter', [
 	'starter.controllers.home',
 	'starter.controllers.raccolta',
 	'starter.controllers.profilo',
-	'starter.services.profilo',
+	'starter.services.profili',
 	'pascalprecht.translate',
 	'google-maps'
 ])
@@ -19,7 +19,7 @@ angular.module('starter', [
 
 
 
-.run(function ($ionicPlatform, $rootScope, $translate) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -43,71 +43,20 @@ angular.module('starter', [
 
   });
 
+  $rootScope.back = function () {
+    $ionicNavBarDelegate.$getByHandle('navBar').back();
+  };
+  $rootScope.containsName = function (array, item) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].name == item) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   $rootScope.p = [];
   $rootScope.selectedProfile = null;
-  $rootScope.supports_html5_storage = function () {
-    try {
-      return 'localStorage' in window && window['localStorage'] !== null;
-    } catch (e) {
-      return false;
-    }
-  }
-  $rootScope.readProfiles = function () {
-    if (!$rootScope.supports_html5_storage()) {
-      return;
-    }
-    $rootScope.p = [];
-    var stringP = localStorage.getItem("profiles");
-    if (!!stringP && stringP != "!!-null") {
-      var rawP = [];
-      rawP = stringP.split("[[;");
-      for (var i = 0; i < rawP.length; i++) {
-        $rootScope.p.push({
-          name: rawP[i].split("([;")[0],
-          type: rawP[i].split("([;")[1],
-          loc: rawP[i].split("([;")[2],
-          image: "img/rifiuti_btn_radio_off_holo_dark.png"
-        });
-      }
-    }
-  };
-  $rootScope.findProfileById = function (id) {
-    $rootScope.readProfiles();
-    for (var i = 0; i < $rootScope.p.length; i++) {
-      if ($rootScope.p[i].name == id) {
-        return $rootScope.p[i];
-      }
-    }
-    return null;
-  };
-  $rootScope.findIndexById = function (id) {
-    $rootScope.readProfiles();
-    for (var i = 0; i < $rootScope.p.length; i++) {
-      if ($rootScope.p[i].name == id) {
-        return i;
-      }
-    }
-    return -1;
-  };
-  $rootScope.selectProfile = function (index) {
-    if (index >= $rootScope.p.length) {
-      return;
-    }
-    if (!!$rootScope.selectedProfile) {
-      $rootScope.findProfileById($rootScope.selectedProfile.name).image = "img/rifiuti_btn_radio_off_holo_dark.png";
-    }
-    $rootScope.p[index].image = "img/rifiuti_btn_radio_on_holo_dark.png";
-    $rootScope.selectedProfile = $rootScope.p[index];
-  };
-  $rootScope.menuProfilesUpdate = function () {
-    var profileIndex;
-    if ($rootScope.selectedProfile) {
-      profileIndex = $rootScope.findIndexById($rootScope.selectedProfile.name);
-    } else {
-      profileIndex = 0;
-    }
-    $rootScope.selectProfile(profileIndex);
-  };
 })
 
 

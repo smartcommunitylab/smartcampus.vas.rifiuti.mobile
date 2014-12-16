@@ -46,27 +46,18 @@ angular.module('starter.controllers.common', ['google-maps'])
 
 })
 
-.controller('AppCtrl', function ($scope, $rootScope, $location) {
+.controller('AppCtrl', function ($scope, $rootScope, $location, Profili) {
   $scope.showTutorial = function () {
     $rootScope.showTutorial = true;
   };
-
-
-
-  $scope.createOneProfile = function () {
-    if (!$rootScope.supports_html5_storage()) {
-      return;
-    }
-    if (!localStorage.getItem("profiles")) {
-      $rootScope.promptedToProfile = true;
-      $location.url("app/aggProfilo");
-    }
-  };
-
-  $scope.createOneProfile();
-
-  $rootScope.readProfiles();
-  $rootScope.selectProfile(0);
+  //localStorage.removeItem('profiles');
+  if (!localStorage.profiles || localStorage.profiles.length==0) {
+    $rootScope.promptedToProfile = true;
+    $location.url("app/aggProfilo");
+  } else {
+    Profili.read();
+    Profili.select(0);
+  }
 })
 
 .controller('InfoCtrl', function ($scope) {})
