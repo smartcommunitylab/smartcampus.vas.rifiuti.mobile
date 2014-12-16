@@ -1,28 +1,7 @@
 angular.module('starter.controllers.common', ['google-maps'])
 
 
-.controller("emailController", function ($scope) {
-
-
-  sendEmail = function () {
-      
-    window.plugin.email.open({
-      to: "sample", // email addresses for TO field
-      cc: "sample", // email addresses for CC field
-      bcc: "sample", // email addresses for BCC field
-      attachments: "sample", // file paths or base64 data streams
-      subject: "sample", // subject of the email
-      body: "sample", // email body (for HTML, set isHtml to true)
-      isHtml: false, // indicats if the body is HTML or plain text
-    }); //}, callback, scope);
-
-
-  }
-
-
-})
-
-.controller("ExampleController", function ($scope, $cordovaCamera) {
+.controller("ExampleController", function ($scope, $rootScope, $cordovaCamera) {
 
   $scope.takePicture = function () {
     var options = {
@@ -38,7 +17,7 @@ angular.module('starter.controllers.common', ['google-maps'])
     };
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
-      $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      $rootScope.imgURI = "data:image/jpeg;base64," + imageData;
     }, function (err) {
       // An error occured. Show a message to the user
     });
@@ -62,7 +41,7 @@ angular.module('starter.controllers.common', ['google-maps'])
 
 .controller('InfoCtrl', function ($scope) {})
 
-.controller('SegnalaCtrl', function ($scope) {
+.controller('SegnalaCtrl', function ($scope, $rootScope) {
   $scope.checked = true;
   $scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
 
@@ -82,7 +61,7 @@ angular.module('starter.controllers.common', ['google-maps'])
     //navigator.geolocation.getCurrentPosition(success);
     //if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
+      //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
       GPScoords = position.coords.latitude + ", " + position.coords.longitude;
     });
     // } else {
@@ -91,6 +70,20 @@ angular.module('starter.controllers.common', ['google-maps'])
   }
 
 
+ console.log('$scope.text: '+$scope.text);
+  console.log('$rootScope.imgURI: '+$rootScope.imgURI);
+ sendEmail = function () {
+     $scope.posizioneG();    
+    cordova.plugins.email.open({
+      to: "sampleemail", // email addresses for TO field
+      subject: "sample subj", // subject of the email
+      body: ["[" + GPScoords+ "] " +"scope text." + $scope.text + "sample body"], // email body (for HTML, set isHtml to true)
+      isHtml: false, // indicats if the body is HTML or plain text
+      //attachment: $rootScope.imgURI.substring(23),
+    }, function(){
+      console.log('email view dismissed');
+    }, this);
+  }
 
 
 })
