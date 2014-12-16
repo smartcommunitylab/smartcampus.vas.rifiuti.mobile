@@ -42,12 +42,34 @@ angular.module('starter.controllers.common', ['google-maps'])
 .controller('InfoCtrl', function ($scope) {})
 
 .controller('SegnalaCtrl', function ($scope, $rootScope) {
+    
+      
+  $scope.GPScoords;
+  var GPScoordsTmp;
+    
+    var posizioneG = function () {
+    //navigator.geolocation.getCurrentPosition(success);
+    //if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
+      GPScoordsTmp = "[ "+position.coords.latitude + ", " + position.coords.longitude+ " ]";
+      $scope.GPScoords = GPScoordsTmp;
+    });
+    // } else {
+    //  showError("Your browser does not support Geolocation!");
+    // }
+  }
+    
   $scope.checked = true;
   $scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
 
+    
+
   $scope.toggleCheck = function () {
+    //$scope.posizioneG();
     $scope.checked = !$scope.checked;
-    $scope.checkboxImage = $scope.checked ? "img/rifiuti_btn_check_on_holo_light.png" : "img/rifiuti_btn_check_off_holo_light.png";
+    $scope.checkboxImage = $scope.checked ? "img/rifiuti_btn_check_on_holo_light.png"  : "img/rifiuti_btn_check_off_holo_light.png";
+      $scope.GPScoords = $scope.checked ?  GPScoordsTmp : "";
   };
 
 
@@ -55,36 +77,26 @@ angular.module('starter.controllers.common', ['google-maps'])
   function opzInCasoDiErrore(error) {
     alert("Errore " + error.code + ": " + error.message);
   }
-  var GPScoords;
 
-  $scope.posizioneG = function () {
-    //navigator.geolocation.getCurrentPosition(success);
-    //if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
-      GPScoords = position.coords.latitude + ", " + position.coords.longitude;
-    });
-    // } else {
-    //  showError("Your browser does not support Geolocation!");
-    // }
-  }
+  
 
 
  console.log('$scope.text: '+$scope.text);
   console.log('$rootScope.imgURI: '+$rootScope.imgURI);
  sendEmail = function () {
-     $scope.posizioneG();    
+    // $scope.posizioneG();    
     cordova.plugins.email.open({
       to: "sampleemail", // email addresses for TO field
       subject: "sample subj", // subject of the email
-      body: ["[" + GPScoords+ "] " +"scope text." + $scope.text + "sample body"], // email body (for HTML, set isHtml to true)
+      body: [$scope.GPScoords +" scope text: " + $scope.text + " sample body"], // email body (for HTML, set isHtml to true)
       isHtml: false, // indicats if the body is HTML or plain text
-      //attachment: $rootScope.imgURI.substring(23),
+      attachment: "base64:icon.png//" + $rootScope.imgURI.substring(26),
     }, function(){
       console.log('email view dismissed');
     }, this);
   }
 
+ posizioneG();
 
 })
 
