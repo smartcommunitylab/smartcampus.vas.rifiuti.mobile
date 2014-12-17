@@ -26,7 +26,7 @@ angular.module('starter.controllers.home', [])
       $scope.f = $scope.oneInThree($scope.rifiuti);
     });
   });
-
+    
   $scope.titleText = function () {
     if (!$rootScope.noteSelected) {
       return '100% Riciclo';
