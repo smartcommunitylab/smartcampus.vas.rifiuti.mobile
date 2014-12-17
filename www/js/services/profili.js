@@ -1,13 +1,19 @@
 angular.module('starter.services.profili', [])
 
 .factory('Profili', function ($http, $rootScope) {
-  var treeWalkUp=function(tree,results) {
-    var parentName=results[results.length-1];
+  var treeWalkUp=function(tree,parentName,results) {
+    if (!parentName || parentName=="") return;
     for (i in tree) {
       var node=tree[i];
-      if (node.nome==parentName && node.parent && node.parent!="") {
-        results.push(node.parent);
-        treeWalkUp(tree,results);
+      if (node.nome==parentName) {
+        var utenzaOK=true;
+        if (node.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
+        if (node.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
+        if (node.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
+        if (utenzaOK) {
+          results.push(node.nome);
+        }
+        treeWalkUp(tree,node.parent,results);
       }
     }
   };
@@ -75,17 +81,22 @@ angular.module('starter.services.profili', [])
     aree: function() {
       return $http.get('data/db/aree.json').then(function (results) {
         var dbAree=results.data;
-        var myAree=[$rootScope.selectedProfile.loc];
+        var myAree=[];
         for (ai in dbAree) {
           var area=dbAree[ai];
           if (area.localita==$rootScope.selectedProfile.loc) {
-            if (area.comune!=$rootScope.selectedProfile.loc) myAree.push(area.comune);
-            if (area.parent && area.parent!="") {
-              myAree.push(area.parent);
-              treeWalkUp(dbAree,myAree);
+            var utenzaOK=true;
+            if (area.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
+            if (area.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
+            if (area.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
+            if (utenzaOK) {
+              myAree.push($rootScope.selectedProfile.loc);
+              if (area.comune!=$rootScope.selectedProfile.loc) myAree.push(area.comune);
             }
+            treeWalkUp(dbAree,area.parent,myAree);
           }
         }
+console.log('myAree: '+myAree);
         return myAree;
       });
     }
