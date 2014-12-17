@@ -1,4 +1,4 @@
-angular.module('starter.controllers.raccolta', [])
+angular.module('rifiuti.controllers.raccolta', [])
 
 .controller('tipidirifiutiCtrl', function ($scope, Profili) {
   $scope.match = function (query) {
@@ -9,9 +9,25 @@ angular.module('starter.controllers.raccolta', [])
     } else {
       return function (item) {
         return item.nome.indexOf(query) != -1;
+        //TODO: consentire la ricerca anche sulle traduzioni
       }
     }
   };
+  Profili.immagini().then(function(){
+    var results=[], row=[], counter=-1;
+    for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
+      var tipologia=$scope.selectedProfile.tipologie[i];
+      counter++;
+      if (counter==3) {
+        counter=0;
+        results.push(row);
+        row=[];
+      }
+      row.push({ label:tipologia, img:$scope.immagini[tipologia] });
+    };
+    if (row.length>0) results.push(row);
+    $scope.tipologie=results;
+  });
 })
   
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {

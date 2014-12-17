@@ -6,29 +6,15 @@
 			</label>
 			<button id="searchButton" class="button button-small button-clear" ng-class="{'ion-search button-balanced': searchQuery.length == 0, 'ion-close button-stable': searchQuery.length > 0}" ng-click="searchQuery = ''"></button>
 		</div>
-		<ion-item ng-repeat="item in listaRifiuti | filter:match(searchQuery)" ng-href="#/app/rifiuto/{{item.nome}}">
+		<ion-item ng-repeat="item in selectedProfile.rifiuti | filter:match(searchQuery)" ng-href="#/app/rifiuto/{{item.nome}}">
 			{{item.nome | translate}}
 		</ion-item>
 	</div>
-	<div class="row" ng-repeat="item in f">
-		<div class="col home-grid">
+	<div class="row" ng-repeat="row in tipologie">
+		<div class="col home-grid" ng-repeat="item in row">
 			<a  class="hidden-link" ng-href="#/app/rifiuto/{{item.valore}}">
 				<div>
-					<img   id=rifiutoId ng-src="{{item.immagine}}" />{{item.valore | translate}}
-				</div>
-			</a>
-		</div>
-		<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+1] == undefined}">
-			<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+1].valore}}">
-				<div>
-					<img ng-src="{{rifiuti[f.indexOf(item)*3+1].immagine}}" />{{rifiuti[f.indexOf(item)*3+1].valore | translate}}
-				</div>
-			</a>
-		</div>
-		<div class="col home-grid" ng-class="{'hidden': rifiuti[f.indexOf(item)*3+2] == undefined}">
-			<a class="hidden-link" ng-href="#/app/rifiuto/{{rifiuti[f.indexOf(item)*3+2].valore}}">
-				<div>
-					<img ng-src="{{rifiuti[f.indexOf(item)*3+2].immagine}}" />{{rifiuti[f.indexOf(item)*3+2].valore | translate}}
+					<img   id=rifiutoId ng-src="{{item.img}}" />{{item.label | translate}}
 				</div>
 			</a>
 		</div>

@@ -1,4 +1,4 @@
-angular.module('starter.controllers.home', [])
+angular.module('rifiuti.controllers.home', [])
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $http, $ionicLoading) {
   $rootScope.noteSelected = false;

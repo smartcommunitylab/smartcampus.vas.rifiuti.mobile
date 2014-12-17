@@ -4,22 +4,30 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', [
+angular.module('rifiuti', [
 	'ionic',
 	'ngCordova',
-	'starter.controllers.common',
-	'starter.controllers.home',
-	'starter.controllers.raccolta',
-	'starter.controllers.profilo',
-	'starter.services.profili',
+	'rifiuti.filters',
+	'rifiuti.services.profili',
+	'rifiuti.controllers.common',
+	'rifiuti.controllers.home',
+	'rifiuti.controllers.raccolta',
+	'rifiuti.controllers.profilo',
 	'pascalprecht.translate',
-	'google-maps'
+	'google-maps',
+  'angular.filter'
 ])
 
 
 
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
+  $rootScope.profili = [];
+  $rootScope.selectedProfile = null;
+  $rootScope.back = function () {
+    $ionicNavBarDelegate.$getByHandle('navBar').back();
+  };
+
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -42,43 +50,7 @@ angular.module('starter', [
     }
 
   });
-
-  $rootScope.back = function () {
-    $ionicNavBarDelegate.$getByHandle('navBar').back();
-  };
-  $rootScope.containsName = function (array, item) {
-    for (var i = 0; i < array.length; i++) {
-      if (array[i].name == item) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  $rootScope.p = [];
-  $rootScope.selectedProfile = null;
 })
-
-
-
-
-
-
-
-
-
-/*.config(function ($translateProvider){
-    $translateProvider.translations("en",{
-        hello_message: "ciao",
-        goodbye_message:"byebye"
-    });
-    $translateProvider.translations("es",{
-        hello_message: "howdy",
-        goodbye_message:"goodbye"
-    });
-    $translateProvider.preferredLanguage("en");
-    $translateProvider.fallbackLanguage("en");
-});*/
 
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
@@ -86,7 +58,6 @@ angular.module('starter', [
   var lang = navigator.language.split("-");
   var current_lang = (lang[0]);
   //alert( "current_lang: " + current_lang );
-
 
   $translateProvider.translations("it", {
     hello_message: "ciao",

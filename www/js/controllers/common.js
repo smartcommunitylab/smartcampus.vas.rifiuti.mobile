@@ -1,4 +1,4 @@
-angular.module('starter.controllers.common', ['google-maps'])
+angular.module('rifiuti.controllers.common', ['google-maps'])
 
 
 .controller("ExampleController", function ($scope, $rootScope, $cordovaCamera) {
@@ -34,6 +34,9 @@ angular.module('starter.controllers.common', ['google-maps'])
     $rootScope.promptedToProfile = true;
     $location.url("app/aggProfilo");
   } else {
+    $scope.selectProfile=function(index){
+      Profili.select(index);
+    };
     Profili.read();
     Profili.select(0);
   }

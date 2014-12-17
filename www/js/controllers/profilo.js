@@ -1,4 +1,4 @@
-angular.module('starter.controllers.profilo', [])
+angular.module('rifiuti.controllers.profilo', [])
 
 .controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
@@ -27,7 +27,7 @@ angular.module('starter.controllers.profilo', [])
   $scope.save = function () {
     if ($scope.profilo.name != "" && $scope.profilo.localita != "Selezionare") {
       Profili.read();
-      if (!$scope.containsName($rootScope.p, $scope.profilo.name)) {
+      if (Profili.byname($scope.profilo.name)) {
         var popup = $ionicPopup.show({
           title: '<b class="popup-title">Attenzione !<b/>',
           template: 'Il nome del profilo è già in uso!',
@@ -37,7 +37,7 @@ angular.module('starter.controllers.profilo', [])
         });
         return;
       }
-      $rootScope.p.push({
+      $rootScope.profili.push({
         name: $scope.profilo.name,
         utenza: $scope.profilo.utenza,
         loc: $scope.profilo.localita
@@ -148,9 +148,9 @@ angular.module('starter.controllers.profilo', [])
       ]
     }).then(function (res) {
       if (!!res) {
-        var v = $rootScope.p;
+        var v = $rootScope.profili;
         v.splice(Profili.indexof($scope.id), 1);
-        $rootScope.p = v;
+        $rootScope.profili = v;
         Profili.save();
         $scope.back();
       }
