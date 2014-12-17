@@ -81,17 +81,17 @@ angular.module('rifiuti.controllers.common', ['google-maps'])
     alert("Errore " + error.code + ": " + error.message);
   }
 
-  
+  $rootScope.text;
 
 
- console.log('$scope.text: '+$scope.text);
+ console.log('$scope.text: '+$rootScope.text);
   console.log('$rootScope.imgURI: '+$rootScope.imgURI);
  sendEmail = function () {
     // $scope.posizioneG();    
     cordova.plugins.email.open({
       to: "sampleemail", // email addresses for TO field
       subject: "sample subj", // subject of the email
-      body: [$scope.GPScoords +" scope text: " + $scope.text + " sample body"], // email body (for HTML, set isHtml to true)
+      body: [$scope.GPScoords +" scope text: " + $rootScope.text + " sample body"], // email body (for HTML, set isHtml to true)
       isHtml: false, // indicats if the body is HTML or plain text
       attachment: "base64:icon.png//" + $rootScope.imgURI.substring(26),
     }, function(){
