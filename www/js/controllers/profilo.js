@@ -95,7 +95,7 @@ angular.module('starter.controllers.profilo', [])
       var p = Profili.byname($scope.id);
       if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.localita != p.loc) {
         if ($scope.profilo.name != "" && $scope.profilo.localita != "Selezionare") {
-          var editedprofile = $rootScope.byname($scope.id);
+          var editedprofile = Profili.byname($scope.id);
           //TODO: gestire nome profilo già presente
           /*if ($scope.profilo.name != p.name && selectedprofile != null) {
             $ionicPopup.show({
