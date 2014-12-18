@@ -770,7 +770,7 @@ angular.module('rifiuti', [
     views: {
       'menuContent': {
         templateUrl: "templates/rifiuti.html",
-        controller: 'RifiutoCtrl'
+        controller: 'RifiutiCtrl'
       }
     }
   })

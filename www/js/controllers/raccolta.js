@@ -152,19 +152,19 @@ angular.module('rifiuti.controllers.raccolta', [])
 })
 
 .controller('TDRCtrl', function ($scope, $http) {
-  $scope.v = [];
-  $scope.readJson = function () {
-    $http.get('data/support/tipologieDiRaccolta.json').success(function (data) {
-      $scope.v = data;
-    });
-  };
-  $scope.readJson();
+  $http.get('data/support/tipologieDiRaccolta.json').success(function (data) {
+    $scope.tipi = data;
+  });
 })
 
-.controller('RaccoltaCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http) {
-
+.controller('RaccoltaCtrl', function ($scope, $stateParams, Profili) {
   $scope.id = $stateParams.id;
+console.log('$scope.id: '+$scope.id);
 
+  Profili.rifiuti({ raccolta:$scope.id }).then(function(rifiuti){
+    $scope.rifiuti=rifiuti;
+  });
+/*
   $scope.rifiuti = [];
 
   $scope.locs = [];
@@ -221,27 +221,39 @@ angular.module('rifiuti.controllers.raccolta', [])
   };
 
   $scope.readJson();
+*/
 })
 
-.controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http, Profili, $q) {
-
+.controller('RifiutiCtrl', function ($scope, $stateParams, Profili) {
   $scope.tipo = $stateParams.tipo;
 
-  $scope.back = function () {
-    $ionicNavBarDelegate.$getByHandle('navBar').back();
-  };
-
-  Profili.raccolta($scope.tipo).then(function(raccolta){
+  Profili.raccolta({ tipo:$scope.tipo }).then(function(raccolta){
     raccolta.forEach(function(item){
-      Profili.puntiraccolta(item.tipologiaPuntoRaccolta).then(function(punti){
+      Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
         item['punti']=punti;
       });
     });
     $scope.raccolta=raccolta;
   });
 
-  Profili.rifiuti($scope.tipo).then(function(rifiuti){
+  Profili.rifiuti({ tipo:$scope.tipo }).then(function(rifiuti){
     $scope.rifiuti=rifiuti;
+  });
+})
+.controller('RifiutoCtrl', function ($scope, $stateParams, Profili) {
+  $scope.nome = $stateParams.nome;
+console.log('$scope.nome: '+$scope.nome);
+  Profili.rifiuto($scope.nome).then(function(rifiuto){
+console.log('rifiuto: '+JSON.stringify(rifiuto));
+    if (!rifiuto) return;
+    Profili.raccolta({ tipo:rifiuto.tipologiaRifiuto }).then(function(raccolta){
+      raccolta.forEach(function(item){
+        Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
+          item['punti']=punti;
+        });
+      });
+      $scope.raccolta=raccolta;
+    });
   });
 })
 

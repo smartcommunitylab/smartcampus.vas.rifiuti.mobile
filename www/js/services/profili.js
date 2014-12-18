@@ -62,8 +62,8 @@ angular.module('rifiuti.services.profili', [])
       if (profileIndex!=-1) {
         $rootScope.profili[profileIndex].image = "img/rifiuti_btn_radio_on_holo_dark.png";
         $rootScope.selectedProfile=$rootScope.profili[profileIndex];
-        this.rifiuti().then(function(myRifiuti){
-          $rootScope.selectedProfile.rifiuti=myRifiuti;
+        this.aree().then(function(myAree){
+          console.log('$rootScope.selectedProfile: '+JSON.stringify($rootScope.selectedProfile));
         });
       }
     },
@@ -101,7 +101,7 @@ angular.module('rifiuti.services.profili', [])
         return myAree;
       });
     },
-    puntiraccolta: function(tipo) {
+    puntiraccolta: function(options) {
       var ptdeferred = $q.defer();
       this.aree().then(function(myAree){
         $http.get('data/db/puntiRaccolta.json').then(function (results) {
@@ -109,7 +109,9 @@ angular.module('rifiuti.services.profili', [])
           var myPuntiDone=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(punto,pi,dbPunti){
-              if (punto.tipologiaPuntiRaccolta==tipo && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              var optionsOK=true;
+              if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
+              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
                   myPunti.push(punto);
                   myPuntiDone.push(punto.dettaglioIndirizzo);
@@ -122,25 +124,35 @@ angular.module('rifiuti.services.profili', [])
       });
       return ptdeferred.promise;
     },
-    raccolta: function(rifiuto) {
+    raccolta: function(options) {
       var deferred = $q.defer();
       this.aree().then(function(myAree){
         $http.get('data/db/raccolta.json').then(function (results) {
           var myRaccolta=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(regola,ri,dbRaccolta){
-              if (regola.tipologiaRifiuto==rifiuto && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              var optionsOK=true;
+              if (options && options.tipo && regola.tipologiaRifiuto!=options.tipo) optionsOK=false;
+              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRaccolta.push(regola);
               }
             });
           }
-console.log('myRaccolta: '+JSON.stringify(myRaccolta));
           deferred.resolve(myRaccolta);
         });
       });
       return deferred.promise;
     },
-    rifiuti: function(tipo) {
+    rifiuto: function(nome) {
+      return this.rifiuti().then(function(myRifiuti){
+        var myRifiuto=null;
+        myRifiuti.forEach(function(rifiuto){
+          if (rifiuto.nome==nome) myRifiuto=rifiuto;
+        });
+        return myRifiuto;
+      });
+    },
+    rifiuti: function(options) {
       var deferred = $q.defer();
       this.aree().then(function(myAree){
         $http.get('data/db/riciclabolario.json').then(function (results) {
@@ -148,7 +160,11 @@ console.log('myRaccolta: '+JSON.stringify(myRaccolta));
           var myRifiuti=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(rifiuto,ri,dbRifiuti){
-              if ( (tipo==null || rifiuto.tipologiaRifiuto==tipo) && $rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              var optionsOK=true;
+              if (options && options.tipo && rifiuto.tipologiaRifiuto!=options.tipo) optionsOK=false;
+              if (options && options.raccolta && rifiuto.tipologiaRaccolta!=options.raccolta) optionsOK=false;
+console.log('rifiuto.tipologiaRaccolta: '+rifiuto.tipologiaRaccolta);
+              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRifiuti.push(rifiuto);
                 if (myTipologie.indexOf(rifiuto.tipologiaRifiuto)==-1) myTipologie.push(rifiuto.tipologiaRifiuto);
               }
