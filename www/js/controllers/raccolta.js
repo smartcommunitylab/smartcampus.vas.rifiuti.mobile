@@ -13,21 +13,23 @@ angular.module('rifiuti.controllers.raccolta', [])
       }
     }
   };
-  Profili.immagini().then(function(){
-    var results=[], row=[], counter=-1;
-    for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
-      var tipologia=$scope.selectedProfile.tipologie[i];
-      counter++;
-      if (counter==3) {
-        counter=0;
-        results.push(row);
-        row=[];
-      }
-      row.push({ label:tipologia, img:$scope.immagini[tipologia] });
-    };
-    if (row.length>0) results.push(row);
-    $scope.tipologie=results;
-  });
+  if ($scope.selectedProfile) {
+    Profili.immagini().then(function(){
+      var results=[], row=[], counter=-1;
+      for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
+        var tipologia=$scope.selectedProfile.tipologie[i];
+        counter++;
+        if (counter==3) {
+          counter=0;
+          results.push(row);
+          row=[];
+        }
+        row.push({ label:tipologia, img:$scope.immagini[tipologia] });
+      };
+      if (row.length>0) results.push(row);
+      $scope.tipologie=results;
+    });
+  }
 })
   
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {
@@ -221,7 +223,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   $scope.readJson();
 })
 
-.controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http) {
+.controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http, Profili, $q) {
   //////////////////
   $scope.id = $stateParams.id;
 
@@ -289,8 +291,25 @@ angular.module('rifiuti.controllers.raccolta', [])
     $ionicNavBarDelegate.$getByHandle('navBar').back();
   };
 
-  $scope.v = [];
-
+  $scope.getPunti=function(tipo){
+//    var deferred = $q.defer();
+    Profili.puntiraccolta(tipo).then(function(punti){
+console.log('punti: '+punti.length);
+//      deferred.resolve(punti);
+    });
+//    return deferred.promise;
+    return [];
+  };
+  Profili.raccolta($scope.id).then(function(raccolta){
+    raccolta.forEach(function(item){
+      Profili.puntiraccolta(item.tipologiaPuntoRaccolta).then(function(punti){
+console.log('punti: '+punti.length);
+        item['punti']=punti;
+      });
+    });
+    $scope.raccolta=raccolta;
+  });
+/*  
   $scope.readJson = function () {
     $http.get('data/db/riciclabolario.json').success(function (base) {
       for (var i = 0; i < base.length; i++) {
@@ -332,7 +351,6 @@ angular.module('rifiuti.controllers.raccolta', [])
       }
     });
   };
-
   $scope.containsIndirizzo = function (array, item) {
     for (var k = 0; k < array.length; k++) {
       if (array[k].indirizzo == item.indirizzo) {
@@ -342,6 +360,7 @@ angular.module('rifiuti.controllers.raccolta', [])
     return true;
   }
   $scope.readJson();
+*/
 })
 
 .controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {

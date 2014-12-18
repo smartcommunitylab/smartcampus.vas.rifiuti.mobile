@@ -97,10 +97,48 @@ angular.module('rifiuti.services.profili', [])
             }
           });
           $rootScope.selectedProfile.aree=myAree;
-console.log('$rootScope.selectedProfile.aree: '+$rootScope.selectedProfile.aree);
         }
         return myAree;
       });
+    },
+    puntiraccolta: function(tipo) {
+      var ptdeferred = $q.defer();
+      this.aree().then(function(myAree){
+        $http.get('data/db/puntiRaccolta.json').then(function (results) {
+          var myPunti=[];
+          var myPuntiDone=[];
+          if ($rootScope.selectedProfile) {
+            results.data.forEach(function(punto,pi,dbPunti){
+              if (punto.tipologiaPuntiRaccolta==tipo && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+                if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
+                  myPunti.push(punto);
+                  myPuntiDone.push(punto.dettaglioIndirizzo);
+                }
+              }
+            });
+          }
+          ptdeferred.resolve(myPunti);
+        });
+      });
+      return ptdeferred.promise;
+    },
+    raccolta: function(rifiuto) {
+      var deferred = $q.defer();
+      this.aree().then(function(myAree){
+        $http.get('data/db/raccolta.json').then(function (results) {
+          var myRaccolta=[];
+          if ($rootScope.selectedProfile) {
+            results.data.forEach(function(regola,ri,dbRaccolta){
+              if (regola.tipologiaRifiuto==rifiuto && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+                myRaccolta.push(regola);
+              }
+            });
+          }
+console.log('myRaccolta: '+JSON.stringify(myRaccolta));
+          deferred.resolve(myRaccolta);
+        });
+      });
+      return deferred.promise;
     },
     rifiuti: function() {
       var deferred = $q.defer();
@@ -110,7 +148,7 @@ console.log('$rootScope.selectedProfile.aree: '+$rootScope.selectedProfile.aree)
           var myRifiuti=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(rifiuto,ri,dbRifiuti){
-              if ($rootScope.selectedProfile.aree.indexOf(rifiuto.area) && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              if ($rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRifiuti.push(rifiuto);
                 if (myTipologie.indexOf(rifiuto.tipologiaRifiuto)==-1) myTipologie.push(rifiuto.tipologiaRifiuto);
               }
