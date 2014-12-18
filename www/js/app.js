@@ -769,7 +769,7 @@ angular.module('rifiuti', [
     url: "/rifiuti/:tipo",
     views: {
       'menuContent': {
-        templateUrl: "templates/rifiuto.html",
+        templateUrl: "templates/rifiuti.html",
         controller: 'RifiutoCtrl'
       }
     }
@@ -779,7 +779,7 @@ angular.module('rifiuti', [
     url: "/rifiuto/:nome",
     views: {
       'menuContent': {
-        templateUrl: "templates/srifiuto.html",
+        templateUrl: "templates/rifiuto.html",
         controller: 'RifiutoCtrl'
       }
     }
