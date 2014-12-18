@@ -765,8 +765,8 @@ angular.module('rifiuti', [
     }
   })
 
-  .state('app.rifiuto', {
-    url: "/rifiuto/:id",
+  .state('app.rifiuti', {
+    url: "/rifiuti/:tipo",
     views: {
       'menuContent': {
         templateUrl: "templates/rifiuto.html",
@@ -775,8 +775,8 @@ angular.module('rifiuti', [
     }
   })
 
-  .state('app.prova', {
-    url: "/rifiutoS/:id",
+  .state('app.rifiuto', {
+    url: "/rifiuto/:nome",
     views: {
       'menuContent': {
         templateUrl: "templates/srifiuto.html",

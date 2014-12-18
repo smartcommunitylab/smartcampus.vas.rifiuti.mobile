@@ -140,7 +140,7 @@ console.log('myRaccolta: '+JSON.stringify(myRaccolta));
       });
       return deferred.promise;
     },
-    rifiuti: function() {
+    rifiuti: function(tipo) {
       var deferred = $q.defer();
       this.aree().then(function(myAree){
         $http.get('data/db/riciclabolario.json').then(function (results) {
@@ -148,7 +148,7 @@ console.log('myRaccolta: '+JSON.stringify(myRaccolta));
           var myRifiuti=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(rifiuto,ri,dbRifiuti){
-              if ($rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              if ( (tipo==null || rifiuto.tipologiaRifiuto==tipo) && $rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRifiuti.push(rifiuto);
                 if (myTipologie.indexOf(rifiuto.tipologiaRifiuto)==-1) myTipologie.push(rifiuto.tipologiaRifiuto);
               }

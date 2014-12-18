@@ -224,143 +224,25 @@ angular.module('rifiuti.controllers.raccolta', [])
 })
 
 .controller('RifiutoCtrl', function ($scope, $rootScope, $stateParams, $ionicNavBarDelegate, $http, Profili, $q) {
-  //////////////////
-  $scope.id = $stateParams.id;
 
-  $scope.rifiuti = [];
-
-  $scope.locs = [];
-
-  $scope.readJson = function () {
-    $http.get('data/db/riciclabolario.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].tipologiaRifiuto == $scope.id) {
-          $scope.rifiuti.push(data[i]);
-        }
-      }
-    });
-    $http.get('data/db/raccolta.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].tipologiaRifiuto == $scope.id) {
-          $scope.locs.push(data[i]);
-        }
-      }
-      for (var i = 0; i < $scope.locs.length; i++) {
-        $scope.locs[i].aperto = false;
-        $scope.locs[i].locs = [];
-      }
-      $http.get('data/db/puntiRaccolta.json').success(function (loc) {
-        var profilo = $rootScope.selectedProfile.loc;
-        for (var i = 0; i < loc.length; i++) {
-          if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1) {
-            for (var j = 0; j < $scope.locs.length; j++) {
-              if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
-                $scope.locs[j].locs.push(loc[i]);
-              }
-            }
-          }
-        }
-      });
-      $http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
-        for (var i = 0; i < $scope.locs.length; i++) {
-          for (var j = 0; j < group.length; j++) {
-            if ($scope.locs[i].tipologiaRifiuto == group[j].name) {
-              $scope.locs[i].icon = group[j].icons[i];
-            }
-          }
-        }
-      });
-    });
-  };
-
-  $scope.containsIndirizzo = function (array, item) {
-    for (var k = 0; k < array.length; k++) {
-      if (array[k].indirizzo == item.indirizzo) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  $scope.readJson();
-  ///////////////////////////// forse bisogna togliere delle cose
-
-  $scope.id = $stateParams.id;
+  $scope.tipo = $stateParams.tipo;
 
   $scope.back = function () {
     $ionicNavBarDelegate.$getByHandle('navBar').back();
   };
 
-  $scope.getPunti=function(tipo){
-//    var deferred = $q.defer();
-    Profili.puntiraccolta(tipo).then(function(punti){
-console.log('punti: '+punti.length);
-//      deferred.resolve(punti);
-    });
-//    return deferred.promise;
-    return [];
-  };
-  Profili.raccolta($scope.id).then(function(raccolta){
+  Profili.raccolta($scope.tipo).then(function(raccolta){
     raccolta.forEach(function(item){
       Profili.puntiraccolta(item.tipologiaPuntoRaccolta).then(function(punti){
-console.log('punti: '+punti.length);
         item['punti']=punti;
       });
     });
     $scope.raccolta=raccolta;
   });
-/*  
-  $scope.readJson = function () {
-    $http.get('data/db/riciclabolario.json').success(function (base) {
-      for (var i = 0; i < base.length; i++) {
-        if (base[i].nome == $scope.id) {
-          $http.get('data/db/raccolta.json').success(function (data) {
-            for (var k = 0; k < data.length; k++) {
-              if (data[k].tipologiaRifiuto == base[i].tipologiaRifiuto) {
-                $scope.v.push(data[k]);
-              }
-            }
-            for (var k = 0; k < $scope.v.length; k++) {
-              $scope.v[k].aperto = false;
-              $scope.v[k].locs = [];
-            }
-            $http.get('data/db/puntiRaccolta.json').success(function (loc) {
-              var profilo = $rootScope.selectedProfile.loc;
-              for (var k = 0; k < loc.length; k++) {
-                if (loc[k].area == profilo && loc[k].indirizzo.indexOf(profilo) != -1) {
-                  for (var j = 0; j < $scope.v.length; j++) {
-                    if ($scope.v[j].tipologiaPuntoRaccolta == loc[k].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.v[j].locs, loc[k])) {
-                      $scope.v[j].locs.push(loc[k]);
-                    }
-                  }
-                }
-              }
-            });
-            $http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
-              for (var i = 0; i < $scope.v.length; i++) {
-                for (var j = 0; j < group.length; j++) {
-                  if ($scope.v[i].tipologiaRifiuto == group[j].name) {
-                    $scope.v[i].icon = group[j].icons[i];
-                  }
-                }
-              }
-            });
-          });
-          break;
-        }
-      }
-    });
-  };
-  $scope.containsIndirizzo = function (array, item) {
-    for (var k = 0; k < array.length; k++) {
-      if (array[k].indirizzo == item.indirizzo) {
-        return false;
-      }
-    }
-    return true;
-  }
-  $scope.readJson();
-*/
+
+  Profili.rifiuti($scope.tipo).then(function(rifiuti){
+    $scope.rifiuti=rifiuti;
+  });
 })
 
 .controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {

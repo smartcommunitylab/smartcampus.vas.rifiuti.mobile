@@ -1,8 +1,8 @@
 <ion-nav-buttons side="left">
 	<a href="#/app/home/tipidirifiuti" class="button button-clear button-light ion-chevron-left sub-page-button">
-		<span class="bar-back">{{"Rifiuto"|translate}}</span>
+		<span class="bar-back">{{"Tipo di rifiuto"|translate}}</span>
 		</br>
-		<div class="title-subtext">{{id|translate}}</div>
+		<div class="title-subtext">{{tipo|translate}}</div>
 	</a>
 </ion-nav-buttons>
 <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
@@ -53,7 +53,7 @@
     <ion-tab title="{{'LISTA RIFIUTI'|translate}}">
         <ion-content class="background-grey-light" has-bouncing="false">
             <ion-list class="background-grey-light">
-                <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiutoS/{{item.nome}}">
+                <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
                     {{item.nome|translate}}
                 </ion-item>
             </ion-list>
