@@ -10,7 +10,7 @@
     <div class="subpage-title">
       <h1 class="title">{{"DETTAGLI"|translate}}</h1>
     </div>
-    <div class="row low-padding no-vertical-padding">
+    <div class="row row-center low-padding no-vertical-padding">
       <div class="col col-67 no-left-padding no-vertical-padding">
         <div class="row no-left-padding pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
         <div class="row no-left-padding pdr-specifica"></div>
@@ -18,11 +18,11 @@
       </div>
       <div class="col no-left-padding no-vertical-padding position-relative">
         <a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
-          <img src="img/ic_map_green.png" class="standard-size absolute-center">
+          <img src="img/ic_map_green.png" class="standard-size">
         </a>
       </div>
       <div class="col no-left-padding no-vertical-padding position-relative">
-        <img src="img/ic_directions.png" class="standard-size absolute-center">
+        <img src="img/ic_directions.png" class="standard-size">
       </div>
     </div>
     <div ng-show="!!pdr.dalle">
