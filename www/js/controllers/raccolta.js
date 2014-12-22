@@ -34,7 +34,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   }
 })
   
-.controller('PDRCtrl', function ($scope, $rootScope, $timeout, Profili, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $timeout, Profili, $location, $stateParams) {
 
   $scope.mapView = true;
   $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
@@ -98,9 +98,19 @@ angular.module('rifiuti.controllers.raccolta', [])
     $scope.updateIMG();
     $timeout(function () {
       var mapHeight = 800; // or any other calculated value
-      mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
-    }, 50);
+      var mapContainer = document.querySelector('#map-container');
+      if (mapContainer) {
+        mapHeight = angular.element(mapContainer)[0].offsetHeight;
+      } else { 
+        console.log('cannot get "#map-container"');
+      }
+      var ng_mapContainer = document.querySelector('.angular-google-map-container');
+      if (ng_mapContainer) {
+        angular.element(ng_mapContainer)[0].style.height = mapHeight + 'px';
+      } else { 
+        console.log('cannot get ".angular-google-map-container"');
+      }
+    }, 200);
   };
 
   $scope.$on('$viewContentLoaded', function () {
