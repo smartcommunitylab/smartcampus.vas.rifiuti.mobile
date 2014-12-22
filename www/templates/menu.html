@@ -6,80 +6,80 @@
 		<ion-content class="background-grey-dark" scroll="false">
 			<ion-list class="menu-list">
 				<ion-item ng-repeat="item in profili" ng-click="selectProfile($index)" class="no-border no-padding">
-					<div class="row">
-						<div class="col col-10 no-vertical-padding position-relative">
-							<img ng-src="{{item.image}}" class="absolute-center menu-size"/>
+					<div class="row row-center no-vertical-padding">
+						<div class="col col-10 position-relative no-vertical-padding">
+							<img ng-src="{{item.image}}" class="menu-size"/>
 						</div>
-						<div class="col no-vertical-padding auto-center">
+						<div class="col no-vertical-padding">
 							{{item.name}}
 						</div>
 					</div>
 				</ion-item>
 			</ion-list>
-			<ion-content class="background-grey-dark" has-bouncing="false" style="top:{{profili.length * 30}}px">
+			<ion-content class="background-grey-dark" has-bouncing="false" style="top:{{profili.length * 35}}px">
 				<ion-list class="menu-list">
-					<ion-item nav-clear  menu-close href="#/app/home/tipidirifiuti">
-						<div class="row"> 
+					<ion-item nav-clear menu-close href="#/app/home/tipidirifiuti">
+						<div class="row row-center"> 
 							<div class="col col-15 position-relative">
-								<img src="img/ic_home.png" class="absolute-center menu-size" />
+								<img src="img/ic_home.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">Home</div>
+							<div class="col">Home</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/puntiDiRaccolta/!">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_punti_raccolta.png" class="absolute-center menu-size" />
+								<img src="img/ic_punti_raccolta.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Punti di raccolta" | translate}}</div>
+							<div class="col">{{"Punti di raccolta" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/tipiDiRaccolta">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_tipi_raccolta.png" class="absolute-center menu-size" />
+								<img src="img/ic_tipi_raccolta.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Tipi di raccolta" | translate}}</div>
+							<div class="col">{{"Tipi di raccolta" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/profili">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_profilo.png" class="absolute-center menu-size" />
+								<img src="img/ic_profilo.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Gestione profili" | translate}}</div>
+							<div class="col">{{"Gestione profili" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/segnala">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_segnala.png" class="absolute-center menu-size" />
+								<img src="img/ic_segnala.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Segnala" | translate}}</div>
+							<div class="col">{{"Segnala" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/contatti">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_contatti.png" class="absolute-center menu-size" />
+								<img src="img/ic_contatti.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Contatti" | translate}}</div>
+							<div class="col">{{"Contatti" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close  href="#/app/home/tipidirifiuti" ng-click="showTutorial()">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_tutorial.png" class="absolute-center menu-size" />
+								<img src="img/ic_tutorial.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Tutorial" | translate}}</div>
+							<div class="col">{{"Tutorial" | translate}}</div>
 						</div>
 					</ion-item>
 					<ion-item nav-clear menu-close href="#/app/info">
-						<div class="row">
+						<div class="row row-center">
 							<div class="col col-15 position-relative">
-								<img src="img/ic_info.png" class="absolute-center menu-size" />
+								<img src="img/ic_info.png" class="menu-size" />
 							</div>
-							<div class="col auto-center">{{"Info" | translate}}</div>
+							<div class="col">{{"Info" | translate}}</div>
 						</div>
 					</ion-item>
 				</ion-list>
