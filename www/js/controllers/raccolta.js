@@ -34,59 +34,19 @@ angular.module('rifiuti.controllers.raccolta', [])
   }
 })
   
-.controller('PDRCtrl', function ($scope, $rootScope, $timeout, $http, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $rootScope, $timeout, Profili, $location, $stateParams) {
 
   $scope.mapView = true;
-
   $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
-
   $scope.list = [];
 
   $scope.variableIMG = "img/ic_list.png";
-
   $scope.updateIMG = function () {
     $scope.variableIMG = $scope.mapView ? "img/ic_list.png" : "img/ic_map.png";
   };
 
-  $scope.init = function () {
-    $http.get('data/db/puntiRaccolta.json').success(function (loc) {
-      var profilo = $rootScope.selectedProfile.loc;
-      var points = [];
-      for (var i = 0; i < loc.length; i++) {
-        var indirizzo = loc[i].dettaglioIndirizzo != "" ? loc[i].dettaglioIndirizzo : loc[i].indirizzo;
-        if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1 && $scope.containsIndirizzo(points, loc[i]) && ($scope.id == null || indirizzo == $scope.id)) {
-          var icon = {
-            url: loc[i].tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
-            scaledSize: new google.maps.Size(45, 45)
-          };
-          points.push({
-            id: loc[i].dettaglioIndirizzo != '' ? loc[i].dettaglioIndirizzo : loc[i].indirizzo,
-            latitude: loc[i].localizzazione.split(',')[0],
-            longitude: loc[i].localizzazione.split(',')[1],
-            icon: icon
-          });
-          $scope.addToList(loc[i]);
-        }
-      }
-      $scope.markers.models = points;
-    });
-  };
-
-  $scope.addToList = function (item) {
-    for (var i = 0; i < $scope.list.length; i++) {
-      if ($scope.list[i].tipologiaPuntoRaccolta == item.tipologiaPuntiRaccolta) {
-        $scope.list[i].locs.push(item);
-        return;
-      }
-    }
-    $scope.list.push({
-      aperto: false,
-      tipologiaPuntoRaccolta: item.tipologiaPuntiRaccolta,
-      icon: item.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_crm_grey.png' : 'img/ic_isola_eco_grey.png',
-      locs: [item]
-    });
-  };
-
+//TODO: come mai in questa funzione il controllo sui CRM è diverso dalle isole ecologiche?
+/*
   $scope.containsIndirizzo = function (array, item) {
     for (var k = 0; k < array.length; k++) {
       if ((array[k].id == item.dettaglioIndirizzo && item.tipologiaPuntiRaccolta == 'CRM') || (array[k].id == item.indirizzo && item.tipologiaPuntiRaccolta != 'CRM')) {
@@ -95,6 +55,7 @@ angular.module('rifiuti.controllers.raccolta', [])
     }
     return true;
   };
+*/
 
   $scope.openMarkerClick = function ($markerModel) {
     $location.url('/app/puntoDiRaccolta/' + $markerModel.id);
@@ -150,7 +111,40 @@ angular.module('rifiuti.controllers.raccolta', [])
     }, 50);
   });
 
-  $scope.init();
+  $scope.addToList = function (item) {
+    for (var i = 0; i < $scope.list.length; i++) {
+      if ($scope.list[i].tipologiaPuntoRaccolta == item.tipologiaPuntiRaccolta) {
+        $scope.list[i].locs.push(item);
+        return;
+      }
+    }
+    $scope.list.push({
+      aperto: false,
+      tipologiaPuntoRaccolta: item.tipologiaPuntiRaccolta,
+      icon: item.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_crm_grey.png' : 'img/ic_isola_eco_grey.png',
+      locs: [item]
+    });
+  };
+
+  Profili.puntiraccolta().then(function(punti){
+    var points = [];
+    punti.forEach(function(punto){
+      if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
+        var icon = {
+          url: punto.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
+          scaledSize: new google.maps.Size(45, 45)
+        };
+        points.push({
+          id: punto.dettaglioIndirizzo,
+          latitude: punto.localizzazione.split(',')[0],
+          longitude: punto.localizzazione.split(',')[1],
+          icon: icon
+        });
+        $scope.addToList(punto);
+      }
+    });
+    $scope.markers.models = points;
+  });
 })
 
 .controller('TDRCtrl', function ($scope, $http) {

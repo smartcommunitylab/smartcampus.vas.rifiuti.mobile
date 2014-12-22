@@ -114,10 +114,9 @@ angular.module('rifiuti.services.profili', [])
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
-console.log('ADD: '+punto.dettaglioIndirizzo);
                   myPunti.push(punto);
                   if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
-                } else { console.log('already: '+punto.dettaglioIndirizzo); 
+                //} else { console.log('already: '+punto.dettaglioIndirizzo); 
                 }
               }
             });

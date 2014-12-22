@@ -1,58 +1,60 @@
-<ion-nav-buttons side="left">
-	<button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
-        <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div  class="wrap-title">
-                <span class="main-title">{{"Punti di raccolta"| translate}}</span>
-                <div class="sub-title">{{selectedProfile.name}}</div>
+<ion-view>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+          <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+              <div  class="wrap-title">
+                  <span class="main-title">{{"Punti di raccolta"| translate}}</span>
+                  <div class="sub-title">{{selectedProfile.name}}</div>
+              </div>
+      <!--<span class="bar-title">Punti di raccolta</span>
+          <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button ng-click="click()" class="button button-clear button-light icon-left">
+      <img ng-src="{{variableIMG}}" class="standard-size" />
+    </button>
+  </ion-nav-buttons>
+  <div ng-if="mapView">
+    <ion-content class="has-header" scroll="false" id="map-container">
+      <div id="map1">
+        <google-map pan="map.pan" center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" options="map.options">
+          <markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
+          </markers>
+        </google-map>
+      </div>
+    </ion-content>
+  </div>
+  <div ng-if="!mapView">
+    <ion-content class="has-header background-grey-light" has-bouncing="false">
+      <div class="bottom-border">
+        <div class="expandable-list-items" ng-repeat="item in list">
+          <div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
+            <div class="col col-10 col-center">
+              <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
             </div>
-		<!--<span class="bar-title">Punti di raccolta</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
-	</button>
-</ion-nav-buttons>
-<ion-nav-buttons side="right">
-	<button ng-click="click()" class="button button-clear button-light icon-left">
-		<img ng-src="{{variableIMG}}" class="standard-size" />
-	</button>
-</ion-nav-buttons>
-<div ng-if="mapView">
-	<ion-content class="has-header" scroll="false" id="map-container">
-		<div id="map1">
-			<google-map pan="map.pan" center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" options="map.options">
-				<markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
-				</markers>
-			</google-map>
-		</div>
-	</ion-content>
-</div>
-<div ng-if="!mapView">
-	<ion-content class="has-header background-grey-light" has-bouncing="false">
-		<div class="bottom-border">
-			<div class="expandable-list-items" ng-repeat="item in list">
-				<div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
-					<div class="col col-10 col-center">
-						<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-					</div>
-					<div class="col col-75">
-						<div class="row only-bottom-vertical-padding expandable-list-title">
-							<div class="col no-vertical-padding">
-								{{item.tipologiaPuntoRaccolta | translate}}
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<img ng-src="{{item.icon}}" width="25" height="25">
-					</div>
-				</div>
-				<div ng-show="item.aperto">
-					<a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-						<div class="row background-grey-light">
-							<div class="col">
-								{{loc.dettaglioIndirizzo || loc.indirizzo}}
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</ion-content>
-</div>
+            <div class="col col-75">
+              <div class="row only-bottom-vertical-padding expandable-list-title">
+                <div class="col no-vertical-padding">
+                  {{item.tipologiaPuntoRaccolta | translate}}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <img ng-src="{{item.icon}}" width="25" height="25">
+            </div>
+          </div>
+          <div ng-show="item.aperto">
+            <a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+              <div class="row background-grey-light">
+                <div class="col">
+                  {{loc.dettaglioIndirizzo || loc.indirizzo}}
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </div>
+</ion-view>
