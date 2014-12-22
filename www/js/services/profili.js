@@ -1,6 +1,6 @@
 angular.module('rifiuti.services.profili', [])
 
-.factory('Profili', function ($http, $rootScope, $q) {
+.factory('Profili', function ($http, $rootScope, $q, $cordovaGeolocation) {
   var treeWalkUp=function(tree,parentName,results) {
     if (!parentName || parentName=="") return;
     tree.forEach(function(node){
@@ -121,6 +121,26 @@ angular.module('rifiuti.services.profili', [])
               }
             });
           }
+
+          $cordovaGeolocation.getCurrentPosition({ timeout:10000,enableHighAccuracy:true }).then(function (position) {
+            position={ coords:{ latitude:'46.0', longitude:'11.0' } };
+
+            if (position.coords && position.coords.latitude && position.coords.longitude) {
+              myPunti.forEach(function(punto){
+                if (punto.localizzazione) {
+                  var distance=$rootScope.distance([position.coords.latitude,position.coords.longitude],punto.localizzazione.split(','));
+                  punto['distance']=distance;
+                } else {
+                  console.log('invalid location for: '+punto.dettaglioIndirizzo);
+                }
+              });
+            } else {
+              console.log('invalid pos: '+JSON.stringify(position));
+            }
+          }, function(err) {
+            console.log('cannot geolocate!');
+          });
+          
           ptdeferred.resolve(myPunti);
         });
       });
