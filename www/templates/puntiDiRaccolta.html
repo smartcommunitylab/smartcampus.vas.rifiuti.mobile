@@ -29,26 +29,25 @@
     <ion-content class="has-header background-grey-light" has-bouncing="false">
       <div class="bottom-border">
         <div class="expandable-list-items" ng-repeat="item in list">
-          <div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
-            <div class="col col-10 col-center">
+          <div class="row row-center background-grey-middle" ng-click="item.aperto=!item.aperto">
+            <div class="col col-10">
               <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
             </div>
-            <div class="col col-75">
-              <div class="row only-bottom-vertical-padding expandable-list-title">
-                <div class="col no-vertical-padding">
-                  {{item.tipologiaPuntoRaccolta | translate}}
-                </div>
-              </div>
+            <div class="col col-80">
+              {{item.tipologiaPuntoRaccolta | translate}}
             </div>
-            <div class="col">
+            <div class="col col-10 col-top a_right">
               <img ng-src="{{item.icon}}" width="25" height="25">
             </div>
           </div>
           <div ng-show="item.aperto">
             <a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-              <div class="row background-grey-light">
-                <div class="col">
+              <div class="row row-center background-grey-light">
+                <div class="col col-80">
                   {{loc.dettaglioIndirizzo || loc.indirizzo}}
+                </div>
+                <div class="col col-20 a_right" ng-if="loc.distance">
+                  {{loc.distance | number:1}} Km
                 </div>
               </div>
             </a>
