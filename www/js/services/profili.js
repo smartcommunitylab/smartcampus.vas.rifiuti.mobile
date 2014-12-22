@@ -143,6 +143,23 @@ angular.module('rifiuti.services.profili', [])
               if (options && options.tipipunto && options.tipipunto.indexOf(regola.tipologiaPuntoRaccolta)==-1) optionsOK=false;
 
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+                switch (regola.tipologiaPuntoRaccolta) {
+                  case 'Isola Ecologica':
+                    regola['icon'] = 'img/ic_isola_eco_grey.png';
+                    break;
+                  case 'CRM':
+                    regola['icon'] = 'img/ic_crm_grey.png';
+                    break;
+                  case 'Farmacia':
+                    regola['icon'] = 'img/ic_farmacia_grey.png';
+                    break;
+                  case 'Rivenditore':
+                    regola['icon'] = 'img/ic_rivenditore_grey.png';
+                    break;
+                  default:
+                    regola['icon'] = 'img/ic_porta_a_porta_grey.png';
+                    break;
+                }
                 myRaccolta.push(regola);
               }
             });
