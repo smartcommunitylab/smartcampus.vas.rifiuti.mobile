@@ -165,7 +165,6 @@ angular.module('rifiuti.controllers.raccolta', [])
 
 .controller('RaccoltaCtrl', function ($scope, $stateParams, Profili) {
   $scope.id = $stateParams.id;
-console.log('$scope.id: '+$scope.id);
 
   Profili.raccolta({ tipo:$scope.id }).then(function(raccolta){
     var tipirifiuto=[], tipipunto=[];
@@ -178,8 +177,6 @@ console.log('$scope.id: '+$scope.id);
       $scope.rifiuti=rifiuti;
     });
 
-console.log('tipirifiuto: '+tipirifiuto);
-console.log('tipipunto: '+tipipunto);
     Profili.raccolta({ tipipunto:tipipunto, tipirifiuto:tipirifiuto }).then(function(raccolta){
       raccolta.forEach(function(item){
         Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
