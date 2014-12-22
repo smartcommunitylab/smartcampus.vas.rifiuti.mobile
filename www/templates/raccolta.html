@@ -19,7 +19,7 @@
     <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
       <ion-content class="background-grey-light" has-bouncing="false">
         <div class="bottom-border">
-          <div class="expandable-list-items" ng-repeat="item in locs">
+          <div class="expandable-list-items" ng-repeat="item in raccolta">
             <div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
               <div class="col col-10 col-center">
                 <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row only-bottom-vertical-padding">
                   <div class="col no-vertical-padding">
-                    {{item.tipologiaRifiuto|translate}}
+                    {{item.tipologiaRaccolta|translate}}
                   </div>
                 </div>
                 <div class="row no-vertical-padding expandable-list-desc">
@@ -50,10 +50,10 @@
               </div>
             </div>
             <div ng-show="item.aperto">
-              <a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+              <a ng-repeat="punto in item.punti" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{punto.dettaglioIndirizzo || punto.indirizzo}}">
                 <div class="row background-grey-light">
                   <div class="col">
-                    {{loc.dettaglioIndirizzo || loc.indirizzo}}
+                    {{punto.dettaglioIndirizzo || punto.indirizzo}}
                   </div>
                 </div>
               </a>

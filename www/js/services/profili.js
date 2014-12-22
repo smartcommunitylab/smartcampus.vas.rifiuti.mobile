@@ -63,7 +63,7 @@ angular.module('rifiuti.services.profili', [])
         $rootScope.profili[profileIndex].image = "img/rifiuti_btn_radio_on_holo_dark.png";
         $rootScope.selectedProfile=$rootScope.profili[profileIndex];
         this.aree().then(function(myAree){
-          console.log('$rootScope.selectedProfile: '+JSON.stringify($rootScope.selectedProfile));
+          console.log('$rootScope.selectedProfile: '+JSON.stringify($rootScope.selectedProfile.name));
         });
       }
     },
@@ -110,11 +110,14 @@ angular.module('rifiuti.services.profili', [])
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(punto,pi,dbPunti){
               var optionsOK=true;
+              if (options && options.indirizzo && punto.dettaglioIndirizzo!=options.indirizzo) optionsOK=false;
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
+console.log('ADD: '+punto.dettaglioIndirizzo);
                   myPunti.push(punto);
-                  myPuntiDone.push(punto.dettaglioIndirizzo);
+                  if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
+                } else { console.log('already: '+punto.dettaglioIndirizzo); 
                 }
               }
             });
@@ -132,7 +135,14 @@ angular.module('rifiuti.services.profili', [])
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(regola,ri,dbRaccolta){
               var optionsOK=true;
-              if (options && options.tipo && regola.tipologiaRifiuto!=options.tipo) optionsOK=false;
+              if (options && options.tipo && regola.tipologiaRaccolta!=options.tipo) optionsOK=false;
+
+              if (options && options.tiporifiuto && regola.tipologiaRifiuto!=options.tiporifiuto) optionsOK=false;
+              if (options && options.tipirifiuto && options.tipirifiuto.indexOf(regola.tipologiaRifiuto)) optionsOK=false;
+
+              if (options && options.tipopunto && regola.tipologiaPuntoRaccolta!=options.tipopunto) optionsOK=false;
+              if (options && options.tipipunto && options.tipipunto.indexOf(regola.tipologiaPuntoRaccolta)==-1) optionsOK=false;
+
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRaccolta.push(regola);
               }
@@ -162,8 +172,7 @@ angular.module('rifiuti.services.profili', [])
             results.data.forEach(function(rifiuto,ri,dbRifiuti){
               var optionsOK=true;
               if (options && options.tipo && rifiuto.tipologiaRifiuto!=options.tipo) optionsOK=false;
-              if (options && options.raccolta && rifiuto.tipologiaRaccolta!=options.raccolta) optionsOK=false;
-console.log('rifiuto.tipologiaRaccolta: '+rifiuto.tipologiaRaccolta);
+              if (options && options.tipi && options.tipi.indexOf(rifiuto.tipologiaRifiuto)==-1) optionsOK=false;
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(rifiuto.area)!=-1 && rifiuto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 myRifiuti.push(rifiuto);
                 if (myTipologie.indexOf(rifiuto.tipologiaRifiuto)==-1) myTipologie.push(rifiuto.tipologiaRifiuto);
@@ -178,18 +187,14 @@ console.log('rifiuto.tipologiaRaccolta: '+rifiuto.tipologiaRaccolta);
       return deferred.promise;
     },
     immagini: function() {
-      var imgDeferred = $q.defer();
-      this.rifiuti().then(function(){
-        $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
-          var imgs={};
-          results.data.forEach(function(immagine,ii,dbImmagini){
-            imgs[immagine.valore]=immagine.immagine;
-          });
-          $rootScope.immagini=imgs;
-          imgDeferred.resolve(imgs);
-        })
+      return $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
+        var imgs={};
+        results.data.forEach(function(immagine,ii,dbImmagini){
+          imgs[immagine.valore]=immagine.immagine;
+        });
+        $rootScope.immagini=imgs;
+        return imgs;
       });
-      return imgDeferred.promise;
     }
   }
 })

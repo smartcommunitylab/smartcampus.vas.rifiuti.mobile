@@ -1,45 +1,47 @@
-<ion-nav-buttons side="left">
-	<button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
-		<span class="bar-back">{{"Punto di raccolta"|translate}}</span>
-		</br>
-		<p class="title-subtext">{{pdr.tipologiaPuntiRaccolta}} {{indirizzoIfIsCRM()}}</p>
-	</button>
-</ion-nav-buttons>
-<ion-content class="background-grey-ligh" has-bouncing="false">
-	<div class="subpage-title">
-		<h1 class="title">{{"DETTAGLI"|translate}}</h1>
-	</div>
-	<div class="row low-padding no-vertical-padding">
-		<div class="col col-67 no-left-padding no-vertical-padding">
-			<div class="row no-left-padding pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
-			<div class="row no-left-padding pdr-specifica"></div>
-			<!--per ora niente...-->
-		</div>
-		<div class="col no-left-padding no-vertical-padding position-relative">
-			<a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
-				<img src="img/ic_map_green.png" class="standard-size absolute-center">
-			</a>
-		</div>
-		<div class="col no-left-padding no-vertical-padding position-relative">
-			<img src="img/ic_directions.png" class="standard-size absolute-center">
-		</div>
-	</div>
-	<div ng-show="!!pdr.dalle">
-		<div class="subpage-title">
-			<h1 class="title">ORARIO</h1>
-		</div>
-		<div class="low-padding">
-			<div class="no-padding" ng-repeat="item in orari">
-				<span>{{item.giorno}}: </span><span ng-repeat="orario in item.orari">{{orario}} </span>
-			</div>
-		</div>
-	</div>
-	<div class="subpage-title">
-		<h1 class="title">{{"TIPOLOGIE DI RACCOLTA"|translate}}</h1>
-	</div>
-	<ion-list>
-		<ion-item class="low-padding no-link-padding" ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
-			{{rifiuto|translate}}
-		</ion-item>
-	</ion-list>
-</ion-content>
+<ion-view>
+  <ion-nav-buttons side="left">
+    <button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+      <span class="bar-back">{{"Punto di raccolta"|translate}}</span>
+      </br>
+      <p class="title-subtext">{{pdr.tipologiaPuntiRaccolta}} {{indirizzoIfIsCRM()}}</p>
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="background-grey-ligh" has-bouncing="false">
+    <div class="subpage-title">
+      <h1 class="title">{{"DETTAGLI"|translate}}</h1>
+    </div>
+    <div class="row low-padding no-vertical-padding">
+      <div class="col col-67 no-left-padding no-vertical-padding">
+        <div class="row no-left-padding pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
+        <div class="row no-left-padding pdr-specifica"></div>
+        <!--per ora niente...-->
+      </div>
+      <div class="col no-left-padding no-vertical-padding position-relative">
+        <a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
+          <img src="img/ic_map_green.png" class="standard-size absolute-center">
+        </a>
+      </div>
+      <div class="col no-left-padding no-vertical-padding position-relative">
+        <img src="img/ic_directions.png" class="standard-size absolute-center">
+      </div>
+    </div>
+    <div ng-show="!!pdr.dalle">
+      <div class="subpage-title">
+        <h1 class="title">ORARIO</h1>
+      </div>
+      <div class="low-padding">
+        <div class="no-padding" ng-repeat="item in orari">
+          <span>{{item.giorno}}: </span><span ng-repeat="orario in item.orari"><span ng-if="$index>0">, </span>{{orario}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="subpage-title">
+      <h1 class="title">{{"TIPOLOGIE DI RACCOLTA"|translate}}</h1>
+    </div>
+    <ion-list>
+      <ion-item class="low-padding no-link-padding" ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
+        {{rifiuto|translate}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

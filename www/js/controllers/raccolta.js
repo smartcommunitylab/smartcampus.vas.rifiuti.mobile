@@ -14,20 +14,22 @@ angular.module('rifiuti.controllers.raccolta', [])
     }
   };
   if ($scope.selectedProfile) {
-    Profili.immagini().then(function(){
-      var results=[], row=[], counter=-1;
-      for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
-        var tipologia=$scope.selectedProfile.tipologie[i];
-        counter++;
-        if (counter==3) {
-          counter=0;
-          results.push(row);
-          row=[];
-        }
-        row.push({ label:tipologia, img:$scope.immagini[tipologia] });
-      };
-      if (row.length>0) results.push(row);
-      $scope.tipologie=results;
+    Profili.rifiuti().then(function(){
+      Profili.immagini().then(function(){
+        var results=[], row=[], counter=-1;
+        for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
+          var tipologia=$scope.selectedProfile.tipologie[i];
+          counter++;
+          if (counter==3) {
+            counter=0;
+            results.push(row);
+            row=[];
+          }
+          row.push({ label:tipologia, img:$scope.immagini[tipologia] });
+        };
+        if (row.length>0) results.push(row);
+        $scope.tipologie=results;
+      });
     });
   }
 })
@@ -161,73 +163,34 @@ angular.module('rifiuti.controllers.raccolta', [])
   $scope.id = $stateParams.id;
 console.log('$scope.id: '+$scope.id);
 
-  Profili.rifiuti({ raccolta:$scope.id }).then(function(rifiuti){
-    $scope.rifiuti=rifiuti;
+  Profili.raccolta({ tipo:$scope.id }).then(function(raccolta){
+    var tipirifiuto=[], tipipunto=[];
+    raccolta.forEach(function(regola){
+      if (tipirifiuto.indexOf(regola.tipologiaRifiuto)==-1) tipirifiuto.push(regola.tipologiaRifiuto);
+      if (tipipunto.indexOf(regola.tipologiaPuntoRaccolta)==-1) tipipunto.push(regola.tipologiaPuntoRaccolta);
+    });
+
+    Profili.rifiuti({ tipi:tipirifiuto }).then(function(rifiuti){
+      $scope.rifiuti=rifiuti;
+    });
+
+console.log('tipirifiuto: '+tipirifiuto);
+console.log('tipipunto: '+tipipunto);
+    Profili.raccolta({ tipipunto:tipipunto, tipirifiuto:tipirifiuto }).then(function(raccolta){
+      raccolta.forEach(function(item){
+        Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
+          item['punti']=punti;
+        });
+      });
+      $scope.raccolta=raccolta;
+    });
   });
-/*
-  $scope.rifiuti = [];
-
-  $scope.locs = [];
-
-  $scope.readJson = function () {
-    $http.get('data/db/riciclabolario.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].tipologiaRifiuto == $scope.id) {
-          $scope.rifiuti.push(data[i]);
-        }
-      }
-    });
-    $http.get('data/db/raccolta.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].tipologiaRifiuto == $scope.id) {
-          $scope.locs.push(data[i]);
-        }
-      }
-      for (var i = 0; i < $scope.locs.length; i++) {
-        $scope.locs[i].aperto = false;
-        $scope.locs[i].locs = [];
-      }
-      $http.get('data/db/puntiRaccolta.json').success(function (loc) {
-        var profilo = $rootScope.selectedProfile.loc;
-        for (var i = 0; i < loc.length; i++) {
-          if (loc[i].area == profilo && loc[i].indirizzo.indexOf(profilo) != -1) {
-            for (var j = 0; j < $scope.locs.length; j++) {
-              if ($scope.locs[j].tipologiaPuntoRaccolta == loc[i].tipologiaPuntiRaccolta && $scope.containsIndirizzo($scope.locs[j].locs, loc[i])) {
-                $scope.locs[j].locs.push(loc[i]);
-              }
-            }
-          }
-        }
-      });
-      $http.get('data/support/tipologieDiRaccolta.json').success(function (group) {
-        for (var i = 0; i < $scope.locs.length; i++) {
-          for (var j = 0; j < group.length; j++) {
-            if ($scope.locs[i].tipologiaRifiuto == group[j].name) {
-              $scope.locs[i].icon = group[j].icons[i];
-            }
-          }
-        }
-      });
-    });
-  };
-
-  $scope.containsIndirizzo = function (array, item) {
-    for (var k = 0; k < array.length; k++) {
-      if (array[k].indirizzo == item.indirizzo) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  $scope.readJson();
-*/
 })
 
 .controller('RifiutiCtrl', function ($scope, $stateParams, Profili) {
   $scope.tipo = $stateParams.tipo;
 
-  Profili.raccolta({ tipo:$scope.tipo }).then(function(raccolta){
+  Profili.raccolta({ tiporifiuto:$scope.tipo }).then(function(raccolta){
     raccolta.forEach(function(item){
       Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
         item['punti']=punti;
@@ -242,11 +205,10 @@ console.log('$scope.id: '+$scope.id);
 })
 .controller('RifiutoCtrl', function ($scope, $stateParams, Profili) {
   $scope.nome = $stateParams.nome;
-console.log('$scope.nome: '+$scope.nome);
+
   Profili.rifiuto($scope.nome).then(function(rifiuto){
-console.log('rifiuto: '+JSON.stringify(rifiuto));
     if (!rifiuto) return;
-    Profili.raccolta({ tipo:rifiuto.tipologiaRifiuto }).then(function(raccolta){
+    Profili.raccolta({ tiporifiuto:rifiuto.tipologiaRifiuto }).then(function(raccolta){
       raccolta.forEach(function(item){
         Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
           item['punti']=punti;
@@ -257,72 +219,20 @@ console.log('rifiuto: '+JSON.stringify(rifiuto));
   });
 })
 
-.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, $http) {
+.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, Profili) {
 
   $scope.id = $stateParams.id;
-
   $scope.isCRM = false;
-
-  $scope.rifiuti = [];
-
+  $scope.pdr = {};
   $scope.orari = [];
   //[{giorno:"lunedì",orari:["12.00-14.00","15.30-17.30"...]}...]
 
-  $scope.back = function () {
-    $ionicNavBarDelegate.$getByHandle('navBar').back();
-  }
-
-  $scope.pdr = {};
-
-  $scope.readJson = function () {
-    $http.get('data/db/puntiRaccolta.json').success(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].indirizzo == $scope.id || data[i].dettaglioIndirizzo == $scope.id) {
-          $scope.pdr = data[i];
-          break;
-        }
-      }
-      if ($scope.pdr.tipologiaPuntiRaccolta == 'CRM') {
-        $scope.isCRM = true;
-      }
-      $http.get('data/db/raccolta.json').success(function (raccolta) {
-        for (var i = 0; i < raccolta.length; i++) {
-          if (raccolta[i].tipologiaPuntoRaccolta == $scope.pdr.tipologiaPuntiRaccolta && $scope.rifiuti.indexOf(raccolta[i].tipologiaRaccolta) == -1) {
-            $scope.rifiuti.push(raccolta[i].tipologiaRaccolta);
-          }
-        }
-      });
-      if (!!$scope.pdr.dalle) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].indirizzo == $scope.id || data[i].dettaglioIndirizzo == $scope.id) {
-            var j = $scope.checkGiorni(data[i].il);
-            if (j == -1) {
-              $scope.orari.push({
-                giorno: data[i].il,
-                orari: [data[i].dalle + "-" + data[i].alle]
-              });
-            } else {
-              if ($scope.orari[j].orari.indexOf(data[i].dalle + "-" + data[i].alle) == -1) {
-                $scope.orari[j].orari.push(data[i].dalle + "-" + data[i].alle);
-              }
-            }
-          }
-        }
-      }
-    });
-  };
-
-  $scope.readJson();
-
   $scope.checkGiorni = function (item) {
     for (var j = 0; j < $scope.orari.length; j++) {
-      if ($scope.orari[j].giorno == item) {
-        return j;
-      }
+      if ($scope.orari[j].giorno == item) return j;
     }
     return -1;
   };
-
   $scope.indirizzoIfIsCRM = function () {
     if ($scope.isCRM) {
       return $scope.pdr.indirizzo;
@@ -330,4 +240,34 @@ console.log('rifiuto: '+JSON.stringify(rifiuto));
       return 'Area Giudicarie';
     }
   };
+  
+  Profili.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){
+    $scope.pdr = punti[0];
+    if ($scope.pdr.tipologiaPuntiRaccolta == 'CRM') {
+      $scope.isCRM = true;
+    }
+    punti.forEach(function(punto){
+      var j = $scope.checkGiorni(punto.il);
+      if (j == -1) {
+        $scope.orari.push({
+          giorno: punto.il,
+          orari:[ punto.dalle + "-" + punto.alle ]
+        });
+      } else {
+        if ($scope.orari[j].orari.indexOf(punto.dalle + "-" + punto.alle) == -1) {
+          $scope.orari[j].orari.push(punto.dalle + "-" + punto.alle);
+        }
+      }
+    });
+    Profili.raccolta({ tipopunto:$scope.pdr.tipologiaPuntiRaccolta }).then(function(raccolta){
+      var myRifiuti=[];
+      raccolta.forEach(function(regola){
+        if (myRifiuti.indexOf(regola.tipologiaRaccolta)==-1) {
+          myRifiuti.push(regola.tipologiaRaccolta);
+        //} else { console.log('already: '+regola.tipologiaRaccolta);
+        }
+      });
+      $scope.rifiuti=myRifiuti;
+    });
+  });
 })

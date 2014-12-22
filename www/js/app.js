@@ -19,8 +19,6 @@ angular.module('rifiuti', [
 ])
 
 
-
-
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
   $rootScope.profili = [];
   $rootScope.selectedProfile = null;
