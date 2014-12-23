@@ -1,6 +1,6 @@
 angular.module('rifiuti.controllers.raccolta', [])
 
-.controller('tipidirifiutiCtrl', function ($scope, Profili) {
+.controller('tipidirifiutiCtrl', function ($scope, Raccolta) {
   $scope.match = function (query) {
     if (query.length < 3) {
       return function (item) {
@@ -14,8 +14,8 @@ angular.module('rifiuti.controllers.raccolta', [])
     }
   };
   if ($scope.selectedProfile) {
-    Profili.rifiuti().then(function(){
-      Profili.immagini().then(function(){
+    Raccolta.rifiuti().then(function(){
+      Raccolta.immagini().then(function(){
         var results=[], row=[], counter=-1;
         for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
           var tipologia=$scope.selectedProfile.tipologie[i];
@@ -34,7 +34,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   }
 })
   
-.controller('PDRCtrl', function ($scope, $timeout, Profili, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $timeout, Raccolta, $location, $stateParams) {
 
   $scope.mapView = true;
   $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
@@ -136,7 +136,7 @@ angular.module('rifiuti.controllers.raccolta', [])
     });
   };
 
-  Profili.puntiraccolta().then(function(punti){
+  Raccolta.puntiraccolta().then(function(punti){
     var points = [];
     punti.forEach(function(punto){
       if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
@@ -163,23 +163,23 @@ angular.module('rifiuti.controllers.raccolta', [])
   });
 })
 
-.controller('RaccoltaCtrl', function ($scope, $stateParams, Profili) {
+.controller('RaccoltaCtrl', function ($scope, $stateParams, Raccolta) {
   $scope.id = $stateParams.id;
 
-  Profili.raccolta({ tipo:$scope.id }).then(function(raccolta){
+  Raccolta.raccolta({ tipo:$scope.id }).then(function(raccolta){
     var tipirifiuto=[], tipipunto=[];
     raccolta.forEach(function(regola){
       if (tipirifiuto.indexOf(regola.tipologiaRifiuto)==-1) tipirifiuto.push(regola.tipologiaRifiuto);
       if (tipipunto.indexOf(regola.tipologiaPuntoRaccolta)==-1) tipipunto.push(regola.tipologiaPuntoRaccolta);
     });
 
-    Profili.rifiuti({ tipi:tipirifiuto }).then(function(rifiuti){
+    Raccolta.rifiuti({ tipi:tipirifiuto }).then(function(rifiuti){
       $scope.rifiuti=rifiuti;
     });
 
-    Profili.raccolta({ tipipunto:tipipunto, tipirifiuto:tipirifiuto }).then(function(raccolta){
+    Raccolta.raccolta({ tipipunto:tipipunto, tipirifiuto:tipirifiuto }).then(function(raccolta){
       raccolta.forEach(function(item){
-        Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
+        Raccolta.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
           item['punti']=punti;
         });
       });
@@ -188,30 +188,30 @@ angular.module('rifiuti.controllers.raccolta', [])
   });
 })
 
-.controller('RifiutiCtrl', function ($scope, $stateParams, Profili) {
+.controller('RifiutiCtrl', function ($scope, $stateParams, Raccolta) {
   $scope.tipo = $stateParams.tipo;
 
-  Profili.raccolta({ tiporifiuto:$scope.tipo }).then(function(raccolta){
+  Raccolta.raccolta({ tiporifiuto:$scope.tipo }).then(function(raccolta){
     raccolta.forEach(function(item){
-      Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
+      Raccolta.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
         item['punti']=punti;
       });
     });
     $scope.raccolta=raccolta;
   });
 
-  Profili.rifiuti({ tipo:$scope.tipo }).then(function(rifiuti){
+  Raccolta.rifiuti({ tipo:$scope.tipo }).then(function(rifiuti){
     $scope.rifiuti=rifiuti;
   });
 })
-.controller('RifiutoCtrl', function ($scope, $stateParams, Profili) {
+.controller('RifiutoCtrl', function ($scope, $stateParams, Raccolta) {
   $scope.nome = $stateParams.nome;
 
-  Profili.rifiuto($scope.nome).then(function(rifiuto){
+  Raccolta.rifiuto($scope.nome).then(function(rifiuto){
     if (!rifiuto) return;
-    Profili.raccolta({ tiporifiuto:rifiuto.tipologiaRifiuto }).then(function(raccolta){
+    Raccolta.raccolta({ tiporifiuto:rifiuto.tipologiaRifiuto }).then(function(raccolta){
       raccolta.forEach(function(item){
-        Profili.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
+        Raccolta.puntiraccolta({ tipo:item.tipologiaPuntoRaccolta }).then(function(punti){
           item['punti']=punti;
         });
       });
@@ -220,7 +220,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   });
 })
 
-.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, Profili) {
+.controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, Raccolta) {
 
   $scope.id = $stateParams.id;
   $scope.isCRM = false;
@@ -242,7 +242,7 @@ angular.module('rifiuti.controllers.raccolta', [])
     }
   };
   
-  Profili.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){
+  Raccolta.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){
     $scope.pdr = punti[0];
     if ($scope.pdr.tipologiaPuntiRaccolta == 'CRM') {
       $scope.isCRM = true;
@@ -260,7 +260,7 @@ angular.module('rifiuti.controllers.raccolta', [])
         }
       }
     });
-    Profili.raccolta({ tipopunto:$scope.pdr.tipologiaPuntiRaccolta }).then(function(raccolta){
+    Raccolta.raccolta({ tipopunto:$scope.pdr.tipologiaPuntiRaccolta }).then(function(raccolta){
       var myRifiuti=[];
       raccolta.forEach(function(regola){
         if (myRifiuti.indexOf(regola.tipologiaRaccolta)==-1) {
