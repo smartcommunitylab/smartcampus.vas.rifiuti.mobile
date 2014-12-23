@@ -1,18 +1,18 @@
 angular.module('rifiuti.services.profili', [])
 
 .factory('Profili', function ($http, $rootScope, $q, $cordovaGeolocation) {
-  var treeWalkUp=function(tree,parentName,results) {
+  var treeWalkUp=function(tree,parentName,key,results) {
     if (!parentName || parentName=="") return;
     tree.forEach(function(node){
-      if (node.nome==parentName) {
+      if (node[key]==parentName) {
         var utenzaOK=true;
         if (node.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
         if (node.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
         if (node.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
         if (utenzaOK) {
-          results.push(node.nome);
+          results.push(node[key]);
         }
-        treeWalkUp(tree,node.parent,results);
+        treeWalkUp(tree,node.parent,key,results);
       }
     });
   };
@@ -81,7 +81,7 @@ angular.module('rifiuti.services.profili', [])
     },
     aree: function() {
       return $http.get('data/db/aree.json').then(function (results) {
-        var myAree=[];
+        var myAree=[],myComuni=[];
         if ($rootScope.selectedProfile) {
           results.data.forEach(function(area,ai,dbAree){
             if (area.localita==$rootScope.selectedProfile.loc) {
@@ -90,13 +90,16 @@ angular.module('rifiuti.services.profili', [])
               if (area.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
               if (area.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
               if (utenzaOK) {
-                myAree.push($rootScope.selectedProfile.loc);
+                myAree.push(area.localita);
                 if (area.comune!=$rootScope.selectedProfile.loc) myAree.push(area.comune);
+                myComuni.push(area.comune);
               }
-              treeWalkUp(dbAree,area.parent,myAree);
+              treeWalkUp(dbAree,area.parent,'nome',myAree);
+              treeWalkUp(dbAree,area.parent,'comune',myComuni);
             }
           });
           $rootScope.selectedProfile.aree=myAree;
+          $rootScope.selectedProfile.comuni=myComuni;
         }
         return myAree;
       });
@@ -112,7 +115,7 @@ angular.module('rifiuti.services.profili', [])
               var optionsOK=true;
               if (options && options.indirizzo && punto.dettaglioIndirizzo!=options.indirizzo) optionsOK=false;
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
-              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1) && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
                   myPunti.push(punto);
                   if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
@@ -163,23 +166,56 @@ angular.module('rifiuti.services.profili', [])
               if (options && options.tipipunto && options.tipipunto.indexOf(regola.tipologiaPuntoRaccolta)==-1) optionsOK=false;
 
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(regola.area)!=-1 && regola.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+                var icona;
                 switch (regola.tipologiaPuntoRaccolta) {
                   case 'Isola Ecologica':
-                    regola['icon'] = 'img/ic_isola_eco_grey.png';
+                    icona = 'isola_eco';
                     break;
                   case 'CRM':
-                    regola['icon'] = 'img/ic_crm_grey.png';
+                    icona = 'crm';
                     break;
                   case 'Farmacia':
-                    regola['icon'] = 'img/ic_farmacia_grey.png';
+                    icona = 'farmacia';
                     break;
                   case 'Rivenditore':
-                    regola['icon'] = 'img/ic_rivenditore_grey.png';
+                    icona = 'rivenditore';
                     break;
                   default:
-                    regola['icon'] = 'img/ic_porta_a_porta_grey.png';
+                    icona = 'porta_a_porta';
                     break;
                 }
+                var colore;
+                switch (regola.colore) {
+                  case 'ARANCIONE':
+                    colore = 'orange';
+                    break;
+                  //TODO: manca l'azzurro, e per ora ho uso la versione BLUE
+                  case 'AZZURRO':
+                    colore = 'blue';
+                    break;
+                  case 'BLU':
+                    colore = 'blue';
+                    break;
+                  case 'GIALLO':
+                    colore = 'yellow';
+                    break;
+                  case 'MARRONE':
+                    colore = 'brown';
+                    break;
+                  case 'ROSSO':
+                    colore = 'red';
+                    break;
+                  case 'VERDE':
+                    colore = 'green';
+                    break;
+                  case 'VERDE SCURO':
+                    colore = 'olivegreen';
+                    break;
+                  default:
+                    colore = 'grey';
+                    break;
+                }
+                if (icona) regola['icon'] = 'img/ic_'+icona+'_'+colore+'.png';
                 myRaccolta.push(regola);
               }
             });
