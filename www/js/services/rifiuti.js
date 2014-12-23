@@ -56,8 +56,17 @@ angular.module('rifiuti.services.rifiuti', [])
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1) && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
-                  myPunti.push(punto);
-                  if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
+                  var extcheckOK=true;
+                  if (punto.gettoniera!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;
+                  if (punto.imbCarta!="" && punto.imbCarta!="True" && punto.tipologiaPuntiRaccolta=="Carta, cartone e cartoni per bevande") extcheckOK=false;
+                  if (punto.imbPlMet!="" && punto.imbPlMet!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in plastica e metallo") extcheckOK=false;
+                  if (punto.imbVetro!="" && punto.imbVetro!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in vetro") extcheckOK=false;
+                  if (punto.organico!="" && punto.organico!="True" && punto.tipologiaPuntiRaccolta=="Organico") extcheckOK=false;
+                  if (punto.indumenti!="" && punto.indumenti!="True" && punto.tipologiaPuntiRaccolta=="Indumenti usati") extcheckOK=false;
+                  if (extcheckOK) {
+                    myPunti.push(punto);
+                    if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
+                  }
                 //} else { console.log('already: '+punto.dettaglioIndirizzo); 
                 }
               }
