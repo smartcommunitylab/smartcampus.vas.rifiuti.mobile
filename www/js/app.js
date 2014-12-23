@@ -9,6 +9,7 @@ angular.module('rifiuti', [
 	'ngCordova',
 	'rifiuti.filters',
 	'rifiuti.services.profili',
+	'rifiuti.services.utili',
 	'rifiuti.controllers.common',
 	'rifiuti.controllers.home',
 	'rifiuti.controllers.raccolta',
