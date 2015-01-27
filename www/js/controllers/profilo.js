@@ -78,7 +78,7 @@ angular.module('rifiuti.controllers.profilo', [])
 
   Profili.tipidiutenza().then(function(tipi){
     $scope.tipologiaUtenza=tipi;
-    $scope.profilo.utenza=tipi[0];
+    //$scope.profilo.utenza=tipi[0];
   });
 
   $scope.id = $stateParams.id;
@@ -91,6 +91,11 @@ angular.module('rifiuti.controllers.profilo', [])
     if (!$scope.editMode) {
       $scope.editMode = true;
       $scope.editIMG = "img/ic_save.png";
+      for (var i = 0; i < $scope.tipologiaUtenza.length;i++){
+        if ($scope.tipologiaUtenza[i].profilo === $scope.profilo.utenza.profilo) {
+             $scope.profilo.utenza = $scope.tipologiaUtenza[i];
+        }
+      }    
     } else {
       var p = Profili.byname($scope.id);
       if ($scope.profilo.name != p.name || $scope.profilo.utenza != p.type || $scope.profilo.localita != p.loc) {
@@ -130,7 +135,29 @@ angular.module('rifiuti.controllers.profilo', [])
     }
   };
 
+  $scope.help = function () {
+    var popup = $ionicPopup.show({
+      title: '<b class="popup-title">Tipo di utenza<b/>',
+      templateUrl: "templates/profiloHelp.html",
+      scope: $scope,
+      buttons: [
+        { text: 'Chiudi' }
+      ]
+    });
+    return;
+  };
   $scope.click = function () {
+    if ($scope.isCurrentProfile) {
+        var popup = $ionicPopup.show({
+          title: '<b class="popup-title">Avviso<b/>',
+          templateUrl: "Non è possibile cancellare il profilo in uso.",
+          scope: $scope,
+          buttons: [
+            { text: 'OK' }
+          ]
+        });
+        return;
+    }  
     var popup = $ionicPopup.show({
       title: '<b class="popup-title">Avviso<b/>',
       template: 'Premendo OK cancellerai definitivamente questo profilo. Confermi?',
