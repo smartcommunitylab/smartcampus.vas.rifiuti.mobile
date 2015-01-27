@@ -10,112 +10,14 @@
             <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
 		</button>
 	</ion-nav-buttons>
-
-	<!--<ion-tabs ng-show="true" class="tabs-balanced tabs-top contatti-tabs">
-		<ion-tab>-->
-			<!--<ion-content has-bouncing="true" class="background-grey-light" scroll="false">-->
-				<!-- <div class="bar bar-header bar-stable contatti-title">
-					<h1 class="title">Comunità delle Giudicarie</h1>
-				</div>-->
-				<ion-content class="contatti-content background-grey-light"  has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
-					<div class="expandable-list-items" ng-repeat="item in v">
-						<div class="row background-grey-middle" ng-click="item.aperto=!item.aperto">
-							<div class="col col-10">
-								<i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-							</div>
-							<div class="col">{{item.title|translate}}</div>
-						</div>
-						<div ng-show="item.aperto">
-							<div class="row bottom-border">
-								<div class="col background-grey-light">
-									{{item.t1|translate}}
-								</div>
-							</div>
-							<div class="row bottom-border">
-								<div class="col background-grey-light">
-									{{item.t2|translate}}
-								</div>
-							</div>
-							<div class="row bottom-border" ng-if="item.t3 != null">
-								<div class="col background-grey-light">
-									{{item.t3|translate}}
-								</div>
-							</div>
-							<div class="row">
-								<div class="col col-80 col-center">WEB: <a href="http://{{item.web}}">{{item.web|translate}}</a>
-								</div>
-								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-									<img src="img/ic_web.png" class="standard-size absolute-center">
-								</button>
-							</div>
-							<div class="row">
-								<div class="col col-80 col-center">TEL: {{item.tel|translate}}</div>
-								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-									<img src="img/ic_call.png" class="standard-size absolute-center">
-								</button>
-							</div>
-							<div class="row">
-								<div class="col col-80 col-center">EMAIL: <a href="{{item.email}}">{{item.email|translate}}</a>
-								</div>
-								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-									<img src="img/ic_mail.png" class="standard-size absolute-center">
-								</button>
-							</div>
-							<div class="row">
-								<div class="col col-80 col-center" ng-if="item.pec!=null">PEC: <a href="{{item.pec}}">{{item.pec|translate}}</a>
-								</div>
-								<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative"  ng-if="item.pec!=null">
-									<img src="img/ic_mail.png" class="standard-size absolute-center">
-								</button>
-							</div>
-							<div class="row">
-								<div class="col col-80 col-center">FAX: {{item.fax|translate}}</div>
-                                <button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-									<img src="img/ic_fax.png" class="standard-size absolute-center">
-								</button>
-							</div>
-						</div>
-					</div>
-				</ion-content>
-		</ion-tab>
-		<!-- <ion-tab title="GESTORE">
-			<ion-content class="background-grey-light" scroll="false">
-				<div class="bar bar-header bar-stable contatti-title">
-					<h1 class="title">SOGAP SRL</h1>
-				</div>
-				<ion-content class="has-header contatti-content" has-bouncing="false">
-					<div class="row bottom-border">
-						<div class="col background-grey-light">
-							Via Cesena 13 38070 Preone (TN)
-						</div>
-					</div>
-					<div class="bottom-border">
-						<div class="row">
-							<div class="col col-80 col-center">WEB: <a href="http://www.sogap.net">www.sogap.net</a>
-							</div>
-							<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-								<img src="img/ic_web.png" class="standard-size absolute-center">
-							</button>
-						</div>
-						<div class="row">
-							<div class="col col-80 col-center">TEL: 0465/3222755</div>
-							<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-								<img src="img/ic_call.png" class="standard-size absolute-center">
-							</button>
-						</div>
-						<div class="row">
-							<div class="col col-80 col-center">EMAIL: <a href="info@sogap.net">info@sogap.net</a>
-							</div>
-							<button class="col col-center icon button-balanced contatti-icon-color button-clear button-large position-relative">
-								<img src="img/ic_mail.png" class="standard-size absolute-center">
-							</button>
-						</div>
-						<div class="row">
-							<div class="col col-center">FAX: 0465/323194</div>
-						</div>
-					</div>
-				</ion-content>
-			</ion-content>
-		</ion-tab>
-	</ion-tabs> -->
+    <ion-content class="contatti-content background-grey-light"  has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+        <div class="expandable-list-items" ng-repeat="item in contatti">
+			<a class="hidden-link" ng-href="#app/contatti/{{$index}}">
+            <div class="row background-grey-middle">
+                <div class="col" ng-if="item.ufficio">{{item.ufficio}}</div>
+                <div class="col" ng-if="item.ragioneSociale">{{item.ragioneSociale}}</div>
+            </div>
+            </a>    
+        </div>
+    </ion-content>
 </ion-view>

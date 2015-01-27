@@ -447,6 +447,15 @@ display:block;
     text-align: left
 }
 
+.main-title-center {
+    
+    padding-left:3px;
+    position:absolute;
+    display: block;
+    width: 180px;
+    text-align: left
+}
+
 .sub-title {
     display: block;
     padding-left: 3px;    
@@ -466,3 +475,14 @@ display:block;
 
 
 .a_right { text-align:right; }
+
+.item-select select
+{
+    right: auto;
+    padding: 13px 45px 15px 0px;
+    direction: ltr;
+}
+.item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

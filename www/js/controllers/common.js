@@ -110,43 +110,27 @@ angular.module('rifiuti.controllers.common', ['google-maps'])
 
 
 
-.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate) {
-  $scope.v = [
-    {
-      title: "y1",
-      t1: "y2",
-      t2: "y3",
-      t3: "y4",
-      web: "y5",
-      tel: "y6",
-      email: "y7",
-      pec: "y8",
-      fax: "y9",
-      aperto: false
-   },
-    {
-      title: "u1",
-      t1: "u2",
-      t2: "u3",
-      t3: "u4",
-      web: "www.comunitadellegiudicarie.it",
-      tel: "0465/325038",
-      email: "rifiuti@comunitadellegiudicarie.it",
-      pec: "c.giudicarie.legamail.it",
-      fax: "0465/329043",
-      aperto: false
-   },
-    {
-      title: "SOGAP SRL",
-      t1: "i2",
-      t2: "Via Cesena 13 38070 Preore (TN)",
-      web: "www.sogap.net",
-      tel: "0465/322755",
-      email: "info@sogap.net",
-      fax: "0465/323194",
-      aperto: false
-   }
-  ];
+.controller('ContattiCtrl', function ($scope, $ionicScrollDelegate, Raccolta) {
+  Raccolta.contatti().then(function(data){
+    $scope.contatti = data;
+  });      
+    
+  $scope.mainScrollResize = function () {
+    $ionicScrollDelegate.$getByHandle('mainScroll').resize();
+  }
+})
+
+.controller('ContattoCtrl', function ($scope, $stateParams, $ionicScrollDelegate, Raccolta) {
+  Raccolta.contatti().then(function(data){
+    $scope.contatto = data[$stateParams.id];
+    if (!!$scope.contatto.sitoIstituzionale && $scope.contatto.sitoIstituzionale.indexOf('http') != 0) {
+        $scope.contatto.sitoIstituzionale = 'http://'+$scope.contatto.sitoIstituzionale;
+    }  
+    if (!!$scope.contatto.sitoWeb && $scope.contatto.sitoWeb.indexOf('http') != 0) {
+        $scope.contatto.sitoWeb  = 'http://'+$scope.contatto.sitoWeb;
+    }  
+  });      
+    
   $scope.mainScrollResize = function () {
     $ionicScrollDelegate.$getByHandle('mainScroll').resize();
   }

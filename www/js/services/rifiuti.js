@@ -158,6 +158,17 @@ angular.module('rifiuti.services.rifiuti', [])
       });
       return deferred.promise;
     },
+    contatti: function() {
+      var deferred = $q.defer();
+      $http.get('data/db/istituzioni.json').then(function (results) {
+        var data=results.data;
+        $http.get('data/db/gestori.json').then(function (gest) {
+          data = data.concat(gest.data);
+          deferred.resolve(data);    
+        });
+     });
+      return deferred.promise;    
+    },
     immagini: function() {
       return $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
         var imgs={};
