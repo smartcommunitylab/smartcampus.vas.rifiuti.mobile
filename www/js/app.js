@@ -22,6 +22,8 @@ angular.module('rifiuti', [
 
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
+  $rootScope.version = '2.0';
+    
   $rootScope.profili = [];
   $rootScope.selectedProfile = null;
   $rootScope.back = function () {
@@ -94,8 +96,10 @@ angular.module('rifiuti', [
 
     'ad esempio': "Ad esempio:",
     Invia: "Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
-    Progetto: '"100% Riciclo" è un progetto di:',
-    Collaborazione: "con la collaborazione di:",
+    Progetto: '"100% Riciclo"',
+    Progetto_DESC: 'Tutto quesllo che devi sapere sulla raccolta differenziata nel tuo Comune',
+    Progetto_di: 'Un progetto di:',  
+    Collaborazione: "In collaborazione con:",
     Eventuali: "Per informazioni:",
 
     TutorialUno: "Questo tutorial ti inlustrerà il funzionamento della app. Per sapere dove buttare uno specifico rifiuto, scrivine il nome qui e premi sulla lente d'ingrandimento.",
@@ -128,6 +132,7 @@ angular.module('rifiuti', [
 
 
   });
+  /*
   $translateProvider.translations("en", {
     hello_message: "howdy",
     goodbye_message: "goodbye",
@@ -695,6 +700,7 @@ angular.module('rifiuti', [
 
 
   });
+  */
   $translateProvider.preferredLanguage(current_lang);
   //debug only
   //$translateProvider.preferredLanguage("en"); // solo lingua inglese, commentare per attivare il riconoscimento della lingua automatico
@@ -862,6 +868,15 @@ angular.module('rifiuti', [
       'menuContent': {
         templateUrl: "templates/contatti.html",
         controller: 'ContattiCtrl'
+      }
+    }
+  })
+  .state('app.contatto', {
+    url: "/contatti/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/contatto.html",
+        controller: 'ContattoCtrl'
       }
     }
   })

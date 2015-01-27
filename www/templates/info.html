@@ -2,26 +2,25 @@
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
             <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div  class="wrap-title">
-                <span class="main-title">{{"Informazioni"|translate}}</span>
-                <div class="sub-title">{{selectedProfile.name}}</div>
-            </div>
+            <span class="main-title-center">{{"Credits"|translate}}</span>
             <!--<span class="bar-title">Informazioni</span>
             <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
         </button>
     </ion-nav-buttons>
     <ion-content class="centred-text background-grey-light" has-bouncing="false">
-        <img style="margin-top:15px" src="img/ic_launcher.png" class="big-size">
-        <p style="color:#63ac3d; font-size:18px">{{'Progetto'|translate}}</p>
-        <a href="http://www.smartcampuslab.it"> <img style="margin-top:15px" src="img/smart_campus_credits.png" width="140" height="42"> </a>
+        <p style="color:#63ac3d; font-size:18px;margin-top:40px;"><strong>{{'Progetto'|translate}}</strong></p>
+        <p style="padding-left:30px; padding-right:30px"><strong>{{'Progetto_DESC'|translate}}</strong></p>
+        <p style="color:#cecece;margin-top:10px;">{{version}}</strong></p>
+        <p style="color:#63ac3d; font-size:16px;margin-top:20px;">{{'Progetto_di'|translate}}</p>
+        <a href="http://www.smartcampuslab.it"> <img src="img/smart_campus_credits.png" width="140" height="42"> </a>
         <a href="http://www.ladurnerambiente.it"><img src="img/ladurnerenergy.png" width="140" height="42"></a>
         </br>
         <a href="http://www.fbk.eu"><img style="margin-top:10px;" src="img/fbk_credits.png" width="140" height="39"></a>
-        <p style="color:#63ac3d; margin-top:40px; font-size:18px">{{"Collaborazione"|translate}}</p>
+        <p style="color:#63ac3d; margin-top:40px; font-size:16px">{{"Collaborazione"|translate}}</p>
         <a href="http://www.comunitrentini.it"><img src="img/autonomie_locali.png" width="140" height="55"></a>
         <!--<div class="list item-input-inset text-left">
         </div>-->
-            <p style="color:#63ac3d; margin-top:40px; font-size:18px">{{"Eventuali"|translate}}<br>
+            <p style="color:#63ac3d; margin-top:40px; font-size:16px">{{"Eventuali"|translate}}<br>
                 <a style="text-decoration:underline; color:black; font-size:18px;">riciclo@smartcampuslab.it</a>
             </p>
             
