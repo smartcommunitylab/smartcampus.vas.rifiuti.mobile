@@ -18,7 +18,7 @@
                   {{"Pagare la bolletta dei rifiuti"| translate}}
               </p>
           </div>
-  <ion-item  ng-repeat="item in notes" ng-click="noteSelect(item)" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
+  <ion-item  ng-repeat="item in notes" ng-click="noteSelect(item)" class="high-padding" ng-class="{'background-green-light': selectedNotes.indexOf(item) != -1, 'background-grey-light': selectedNotes.indexOf(item) == -1}">
     {{item.note}}
   </ion-item>             
 </ion-content>

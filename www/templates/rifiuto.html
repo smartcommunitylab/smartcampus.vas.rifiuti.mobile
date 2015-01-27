@@ -1,10 +1,17 @@
 <ion-view>
   <ion-nav-buttons side="left">
+    <button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
+      <span class="bar-back">{{"Rifiuto"|translate}}</span>
+      </br>
+      <p class="title-subtext">{{nome|translate}}</p>
+    </button>      
+<!--
     <a href="#/app/home/tipidirifiuti" class="button button-clear button-light ion-chevron-left sub-page-button">
       <span class="bar-back">{{"Rifiuto"|translate}}</span>
       </br>
       <div class="title-subtext">{{nome|translate}}</div>
     </a>
+-->
   </ion-nav-buttons>
   <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
           <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
