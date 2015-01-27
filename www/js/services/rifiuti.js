@@ -169,6 +169,29 @@ angular.module('rifiuti.services.rifiuti', [])
      });
       return deferred.promise;    
     },
+    areeForTipoUtenza: function(profile) {
+      var deferred = $q.defer();
+      $http.get('data/db/aree.json').then(function (results) {
+        var data=results.data;
+        var res = [];
+        for (var i =0; i < data.length; i++) {
+            var a = data[i];
+            if (!!a.localita) {
+                if (profile==='utenza domestica' && a.utenzaDomestica==='True' ||
+                    profile==='utenza non domestica' && a.utenzaNonDomestica==='True' ||
+                    profile==='utenza occasionale' && a.utenzaOccasionale==='True') 
+                {
+                    res.push(a);
+                }
+            }
+        }
+        res.sort(function(a,b) {
+            return a.localita.localeCompare(b.localita);
+        });  
+        deferred.resolve(res);  
+      });
+      return deferred.promise;    
+    },
     immagini: function() {
       return $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
         var imgs={};

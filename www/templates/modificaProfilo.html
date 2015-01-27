@@ -20,7 +20,7 @@
 	<div class="list background-grey-light">
         <div class="high-padding profili-titolo">{{"Tipo di utenza"|translate}}<a ng-click="help()"><img ng-src="img/ic_help.png" class="standard-size" style="vertical-align:middle;"/></a></div>
 		<label class="item background-grey-light no-border" ng-show="editMode"  ng-repeat="item in tipologiaUtenza">
-		  <input type="radio" ng-model="profilo.utenza"  ng-value="item"><span class="high-padding">{{item.profilo}}</span>
+		  <input type="radio" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item"><span class="high-padding">{{item.profilo}}</span>
 		</label>
 		<p class="low-padding"  ng-show="!editMode">{{profilo.utenza.profilo|translate}}</p>
 	</div>

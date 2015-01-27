@@ -69,7 +69,7 @@ angular.module('rifiuti.controllers.profilo', [])
   $scope.init();
 })
 
-.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup, Profili) {
+.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup, Profili, Raccolta) {
   $scope.locs = [];
   $scope.profilo = {
     name: "",
@@ -78,7 +78,10 @@ angular.module('rifiuti.controllers.profilo', [])
 
   Profili.tipidiutenza().then(function(tipi){
     $scope.tipologiaUtenza=tipi;
-    //$scope.profilo.utenza=tipi[0];
+    if (!$scope.id) {
+        $scope.profilo.utenza=tipi[0];
+        $scope.updateLocations();
+    }
   });
 
   $scope.id = $stateParams.id;
@@ -183,19 +186,23 @@ angular.module('rifiuti.controllers.profilo', [])
       }
     });
   };
-
-  $http.get('data/db/aree.json').success(function (data) {
-    for (var i = 0; i < data.length; i++) {
-      if (!!data[i].localita) {
-        $scope.locs.push(data[i].localita);
-      }
-    }
-  });
+  
+  $scope.updateLocations = function() {
+      Raccolta.areeForTipoUtenza($scope.profilo.utenza.tipologiaUtenza).then(function(data){
+        $scope.aree = data;
+        $scope.locs = [];
+        for (var i = 0; i < data.length; i++) {
+            $scope.locs.push(data[i].localita);
+        }
+      });          
+  };    
+  
   var p = Profili.byname($scope.id);
   if (!!p) {
     $scope.profilo.name = p.name;
     $scope.profilo.utenza = p.utenza;
     $scope.profilo.localita = p.loc;
+    $scope.updateLocations();
   }
   if ($rootScope.selectedProfile.name == $scope.profilo.name) {
     $scope.isCurrentProfile = true;
