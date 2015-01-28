@@ -23,14 +23,14 @@ angular.module('rifiuti.services.rifiuti', [])
         var myAree=[],myComuni=[];
         if ($rootScope.selectedProfile) {
           results.data.forEach(function(area,ai,dbAree){
-            if (area.localita==$rootScope.selectedProfile.loc) {
+            if (area.nome==$rootScope.selectedProfile.area.nome) {
               var utenzaOK=true;
               if (area.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
               if (area.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
               if (area.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
               if (utenzaOK) {
-                myAree.push(area.localita);
-                if (area.comune!=$rootScope.selectedProfile.loc) myAree.push(area.comune);
+                myAree.push(area.nome);
+//                if (area.comune!=$rootScope.selectedProfile.area.localita) myAree.push(area.comune);
                 myComuni.push(area.comune);
               }
               treeWalkUp(dbAree,area.parent,'nome',myAree);

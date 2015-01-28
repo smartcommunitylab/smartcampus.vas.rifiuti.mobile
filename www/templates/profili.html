@@ -17,7 +17,7 @@
 <ion-content class="background-grey-light" has-bouncing="false">
 	<div class="row background-grey-light profili-profilo" ng-repeat="profilo in profili">
 		<div class="col background-white">
-			<a class="hidden-link" ng-href="#app/modificaProfilo/{{profilo.name}}">
+			<a class="hidden-link" ng-href="#app/modificaProfilo/{{profilo.id}}">
 				<div>
 					<div class="row profili-title">
 						<div class="col no-border">
@@ -26,7 +26,7 @@
 					</div>
 					<div class="row profili-info">
 						<div class="col no-border">
-							{{profilo.utenza.profilo|translate}}: {{profilo.loc}}
+							{{profilo.utenza.profilo|translate}}: {{profilo.area.localita}}
 						</div>
 					</div>
 				</div>

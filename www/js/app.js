@@ -112,6 +112,7 @@ angular.module('rifiuti', [
     TTTre: "Note",
     TTQuattro: "Calendario",
     TTCinque: "Menù laterale",
+    Selezionare: "Seleziona Comune/Località",
 
     y1: "Servizio TIA e informatica",
     y2: "Per informazioni in merito alla Tariffa di Igiene Urbana",
@@ -836,8 +837,8 @@ angular.module('rifiuti', [
     url: "/aggProfilo",
     views: {
       'menuContent': {
-        templateUrl: "templates/aggProfilo.html",
-        controller: 'AggiungiProfiloCtrl'
+        templateUrl: "templates/modificaProfilo.html",
+        controller: 'ModificaProfiloCtrl'
       }
     }
   })
