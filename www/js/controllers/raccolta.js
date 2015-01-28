@@ -8,7 +8,7 @@ angular.module('rifiuti.controllers.raccolta', [])
       }
     } else {
       return function (item) {
-        return item.nome.indexOf(query) != -1;
+        return item.nome.toLowerCase().indexOf(query.toLowerCase()) != -1;
         //TODO: consentire la ricerca anche sulle traduzioni
       }
     }
