@@ -1,6 +1,7 @@
 angular.module('rifiuti.controllers.raccolta', [])
 
-.controller('tipidirifiutiCtrl', function ($scope, Raccolta) {
+.controller('tipidirifiutiCtrl', function ($scope, $rootScope, Raccolta) {
+  $rootScope.noteSelected = false;
   $scope.match = function (query) {
     if (query.length < 3) {
       return function (item) {

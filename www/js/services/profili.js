@@ -63,6 +63,15 @@ angular.module('rifiuti.services.profili', [])
       return null;
     };
 
+    var readNotes = function() {
+        var notes = localStorage.notes;
+        if (!!notes && notes.charAt(0)=='{') notes=JSON.parse(localStorage.notes);
+        else notes = {};
+        return notes;
+    };
+    var saveNotes = function(notes) {
+      localStorage.notes=JSON.stringify(notes);
+    }
     
     return {
         tipidiutenza: function() {
@@ -108,6 +117,37 @@ angular.module('rifiuti.services.profili', [])
         select : select,
         selectedProfileIndex: function() {
             return indexof(localStorage.selectedProfileId);
+        },
+        getNotes: function() {
+            return readNotes()[localStorage.selectedProfileId];
+        },
+        addNote: function(txt) {
+            var allNotes = readNotes();
+            var notes = allNotes[localStorage.selectedProfileId];
+            if (!notes) notes = [];
+            notes.push(txt);
+            allNotes[localStorage.selectedProfileId] = notes;
+            saveNotes(allNotes);
+            return notes;
+        },
+        updateNote: function(idx, txt) {
+            var allNotes = readNotes();
+            var notes = allNotes[localStorage.selectedProfileId];
+            if (!notes && !!notes[idx]) return null;
+            notes[idx] = txt;
+            saveNotes(allNotes);
+            return notes;
+        },
+        deleteNotes: function(idx) {
+            var allNotes = readNotes();
+            var notes = allNotes[localStorage.selectedProfileId];
+            var newNotes = [];
+            for (var i = 0; i < notes.length;i++){
+                if (idx.indexOf(i) < 0) newNotes.push(notes[i]);
+            }
+            allNotes[localStorage.selectedProfileId] = newNotes;
+            saveNotes(allNotes);
+            return newNotes;
         }
     }
 })

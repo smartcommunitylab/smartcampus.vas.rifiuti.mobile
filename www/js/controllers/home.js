@@ -46,7 +46,7 @@ angular.module('rifiuti.controllers.home', [])
     if (!$rootScope.noteSelected) {
       $ionicSideMenuDelegate.toggleLeft();
     } else {
-      $rootScope.noteReset();
+      $rootScope.noteSelected = false;
     }
   };
 
@@ -93,56 +93,37 @@ angular.module('rifiuti.controllers.home', [])
   });
 })
 
-.controller('noteCtrl', function ($scope, $rootScope, $ionicPopup) {
+.controller('noteCtrl', function ($scope, $rootScope, $ionicPopup, Profili) {
+  $rootScope.noteSelected = false;
   $scope.variableIMG = "img/ic_add.png";
-  $scope.updateIMG = function () {
+  var updateIMG = function () {
     $scope.variableIMG = !$rootScope.noteSelected ? "img/ic_add.png" : "img/ic_menu_delete.png";
   };
 
-  $scope.notes = [];
+  $rootScope.$watch('noteSelected', function() {
+    if (!$rootScope.noteSelected) {
+        $scope.selectedNotes = [];
+        $scope.multipleNoteSelected = false;
+    }
+  });    
+    
+  $scope.notes = Profili.getNotes();
   $scope.selectedNotes = [];
   $scope.multipleNoteSelected = false;
   
-  if (localStorage.notes && localStorage.notes.charAt(0)=='[') $scope.notes=JSON.parse(localStorage.notes);
-
-  $scope.saveNotes = function () {
-    localStorage.notes=JSON.stringify($scope.notes)
-  };
   $scope.addNote = function (nota) {
-    var idAvailable = $scope.findNextId();
-    $scope.notes.push({
-      id: idAvailable,
-      note: nota
-    });
-    $scope.saveNotes();
+      $scope.notes = Profili.addNote(nota);
   };
-  $scope.findNextId = function () {
-    for (var i = 0; i <= $scope.notes.length; i++) {
-      if ($scope.idExists(i)) {
-        return i;
-      }
-    }
+  $scope.removeNotes = function (idx) {
+      $scope.notes = Profili.deleteNotes(idx);
+      $scope.selectedNotes = [];
+      $scope.multipleNoteSelected = false;
+      $rootScope.noteSelected = false;
   };
-  $scope.idExists = function (i) {
-    for (var j = 0; j < $scope.notes.length; j++) {
-      if ($scope.notes[j].id == i) {
-        return false;
-      }
-    }
-    return true;
-  };
-  $scope.removeNote = function (id) {
-    for (var i = 0; i < $scope.notes.length; i = i + 1) {
-      if ($scope.notes[i].id == id) {
-        $scope.notes.splice(i, 1);
-      }
-    }
-    $scope.saveNotes();
-  };
-  $scope.noteSelect = function (nota) {
-    var p = $scope.selectedNotes.indexOf(nota);
+  $scope.noteSelect = function (idx) {
+    var p = $scope.selectedNotes.indexOf(idx);
     if (p == -1) {
-      $scope.selectedNotes.push(nota);
+      $scope.selectedNotes.push(idx);
       $rootScope.noteSelected = true;
       if ($scope.selectedNotes.length > 1) $scope.multipleNoteSelected = true;
     } else {
@@ -152,14 +133,11 @@ angular.module('rifiuti.controllers.home', [])
         if ($scope.selectedNotes.length < 1) $rootScope.noteSelected = false;
       }
     }
-    $scope.updateIMG();
+    updateIMG();
   };
   $scope.click = function () {
     if ($rootScope.noteSelected) {
-      while ($scope.selectedNotes.length > 0) {
-        $scope.removeNote($scope.selectedNotes[0].id);
-        $scope.noteSelect($scope.selectedNotes[0]);
-      }
+        $scope.removeNotes($scope.selectedNotes);
     } else {
       $scope.data = {};
       $ionicPopup.show({
@@ -188,7 +166,7 @@ angular.module('rifiuti.controllers.home', [])
     }
   };
   $scope.edit = function () {
-    $scope.data = { 'nota':$scope.selectedNotes[0].note };
+    $scope.data = { 'nota': $scope.notes[$scope.selectedNotes[0]], idx: $scope.selectedNotes[0]};
 
     var popup = $ionicPopup.show({
       template: '<input type="text" ng-model="data.nota">',
@@ -210,15 +188,17 @@ angular.module('rifiuti.controllers.home', [])
       ]
     }).then(function (res) {
       if (res != null && res != undefined) {
-        $scope.notes[$scope.notes.indexOf($scope.selectedNotes[0])].note = res;
-        $scope.noteSelect($scope.selectedNotes[0]);
-        $scope.saveNotes();
+          $scope.notes = Profili.updateNote($scope.data.idx, res);
+          $scope.selectedNotes = [];
+          $scope.multipleNoteSelected = false;
+          $rootScope.noteSelected = false;
       }
     });
   };
 })
 
-.controller('calendarioCtrl', function ($scope, $ionicScrollDelegate) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate) {
+  $rootScope.noteSelected = false;
   $scope.calendarClick = null;
   $scope.calendarView = false;
 
