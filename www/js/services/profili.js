@@ -50,6 +50,7 @@ angular.module('rifiuti.services.profili', [])
       if (profileIndex!=-1) {
         $rootScope.profili[profileIndex].image = "img/rifiuti_btn_radio_on_holo_dark.png";
         $rootScope.selectedProfile=$rootScope.profili[profileIndex];
+        localStorage.selectedProfileId = $rootScope.selectedProfile.id;
         Raccolta.aree().then(function(myAree){
           //console.log('selectedProfile: '+JSON.stringify($rootScope.selectedProfile.name));
         });
@@ -104,6 +105,9 @@ angular.module('rifiuti.services.profili', [])
           save();
         },
         byId: byId,
-        select : select
+        select : select,
+        selectedProfileIndex: function() {
+            return indexof(localStorage.selectedProfileId);
+        }
     }
 })

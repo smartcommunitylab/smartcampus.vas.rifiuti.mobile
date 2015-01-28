@@ -38,7 +38,7 @@ angular.module('rifiuti.controllers.common', ['google-maps'])
       Profili.select(index);
     };
     Profili.read();
-    Profili.select(0);
+    Profili.select(Profili.selectedProfileIndex());
   }
 })
 
