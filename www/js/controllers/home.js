@@ -197,8 +197,9 @@ angular.module('rifiuti.controllers.home', [])
   };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, Calendar) {
   $rootScope.noteSelected = false;
+  
   $scope.calendarClick = null;
   $scope.calendarView = false;
 
@@ -218,569 +219,70 @@ angular.module('rifiuti.controllers.home', [])
   $scope.updateIMG2 = function () {
     $scope.variableIMG2 = $scope.calendarView ? "img/tableView.png" : "img/listView.png";
   };
-  
-  $scope.getEmptyArrayByLenght = function (lenght) {
+        
+    
+  $scope.firstDayIndex = function (week) {
+    return Calendar.dayIndex(week[0].day);
+  };
+  $scope.lastDayIndex = function (week) {
+    return Calendar.dayIndex(week[week.length - 1].day);
+  };
+
+  $scope.getEmptyArrayByLength = function(length) {
     var array = [];
-    if (lenght < 100) {} else lenght = 100;
-    for (var i = 0; i < lenght; i++) {
+    if (length > 100) length = 100;
+    for (var i = 0; i < length; i++) {
       array.push(i - 1);
     }
     return array;
+  }
+  
+  $scope.currDate = new Date();
+  $scope.dayList = [];//$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
+  $scope.dayListLastMonth = null;
+  $scope.showDate = new Date();
+  
+  var buildMonthData = function() {
+    return {
+      name: Calendar.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
+      weeks: Calendar.fillWeeks($scope.showDate)
+    };
   };
-
-  $scope.firstDayIndex = function (week) {
-    switch (week[0].day) {
-    case "LUN":
-      return 0;
-    case "MAR":
-      return 1;
-    case "MER":
-      return 2;
-    case "GIO":
-      return 3;
-    case "VEN":
-      return 4;
-    case "SAB":
-      return 5;
-    case "DOM":
-      return 6;
+  
+  $scope.month = buildMonthData();
+  $scope.$watch('month', function(a,b){
+    if (a.name !== b.name || $scope.dayList.length == 0) {
+      $scope.dayList = Calendar.toListData($scope.month.weeks);     
+      $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.showDate);
+    }
+  });
+    
+  $scope.loadMoreDays = function() {
+    $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate()+1);
+    $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.dayListLastMonth);
+    var newWeeks = Calendar.fillWeeks($scope.dayListLastMonth);
+    $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };  
+    
+  $scope.goToToday = function () {
+    if ($scope.calendarView == false) {
+      $scope.showDate = new Date();
+      $scope.month = buildMonthData();
+    } else if ($scope.calendarView == true) {
+      $ionicScrollDelegate.scrollTop();
     }
   };
-  $scope.lastDayIndex = function (week) {
-    switch (week[week.length - 1].day) {
-    case "LUN":
-      return 0;
-    case "MAR":
-      return 1;
-    case "MER":
-      return 2;
-    case "GIO":
-      return 3;
-    case "VEN":
-      return 4;
-    case "SAB":
-      return 5;
-    case "DOM":
-      return 6;
-    }
-  };
-  var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  var giorni = ["DOM", "LUN", "MAR", "MER", "GIO", "VEN", "SAB"];
-  var giorniC = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
-
-  $scope.DayDiff = function () {
-    if ($scope.calendarClick == null)
-      var CurrentDate = new Date();
-    else
-      var CurrentDate = new Date(y, m, $scope.calendarClick, 0, 0, 0, 0);
-    var TYear = CurrentDate.getFullYear();
-    var nextYear = "January, 01, " + (TYear + 1)
-    var TDay = new Date(nextYear);
-    TDay.getFullYear(TYear);
-    var DayCount = (TDay - CurrentDate) / (1000 * 60 * 60 * 24);
-    DayCount = Math.round(DayCount);
-    return (DayCount + 14);
-  }
-
-  $scope.arrayD = $scope.getEmptyArrayByLenght($scope.DayDiff());
-
-  $scope.counterGiorniMese = 0;
-
-  function isLastDay(dt) { //controlla se è l'ultimo giorno del mese
-    return new Date(dt.getTime() + 86400000).getDate() === 1;
-  }
-
-  $scope.giornoCounter = 0;
-
-  function giorniMese(mm, yyyy) {
-    //if (month[][week].index!=1) $scope.giornoCounter=0;
-    if ($scope.giornoCounter != 0 || $scope.counterGiorniMese > 31) return null;
-    for (var i = 1; i < 7; i += 2)
-      if ($scope.counterGiorniMese >= 30 && mm == i) return null;
-    for (var k = 8; k < 11; k += 2)
-      if ($scope.counterGiorniMese >= 30 && mm == k) return null;
-    for (var i = 0; i < 7; i += 2)
-      if ($scope.counterGiorniMese >= 31 && mm == i) return null;
-    for (var i = 7; i < 12; i += 2)
-      if ($scope.counterGiorniMese >= 31 && mm == i) return null;
-    if (mm == 1 && yyyy % 4 == 0 && $scope.counterGiorniMese >= 29) return null;
-    if (mm == 1 && yyyy % 4 != 0 && $scope.counterGiorniMese >= 28) return null;
-    $scope.counterGiorniMese++;
-    datax = new Date(yyyy, mm, $scope.counterGiorniMese, 0, 0, 0, 0);
-    if (isLastDay(datax)) {
-      tmp = $scope.counterGiorniMese;
-      $scope.counterGiorniMese = 0;
-      $scope.giornoCounter = -1;
-      return tmp;
-    } else {
-      return $scope.counterGiorniMese;
-    }
-  }
-
-  function firstGiorniMese(mm, yyyy) {
-    $scope.giornoCounter = 0;
-
-    if ($scope.counterGiorniMese > 31) return null;
-
-    if (mm == 1 && yyyy % 4 == 0 && $scope.counterGiorniMese >= 29) return null;
-    if (mm == 1 && yyyy % 4 != 0 && $scope.counterGiorniMese >= 28) return null;
-    $scope.counterGiorniMese++;
-    datax = new Date(yyyy, mm, $scope.counterGiorniMese, 0, 0, 0, 0);
-    tmp = $scope.counterGiorniMese;
-    //$scope.counterGiorniMese=0;
-    return tmp;
-  }
-
-  $scope.mm;
-  $scope.yyyy;
-
-  $scope.counterVerde = 0;
-
-  var oggi = new Date();
-  $scope.today = oggi.getDate();
-  $scope.meseN = oggi.getMonth();
-  mm = oggi.getMonth(); //January is 0!
-  costante = oggi.getMonth();
-  yyyy = oggi.getFullYear();
-  $scope.giornoSettimanaOggi = oggi.getDay();
-  var m = mm;
-  var y = yyyy;
-
-  function daysInMonth(month, year) {
-    return new Date(year, month + 1, 0).getDate();
-  }
-
-  //function monthYear(){return mesi[mm]+" "+yyyy};//es Novembre 2014
-
-  function monthYear(a, b) {
-    return mesi[a] + " " + b
-  };
-
-
-
-
-  /*$scope.dayDayMonthYear= function(date) { //es.: Martedì 12 settembre 2014
-        var day = giorniC[date.getDay()];
-        var Day = date.getDate();
-        var month = mesi[date.getMonth()];
-        var year = date.getFullYear();
-        
-        return day+" "+Day+" "+month+" "+year;
-    }*/
-
-  $scope.dayDayMonthYear = function (giorno) { //es.: Martedì 12 settembre 2014
-    var date = giorno;
-    var day = giorniC[date.getDay()];
-    var Day = date.getDate();
-    var month = mesi[date.getMonth()];
-    var year = date.getFullYear();
-
-    return day + " " + Day + " " + month + " " + year;
-
-  }
-
-
-  function returnDayName(day, month, year) { // es.: LUN
-    if ($scope.giornoCounter != 0) return null;
-    var oo = new Date(year, month, day, 0, 0, 0, 0);
-    var tt = oo.getDay();
-    var ui = giorni[tt];
-    if (tt == 0) $scope.giornoCounter++;
-    return ui;
-  }
-
-
-  $scope.aggiungiMese = function () {
-    if (mm == 11) {
-      mm++;
-      yyyy++;
-    } else mm++;
-  }
-
-  /* $scope.aggiungiGiorno = function (date) {
-        if (getDate(date) == 31 && getMonth(date) == 11) return null;
-        else date.setDate(date.getDate() + 1);
-        return date;
-    }*/
-
-  $scope.aggiungiGiorni = function (i) {
-
-    if ($scope.calendarClick != null)
-      var d = new Date(y, m, $scope.calendarClick, 0, 0, 0, 0);
-    else
-      var d = new Date();
-    //a = d.getDate();
-    d.setDate(d.getDate() + i);
-    return d;
-  }
-
-
-  var currentMonth = mesi[mm];
-  var currentYear = yyyy;
-  $scope.month = {
-    name: monthYear(mm, yyyy),
-    weeks: [
-   [ //for(int i=0;i<daysInMonth($scope.mm,$scope.yyyy);i++)
-        {
-          date: firstGiorniMese(mm, yyyy),
-          day: returnDayName(1, mm, yyyy),
-          events: []
-    }
-            , {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(2, mm, yyyy),
-          events: []
-    }
-            , {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(3, mm, yyyy),
-          events: []
-    }
-            , {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(4, mm, yyyy),
-          events: []
-    }
-            ,
-        {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(5, mm, yyyy),
-          events: []
-    }
-            ,
-        {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(6, mm, yyyy),
-          events: [
-            {
-              color: "blue"
-      }
-     ]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: returnDayName(7, mm, yyyy),
-          events: [
-            {
-              color: "blue"
-      }
-     ]
-    }
-    //{
-    //	date: 3,
-    //	day: "DOM",
-    //	events: []
-    //}
-   ],
-   [
-        {
-          date: firstGiorniMese(mm, yyyy),
-          day: "LUN",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MAR",
-          events: [
-            {
-              //Dati del evento
-              color: "red"
-      }
-     ]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MER",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "GIO",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "VEN",
-          events: [
-            {
-              color: "blue"
-      }, {
-              color: "blue"
-      }
-     ]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "SAB",
-          events: [{
-            color: "green"
-      }]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "DOM",
-          events: []
-    }
-   ]
-   ,
-   [
-        {
-          date: firstGiorniMese(mm, yyyy),
-          day: "LUN",
-          events: [{
-            color: "yellow"
-      }]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MAR",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MER",
-          events: [
-            {
-              color: "blue"
-      },
-            {
-              color: "red"
-      }, {
-              color: "brown"
-      }]
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "GIO",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "VEN",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "SAB",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "DOM",
-          events: []
-    }
-   ]
-   ,
-   [
-        {
-          date: firstGiorniMese(mm, yyyy),
-          day: "LUN",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MAR",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "MER",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "GIO",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "VEN",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "SAB",
-          events: []
-    },
-        {
-          date: giorniMese(mm, yyyy),
-          day: "DOM",
-          events: []
-    }
-   ]
-   ,
-   [
-        {
-          index: 5,
-          date: firstGiorniMese(mm, yyyy),
-          day: "LUN",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "MAR",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "MER",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "GIO",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "VEN",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "SAB",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "DOM",
-          events: []
-    }
-            ]
-            ,
-   [
-        {
-          index: 5,
-          date: firstGiorniMese(mm, yyyy),
-          day: "LUN",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "MAR",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "MER",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "GIO",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "VEN",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "SAB",
-          events: []
-    },
-        {
-          index: 5,
-          date: giorniMese(mm, yyyy),
-          day: "DOM",
-          events: []
-    }
-   ]
-  ]
+  $scope.nextMonth = function () {
+    $scope.showDate.setDate(1);
+    $scope.showDate.setMonth($scope.showDate.getMonth()+1);
+    $scope.month = buildMonthData();
   };
 
   $scope.lastMonth = function () {
-    $scope.counterVerde--;
-    $scope.giornoCounter = 0;
-    $scope.counterGiorniMese = 0;
+    $scope.showDate.setDate(1);
+    $scope.showDate.setMonth($scope.showDate.getMonth()-1);
+    $scope.month = buildMonthData();
+  };
 
-    if (m == 0) {
-      m = 11;
-      y--;
-    } else
-      m--;
-
-    $scope.month.name = monthYear(m, y);
-
-    for (var i = 0; i < 6; i++) {
-      for (var k = 0; k < 7; k++) {
-        if (k == 0)
-          $scope.month.weeks[i][k].date = firstGiorniMese(m, y);
-        else
-          $scope.month.weeks[i][k].date = giorniMese(m, y);
-        if (i == 0) {
-          $scope.month.weeks[i][k].day = returnDayName(k + 1, m, y);
-        }
-
-      }
-    }
-
-  }
-
-  $scope.nextMonth = function () {
-    $scope.counterVerde++;
-    $scope.giornoCounter = 0;
-    $scope.counterGiorniMese = 0;
-
-    if (m == 11) {
-      m = 0;
-      y++;
-    } else
-      m++;
-
-    $scope.month.name = monthYear(m, y);
-    for (var i = 0; i < 6; i++) {
-      for (var k = 0; k < 7; k++) {
-        if (k == 0)
-          $scope.month.weeks[i][k].date = firstGiorniMese(m, y);
-        else
-          $scope.month.weeks[i][k].date = giorniMese(m, y);
-        if (i == 0) {
-          $scope.month.weeks[i][k].day = returnDayName(k + 1, m, y);
-        }
-
-      }
-    }
-  }
-
-  $scope.goToToday = function () {
-    if ($scope.calendarView == false) {
-      $scope.counterGiorniMese = 0;
-      $scope.counterVerde = 0;
-      m = mm;
-      y = yyyy;
-      $scope.month.name = monthYear(m, y);
-
-      for (var i = 0; i < 6; i++) {
-        for (var k = 0; k < 7; k++) {
-          if (k == 0)
-            $scope.month.weeks[i][k].date = firstGiorniMese(m, y);
-          else
-            $scope.month.weeks[i][k].date = giorniMese(m, y);
-          if (i == 0) {
-            $scope.month.weeks[i][k].day = returnDayName(k + 1, m, y);
-          }
-
-        }
-      }
-    } else if ($scope.calendarView == true) {
-      $scope.calendarClick = null;
-      $ionicScrollDelegate.scrollTop();
-
-
-
-    }
-  }
 })

@@ -25,10 +25,10 @@
       <div class="col">{{ "DOM" | translate}}</div>
     </div>
     <div class="row week" ng-repeat="week in month.weeks">
-      <div  class="col day" ng-repeat="item in getEmptyArrayByLenght(firstDayIndex(week))"></div>
-      <div ng-click="click3(day.date)" class="col day" ng-class="{'today' : day.date == today && counterVerde==0, 'background-white' : day.date!=null}" ng-repeat="day in week"  ng-if="day.index!=5 || day.date>21 && day.date <32">
+      <div  class="col day" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
+      <div ng-click="click3(day.date)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString(), 'background-white' : true}" ng-repeat="day in week" >
         <div ng-if="day.date!=null" class="day-date">
-          {{day.date}}
+          {{day.date.getDate()}}
         </div>
         <div class="row no-orizontal-padding">
           <div class="separation-padding" ng-repeat="event in day.events">
@@ -39,19 +39,23 @@
           </div>
         </div>
       </div>
-      <!--<div class="col day" ng-repeat="item in getEmptyArrayByLenght(6 - lastDayIndex(week))"></div>-->
     </div>
   </div>
-  <!--<button  ng-if="!calendarView" ng-click="reset()">Emergency Reset!!! (PER DEBUG)</button>-->    
   <div  ng-if="calendarView">
-    <ion-list  id="listaCalendario" ng-if="$index<100" ng-repeat="day in arrayD" >
+    <ion-list  id="listaCalendario" ng-repeat="day in dayList" >
       <ion-item style="text-align:center;" class="my-item background-grey-light">
+          {{day.date.toDateString()}}
+<!--
           {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[0] | translate}}
           {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[1] | translate}}
           {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[2] | translate}}
           {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[3] | translate}}
-          <ion-item ></ion-item>
+-->
+      </ion-item>
+      <ion-item >
+      CRM
       </ion-item>
     </ion-list>
+    <ion-infinite-scroll on-infinite="loadMoreDays()" distance="10%"></ion-infinite-scroll>
   </div>
 </ion-content>

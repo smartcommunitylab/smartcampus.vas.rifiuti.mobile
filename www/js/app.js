@@ -11,6 +11,7 @@ angular.module('rifiuti', [
 	'rifiuti.services.profili',
 	'rifiuti.services.rifiuti',
 	'rifiuti.services.utili',
+    'rifiuti.services.calendar',
 	'rifiuti.controllers.common',
 	'rifiuti.controllers.home',
 	'rifiuti.controllers.raccolta',
