@@ -197,19 +197,21 @@ angular.module('rifiuti.controllers.home', [])
   };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, Calendar) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, Calendar, Utili) {
   $rootScope.noteSelected = false;
   
   $scope.calendarClick = null;
   $scope.calendarView = false;
 
-  $scope.click2 = function () {
+  $scope.loaded = false;
+
+  $scope.switchView = function () {
     $scope.calendarClick = null;
     $scope.calendarView = !$scope.calendarView;
     $scope.updateIMG2();
     $ionicScrollDelegate.scrollTop();
   }
-  $scope.click3 = function (i) {
+  $scope.selectDay = function (i) {
     $scope.calendarClick = i;
     $scope.calendarView = !$scope.calendarView;
     $scope.updateIMG2();
@@ -243,15 +245,19 @@ angular.module('rifiuti.controllers.home', [])
   $scope.showDate = new Date();
   
   var buildMonthData = function() {
-    return {
-      name: Calendar.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
-      weeks: Calendar.fillWeeks($scope.showDate)
-    };
+    $scope.loaded = false;
+    Calendar.fillWeeks($scope.showDate, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data){
+      $scope.month = {
+        name: Calendar.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
+        weeks: data
+      };
+      $scope.loaded = true;
+    });
   };
   
-  $scope.month = buildMonthData();
+  buildMonthData();
   $scope.$watch('month', function(a,b){
-    if (a.name !== b.name || $scope.dayList.length == 0) {
+    if (a !=null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
       $scope.dayList = Calendar.toListData($scope.month.weeks);     
       $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.showDate);
     }
@@ -260,15 +266,24 @@ angular.module('rifiuti.controllers.home', [])
   $scope.loadMoreDays = function() {
     $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate()+1);
     $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.dayListLastMonth);
-    var newWeeks = Calendar.fillWeeks($scope.dayListLastMonth);
-    $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
-    $scope.$broadcast('scroll.infiniteScrollComplete');
+    Calendar.fillWeeks($scope.dayListLastMonth, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data) {
+      var newWeeks = data;
+      $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
+      $scope.$broadcast('scroll.infiniteScrollComplete');    
+    });
   };  
-    
+  
+  $scope.getColor = function(colorString) {
+    return Utili.getRGBColor(colorString);
+  };
+  $scope.getIcon = function(item) {
+    return Utili.icon(item.tipologiaPuntiRaccolta, item.colore);
+  }
+
   $scope.goToToday = function () {
     if ($scope.calendarView == false) {
       $scope.showDate = new Date();
-      $scope.month = buildMonthData();
+      buildMonthData();
     } else if ($scope.calendarView == true) {
       $ionicScrollDelegate.scrollTop();
     }
@@ -276,13 +291,13 @@ angular.module('rifiuti.controllers.home', [])
   $scope.nextMonth = function () {
     $scope.showDate.setDate(1);
     $scope.showDate.setMonth($scope.showDate.getMonth()+1);
-    $scope.month = buildMonthData();
+    buildMonthData();
   };
 
   $scope.lastMonth = function () {
     $scope.showDate.setDate(1);
     $scope.showDate.setMonth($scope.showDate.getMonth()-1);
-    $scope.month = buildMonthData();
+    buildMonthData();
   };
 
 })

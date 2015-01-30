@@ -2,7 +2,7 @@
   <button ng-click="goToToday()" class="button button-clear button-light menu-edit-button nav-bar-buttons-alignment">
     <img src="img/today.png" class="standard-size" />
   </button>
-          <button ng-click="click2()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
+          <button ng-click="switchView()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
     <img ng-src="{{variableIMG2}}" class="standard-size" />
   </button>
 </ion-nav-buttons>
@@ -26,13 +26,13 @@
     </div>
     <div class="row week" ng-repeat="week in month.weeks">
       <div  class="col day" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
-      <div ng-click="click3(day.date)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString(), 'background-white' : true}" ng-repeat="day in week" >
+      <div ng-click="selectDay(day.date)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString(), 'background-white' : true}" ng-repeat="day in week" >
         <div ng-if="day.date!=null" class="day-date">
           {{day.date.getDate()}}
         </div>
         <div class="row no-orizontal-padding">
-          <div class="separation-padding" ng-repeat="event in day.events">
-            <div class="fixed-size" style="background-color:{{event.color}};"></div>
+          <div class="separation-padding" ng-repeat="colore in day.colors">
+            <div class="fixed-size" style="background-color:{{getColor(colore)}};"></div>
           </div>
           <div class="separation-padding" ng-if="day.events.length == 0">
             <div class="fixed-size"></div>
@@ -43,17 +43,22 @@
   </div>
   <div  ng-if="calendarView">
     <ion-list  id="listaCalendario" ng-repeat="day in dayList" >
-      <ion-item style="text-align:center;" class="my-item background-grey-light">
-          {{day.date.toDateString()}}
-<!--
-          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[0] | translate}}
-          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[1] | translate}}
-          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[2] | translate}}
-          {{dayDayMonthYear(aggiungiGiorni($index)).split(" ")[3] | translate}}
--->
+      <ion-item style="text-align:center;" class="my-item background-grey-light" ng-if="day.colors.length > 0">
+          {{day.date | date:'EEEE d MMMM y'}}
       </ion-item>
-      <ion-item >
-      CRM
+      <ion-item  ng-if="day.colors.length > 0">
+        <div ng-repeat="(key, block) in day.events">
+          <span class="expandable-list-title">{{block.type | translate}}</span>
+          <div ng-repeat="elem in block.events" class="row no-padding">
+            <div class="col-10 col-center">
+              <img ng-src="{{getIcon(elem)}}" height="30" width="30">
+            </div>
+            <div class="col col-center no-padding">
+              <span class="row" ng-repeat="d in elem.descr">{{d}}</span>
+            </div>
+          </div>  
+        </div>  
+
       </ion-item>
     </ion-list>
     <ion-infinite-scroll on-infinite="loadMoreDays()" distance="10%"></ion-infinite-scroll>

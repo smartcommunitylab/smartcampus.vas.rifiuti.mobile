@@ -1,10 +1,37 @@
 angular.module('rifiuti.services.utili', [])
 
+
 .factory('Utili', function () {
   return {
+    getRGBColor: function(colore) {
+      switch (colore) {
+        case 'ARANCIONE':
+          return 'orange';
+        //TODO: manca l'azzurro, e per ora ho uso la versione BLUE
+        case 'AZZURRO':
+          return 'blue';
+        case 'BLU':
+          return 'blue';
+        case 'GIALLO':
+          return 'yellow';
+        case 'MARRONE':
+          return 'brown';
+        case 'ROSSO':
+          return 'red';
+        case 'VERDE':
+          return 'green';
+        case 'VERDE SCURO':
+          return 'darkgreen';
+        default:
+          return 'grey';
+      }
+    },
     iconFromRegola: function(regola) {
+      return this.icon(regola.tipologiaPuntoRaccolta, regola.colore);
+    },
+    icon: function(tipologia, colore) {
       var icona;
-      switch (regola.tipologiaPuntoRaccolta) {
+      switch (tipologia) {
         case 'Isola Ecologica':
           icona = 'isola_eco';
           break;
@@ -18,43 +45,12 @@ angular.module('rifiuti.services.utili', [])
           icona = 'rivenditore';
           break;
         default:
-          if (regola.tipologiaPuntoRaccolta.indexOf('Porta a porta')==0) {
+          if (tipologia.indexOf('Porta a porta')==0) {
             icona = 'porta_a_porta';
           }
           break;
       }
-      var colore;
-      switch (regola.colore) {
-        case 'ARANCIONE':
-          colore = 'orange';
-          break;
-        //TODO: manca l'azzurro, e per ora ho uso la versione BLUE
-        case 'AZZURRO':
-          colore = 'blue';
-          break;
-        case 'BLU':
-          colore = 'blue';
-          break;
-        case 'GIALLO':
-          colore = 'yellow';
-          break;
-        case 'MARRONE':
-          colore = 'brown';
-          break;
-        case 'ROSSO':
-          colore = 'red';
-          break;
-        case 'VERDE':
-          colore = 'green';
-          break;
-        case 'VERDE SCURO':
-          colore = 'olivegreen';
-          break;
-        default:
-          colore = 'grey';
-          break;
-      }
-      return (!!icona?'img/ic_'+icona+'_'+colore+'.png':null);
+      return (!!icona?'img/ic_'+icona+'_'+this.getRGBColor(colore)+'.png':null);
     }
   }
 })

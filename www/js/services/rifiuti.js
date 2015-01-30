@@ -169,6 +169,21 @@ angular.module('rifiuti.services.rifiuti', [])
      });
       return deferred.promise;    
     },
+    puntiRaccoltaCalendar : function(utenza, aree) {
+      var deferred = $q.defer();
+      if (!aree) aree = [];
+      $http.get('data/db/puntiRaccoltaCalendar.json').then(function (results) {
+        var data = results.data;
+        var filtered = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].tipologiaUtenza == utenza && aree.indexOf(data[i].area)>=0 && aree.indexOf(data[i].r_area)>=0) {
+            filtered.push(data[i]);
+          }
+        }
+        deferred.resolve(filtered);
+      });
+      return deferred.promise;    
+    },
     areeForTipoUtenza: function(profile) {
       var deferred = $q.defer();
       $http.get('data/db/aree.json').then(function (results) {
