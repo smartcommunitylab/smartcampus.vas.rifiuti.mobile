@@ -86,7 +86,7 @@ angular.module('rifiuti.controllers.profilo', [])
     if ($scope.isCurrentProfile) {
         var popup = $ionicPopup.show({
           title: '<b class="popup-title">Avviso<b/>',
-          templateUrl: "Non è possibile cancellare il profilo in uso.",
+          template: "Non è possibile cancellare il profilo in uso.",
           scope: $scope,
           buttons: [
             { text: 'OK' }
