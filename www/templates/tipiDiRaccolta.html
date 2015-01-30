@@ -12,15 +12,15 @@
   </ion-nav-buttons>
   <ion-content class="background-grey-light" has-bouncing="false">
     <ion-list class="contatti-item-list">
-      <ion-item ng-repeat="item in tipi" ng-href="#/app/raccolta/{{item.name}}" class="no-vertical-padding">
+      <ion-item ng-repeat="(tipo,items) in tipi" ng-href="#/app/raccolta/{{tipo}}" class="no-vertical-padding">
         <div class="row no-vertical-padding">
           <div class="col only-top-vertical-padding">
-            {{item.name | translate}}
+            {{tipo | translate}}
           </div>
         </div>
         <div class="row only-top-vertical-padding">
-          <div class="col col-10" ng-repeat="icon in item.icons">
-            <img ng-src="{{icon}}" height="30" width="30">
+          <div class="col col-10" ng-repeat="(key, item) in items">
+            <img ng-src="{{icon(item)}}" height="30" width="30">
           </div>
         </div>
       </ion-item>

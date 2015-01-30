@@ -207,6 +207,28 @@ angular.module('rifiuti.services.rifiuti', [])
       });
       return deferred.promise;    
     },
+    tipiDiRaccolta: function(utenza, aree) {
+      var deferred = $q.defer();
+      $http.get('data/db/raccolta.json').then(function (results) {
+        var data=results.data;
+        var res = {};
+        for (var i =0; i < data.length; i++) {
+          if (data[i].tipologiaUtenza == utenza && aree.indexOf(data[i].area)>=0 && !!data[i].tipologiaRaccolta) {
+            var list = res[data[i].tipologiaRaccolta];
+            if (!list) {
+              list = {};
+              res[data[i].tipologiaRaccolta] = list;
+            }
+            list[data[i].tipologiaPuntoRaccolta+'_'+data[i].colore] = {
+              tipologiaPuntoRaccolta: data[i].tipologiaPuntoRaccolta,
+              colore: data[i].colore
+            };
+          }
+        }
+        deferred.resolve(res);  
+      });
+      return deferred.promise;    
+    },
     immagini: function() {
       return $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
         var imgs={};

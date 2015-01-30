@@ -158,10 +158,13 @@ angular.module('rifiuti.controllers.raccolta', [])
   });
 })
 
-.controller('TDRCtrl', function ($scope, $http) {
-  $http.get('data/support/tipologieDiRaccolta.json').success(function (data) {
+.controller('TDRCtrl', function ($scope, $rootScope, $http, Raccolta, Utili) {
+  Raccolta.tipiDiRaccolta($rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
     $scope.tipi = data;
   });
+  $scope.icon = function(item) {
+    return Utili.icon(item.tipologiaPuntoRaccolta,item.colore);
+  };
 })
 
 .controller('RaccoltaCtrl', function ($scope, $stateParams, Raccolta) {
