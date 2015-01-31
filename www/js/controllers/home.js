@@ -207,17 +207,20 @@ angular.module('rifiuti.controllers.home', [])
   };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, Calendar, Utili) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili) {
   $rootScope.noteSelected = false;
 
   $scope.switchView = function () {
-    $scope.calendarClick = null;
     $scope.calendarView = !$scope.calendarView;
     $scope.updateIMG2();
     $ionicScrollDelegate.scrollTop();
   }
   $scope.selectDay = function (i) {
-    $scope.calendarClick = i;
+    if (i.colors.length == 0) return;
+    $location.hash(i.dateString);
+    $scope.currListItem = i;
+
+    $ionicScrollDelegate.anchorScroll(true);
     $scope.calendarView = !$scope.calendarView;
     $scope.updateIMG2();
   }
@@ -259,6 +262,7 @@ angular.module('rifiuti.controllers.home', [])
     $scope.calendarView = false;
     $scope.loaded = false;
     $scope.currDate = new Date();
+    $scope.currListItem = null;
     $scope.dayList = [];//$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
     $scope.dayListLastMonth = null;
     $scope.showDate = new Date();
@@ -304,7 +308,18 @@ angular.module('rifiuti.controllers.home', [])
       $scope.showDate = new Date();
       buildMonthData();
     } else if ($scope.calendarView == true) {
-      $ionicScrollDelegate.scrollTop();
+      var time = 0;
+      var i = 0;
+      while (i < $scope.dayList.length && time < $scope.currDate.getTime()) {
+        time = $scope.dayList[i++].date.getTime();
+      }
+      if (i - 2 >= 0 && i-2 <=$scope.dayList.length) {
+        $location.hash($scope.dayList[i-2].dateString);
+        $scope.currListItem = $scope.dayList[i-2];
+        $ionicScrollDelegate.anchorScroll(true);
+      } else {
+        $ionicScrollDelegate.scrollToTop();
+      }
     }
   };
   $scope.nextMonth = function () {
