@@ -14,34 +14,41 @@ angular.module('rifiuti.controllers.raccolta', [])
       }
     }
   };
-  if ($scope.selectedProfile) {
-    Raccolta.rifiuti().then(function(){
-      Raccolta.immagini().then(function(){
-        var results=[], row=[], counter=-1;
-        for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
-          var tipologia=$scope.selectedProfile.tipologie[i];
-          counter++;
-          if (counter==3) {
-            counter=0;
-            results.push(row);
-            row=[];
-          }
-          row.push({ label:tipologia, img:$scope.immagini[tipologia] });
-        };
-        if (row.length>0) results.push(row);
-        $scope.tipologie=results;
+  
+  var init = function() {
+    if ($scope.selectedProfile) {
+      Raccolta.rifiuti().then(function(){
+        Raccolta.immagini().then(function(){
+          var results=[], row=[], counter=-1;
+          for (var i=0; i<$scope.selectedProfile.tipologie.length; i++) {
+            var tipologia=$scope.selectedProfile.tipologie[i];
+            counter++;
+            if (counter==3) {
+              counter=0;
+              results.push(row);
+              row=[];
+            }
+            row.push({ label:tipologia, img:$scope.immagini[tipologia] });
+          };
+          if (row.length>0) results.push(row);
+          $scope.tipologie=results;
+        });
       });
-    });
-  }
+    }
+  };
+  
+  $rootScope.$watch('selectedProfile',function(a,b) {
+    if (b == null || a.id != b.id) {
+      init();
+    }
+  }); 
+
+  init();
+  
 })
   
-.controller('PDRCtrl', function ($scope, $timeout, Raccolta, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $rootScope, $timeout, Raccolta, $location, $stateParams) {
 
-  $scope.mapView = true;
-  $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
-  $scope.list = [];
-
-  $scope.variableIMG = "img/ic_list.png";
   $scope.updateIMG = function () {
     $scope.variableIMG = $scope.mapView ? "img/ic_list.png" : "img/ic_map.png";
   };
@@ -83,15 +90,6 @@ angular.module('rifiuti.controllers.raccolta', [])
           }]
         }]
     }
-  };
-
-  $scope.markers = {
-    control: {},
-    models: [],
-    coords: 'self',
-    fit: true,
-    icon: 'icon',
-    doCluster: true
   };
 
   $scope.click = function () {
@@ -136,35 +134,73 @@ angular.module('rifiuti.controllers.raccolta', [])
       locs: [item]
     });
   };
+  
+  var init = function() {
+    $scope.mapView = true;
+    $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
+    $scope.list = [];
+    $scope.variableIMG = "img/ic_list.png";
 
-  Raccolta.puntiraccolta().then(function(punti){
-    var points = [];
-    punti.forEach(function(punto){
-      if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
-        var icon = {
-          url: punto.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
-          scaledSize: new google.maps.Size(45, 45)
-        };
-        points.push({
-          id: punto.dettaglioIndirizzo,
-          latitude: punto.localizzazione.split(',')[0],
-          longitude: punto.localizzazione.split(',')[1],
-          icon: icon
-        });
-        $scope.addToList(punto);
-      }
+    $scope.markers = {
+      control: {},
+      models: [],
+      coords: 'self',
+      fit: true,
+      icon: 'icon',
+      doCluster: true
+    };
+    
+    Raccolta.puntiraccolta().then(function(punti){
+      var points = [];
+      punti.forEach(function(punto){
+        if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
+          var icon = {
+            url: punto.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
+            scaledSize: new google.maps.Size(45, 45)
+          };
+          points.push({
+            id: punto.dettaglioIndirizzo,
+            latitude: punto.localizzazione.split(',')[0],
+            longitude: punto.localizzazione.split(',')[1],
+            icon: icon
+          });
+          $scope.addToList(punto);
+        }
+      });
+      $scope.markers.models = points;
     });
-    $scope.markers.models = points;
-  });
+
+  };
+  
+  $rootScope.$watch('selectedProfile',function(a,b) {
+    if (b == null || a.id != b.id) {
+      init();
+    }
+  }); 
+  
+  init();
+
 })
 
 .controller('TDRCtrl', function ($scope, $rootScope, $http, Raccolta, Utili) {
-  Raccolta.tipiDiRaccolta($rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
-    $scope.tipi = data;
-  });
   $scope.icon = function(item) {
     return Utili.icon(item.tipologiaPuntoRaccolta,item.colore);
   };
+  
+  var init = function() {
+    Raccolta.tipiDiRaccolta($rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
+      $scope.tipi = data;
+    });
+  };
+  
+  $rootScope.$watch('selectedProfile',function(a,b) {
+    if (b == null || a.id != b.id) {
+      init();
+    }
+  }); 
+  
+  init();
+
 })
 
 .controller('RaccoltaCtrl', function ($scope, $stateParams, Raccolta) {

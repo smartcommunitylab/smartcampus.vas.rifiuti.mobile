@@ -106,10 +106,20 @@ angular.module('rifiuti.controllers.home', [])
         $scope.multipleNoteSelected = false;
     }
   });    
-    
-  $scope.notes = Profili.getNotes();
-  $scope.selectedNotes = [];
-  $scope.multipleNoteSelected = false;
+
+  var init = function() {
+    $scope.notes = Profili.getNotes();
+    $scope.selectedNotes = [];
+    $scope.multipleNoteSelected = false;
+  };
+  
+  $rootScope.$watch('selectedProfile',function(a,b) {
+    if (b == null || a.id != b.id) {
+      init();
+    }
+  }); 
+  
+  init();
   
   $scope.addNote = function (nota) {
       $scope.notes = Profili.addNote(nota);
@@ -199,11 +209,6 @@ angular.module('rifiuti.controllers.home', [])
 
 .controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, Calendar, Utili) {
   $rootScope.noteSelected = false;
-  
-  $scope.calendarClick = null;
-  $scope.calendarView = false;
-
-  $scope.loaded = false;
 
   $scope.switchView = function () {
     $scope.calendarClick = null;
@@ -238,12 +243,7 @@ angular.module('rifiuti.controllers.home', [])
     }
     return array;
   }
-  
-  $scope.currDate = new Date();
-  $scope.dayList = [];//$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
-  $scope.dayListLastMonth = null;
-  $scope.showDate = new Date();
-  
+    
   var buildMonthData = function() {
     $scope.loaded = false;
     Calendar.fillWeeks($scope.showDate, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data){
@@ -255,7 +255,26 @@ angular.module('rifiuti.controllers.home', [])
     });
   };
   
-  buildMonthData();
+  var init = function() {
+    $scope.calendarView = false;
+    $scope.loaded = false;
+    $scope.currDate = new Date();
+    $scope.dayList = [];//$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
+    $scope.dayListLastMonth = null;
+    $scope.showDate = new Date();
+    buildMonthData();
+  }
+  
+  init();
+  
+  $rootScope.$watch('selectedProfile',function(a,b) {
+    if (b == null || a.id != b.id) {
+      init();
+    }
+  }); 
+  
+  
+  
   $scope.$watch('month', function(a,b){
     if (a !=null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
       $scope.dayList = Calendar.toListData($scope.month.weeks);     
