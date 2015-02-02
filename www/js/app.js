@@ -94,6 +94,7 @@ angular.module('rifiuti', [
     SAB: "SAB",
     DOM: "DOM",
     Tocca: "Tocca + per aggiungere una nota",
+    empty_elem: "Nessun elemento da visualizzare",
 
     'ad esempio': "Ad esempio:",
     Invia: "Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",

@@ -64,6 +64,9 @@
                   </div>
                 </div>
               </a>
+              <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
+                {{'empty_elem'|translate}}
+              </div>  
             </div>
           </div>
         </div>
