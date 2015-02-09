@@ -46,7 +46,7 @@ angular.module('rifiuti.services.rifiuti', [])
     puntiraccolta: function(options) {
       var ptdeferred = $q.defer();
       this.aree().then(function(myAree){
-        $http.get('data/db/puntiRaccolta.json').then(function (results) {
+        $http.get('data/db/puntiRaccolta_'+$rootScope.selectedProfile.utenza.tipologiaUtenza+'.json').then(function (results) {
           var myPunti=[];
           var myPuntiDone=[];
           if ($rootScope.selectedProfile) {
@@ -54,7 +54,7 @@ angular.module('rifiuti.services.rifiuti', [])
               var optionsOK=true;
               if (options && options.indirizzo && punto.dettaglioIndirizzo!=options.indirizzo) optionsOK=false;
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
-              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1) && punto.tipologiaUtenza==$rootScope.selectedProfile.utenza.tipologiaUtenza) {
+              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1)) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
                   var extcheckOK=true;
                   if (punto.gettoniera!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;
@@ -172,11 +172,11 @@ angular.module('rifiuti.services.rifiuti', [])
     puntiRaccoltaCalendar : function(utenza, aree) {
       var deferred = $q.defer();
       if (!aree) aree = [];
-      $http.get('data/db/puntiRaccoltaCalendar.json').then(function (results) {
+      $http.get('data/db/puntiRaccoltaCalendar_'+utenza+'.json').then(function (results) {
         var data = results.data;
         var filtered = [];
         for (var i = 0; i < data.length; i++) {
-          if (data[i].tipologiaUtenza == utenza && aree.indexOf(data[i].area)>=0 && aree.indexOf(data[i].r_area)>=0) {
+          if (aree.indexOf(data[i].area)>=0 && aree.indexOf(data[i].r_area)>=0) {
             filtered.push(data[i]);
           }
         }

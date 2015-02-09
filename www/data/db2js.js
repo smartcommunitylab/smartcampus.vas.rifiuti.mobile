@@ -27,12 +27,38 @@ db.serialize(function() {
 					+ " AND (puntiRaccolta.il IS NOT NULL AND puntiRaccolta.il != '')";
 
   db.all(sql, function(err, rows) {
-    fs.writeFile('db/puntiRaccoltaCalendar.json', JSON.stringify(rows), function (err) {
-      if (err) throw err;
-      console.log('view: puntiRaccoltaCalendar');
-    });
+    var map = {};
+    for (var i = 0; i < rows.length; i++) {
+      if (!(rows[i].tipologiaUtenza in map)) {
+        map[rows[i].tipologiaUtenza] = [];
+      }
+      map[rows[i].tipologiaUtenza].push(rows[i]);
+    }
+    for (var type in map) {
+      fs.writeFile('db/puntiRaccoltaCalendar_'+type+'.json', JSON.stringify(map[type]), function (err) {
+        if (err) throw err;
+        console.log('view: puntiRaccoltaCalendar_'+type);
+      });
+    }    
   });
 
+  sql = "SELECT DISTINCT * FROM puntiRaccolta";
+  db.all(sql, function(err, rows) {
+    var map = {};
+    for (var i = 0; i < rows.length; i++) {
+      if (!(rows[i].tipologiaUtenza in map)) {
+        map[rows[i].tipologiaUtenza] = [];
+      }
+      map[rows[i].tipologiaUtenza].push(rows[i]);
+    }
+    for (var type in map) {
+      fs.writeFile('db/puntiRaccolta_'+type+'.json', JSON.stringify(map[type]), function (err) {
+        if (err) throw err;
+        console.log('view: puntiRaccolta_'+type);
+      });
+    }    
+  });
+  
 });
 
 db.close();

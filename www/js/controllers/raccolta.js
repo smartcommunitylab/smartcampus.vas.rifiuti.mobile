@@ -49,6 +49,8 @@ angular.module('rifiuti.controllers.raccolta', [])
   
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, Raccolta, $location, $stateParams) {
 
+  $scope.profile = null;
+  
   $rootScope.checkMap();  
   
   $scope.updateIMG = function () {
@@ -97,39 +99,39 @@ angular.module('rifiuti.controllers.raccolta', [])
   $scope.click = function () {
     $scope.mapView = !$scope.mapView;
     $scope.updateIMG();
-    $timeout(function () {
-      var mapHeight = 800; // or any other calculated value
-      var mapContainer = document.querySelector('#map-container');
-      if (mapContainer) {
-        mapHeight = angular.element(mapContainer)[0].offsetHeight;
-      } else { 
-        console.log('cannot get "#map-container"');
-      }
-      var ng_mapContainer = document.querySelector('.angular-google-map-container');
-      if (ng_mapContainer) {
-        angular.element(ng_mapContainer)[0].style.height = mapHeight + 'px';
-      } else { 
-        console.log('cannot get ".angular-google-map-container"');
-      }
-    }, 200);
+//    $timeout(function () {
+//      var mapHeight = 800; // or any other calculated value
+//      var mapContainer = document.querySelector('#map-container');
+//      if (mapContainer) {
+//        mapHeight = angular.element(mapContainer)[0].offsetHeight;
+//      } else { 
+//        console.log('cannot get "#map-container"');
+//      }
+//      var ng_mapContainer = document.querySelector('.angular-google-map-container');
+//      if (ng_mapContainer) {
+//        angular.element(ng_mapContainer)[0].style.height = mapHeight + 'px';
+//      } else { 
+//        console.log('cannot get ".angular-google-map-container"');
+//      }
+//    }, 200);
   };
 
-  $scope.$on('$viewContentLoaded', function () {
-    $timeout(function () {
-      var mapHeight = 800; // or any other calculated value
-      mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
-    }, 50);
-  });
+//  $scope.$on('$viewContentLoaded', function () {
+//    $timeout(function () {
+//      var mapHeight = 800; // or any other calculated value
+//      mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+//      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+//    }, 50);
+//  });
 
-  $scope.addToList = function (item) {
-    for (var i = 0; i < $scope.list.length; i++) {
-      if ($scope.list[i].tipologiaPuntoRaccolta == item.tipologiaPuntiRaccolta) {
-        $scope.list[i].locs.push(item);
+  var addToList = function (item, list) {
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].tipologiaPuntoRaccolta == item.tipologiaPuntiRaccolta) {
+        list[i].locs.push(item);
         return;
       }
     }
-    $scope.list.push({
+    list.push({
       aperto: false,
       tipologiaPuntoRaccolta: item.tipologiaPuntiRaccolta,
       icon: item.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_crm_grey.png' : 'img/ic_isola_eco_grey.png',
@@ -138,22 +140,15 @@ angular.module('rifiuti.controllers.raccolta', [])
   };
   
   var init = function() {
+    
     $scope.mapView = true;
     $scope.id = $stateParams.id != '!' ? $stateParams.id : null;
     $scope.list = [];
     $scope.variableIMG = "img/ic_list.png";
 
-    $scope.markers = {
-      control: {},
-      models: [],
-      coords: 'self',
-      fit: true,
-      icon: 'icon',
-      doCluster: true
-    };
-    
     Raccolta.puntiraccolta().then(function(punti){
       var points = [];
+      var list = [];
       punti.forEach(function(punto){
         if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
           var icon = {
@@ -166,16 +161,25 @@ angular.module('rifiuti.controllers.raccolta', [])
             longitude: punto.localizzazione.split(',')[1],
             icon: icon
           });
-          $scope.addToList(punto);
+          addToList(punto, list);
         }
       });
-      $scope.markers.models = points;
+      $scope.markers = {
+        control: {},
+        models: points,
+        coords: 'self',
+        fit: true,
+        icon: 'icon',
+        doCluster: false
+      };
+      $scope.list = list;
     });
 
   };
   
   $rootScope.$watch('selectedProfile',function(a,b) {
-    if (b == null || a.id != b.id) {
+    if ((b == null || a.id != b.id) && a.id != $scope.profile) {
+      $scope.profile = a.id;
       init();
     }
   }); 
@@ -196,7 +200,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   };
   
   $rootScope.$watch('selectedProfile',function(a,b) {
-    if (b == null || a.id != b.id) {
+    if ((b == null || a.id != b.id)) {
       init();
     }
   }); 
@@ -264,7 +268,7 @@ angular.module('rifiuti.controllers.raccolta', [])
 
 .controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, Raccolta) {
 
-  $scope.id = $stateParams.id;
+  $scope.id = !!$stateParams.id && $stateParams.id != 'undefined' && $stateParams.id != 'null'? $stateParams.id : null;
   $scope.isCRM = false;
   $scope.pdr = {};
   $scope.orari = [];
@@ -282,6 +286,10 @@ angular.module('rifiuti.controllers.raccolta', [])
     } else {
       return 'Area Giudicarie';
     }
+  };
+  
+  $scope.clickNav = function() {
+     window.open("http://maps.google.com?daddr="+$scope.pdr.localizzazione,"_system");
   };
   
   Raccolta.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){

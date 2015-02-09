@@ -157,8 +157,7 @@ angular.module('rifiuti.controllers.home', [])
         buttons: [
           { text: 'Cancel' },
           {
-            text: '<b>Save</b>',
-            type: 'button-positive',
+            text: 'Save',
             onTap: function (e) {
               if (!$scope.data.nota) {
                 return null;

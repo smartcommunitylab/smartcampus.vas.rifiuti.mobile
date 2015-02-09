@@ -38,7 +38,7 @@ angular.module('rifiuti', [
 //  });
 //}])
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili) {
   $rootScope.version = '2.0';
     
   $rootScope.profili = [];
@@ -68,6 +68,16 @@ angular.module('rifiuti', [
       }, null);
     }
 
+    $ionicPlatform.registerBackButtonAction(function (event) {
+      console.log('going back in '+$state.current.name);
+      if($state.current.name=="app.home.tipidirifiuti"){
+        //console.log('going back in home...');
+        $rootScope.reallyexitapp();
+      } else {
+        navigator.app.backHistory();
+      }
+    }, 100);
+
   });
 
   $rootScope.checkMap = function() {
@@ -96,6 +106,25 @@ angular.module('rifiuti', [
     }
     return d;
   };
+  
+  $rootScope.reallyexitapp=function(){
+    $ionicPopup.show({
+      title: $filter('translate')('Progetto'),
+      template: $filter('translate')('exitapp_template'),
+      buttons: [
+        { text: $filter('translate')('cancel') },
+        {
+          text: $filter('translate')('exitapp_ok'),
+          onTap: function (e) {
+            return true;
+          }
+        }
+      ]
+    }).then(function(reallyExit) {
+      if (reallyExit) ionic.Platform.exitApp();
+    });
+  };
+
 })
 
 
@@ -108,6 +137,9 @@ angular.module('rifiuti', [
   $translateProvider.translations("it", {
     hello_message: "ciao",
     goodbye_message: "arrivederci",
+    exitapp_template: "Sei sicuro di uscire dall'app?",
+    cancel: "Annulla",
+    exitapp_ok: "OK",
     LUN: "LUN",
     MAR: "MAR",
     MER: "MER",

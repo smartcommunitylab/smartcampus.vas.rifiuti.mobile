@@ -14,7 +14,7 @@
                 {{contatto.descrizione}}
             </div>
         </div>
-        <a class="hidden-link" target="_system" ng-href="http://maps.google.com/maps?daddr={{contatto.coords}}"  ng-if="!!contatto.indirizzo">
+        <a class="hidden-link" ng-click="clickLink('http://maps.google.com/maps?daddr='+contatto.coords)"  ng-if="!!contatto.indirizzo">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_directions.png" class="standard-size absolute-center">
@@ -28,7 +28,7 @@
             </button>
             <div class="col col-90 col-center">{{contatto.orarioUfficio}}</div>
         </div>
-        <a class="hidden-link" target="_system" ng-href="{{contatto.sitoIstituzionale}}"  ng-if="!!contatto.sitoIstituzionale">
+        <a class="hidden-link" ng-click="clickLink(contatto.sitoIstituzionale)"  ng-if="!!contatto.sitoIstituzionale">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_web.png" class="standard-size absolute-center">
@@ -36,7 +36,7 @@
                 <div class="col col-90 col-center">{{contatto.sitoIstituzionale}}</div>
             </div>
         </a>    
-        <a class="hidden-link" target="_system" ng-href="{{contatto.sitoWeb}}"  ng-if="!!contatto.sitoWeb">
+        <a class="hidden-link" ng-click="clickLink(contatto.sitoWeb)"  ng-if="!!contatto.sitoWeb">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_web.png" class="standard-size absolute-center">
@@ -44,7 +44,7 @@
                 <div class="col col-90 col-center">{{contatto.sitoWeb}}</div>
             </div>
         </a>    
-        <a class="hidden-link" target="_system" ng-href="tel:{{contatto.telefono}}"  ng-if="!!contatto.telefono">
+        <a class="hidden-link" ng-click="clickLink('tel:'+contatto.telefono)"  ng-if="!!contatto.telefono">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_call.png" class="standard-size absolute-center">
@@ -58,7 +58,7 @@
             </button>
             <div class="col col-90 col-center">{{contatto.fax}}</div>
         </div>
-        <a class="hidden-link" target="_system" ng-href="mailto:{{contatto.email}}"  ng-if="!!contatto.email">
+        <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.email)"  ng-if="!!contatto.email">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_mail.png" class="standard-size absolute-center">
@@ -66,7 +66,7 @@
                 <div class="col col-90 col-center">{{contatto.email}}</div>
             </div>
         </a>    
-        <a class="hidden-link" target="_system" ng-href="mailto:{{contatto.pec}}"  ng-if="!!contatto.pec">
+        <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.pec)"   ng-if="!!contatto.pec">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_pec.png" class="standard-size absolute-center">

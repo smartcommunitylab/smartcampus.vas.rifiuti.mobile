@@ -134,6 +134,10 @@ angular.module('rifiuti.controllers.common', [])
   $scope.mainScrollResize = function () {
     $ionicScrollDelegate.$getByHandle('mainScroll').resize();
   }
+  
+  $scope.clickLink = function(link) {
+     window.open(link,"_system");
+  };
 })
 
 .controller('TutorialCtrl', function ($scope, $ionicLoading) {
