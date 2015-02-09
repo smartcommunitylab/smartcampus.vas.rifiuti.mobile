@@ -49,6 +49,8 @@ angular.module('rifiuti.controllers.raccolta', [])
   
 .controller('PDRCtrl', function ($scope, $rootScope, $timeout, Raccolta, $location, $stateParams) {
 
+  $rootScope.checkMap();  
+  
   $scope.updateIMG = function () {
     $scope.variableIMG = $scope.mapView ? "img/ic_list.png" : "img/ic_map.png";
   };

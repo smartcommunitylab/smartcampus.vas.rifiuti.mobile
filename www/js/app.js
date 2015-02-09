@@ -17,10 +17,26 @@ angular.module('rifiuti', [
 	'rifiuti.controllers.raccolta',
 	'rifiuti.controllers.profilo',
 	'pascalprecht.translate',
-	'google-maps',
+    'uiGmapgoogle-maps',
+  //'google-maps',
   'angular.filter'
 ])
 
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyBmKVWmFzh2JHT7q1MLmQRQ7jC4AhkRBDs',
+        v: '3.17',
+        libraries: 'geometry'
+    });
+})
+
+//.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+//  GoogleMapApi.configure({
+//    //    key: 'your api key',
+//    v: '3.17',
+////    libraries: 'geometry'
+//  });
+//}])
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, Profili) {
   $rootScope.version = '2.0';
@@ -54,6 +70,12 @@ angular.module('rifiuti', [
 
   });
 
+  $rootScope.checkMap = function() {
+    if (window.google != null && window.google.maps != null) {
+      angular.module('rifiuti').requires.push('google-maps');
+    }  
+  };
+  
   $rootScope.distance=function (pt1, pt2) {
     var d = false;
     if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {

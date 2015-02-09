@@ -1,4 +1,4 @@
-angular.module('rifiuti.controllers.common', ['google-maps'])
+angular.module('rifiuti.controllers.common', [])
 
 
 .controller("ExampleController", function ($scope, $rootScope, $cordovaCamera) {

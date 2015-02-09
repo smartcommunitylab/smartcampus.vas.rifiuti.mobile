@@ -18,10 +18,10 @@
   <div ng-if="mapView">
     <ion-content class="has-header" scroll="false" id="map-container">
       <div id="map1">
-        <google-map data-tap-disabled="true" pan="map.pan" center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" options="map.options">
-          <markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
-          </markers>
-        </google-map>
+        <ui-gmap-google-map data-tap-disabled="true" pan="map.pan" center="map.center" zoom="map.zoom" dragging="false" options="map.options">
+          <ui-gmap-markers models="markers.models" coords="markers.coords" icon="markers.icon" click="openMarkerClick" fit="markers.fit" doCluster="markers.doCluster">
+          </ui-gmap-markers>
+        </ui-gmap-google-map>
       </div>
     </ion-content>
   </div>
