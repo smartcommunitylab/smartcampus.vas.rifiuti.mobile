@@ -70,7 +70,7 @@ angular.module('rifiuti.controllers.raccolta', [])
 */
 
   $scope.openMarkerClick = function ($markerModel) {
-    $location.url('/app/puntoDiRaccolta/' + $markerModel.id);
+    $location.url('/app/puntoDiRaccolta/' + $markerModel.model.id);
   };
 
   $scope.map = {
@@ -188,7 +188,7 @@ angular.module('rifiuti.controllers.raccolta', [])
 
 })
 
-.controller('TDRCtrl', function ($scope, $rootScope, $http, Raccolta, Utili) {
+.controller('TDRCtrl', function ($scope, $rootScope, DataManager, Raccolta, Utili) {
   $scope.icon = function(item) {
     return Utili.icon(item.tipologiaPuntoRaccolta,item.colore);
   };
@@ -289,7 +289,8 @@ angular.module('rifiuti.controllers.raccolta', [])
   };
   
   $scope.clickNav = function() {
-     window.open("http://maps.google.com?daddr="+$scope.pdr.localizzazione,"_system");
+    if ($scope.pdr.localizzazione) window.open("http://maps.google.com?daddr="+$scope.pdr.localizzazione,"_system");
+    else window.open("http://maps.google.com?daddr="+$scope.pdr.dettaglioIndirizzo,"_system");
   };
   
   Raccolta.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){
@@ -298,17 +299,19 @@ angular.module('rifiuti.controllers.raccolta', [])
       $scope.isCRM = true;
     }
     punti.forEach(function(punto){
-      var j = $scope.checkGiorni(punto.il);
-      if (j == -1) {
-        $scope.orari.push({
-          giorno: punto.il,
-          orari:[ punto.dalle + "-" + punto.alle ]
-        });
-      } else {
-        if ($scope.orari[j].orari.indexOf(punto.dalle + "-" + punto.alle) == -1) {
-          $scope.orari[j].orari.push(punto.dalle + "-" + punto.alle);
+      punto.orarioApertura.forEach(function(orario) {
+      var j = $scope.checkGiorni(orario.il);
+        if (j == -1) {
+          $scope.orari.push({
+            giorno: orario.il,
+            orari:[ orario.dalle + "-" + orario.alle ]
+          });
+        } else {
+          if ($scope.orari[j].orari.indexOf(orario.dalle + "-" + orario.alle) == -1) {
+            $scope.orari[j].orari.push(orario.dalle + "-" + orario.alle);
+          }
         }
-      }
+      });
     });
     Raccolta.raccolta({ tipopunto:$scope.pdr.tipologiaPuntiRaccolta }).then(function(raccolta){
       var myRifiuti=[];

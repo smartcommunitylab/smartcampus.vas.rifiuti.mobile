@@ -8,6 +8,7 @@ angular.module('rifiuti', [
 	'ionic',
 	'ngCordova',
 	'rifiuti.filters',
+	'rifiuti.services.data',
 	'rifiuti.services.profili',
 	'rifiuti.services.rifiuti',
 	'rifiuti.services.utili',
@@ -38,9 +39,11 @@ angular.module('rifiuti', [
 //  });
 //}])
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
   $rootScope.version = '2.0';
     
+  DataManager.setDataURL('data/data.zip');
+
   $rootScope.profili = [];
   $rootScope.selectedProfile = null;
   $rootScope.back = function () {
@@ -77,8 +80,9 @@ angular.module('rifiuti', [
         navigator.app.backHistory();
       }
     }, 100);
-
   });
+  
+  window.addEventListener('filePluginIsReady', function(){ console.log('File plugin is ready');}, false);
 
   $rootScope.checkMap = function() {
     if (window.google != null && window.google.maps != null) {
@@ -124,7 +128,6 @@ angular.module('rifiuti', [
       if (reallyExit) ionic.Platform.exitApp();
     });
   };
-
 })
 
 

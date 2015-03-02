@@ -32,7 +32,7 @@ angular.module('rifiuti.services.utili', [])
     icon: function(tipologia, colore) {
       var icona;
       switch (tipologia) {
-        case 'Isola Ecologica':
+        case 'Isola ecologica':
           icona = 'isola_eco';
           break;
         case 'CRM':

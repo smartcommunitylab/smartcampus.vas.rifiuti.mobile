@@ -1,6 +1,6 @@
 angular.module('rifiuti.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $http, $ionicLoading) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, DataManager, $ionicLoading) {
   $rootScope.noteSelected = false;
 
   $scope.height = window.innerHeight;
@@ -10,12 +10,16 @@ angular.module('rifiuti.controllers.home', [])
   $scope.f = [];
   $scope.listaRifiuti = [];
   
-  $http.get('data/db/riciclabolario.json').success(function (data) {
-    $scope.listaRifiuti = data;
+  DataManager.get('data/db/riciclabolario.json').then(function (results) {
+    $scope.listaRifiuti = results.data;
   });
-  $http.get('data/db/tipologiaRifiuto.json').success(function (tdr) {
-    $scope.rifiuti = tdr;
-    $http.get('data/support/tipologiaRifiutoImmagini.json').success(function (tdri) {
+  DataManager.get('data/db/tipologiaRifiuto.json').then(function (results) {
+    for (var i = 0; i < results.data.length; i++) {
+      results.data[i].valore = results.data[i].nome.substr(0,1)+ results.data[i].nome.substr(1).toLowerCase();
+    }
+    $scope.rifiuti = results.data;
+    DataManager.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
+      var tdri = results.data;
       for (var i = 0; i < $scope.rifiuti.length; i++) {
         for (var j = 0; j < tdri.length; j++) {
           if ($scope.rifiuti[i].valore == tdri[j].valore) {

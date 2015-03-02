@@ -1,6 +1,6 @@
 angular.module('rifiuti.services.calendar', [])
 
-.factory('Calendar', function ($http, $rootScope, $q, $filter, Raccolta) {
+.factory('Calendar', function ($rootScope, $q, $filter, Raccolta) {
     var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
     var giorni = ["DOM", "LUN", "MAR", "MER", "GIO", "VEN", "SAB"];
     var giorniC = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
@@ -15,30 +15,30 @@ angular.module('rifiuti.services.calendar', [])
             return DOW[day];
     };
 
-    var appendToCalendarCell = function(cell, calItem) {
-      if (cell.colors.indexOf(calItem.colore) < 0) cell.colors.push(calItem.colore);
+    var appendToCalendarCell = function(cell, calItem, puntoDiRaccolta) {
+      if (cell.colors.indexOf(puntoDiRaccolta.colore) < 0) cell.colors.push(puntoDiRaccolta.colore);
       
       var key = null, t = null, descr = null;
       var proto = null;
-      if (calItem.tipologiaPuntiRaccolta.toLowerCase().indexOf('porta a porta') == 0) {
+      if (puntoDiRaccolta.tipologiaPuntiRaccolta.toLowerCase().indexOf('porta a porta') == 0) {
         key = 'Porta a porta'; t = key;
         proto = {
-          tipologiaPuntiRaccolta: calItem.tipologiaPuntiRaccolta,
-          colore: calItem.colore,
-          descr : [calItem.tipologiaPuntiRaccolta.substr(14)]
+          tipologiaPuntiRaccolta: puntoDiRaccolta.tipologiaPuntiRaccolta,
+          colore: puntoDiRaccolta.colore,
+          descr : [puntoDiRaccolta.tipologiaPuntiRaccolta.substr(14)]
         };
       } else  {
-        key = calItem.tipologiaPuntiRaccolta + calItem.indirizzo;
-        t = calItem.tipologiaPuntiRaccolta;
+        key = puntoDiRaccolta.tipologiaPuntiRaccolta + puntoDiRaccolta.indirizzo;
+        t = puntoDiRaccolta.tipologiaPuntiRaccolta;
         if (!!cell.events[key] && cell.events[key].events.length > 0) {
           proto = cell.events[key].events[0];
           proto.descr[proto.descr.length-1] += ', ' + calItem.dalle +'-'+calItem.alle;
           cell.events[key].events = [];
         } else {
           proto = {
-            tipologiaPuntiRaccolta: calItem.tipologiaPuntiRaccolta,
-            colore: calItem.colore,
-            descr : [calItem.dettaglioIndirizzo, calItem.dalle +'-'+calItem.alle]
+            tipologiaPuntiRaccolta: puntoDiRaccolta.tipologiaPuntiRaccolta,
+            colore: puntoDiRaccolta.colore,
+            descr : [puntoDiRaccolta.dettaglioIndirizzo, calItem.dalle +'-'+calItem.alle]
           };
         }
       }
@@ -99,23 +99,27 @@ angular.module('rifiuti.services.calendar', [])
               
               var d = data;
               for (var i = 0; i < d.length; i++) {
-                var calItem = d[i];
-                var calDa = new Date(Date.parse(calItem.dataDa));
-                var calA = new Date(Date.parse(calItem.dataA));
-                // restrict interval
-                if (calDa.getTime() < firstDate.getTime()) calDa = firstDate;
-                if (calA.getTime() > lastDate.getTime()) calA = lastDate;
-                if (calDa.getTime() <= calA.getTime()) {
-                  // which DOW the current item is
-                  var calDow = DOW[giorni[giorniC.indexOf(calItem.il)]];
-                  for (var w = 0; w < weeks.length; w++) {
-                    // find pos in week corresponding to the specified DOW
-                    var idx = w == 0 ? calDow - firstDay : calDow;
-                    if (idx >= 0) {
-                      var cell = weeks[w][idx];
-                      // if this is the date of the interval of interest
-                      if (cell != null && cell.date.getDate() >= calDa.getDate() && cell.date.getDate() <= calA.getDate()) {
-                        appendToCalendarCell(cell,calItem);
+                if (d[i].orarioApertura) {
+                  for (var j = 0; j < d[i].orarioApertura.length; j++) {
+                    calItem = d[i].orarioApertura[j];
+                    var calDa = new Date(Date.parse(calItem.dataDa));
+                    var calA = new Date(Date.parse(calItem.dataA));
+                    // restrict interval
+                    if (calDa.getTime() < firstDate.getTime()) calDa = firstDate;
+                    if (calA.getTime() > lastDate.getTime()) calA = lastDate;
+                    if (calDa.getTime() <= calA.getTime()) {
+                      // which DOW the current item is
+                      var calDow = DOW[giorni[giorniC.indexOf(calItem.il)]];
+                      for (var w = 0; w < weeks.length; w++) {
+                        // find pos in week corresponding to the specified DOW
+                        var idx = w == 0 ? calDow - firstDay : calDow;
+                        if (idx >= 0) {
+                          var cell = weeks[w][idx];
+                          // if this is the date of the interval of interest
+                          if (cell != null && cell.date.getDate() >= calDa.getDate() && cell.date.getDate() <= calA.getDate()) {
+                            appendToCalendarCell(cell,calItem,d[i]);
+                          }
+                        }
                       }
                     }
                   }

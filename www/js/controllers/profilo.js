@@ -2,7 +2,7 @@ angular.module('rifiuti.controllers.profilo', [])
 
 .controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
-.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $http, $stateParams, $ionicPopup, Profili, Raccolta) {
+.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, DataManager, $stateParams, $ionicPopup, Profili, Raccolta) {
   $scope.aree = [];
   $scope.profilo = {
     name: "",

@@ -1,6 +1,6 @@
 angular.module('rifiuti.services.profili', [])
 
-.factory('Profili', function ($http, $rootScope, Raccolta) {
+.factory('Profili', function (DataManager, $rootScope, Raccolta) {
     var update = function() {
       read();
       var profileIndex=-1;
@@ -11,9 +11,13 @@ angular.module('rifiuti.services.profili', [])
       } else {
         profileIndex=0;
       }
+      DataManager.updataProfiles($rootScope.profili);
       select(profileIndex);
     };
     var save = function() {
+      $rootScope.profili.forEach(function(p) {
+        aree(p);
+      });
       localStorage.profiles=JSON.stringify($rootScope.profili);
       update();
     };
@@ -73,9 +77,41 @@ angular.module('rifiuti.services.profili', [])
       localStorage.notes=JSON.stringify(notes);
     }
     
+    var treeWalkUp=function(tree,parentName,key,results) {
+      if (!parentName || parentName=="") return;
+      tree.forEach(function(node){
+        if (node[key]==parentName) {
+//        var utenzaOK = node.utenza[$rootScope.selectedProfile.utenza.tipologiaUtenza];
+//        if (utenzaOK) {
+          results.push(node[key]);
+//        }
+          treeWalkUp(tree,node.parent,key,results);
+        }
+      });
+    };
+
+    var aree = function(p) {
+      var myAree = [];
+      var myComuni = [];
+      var aree = DataManager.getSync('aree');
+      aree.forEach(function(area,ai,dbAree){
+            if (area.nome==p.area.nome) {
+              var utenzaOK = area.utenza[p.utenza.tipologiaUtenza];
+              if (utenzaOK) {
+                myAree.push(area.nome);
+                myComuni.push(area.comune);
+              }
+              treeWalkUp(dbAree,area.parent,'nome',myAree);
+              treeWalkUp(dbAree,area.parent,'comune',myComuni);
+            }
+      });
+      p.aree=myAree;
+      p.comuni=myComuni;
+    };
+    
     return {
         tipidiutenza: function() {
-          return $http.get('data/db/profili.json').then(function(results){
+          return DataManager.get('data/db/profili.json').then(function(results){
             return results.data;
           });
         },

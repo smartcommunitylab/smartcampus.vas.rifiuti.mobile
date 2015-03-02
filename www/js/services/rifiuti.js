@@ -1,52 +1,20 @@
 angular.module('rifiuti.services.rifiuti', [])
 
-.factory('Raccolta', function ($http, $rootScope, $q, $cordovaGeolocation, Utili) {
-  var treeWalkUp=function(tree,parentName,key,results) {
-    if (!parentName || parentName=="") return;
-    tree.forEach(function(node){
-      if (node[key]==parentName) {
-        var utenzaOK=true;
-        if (node.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
-        if (node.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
-        if (node.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
-        if (utenzaOK) {
-          results.push(node[key]);
-        }
-        treeWalkUp(tree,node.parent,key,results);
-      }
-    });
-  };
+.factory('Raccolta', function (DataManager, $rootScope, $q, $cordovaGeolocation, Utili) {
 
   return {
     aree: function() {
-      return $http.get('data/db/aree.json').then(function (results) {
-        var myAree=[],myComuni=[];
+      return DataManager.get('data/db/aree.json').then(function (results) {
         if ($rootScope.selectedProfile) {
-          results.data.forEach(function(area,ai,dbAree){
-            if (area.nome==$rootScope.selectedProfile.area.nome) {
-              var utenzaOK=true;
-              if (area.utenzaDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza domestica") utenzaOK=false;
-              if (area.utenzaNonDomestica=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza non domestica") utenzaOK=false;
-              if (area.utenzaOccasionale=="False" && $rootScope.selectedProfile.utenza.tipologiaUtenza=="utenza occasionale") utenzaOK=false;
-              if (utenzaOK) {
-                myAree.push(area.nome);
-//                if (area.comune!=$rootScope.selectedProfile.area.localita) myAree.push(area.comune);
-                myComuni.push(area.comune);
-              }
-              treeWalkUp(dbAree,area.parent,'nome',myAree);
-              treeWalkUp(dbAree,area.parent,'comune',myComuni);
-            }
-          });
-          $rootScope.selectedProfile.aree=myAree;
-          $rootScope.selectedProfile.comuni=myComuni;
+          return $rootScope.selectedProfile.aree;
         }
-        return myAree;
+        return [];
       });
     },
     puntiraccolta: function(options) {
       var ptdeferred = $q.defer();
       this.aree().then(function(myAree){
-        $http.get('data/db/puntiRaccolta_'+$rootScope.selectedProfile.utenza.tipologiaUtenza+'.json').then(function (results) {
+        DataManager.get('data/db/puntiRaccolta_'+$rootScope.selectedProfile.utenza.tipologiaUtenza+'.json').then(function (results) {
           var myPunti=[];
           var myPuntiDone=[];
           if ($rootScope.selectedProfile) {
@@ -57,12 +25,12 @@ angular.module('rifiuti.services.rifiuti', [])
               if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1)) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
                   var extcheckOK=true;
-                  if (punto.gettoniera!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;
-                  if (punto.imbCarta!="" && punto.imbCarta!="True" && punto.tipologiaPuntiRaccolta=="Carta, cartone e cartoni per bevande") extcheckOK=false;
-                  if (punto.imbPlMet!="" && punto.imbPlMet!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in plastica e metallo") extcheckOK=false;
-                  if (punto.imbVetro!="" && punto.imbVetro!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in vetro") extcheckOK=false;
-                  if (punto.organico!="" && punto.organico!="True" && punto.tipologiaPuntiRaccolta=="Organico") extcheckOK=false;
-                  if (punto.indumenti!="" && punto.indumenti!="True" && punto.tipologiaPuntiRaccolta=="Indumenti usati") extcheckOK=false;
+//                  if (punto.caratteristiche!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;
+//                  if (punto.imbCarta!="" && punto.imbCarta!="True" && punto.tipologiaPuntiRaccolta=="Carta, cartone e cartoni per bevande") extcheckOK=false;
+//                  if (punto.imbPlMet!="" && punto.imbPlMet!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in plastica e metallo") extcheckOK=false;
+//                  if (punto.imbVetro!="" && punto.imbVetro!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in vetro") extcheckOK=false;
+//                  if (punto.organico!="" && punto.organico!="True" && punto.tipologiaPuntiRaccolta=="Organico") extcheckOK=false;
+//                  if (punto.indumenti!="" && punto.indumenti!="True" && punto.tipologiaPuntiRaccolta=="Indumenti usati") extcheckOK=false;
                   if (extcheckOK) {
                     myPunti.push(punto);
                     if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
@@ -100,7 +68,7 @@ angular.module('rifiuti.services.rifiuti', [])
     raccolta: function(options) {
       var deferred = $q.defer();
       this.aree().then(function(myAree){
-        $http.get('data/db/raccolta.json').then(function (results) {
+        DataManager.get('data/db/raccolta.json').then(function (results) {
           var myRaccolta=[];
           if ($rootScope.selectedProfile) {
             results.data.forEach(function(regola,ri,dbRaccolta){
@@ -137,7 +105,7 @@ angular.module('rifiuti.services.rifiuti', [])
     rifiuti: function(options) {
       var deferred = $q.defer();
       this.aree().then(function(myAree){
-        $http.get('data/db/riciclabolario.json').then(function (results) {
+        DataManager.get('data/db/riciclabolario.json').then(function (results) {
           var myTipologie=[];
           var myRifiuti=[];
           if ($rootScope.selectedProfile) {
@@ -160,9 +128,9 @@ angular.module('rifiuti.services.rifiuti', [])
     },
     contatti: function() {
       var deferred = $q.defer();
-      $http.get('data/db/istituzioni.json').then(function (results) {
+      DataManager.get('data/db/istituzioni.json').then(function (results) {
         var data=results.data;
-        $http.get('data/db/gestori.json').then(function (gest) {
+        DataManager.get('data/db/gestori.json').then(function (gest) {
           data = data.concat(gest.data);
           deferred.resolve(data);    
         });
@@ -172,12 +140,20 @@ angular.module('rifiuti.services.rifiuti', [])
     puntiRaccoltaCalendar : function(utenza, aree) {
       var deferred = $q.defer();
       if (!aree) aree = [];
-      $http.get('data/db/puntiRaccoltaCalendar_'+utenza+'.json').then(function (results) {
+      DataManager.get('data/db/puntiRaccoltaCalendar_'+utenza+'.json').then(function (results) {
         var data = results.data;
         var filtered = [];
         for (var i = 0; i < data.length; i++) {
-          if (aree.indexOf(data[i].area)>=0 && aree.indexOf(data[i].r_area)>=0) {
-            filtered.push(data[i]);
+          if (aree.indexOf(data[i].area)>=0) {
+            var copy = null;
+            for(var j = 0; j < aree.length; j++) {
+              if (aree[j] in data[i].colore) {
+                copy = angular.copy(data[i]);
+                copy.colore = data[i].colore[aree[j]];
+                break;
+              }
+            }
+            if (copy != null) filtered.push(copy);
           }
         }
         deferred.resolve(filtered);
@@ -186,15 +162,13 @@ angular.module('rifiuti.services.rifiuti', [])
     },
     areeForTipoUtenza: function(profile) {
       var deferred = $q.defer();
-      $http.get('data/db/aree.json').then(function (results) {
+      DataManager.get('data/db/aree.json').then(function (results) {
         var data=results.data;
         var res = [];
         for (var i =0; i < data.length; i++) {
             var a = data[i];
             if (!!a.localita) {
-                if (profile==='utenza domestica' && a.utenzaDomestica==='True' ||
-                    profile==='utenza non domestica' && a.utenzaNonDomestica==='True' ||
-                    profile==='utenza occasionale' && a.utenzaOccasionale==='True') 
+              if (a.utenza[profile])
                 {
                     res.push(a);
                 }
@@ -209,7 +183,7 @@ angular.module('rifiuti.services.rifiuti', [])
     },
     tipiDiRaccolta: function(utenza, aree) {
       var deferred = $q.defer();
-      $http.get('data/db/raccolta.json').then(function (results) {
+      DataManager.get('data/db/raccolta.json').then(function (results) {
         var data=results.data;
         var res = {};
         for (var i =0; i < data.length; i++) {
@@ -230,7 +204,7 @@ angular.module('rifiuti.services.rifiuti', [])
       return deferred.promise;    
     },
     immagini: function() {
-      return $http.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
+      return DataManager.get('data/support/tipologiaRifiutoImmagini.json').then(function (results) {
         var imgs={};
         results.data.forEach(function(immagine,ii,dbImmagini){
           imgs[immagine.valore]=immagine.immagine;

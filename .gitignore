@@ -2,3 +2,5 @@
 /node_modules/
 /plugins/
 /_*
+android/www/templates/chat-detail.html
+android/www/lib/ionic/js/angular/angular.min.js
