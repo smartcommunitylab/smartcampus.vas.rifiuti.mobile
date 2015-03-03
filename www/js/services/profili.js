@@ -1,6 +1,83 @@
 angular.module('rifiuti.services.profili', [])
 
-.factory('Profili', function (DataManager, $rootScope, Raccolta) {
+.factory('Profili', function (DataManager, $rootScope, Raccolta, Calendar) {
+    var toMessage = function(typemap) {
+      var lines = [];
+      for (var t in typemap) {
+        lines.push(t);
+      }
+      if (lines.length == 1) {
+        return lines[0];
+      } else if (lines.length > 1) {
+        var msg = lines[0];
+        for (var i = 1; i < lines.length; i++) {
+          msg += ',' + lines[i].replace('Porta a porta', '');
+        }
+        return msg;
+      }
+      
+      return null;
+    };
+    var updateNotifications = function() {
+      if (window.plugin && window.plugin.notification) {
+//        window.plugin.notification.local.cancelAll();
+        $rootScope.profili.forEach(function(p) {
+          Raccolta.notificationCalendar(p.aree, p.utenza.tipologiaUtenza, p.id, p.area.comune).then(function(data){
+            // TODO: group by date?
+            if (data) {
+              var daymap = {};
+              // notifications for 1 month range
+              var dFrom = new Date();
+              var dTo = new Date(); dTo.setMonth(dTo.getMonth()+1);
+              
+              data.forEach(function(n) {
+                n.orarioApertura.forEach(function(cal) {
+                  // considered DOW
+                  var dow = Calendar.textToDOW(cal.il);
+                  // upper bound of notifications interval for this calendar
+                  var max = new Date(Date.parse(cal.dataA));
+                  if (max.getTime() > dTo.getTime()) max.setTime(dTo.getTime());
+                  // lower bound of notifications interval for this calendar
+                  var min = new Date(Date.parse(cal.dataDa));
+                  if (min.getTime() < dFrom.getTime()) min.setTime(dFrom.getTime());
+                  // running date
+                  var currFrom = new Date();
+                  currFrom.setDate(currFrom.getDate()-Calendar.dayToDOW(currFrom.getDay())+dow);
+                  while (currFrom.getTime() < max.getTime()) {
+                    // running date is ok?
+                    var targetDate = new Date(currFrom.getFullYear(),currFrom.getMonth(),currFrom.getDate()-1,15,0,0,0);
+                    if (targetDate.getTime() > dFrom.getTime()) {
+                      var dStr = currFrom.toLocaleString();
+                      if (!(dStr in daymap)) {
+                        daymap[dStr] = {
+                          id: n.id+'_'+dStr,
+                          title: 'Domani a '+n.comune,
+                          message: {},
+                          repeat:  null,
+                          date: targetDate,
+                          autoCancel: true
+                        };
+                      }
+                      daymap[dStr].message[n.tipologiaPuntiRaccolta] = 1;
+                    }
+                    // move to next week
+                    currFrom.setDate(currFrom.getDate()+7);
+                  }
+                });
+              });
+              for (var d in daymap) {
+                var n = daymap[d];
+                n.message = toMessage(n.message);
+                if (n.message) {
+                  window.plugin.notification.local.add(n);
+                }
+              }
+            }
+          });
+        });
+      }
+    };
+  
     var update = function() {
       read();
       var profileIndex=-1;
@@ -12,6 +89,7 @@ angular.module('rifiuti.services.profili', [])
         profileIndex=0;
       }
       DataManager.updataProfiles($rootScope.profili);
+      updateNotifications();
       select(profileIndex);
     };
     var save = function() {
@@ -110,6 +188,7 @@ angular.module('rifiuti.services.profili', [])
     };
     
     return {
+        updateNotifications: updateNotifications, 
         tipidiutenza: function() {
           return DataManager.get('data/db/profili.json').then(function(results){
             return results.data;

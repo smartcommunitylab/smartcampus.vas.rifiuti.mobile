@@ -23,6 +23,9 @@
     "org.apache.cordova.file",
     "org.apache.cordova.device",
     "org.apache.cordova.console",
-    "com.ionic.keyboard"
+    "com.ionic.keyboard",
+    "de.appplant.cordova.plugin.local-notification",
+    "org.apache.cordova.camera",
+    "de.appplant.cordova.plugin.email-composer"
   ]
 }

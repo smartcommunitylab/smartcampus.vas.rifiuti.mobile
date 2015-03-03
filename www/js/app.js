@@ -25,7 +25,7 @@ angular.module('rifiuti', [
 
 .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyBmKVWmFzh2JHT7q1MLmQRQ7jC4AhkRBDs',
+        key: API_KEY,
         v: '3.17',
         libraries: 'geometry'
     });
@@ -41,7 +41,6 @@ angular.module('rifiuti', [
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
   $rootScope.version = '2.0';
-    
   DataManager.setDataURL('data/data.zip');
 
   $rootScope.profili = [];
@@ -80,9 +79,11 @@ angular.module('rifiuti', [
         navigator.app.backHistory();
       }
     }, 100);
+    
+    Profili.updateNotifications();
   });
   
-  window.addEventListener('filePluginIsReady', function(){ console.log('File plugin is ready');}, false);
+  window.addEventListener('filePluginIsReady', function(){ console.log('device is ready');}, false);
 
   $rootScope.checkMap = function() {
     if (window.google != null && window.google.maps != null) {
