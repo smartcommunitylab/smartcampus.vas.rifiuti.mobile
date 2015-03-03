@@ -88,7 +88,7 @@ angular.module('rifiuti', [
     });
 
     window.addEventListener('filePluginIsReady', function () {
-        console.log('File plugin is ready');
+        console.log('device is ready');
     }, false);
 
     $rootScope.checkMap = function () {
