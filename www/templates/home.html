@@ -1,29 +1,29 @@
 <ion-view>
-  <ion-nav-buttons side="left">
-    <button id="menuId" ng-click="leftClick()" class=" row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
-      <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-      <div class="wrap-title">
-        <span class="main-title">{{titleText()}}</span>
-        <div class="sub-title">{{subTitleText()}}</div>
-      </div>
-    </button>
-    <!--<span ng-class="{'bar-title': !noteSelected}" style="vertical-align:top" class="bar-title">{{titleText()}}</span>
+    <ion-nav-buttons side="left">
+        <button id="menuId" ng-click="leftClick()" class=" row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
+            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <div class="wrap-title">
+                <span class="main-title">{{titleText()}}</span>
+                <div class="sub-title">{{subTitleText()}}</div>
+            </div>
+        </button>
+        <!--<span ng-class="{'bar-title': !noteSelected}" style="vertical-align:top" class="bar-title">{{titleText()}}</span>
     <div ng-class="{'title-subtext1': !noteSelected}" class= "title-subtext1">{{subTitleText()}}</div> -->
-  </ion-nav-buttons>
+    </ion-nav-buttons>
 
-  <ion-tabs class="tabs-balanced tabs-top home-tabs" delegate-handle="home-tabs">
+    <ion-tabs class="tabs-top tabs-balanced home-tabs" delegate-handle="home-tabs">
 
-    <ion-tab id="noteId" title="{{'NOTE' | translate}}" href="#/app/home/note">
-      <ion-nav-view name="note"></ion-nav-view>
-    </ion-tab>
+        <ion-tab id="noteId" title="{{'NOTE' | translate}}" href="#/app/home/note">
+            <ion-nav-view name="note"></ion-nav-view>
+        </ion-tab>
 
-    <ion-tab title="{{'DOVE LO BUTTO?'| translate}}" href="#/app/home/tipidirifiuti" delegate-handle="home-qwe">
-      <ion-nav-view name="tipidirifiuti"></ion-nav-view>
-    </ion-tab>
+        <ion-tab title="{{'DOVE LO BUTTO?'| translate}}" href="#/app/home/tipidirifiuti" delegate-handle="home-qwe">
+            <ion-nav-view name="tipidirifiuti"></ion-nav-view>
+        </ion-tab>
 
-    <ion-tab id="calendarioId" title="{{'CALENDARIO'|translate}}" href="#/app/home/calendario">
-      <ion-nav-view name="calendario"></ion-nav-view>
-    </ion-tab>
+        <ion-tab id="calendarioId" title="{{'CALENDARIO'|translate}}" href="#/app/home/calendario">
+            <ion-nav-view name="calendario"></ion-nav-view>
+        </ion-tab>
 
-  </ion-tabs>
+    </ion-tabs>
 </ion-view>
