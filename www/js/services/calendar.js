@@ -51,6 +51,12 @@ angular.module('rifiuti.services.calendar', [])
   
     return {
         dayIndex: dayIndex,
+        textToDOW: function(txt) {
+          return DOW[giorni[giorniC.indexOf(txt)]];
+        },
+        dayToDOW: function(day) {
+          return dayIndex(giorni[day]);
+        },
         dayArrayHorizon: function(y, m, d) {
             var currDate = (!y || !m || !d) ? new Date() : new Date(y,m,d,0,0,0,0);
             var TYear = currDate.getFullYear();

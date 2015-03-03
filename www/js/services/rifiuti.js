@@ -160,6 +160,26 @@ angular.module('rifiuti.services.rifiuti', [])
       });
       return deferred.promise;    
     },
+    notificationCalendar : function(aree, utenza, id, comune) {
+      var deferred = $q.defer();
+      if (!aree) aree = [];
+      DataManager.get('data/db/puntiRaccoltaCalendar_'+utenza+'.json').then(function (results) {
+        var data = results.data;
+        var filtered = [];
+        for (var i = 0; i < data.length; i++) {
+          if (aree.indexOf(data[i].area)>=0 && data[i].tipologiaPuntiRaccolta.toLowerCase().indexOf('porta a porta') == 0) {
+            filtered.push({
+              id: id,
+              comune: comune,
+              orarioApertura: data[i].orarioApertura,
+              tipologiaPuntiRaccolta: data[i].tipologiaPuntiRaccolta
+            });
+          }
+        }
+        deferred.resolve(filtered);
+      });
+      return deferred.promise;
+    },
     areeForTipoUtenza: function(profile) {
       var deferred = $q.defer();
       DataManager.get('data/db/aree.json').then(function (results) {

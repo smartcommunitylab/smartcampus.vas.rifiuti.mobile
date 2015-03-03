@@ -6,3 +6,6 @@ cordova plugin add org.apache.cordova.statusbar
 (project related)
 cordova plugin add org.apache.cordova.splashscreen
 cordova plugin add org.apache.cordova.inappbrowser
+cordova plugin add org.apache.cordova.camera
+cordova plugin add de.appplant.cordova.plugin.local-notification
+cordova plugin add de.appplant.cordova.plugin.email-composer

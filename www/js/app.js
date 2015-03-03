@@ -25,7 +25,7 @@ angular.module('rifiuti', [
 
 .config(function (uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyBmKVWmFzh2JHT7q1MLmQRQ7jC4AhkRBDs',
+        key: API_KEY,
         v: '3.17',
         libraries: 'geometry'
     });
@@ -45,6 +45,7 @@ angular.module('rifiuti', [
 }])
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
+<<<<<<< HEAD
     $rootScope.version = '2.0';
 
     DataManager.setDataURL('data/data.zip');
@@ -60,6 +61,91 @@ angular.module('rifiuti', [
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+=======
+  $rootScope.version = '2.0';
+  DataManager.setDataURL('data/data.zip');
+
+  $rootScope.profili = [];
+  $rootScope.selectedProfile = null;
+  $rootScope.back = function () {
+    $ionicNavBarDelegate.$getByHandle('navBar').back();
+  };
+
+  $ionicPlatform.ready(function () {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+
+    if (typeof navigator.globalization !== "undefined") {
+      navigator.globalization.getPreferredLanguage(function (language) {
+        $translate.use((language.value).split("-")[0]).then(function (data) {
+          console.log("SUCCESS -> " + data);
+        }, function (error) {
+          console.log("ERROR -> " + error);
+        });
+      }, null);
+    }
+
+    $ionicPlatform.registerBackButtonAction(function (event) {
+      console.log('going back in '+$state.current.name);
+      if($state.current.name=="app.home.tipidirifiuti"){
+        //console.log('going back in home...');
+        $rootScope.reallyexitapp();
+      } else {
+        navigator.app.backHistory();
+      }
+    }, 100);
+
+    Profili.updateNotifications();
+  });
+
+  window.addEventListener('filePluginIsReady', function(){ console.log('device is ready');}, false);
+
+  $rootScope.checkMap = function() {
+    if (window.google != null && window.google.maps != null) {
+      angular.module('rifiuti').requires.push('google-maps');
+    }
+  };
+
+  $rootScope.distance=function (pt1, pt2) {
+    var d = false;
+    if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
+      var lat1 = parseFloat(pt1[0]);
+      var lon1 = parseFloat(pt1[1]);
+      var lat2 = parseFloat(pt2[0]);
+      var lon2 = parseFloat(pt2[1]);
+
+      var R = 6371; // km
+      //var R = 3958.76; // miles
+      var deg2rad = Math.PI / 180;
+      var dLat = (lat2 - lat1) * deg2rad;  // deg2rad below
+      var dLon = (lon2 - lon1) * deg2rad;
+      var a = 0.5 - Math.cos(dLat)/2 + Math.cos(lat1 * deg2rad) * Math.cos(lat2 * deg2rad) * (1 - Math.cos(dLon))/2;
+      d = R * 2 * Math.asin(Math.sqrt(a));
+    } else {
+      console.log('cannot calculate distance!');
+    }
+    return d;
+  };
+
+  $rootScope.reallyexitapp=function(){
+    $ionicPopup.show({
+      title: $filter('translate')('Progetto'),
+      template: $filter('translate')('exitapp_template'),
+      buttons: [
+        { text: $filter('translate')('cancel') },
+        {
+          text: $filter('translate')('exitapp_ok'),
+          onTap: function (e) {
+            return true;
+          }
+>>>>>>> origin/master
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required

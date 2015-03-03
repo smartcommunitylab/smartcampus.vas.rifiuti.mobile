@@ -25,6 +25,9 @@
     "org.apache.cordova.console",
     "com.ionic.keyboard",
     "org.apache.cordova.statusbar",
-    "org.apache.cordova.splashscreen"
+    "org.apache.cordova.splashscreen",
+    "de.appplant.cordova.plugin.local-notification",
+    "org.apache.cordova.camera",
+    "de.appplant.cordova.plugin.email-composer"
   ]
 }

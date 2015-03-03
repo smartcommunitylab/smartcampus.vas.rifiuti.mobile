@@ -5,20 +5,15 @@
                 <span class="main-title">{{"Segnalazione"|translate}}</span>
                 <div class="sub-title">{{selectedProfile.name}}</div>
             </div>
-		<!--<span class="bar-title">Segnalazione</span>
-        <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
 	</button>
 </ion-nav-buttons>
-<ion-content ng-controller="ExampleController"  class="background-grey-light">
+<ion-content class="background-grey-light">
 	<div class="high-padding segnala-descrizione">
         {{"Invia"|translate}}
 	</div>
 	<div class="item item-input-inset no-border background-grey-light" style="margin-top:7px">
-		<input type="search" ng-init="text = ''" ng-model="text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light"  style="font-size:16px">
+		<input type="search" ng-model="msg.text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light"  style="font-size:16px">
 	</div>
-    <!--<div CLASS="high-padding"ng-click="posizioneG()">CLICK FOR GPS</div>-->
-    
-    
         <div class="row" ng-click="takePicture()" style="margin-top:10px">
             <button  style="background-image: url('img/ic_camera.png');background-size: 35px 35px; background-repeat: no-repeat; padding-right:25px;" class="button-clear"></button>
             <div class="col segnala-testo" style="margin-top:7px">{{"Scatta una foto"|translate}}</div>
@@ -34,18 +29,11 @@
             {{"Allega la tua posizione"|translate}}
 		</div>
 	</div>
-    
-        <!--
-        <img class="centre-displayed" ng-show="imgURI === undefined" ng-src="http://placehold.it/150x150">-->
-	
 </ion-content>
 
-<!--<ion-content ng-controller="ExampleController">
-                <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
-                <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
-                <button class="button" ng-click="takePicture()">Take Picture</button>
-
-</ion-content>-->
     <div class="bar bar-footer">
-        <button onclick="sendEmail()"  class="button button-balanced button-block background-green-dark segnala-button"><a style="text-decoration:none; color:white" href="mailto:segnalazioni.rifiuti@comunitadellegiudicarie.it?subject=segnalazione dalla app ''100% Riciclo''&body={{text}} {{GPScoords}}">{{"Segnala!"|translate }}</a></button>
+        <button class="button button-balanced button-block background-green-dark segnala-button"  ng-click="sendEmail()">
+          <a style="text-decoration:none; color:white">
+            {{"Segnala!"|translate }}
+          </a></button>
     </div>

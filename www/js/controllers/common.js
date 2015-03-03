@@ -1,30 +1,6 @@
 angular.module('rifiuti.controllers.common', [])
 
 
-.controller("ExampleController", function ($scope, $rootScope, $cordovaCamera) {
-
-  $scope.takePicture = function () {
-    var options = {
-      quality: 75,
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA,
-      allowEdit: true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 150,
-      targetHeight: 150,
-      popoverOptions: CameraPopoverOptions,
-      saveToPhotoAlbum: false
-    };
-
-    $cordovaCamera.getPicture(options).then(function (imageData) {
-      $rootScope.imgURI = "data:image/jpeg;base64," + imageData;
-    }, function (err) {
-      // An error occured. Show a message to the user
-    });
-  }
-
-})
-
 .controller('AppCtrl', function ($scope, $rootScope, $location, Profili) {
   $scope.showTutorial = function () {
     $rootScope.showTutorial = true;
@@ -44,13 +20,12 @@ angular.module('rifiuti.controllers.common', [])
 
 .controller('InfoCtrl', function ($scope) {})
 
-.controller('SegnalaCtrl', function ($scope, $rootScope) {
+.controller('SegnalaCtrl', function ($scope, $rootScope, $cordovaCamera) {
     
-      
-  $scope.GPScoords;
-  var GPScoordsTmp;
+  $scope.GPScoords = null;
+  var GPScoordsTmp = null;
     
-    var posizioneG = function () {
+  var posizioneG = function () {
     //navigator.geolocation.getCurrentPosition(success);
     //if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -61,12 +36,31 @@ angular.module('rifiuti.controllers.common', [])
     // } else {
     //  showError("Your browser does not support Geolocation!");
     // }
-  }
+  };
     
   $scope.checked = true;
   $scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
-
+  $scope.msg = {text:null};
     
+  $scope.takePicture = function () {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.FILE_URI,//Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: false,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 150,
+      targetHeight: 150,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+      $scope.imgURI = imageData;//"data:image/jpeg;base64," + imageData;
+    }, function (err) {
+      // An error occured. Show a message to the user
+    });
+  }
 
   $scope.toggleCheck = function () {
     //$scope.posizioneG();
@@ -75,31 +69,30 @@ angular.module('rifiuti.controllers.common', [])
       $scope.GPScoords = $scope.checked ?  GPScoordsTmp : "";
   };
 
+  $scope.sendEmail = function () {
+   var emailPlugin=null;
+    if (ionic.Platform.isWebView()) {
+      if (window.plugin.email) emailPlugin=window.plugin.email;
+      else if (cordova.plugins.email) emailPlugin=cordova.plugins.email;
+    }
+    if (emailPlugin) {
+      var body = $scope.msg.text ? ($scope.msg.text +' ') : '';
+      body += $scope.GPScoords ? $scope.GPScoords : '';
+      window.plugin.email.open({
+        to: [SEGNALA_EMAIL],
+        subject: "segnalazione dalla app '100% Riciclo'", // subject of the email
+        body: [body],
+        isHtml: false,
+        attachments: $scope.imgURI
+//        attachment: $scope.imgURI ? "base64:icon.png//" + $scope.imgURI.substring(26) : null
+      });
+    } else {
+      //console.log('using "mailto:" schema in location...');
+      window.open("mailto:" + SEGNALA_EMAIL,"_system");
+    }
+  };
 
-
-  function opzInCasoDiErrore(error) {
-    alert("Errore " + error.code + ": " + error.message);
-  }
-
-  $rootScope.text;
-
-
- console.log('$scope.text: '+$rootScope.text);
-  console.log('$rootScope.imgURI: '+$rootScope.imgURI);
- sendEmail = function () {
-    // $scope.posizioneG();    
-    cordova.plugins.email.open({
-      to: "sampleemail", // email addresses for TO field
-      subject: "sample subj", // subject of the email
-      body: [$scope.GPScoords +" scope text: " + $rootScope.text + " sample body"], // email body (for HTML, set isHtml to true)
-      isHtml: false, // indicats if the body is HTML or plain text
-      attachment: "base64:icon.png//" + $rootScope.imgURI.substring(26),
-    }, function(){
-      console.log('email view dismissed');
-    }, this);
-  }
-
- posizioneG();
+  posizioneG();
 
 })
 
