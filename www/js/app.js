@@ -108,6 +108,10 @@ angular.module('rifiuti', [
         }
     };
 
+    $rootScope.clickLink = function(link) {
+      window.open(link,"_system");
+    };
+  
     $rootScope.distance = function (pt1, pt2) {
         var d = false;
         if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {

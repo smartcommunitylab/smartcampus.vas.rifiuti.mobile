@@ -12,16 +12,16 @@
         <p style="padding-left:30px; padding-right:30px"><strong>{{'Progetto_DESC'|translate}}</strong></p>
         <p style="color:#cecece;margin-top:10px;">{{version}}</strong></p>
         <p style="color:#63ac3d; font-size:16px;margin-top:20px;">{{'Progetto_di'|translate}}</p>
-        <a href="http://www.smartcampuslab.it"> <img src="img/smart_campus_credits.png" width="140" height="42"> </a>
-        <a href="http://www.ladurnerambiente.it"><img src="img/ladurnerenergy.png" width="140" height="42"></a>
+        <a ng-click="clickLink('http://www.smartcampuslab.it')" > <img src="img/smart_campus_credits.png" width="140" height="42"> </a>
+        <a ng-click="clickLink('http://www.ladurnerambiente.it')"><img src="img/ladurnerenergy.png" width="140" height="42"></a>
         </br>
-        <a href="http://www.fbk.eu"><img style="margin-top:10px;" src="img/fbk_credits.png" width="140" height="39"></a>
+        <a ng-click="clickLink('http://www.fbk.eu')"><img style="margin-top:10px;" src="img/fbk_credits.png" width="140" height="39"></a>
         <p style="color:#63ac3d; margin-top:40px; font-size:16px">{{"Collaborazione"|translate}}</p>
-        <a href="http://www.comunitrentini.it"><img src="img/autonomie_locali.png" width="140" height="55"></a>
+        <a ng-click="clickLink('http://www.comunitrentini.it')"><img src="img/autonomie_locali.png" width="140" height="55"></a>
         <!--<div class="list item-input-inset text-left">
         </div>-->
             <p style="color:#63ac3d; margin-top:40px; font-size:16px">{{"Eventuali"|translate}}<br>
-                <a style="text-decoration:underline; color:black; font-size:18px;">riciclo@smartcampuslab.it</a>
+                <a style="text-decoration:underline; color:black; font-size:18px;" ng-click="clickLink('mailto:riciclo@smartcampuslab.it')">riciclo@smartcampuslab.it</a>
             </p>
             
     </ion-content>

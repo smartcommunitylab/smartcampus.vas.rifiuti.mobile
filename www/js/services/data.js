@@ -74,13 +74,13 @@ angular.module('rifiuti.services.data', [])
       profili.forEach(function(p) {
         completeData['puntiRaccolta_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
           //$rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1)
-          if (p.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || !pr.indirizzio || p.comuni.indexOf(pr.indirizzo)!=-1) && profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1) {
+          if (p.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || !pr.indirizzo || p.comuni.indexOf(pr.indirizzo)!=-1) && profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1) {
             profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].push(pr);
           }
         });
         if (completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza]) {
           completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
-            if (p.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || !pr.indirizzio || p.comuni.indexOf(pr.indirizzo)!=-1) && 
+            if (p.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || !pr.indirizzo || p.comuni.indexOf(pr.indirizzo)!=-1) && 
                 profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1)
             {
               profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].push(pr);
