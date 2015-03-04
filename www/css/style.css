@@ -436,6 +436,7 @@
 
 .pdr-dettaglio {
     text-decoration: bold;
+    white-space: nowrap;
 }
 
 .pdr-specifica {

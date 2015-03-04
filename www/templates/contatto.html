@@ -14,7 +14,7 @@
                 {{contatto.descrizione}}
             </div>
         </div>
-        <a class="hidden-link" ng-click="clickLink('http://maps.google.com/maps?daddr='+contatto.coords)"  ng-if="!!contatto.indirizzo">
+        <a class="hidden-link" ng-click="clickLink('http://maps.google.com?daddr='+contatto.coords)"  ng-if="!!contatto.indirizzo">
             <div class="row bottom-border high-padding">
                 <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
                     <img src="img/ic_directions.png" class="standard-size absolute-center">
