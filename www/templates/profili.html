@@ -15,7 +15,7 @@
 	</a>
 </ion-nav-buttons>
 <ion-content class="background-grey-light" has-bouncing="false">
-	<div class="row background-grey-light profili-profilo" ng-repeat="profilo in profili">
+	<div class="row background-grey-light profili-profilo" ng-repeat="profilo in profili track by $index">
 		<div class="col background-white">
 			<a class="hidden-link" ng-href="#app/modificaProfilo/{{profilo.id}}">
 				<div>
