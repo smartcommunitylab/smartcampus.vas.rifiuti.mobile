@@ -77,11 +77,22 @@ angular.module('rifiuti', [
         }
 
         $ionicPlatform.registerBackButtonAction(function (event) {
-            console.log('going back in ' + $state.current.name);
-            if ($state.current.name == "app.home.tipidirifiuti") {
-                //console.log('going back in home...');
+//            console.log('going back in ' + $state.current.name);
+            switch($state.current.name){
+              case "app.home.tipidirifiuti":
+//              case "app.home":
+//              case "app.home.note":
+//              case "app.home.calendario":
+//              case "app.puntiDiRaccolta":
+//              case "app.tipiDiRaccolta":
+//              case "app.rifiuti":
+//              case "app.profili":
+//              case "app.segnala":
+//              case "app.contatti":
+//              case "app.info":
                 $rootScope.reallyexitapp();
-            } else {
+                break;
+              default:
                 navigator.app.backHistory();
             }
         }, 100);
