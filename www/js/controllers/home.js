@@ -33,7 +33,7 @@ angular.module('rifiuti.controllers.home', [])
     
   $scope.titleText = function () {
     if (!$rootScope.noteSelected) {
-      return '100% Riciclo';
+      return APP_NAME;
     } else {
       return '';
     }

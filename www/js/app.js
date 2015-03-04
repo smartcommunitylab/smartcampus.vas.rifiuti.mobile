@@ -164,7 +164,7 @@ angular.module('rifiuti', [
 
         'ad esempio': "Ad esempio:",
         Invia: "Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
-        Progetto: '"100% Riciclo"',
+        Progetto: '"'+APP_NAME+'"',
         Progetto_DESC: 'Tutto quesllo che devi sapere sulla raccolta differenziata nel tuo Comune',
         Progetto_di: 'Un progetto di:',
         Collaborazione: "In collaborazione con:",
@@ -299,7 +299,7 @@ angular.module('rifiuti', [
       Segnalazione: "Report",
 
 
-      Progetto: '"100% Riciclo" is a project by:',
+      Progetto: '"'+APP_NAME+'"' is a project by:',
       Collaborazione: "with the collaboration of:",
       Eventuali: "For informations:",
       Informazioni: "Informations",

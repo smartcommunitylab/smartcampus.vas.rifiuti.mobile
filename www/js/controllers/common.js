@@ -80,7 +80,7 @@ angular.module('rifiuti.controllers.common', [])
       body += $scope.GPScoords ? $scope.GPScoords : '';
       window.plugin.email.open({
         to: [SEGNALA_EMAIL],
-        subject: "segnalazione dalla app '100% Riciclo'", // subject of the email
+        subject: "segnalazione dalla app '"+APP_NAME+"'", // subject of the email
         body: [body],
         isHtml: false,
         attachments: $scope.imgURI
