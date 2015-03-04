@@ -168,20 +168,27 @@
     height: 30px;
     line-height: 30px;
     background-color: #47772b;
-    color: lightgray;
     border-color: #47772b;
 }
 
-.home-tabs .tabs .tab-item {
+.home-tabs .tab-item {
     font-size: 12px;
-}
-
-.home-tabs .tabs .tab-item-active {
-    color: white;
 }
 
 .home-tabs .has-tabs-top {
     top: 74px;
+}
+
+.tabs-striped .tab-item {
+    color: white !important;
+}
+
+.home-tabs.tabs-striped .tab-item-active {
+    border-color: transparent !important;
+}
+
+.home-tabs.tabs-striped .tab-item + .tab-item:before {
+    border-left: 0;
 }
 
 .home-search-bar {

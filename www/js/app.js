@@ -5,22 +5,22 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('rifiuti', [
- 'ionic',
- 'ngCordova',
- 'rifiuti.filters',
- 'rifiuti.services.data',
- 'rifiuti.services.profili',
- 'rifiuti.services.rifiuti',
- 'rifiuti.services.utili',
+    'ionic',
+    'ngCordova',
+    'rifiuti.filters',
+    'rifiuti.services.data',
+    'rifiuti.services.profili',
+    'rifiuti.services.rifiuti',
+    'rifiuti.services.utili',
     'rifiuti.services.calendar',
- 'rifiuti.controllers.common',
- 'rifiuti.controllers.home',
- 'rifiuti.controllers.raccolta',
- 'rifiuti.controllers.profilo',
- 'pascalprecht.translate',
+    'rifiuti.controllers.common',
+    'rifiuti.controllers.home',
+    'rifiuti.controllers.raccolta',
+    'rifiuti.controllers.profilo',
+    'pascalprecht.translate',
     'uiGmapgoogle-maps',
-  //'google-maps',
-  'angular.filter'
+    //'google-maps',
+    'angular.filter'
 ])
 
 .config(function (uiGmapGoogleMapApiProvider) {
@@ -39,10 +39,10 @@ angular.module('rifiuti', [
 //  });
 //}])
 
-.config(['$ionicTabsConfig', function ($ionicTabsConfig) {
+//.config(['$ionicTabsConfig', function ($ionicTabsConfig) {
     // Override the Android platform default to add "tabs-striped" class to "ion-tabs" elements.
-    $ionicTabsConfig.type = '';
-}])
+    //$ionicTabsConfig.type = '';
+//}])
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
     $rootScope.version = '2.0';
