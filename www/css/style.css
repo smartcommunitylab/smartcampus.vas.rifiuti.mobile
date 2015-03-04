@@ -8,28 +8,6 @@
     height: 800px;
 }
 
-.bar-title {
-    margin-left: 10px;
-    padding-left: 35px;
-    padding-bottom: 5px;
-    background-image: url("../img/ic_launcher.png");
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-}
-/*.bar-title {
-    display: block;
-    width: 140px;
-    position: absolute;
-    top: 0px;
-    margin-left: 10px;
-    padding-left: 35px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-image: url("../img/ic_launcher.png");
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-}*/
-
 .bar-back {
     padding-left: 35px;
     padding-bottom: 10px;
@@ -190,7 +168,6 @@
 .tabs-striped .tab-item {
     color: white !important;
 }
-
 /*
 .home-tabs.tabs-striped .tab-item-active,
 .home-tabs.tabs-striped .tab-item.active,
