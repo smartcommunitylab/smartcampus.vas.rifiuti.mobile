@@ -164,6 +164,14 @@
     visibility: hidden;
 }
 
+.tab-item {
+    opacity: 0.4;
+}
+
+.tab-item-active {
+    opacity: 1;
+}
+
 .home-tabs .tabs {
     height: 30px;
     line-height: 30px;
@@ -183,6 +191,7 @@
     color: white !important;
 }
 
+/*
 .home-tabs.tabs-striped .tab-item-active,
 .home-tabs.tabs-striped .tab-item.active,
 .home-tabs.tabs-striped .tab-item.activated {
@@ -192,6 +201,7 @@
 .home-tabs.tabs-striped .tab-item + .tab-item:before {
     border-left: 0;
 }
+*/
 
 .home-search-bar {
     margin-top: 10px;

@@ -39,10 +39,10 @@ angular.module('rifiuti', [
 //  });
 //}])
 
-//.config(['$ionicTabsConfig', function ($ionicTabsConfig) {
+.config(['$ionicTabsConfig', function ($ionicTabsConfig) {
     // Override the Android platform default to add "tabs-striped" class to "ion-tabs" elements.
-    //$ionicTabsConfig.type = '';
-//}])
+    $ionicTabsConfig.type = '';
+}])
 
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
     $rootScope.version = '2.0';
