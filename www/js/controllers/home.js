@@ -129,10 +129,15 @@ angular.module('rifiuti.controllers.home', [])
       $scope.notes = Profili.addNote(nota);
   };
   $scope.removeNotes = function (idx) {
-      $scope.notes = Profili.deleteNotes(idx);
-      $scope.selectedNotes = [];
-      $scope.multipleNoteSelected = false;
-      $rootScope.noteSelected = false;
+       $ionicPopup.show(popupDelete()).then(function (res) {
+        if (res) {
+          $scope.notes = Profili.deleteNotes(idx);
+          $scope.selectedNotes = [];
+          $scope.multipleNoteSelected = false;
+          $rootScope.noteSelected = false;
+          updateIMG();
+        }
+       });
   };
   $scope.noteSelect = function (idx) {
     var p = $scope.selectedNotes.indexOf(idx);
@@ -149,12 +154,25 @@ angular.module('rifiuti.controllers.home', [])
     }
     updateIMG();
   };
-  $scope.click = function () {
-    if ($rootScope.noteSelected) {
-        $scope.removeNotes($scope.selectedNotes);
-    } else {
-      $scope.data = {};
-      $ionicPopup.show({
+  
+  var popupDelete = function() {
+    return {
+        template: "Confermi l'eleminazione della nota?",
+        title: 'Avviso',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Conferma',
+            onTap: function (e) {
+              return true;
+            }
+          }
+        ]
+      }
+  };
+  var popupCreate = function() {
+    return {
         template: '<input type="text" ng-model="data.nota">',
         title: 'Cosa vuoi ricordare?',
         scope: $scope,
@@ -171,7 +189,15 @@ angular.module('rifiuti.controllers.home', [])
             }
           }
         ]
-      }).then(function (res) {
+      }
+  };
+  
+  $scope.click = function () {
+    if ($rootScope.noteSelected) {
+        $scope.removeNotes($scope.selectedNotes);
+    } else {
+      $scope.data = {};
+      $ionicPopup.show(popupCreate()).then(function (res) {
         if (res != null && res != undefined) {
           $scope.addNote(res);
         }
@@ -181,25 +207,7 @@ angular.module('rifiuti.controllers.home', [])
   $scope.edit = function () {
     $scope.data = { 'nota': $scope.notes[$scope.selectedNotes[0]], idx: $scope.selectedNotes[0]};
 
-    var popup = $ionicPopup.show({
-      template: '<input type="text" ng-model="data.nota">',
-      title: 'Cosa vuoi ricordare?',
-      scope: $scope,
-      buttons: [
-        { text: 'Cancel' },
-        {
-          text: '<b>Save</b>',
-          type: 'button-positive',
-          onTap: function (e) {
-            if (!$scope.data.nota) {
-              return null;
-            } else {
-              return $scope.data.nota;
-            }
-          }
-        }
-      ]
-    }).then(function (res) {
+    var popup = $ionicPopup.show(popupCreate()).then(function (res) {
       if (res != null && res != undefined) {
           $scope.notes = Profili.updateNote($scope.data.idx, res);
           $scope.selectedNotes = [];

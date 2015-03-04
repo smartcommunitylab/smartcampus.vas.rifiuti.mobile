@@ -1,11 +1,12 @@
 <ion-nav-buttons side="right">
-  <button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-show="noteSelected && !multipleNoteSelected">
+  <span style="white-space:nowrap;">
+  <button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment" ng-if="noteSelected && !multipleNoteSelected">
     <img ng-src="img/ic_edit.png" class="standard-size" />
   </button>
   <button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
     <img ng-src="{{variableIMG}}" class="standard-size" />
   </button>
-  <!--ng-class="{'ion-plus': !noteSelected, 'ion-trash-b': noteSelected}"-->
+  </span>  
 </ion-nav-buttons>
 <ion-content ng-class="{'background-note-noimg':notes[0]!=null, 'background-note': notes[0]==null}" class="home-tabs-content" has-bouncing="false">
           <div class="position-relative" style="margin-top:{{(height-74)*0.5-130}}px;" class="note-text" ng-if="notes[0]==null">
