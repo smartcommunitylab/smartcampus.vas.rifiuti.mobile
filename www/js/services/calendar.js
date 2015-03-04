@@ -1,6 +1,6 @@
 angular.module('rifiuti.services.calendar', [])
 
-.factory('Calendar', function ($rootScope, $q, $filter, Raccolta) {
+.factory('Calendar', function ($rootScope, $q, $filter, Raccolta, Utili) {
     var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
     var giorni = ["DOM", "LUN", "MAR", "MER", "GIO", "VEN", "SAB"];
     var giorniC = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
@@ -20,7 +20,7 @@ angular.module('rifiuti.services.calendar', [])
       
       var key = null, t = null, descr = null;
       var proto = null;
-      if (puntoDiRaccolta.tipologiaPuntiRaccolta.toLowerCase().indexOf('porta a porta') == 0) {
+      if (Utili.isPaP(puntoDiRaccolta.tipologiaPuntiRaccolta)) {
         key = 'Porta a porta'; t = key;
         proto = {
           tipologiaPuntiRaccolta: puntoDiRaccolta.tipologiaPuntiRaccolta,

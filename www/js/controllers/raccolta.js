@@ -47,7 +47,7 @@ angular.module('rifiuti.controllers.raccolta', [])
   
 })
   
-.controller('PDRCtrl', function ($scope, $rootScope, $timeout, Raccolta, $location, $stateParams) {
+.controller('PDRCtrl', function ($scope, $rootScope, $timeout, Raccolta, $location, $stateParams, Utili) {
 
   $scope.profile = null;
   
@@ -56,18 +56,6 @@ angular.module('rifiuti.controllers.raccolta', [])
   $scope.updateIMG = function () {
     $scope.variableIMG = $scope.mapView ? "img/ic_list.png" : "img/ic_map.png";
   };
-
-//TODO: come mai in questa funzione il controllo sui CRM è diverso dalle isole ecologiche?
-/*
-  $scope.containsIndirizzo = function (array, item) {
-    for (var k = 0; k < array.length; k++) {
-      if ((array[k].id == item.dettaglioIndirizzo && item.tipologiaPuntiRaccolta == 'CRM') || (array[k].id == item.indirizzo && item.tipologiaPuntiRaccolta != 'CRM')) {
-        return false;
-      }
-    }
-    return true;
-  };
-*/
 
   $scope.openMarkerClick = function ($markerModel) {
     $location.url('/app/puntoDiRaccolta/' + $markerModel.model.id);
@@ -134,7 +122,7 @@ angular.module('rifiuti.controllers.raccolta', [])
     list.push({
       aperto: false,
       tipologiaPuntoRaccolta: item.tipologiaPuntiRaccolta,
-      icon: item.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_crm_grey.png' : 'img/ic_isola_eco_grey.png',
+      icon: Utili.icon(item.tipologiaPuntiRaccolta),
       locs: [item]
     });
   };
@@ -152,7 +140,7 @@ angular.module('rifiuti.controllers.raccolta', [])
       punti.forEach(function(punto){
         if ($scope.id == null || punto.dettaglioIndirizzo == $scope.id) {
           var icon = {
-            url: punto.tipologiaPuntiRaccolta == 'CRM' ? 'img/ic_poi_crm.png' : 'img/ic_poi_isolaeco.png',
+            url: Utili.poiIcon(punto.tipologiaPuntiRaccolta),
             scaledSize: new google.maps.Size(45, 45)
           };
           points.push({
@@ -269,7 +257,6 @@ angular.module('rifiuti.controllers.raccolta', [])
 .controller('PuntoDiRaccoltaCtrl', function ($scope, $stateParams, $ionicNavBarDelegate, Raccolta) {
 
   $scope.id = !!$stateParams.id && $stateParams.id != 'undefined' && $stateParams.id != 'null'? $stateParams.id : null;
-  $scope.isCRM = false;
   $scope.pdr = {};
   $scope.orari = [];
   //[{giorno:"lunedì",orari:["12.00-14.00","15.30-17.30"...]}...]
@@ -280,13 +267,6 @@ angular.module('rifiuti.controllers.raccolta', [])
     }
     return -1;
   };
-  $scope.indirizzoIfIsCRM = function () {
-    if ($scope.isCRM) {
-      return $scope.pdr.indirizzo;
-    } else {
-      return 'Area Giudicarie';
-    }
-  };
   
   $scope.clickNav = function() {
     if ($scope.pdr.localizzazione) window.open("http://maps.google.com?daddr="+$scope.pdr.localizzazione,"_system");
@@ -295,9 +275,6 @@ angular.module('rifiuti.controllers.raccolta', [])
   
   Raccolta.puntiraccolta({ indirizzo:$scope.id, all:true }).then(function(punti){
     $scope.pdr = punti[0];
-    if ($scope.pdr.tipologiaPuntiRaccolta == 'CRM') {
-      $scope.isCRM = true;
-    }
     punti.forEach(function(punto){
       punto.orarioApertura.forEach(function(orario) {
       var j = $scope.checkGiorni(orario.il);

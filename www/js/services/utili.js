@@ -2,6 +2,33 @@ angular.module('rifiuti.services.utili', [])
 
 
 .factory('Utili', function () {
+  var iconType = function(tipologia) {
+      var icona;
+      switch (tipologia) {
+        case 'Isola ecologica':
+          icona = 'isola_eco';
+          break;
+        case 'CRM':
+          icona = 'crm';
+          break;
+        case 'CRZ':
+          icona = 'crz';
+          break;
+        case 'Farmacia':
+          icona = 'farmacia';
+          break;
+        case 'Rivenditore':
+          icona = 'rivenditore';
+          break;
+        default:
+          if (tipologia.indexOf('Porta a porta')==0) {
+            icona = 'porta_a_porta';
+          }
+          break;
+      }
+      return icona;
+  }; 
+  
   return {
     getRGBColor: function(colore) {
       switch (colore) {
@@ -30,27 +57,18 @@ angular.module('rifiuti.services.utili', [])
       return this.icon(regola.tipologiaPuntoRaccolta, regola.colore);
     },
     icon: function(tipologia, colore) {
-      var icona;
-      switch (tipologia) {
-        case 'Isola ecologica':
-          icona = 'isola_eco';
-          break;
-        case 'CRM':
-          icona = 'crm';
-          break;
-        case 'Farmacia':
-          icona = 'farmacia';
-          break;
-        case 'Rivenditore':
-          icona = 'rivenditore';
-          break;
-        default:
-          if (tipologia.indexOf('Porta a porta')==0) {
-            icona = 'porta_a_porta';
-          }
-          break;
-      }
+      var icona = iconType(tipologia);
       return (!!icona?'img/ic_'+icona+'_'+this.getRGBColor(colore)+'.png':null);
+    },
+    poiIcon: function(tipologia, colore) {
+      var icona = iconType(tipologia);
+      return (!!icona?'img/ic_poi_'+icona+'.png':null);
+    },
+    belongsTo: function(pr, profile) {
+      return profile.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || pr.tipologiaPuntiRaccolta=='CRZ' || !pr.indirizzo || profile.comuni.indexOf(pr.indirizzo)!=-1);
+    },
+    isPaP: function(tipologia) {
+      return !!tipologia && tipologia.toLowerCase().indexOf('porta a porta') == 0;
     }
   }
 })

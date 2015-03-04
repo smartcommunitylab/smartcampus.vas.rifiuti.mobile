@@ -22,19 +22,19 @@ angular.module('rifiuti.services.rifiuti', [])
               var optionsOK=true;
               if (options && options.indirizzo && punto.dettaglioIndirizzo!=options.indirizzo) optionsOK=false;
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
-              if (optionsOK && $rootScope.selectedProfile.aree.indexOf(punto.area)!=-1 && (punto.tipologiaPuntiRaccolta=='CRM' || $rootScope.selectedProfile.comuni.indexOf(punto.indirizzo)!=-1)) {
+              if (optionsOK && punto.indirizzo && Utili.belongsTo(punto, $rootScope.selectedProfile)) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
-                  var extcheckOK=true;
+//                  var extcheckOK=true;
 //                  if (punto.caratteristiche!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;
 //                  if (punto.imbCarta!="" && punto.imbCarta!="True" && punto.tipologiaPuntiRaccolta=="Carta, cartone e cartoni per bevande") extcheckOK=false;
 //                  if (punto.imbPlMet!="" && punto.imbPlMet!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in plastica e metallo") extcheckOK=false;
 //                  if (punto.imbVetro!="" && punto.imbVetro!="True" && punto.tipologiaPuntiRaccolta=="Imballaggi in vetro") extcheckOK=false;
 //                  if (punto.organico!="" && punto.organico!="True" && punto.tipologiaPuntiRaccolta=="Organico") extcheckOK=false;
 //                  if (punto.indumenti!="" && punto.indumenti!="True" && punto.tipologiaPuntiRaccolta=="Indumenti usati") extcheckOK=false;
-                  if (extcheckOK) {
+//                  if (extcheckOK) {
                     myPunti.push(punto);
                     if (!options || !options.all) myPuntiDone.push(punto.dettaglioIndirizzo);
-                  }
+//                  }
                 //} else { console.log('already: '+punto.dettaglioIndirizzo); 
                 }
               }
@@ -167,7 +167,7 @@ angular.module('rifiuti.services.rifiuti', [])
         var data = results.data;
         var filtered = [];
         for (var i = 0; i < data.length; i++) {
-          if (aree.indexOf(data[i].area)>=0 && data[i].tipologiaPuntiRaccolta.toLowerCase().indexOf('porta a porta') == 0) {
+          if (aree.indexOf(data[i].area)>=0 && Utili.isPaP(data[i].tipologiaPuntiRaccolta)) {
             filtered.push({
               id: id,
               comune: comune,
