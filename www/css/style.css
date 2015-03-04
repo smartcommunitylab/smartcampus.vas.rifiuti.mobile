@@ -183,7 +183,9 @@
     color: white !important;
 }
 
-.home-tabs.tabs-striped .tab-item-active {
+.home-tabs.tabs-striped .tab-item-active,
+.home-tabs.tabs-striped .tab-item.active,
+.home-tabs.tabs-striped .tab-item.activated {
     border-color: transparent !important;
 }
 
