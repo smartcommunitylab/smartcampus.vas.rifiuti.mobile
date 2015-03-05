@@ -1,11 +1,14 @@
 <ion-view>
+    <ion-nav-title>
+        <div class="nav-title">
+            <div class="nav-title-main">{{"Profili"|translate}}</div>
+            <div class="nav-title-sub">{{selectedProfile.name}}</div>
+        </div>
+    </ion-nav-title>
+
     <ion-nav-buttons side="left">
-        <button ng-click="back()" class="row button button-clear button-light ion-ios7-arrow-back">
+        <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
             <img class="img-menu" src="img/ic_launcher.png">
-            <div class="wrap-title" style="margin-left:36px">
-                <span class="main-title">{{"Profili"|translate}}</span>
-                <span class="sub-title">{{selectedProfile.name}}</span>
-            </div>
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">

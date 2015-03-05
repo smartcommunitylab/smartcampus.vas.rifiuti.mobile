@@ -1,11 +1,18 @@
-<ion-view>
+<ion-view view-title="CIAO">
+    <ion-nav-title>
+        <!--<div class="wrap-title">
+            <span class="main-title">{{"Tipo di rifiuto"|translate}}</span>
+            <span class="sub-title">{{tipo|translate}}</span>
+        </div>-->
+        <div class="nav-title">
+            <div class="nav-title-main">{{"Tipo di rifiuto"|translate}}</div>
+            <div class="nav-title-sub">{{tipo|translate}}</div>
+        </div>
+    </ion-nav-title>
+
     <ion-nav-buttons side="left">
         <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
             <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div class="wrap-title">
-                <span class="main-title">{{"Tipo di rifiuto"|translate}}</span>
-                <span class="sub-title">{{tipo|translate}}</span>
-            </div>
         </button>
     </ion-nav-buttons>
 

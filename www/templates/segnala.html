@@ -1,11 +1,14 @@
 <ion-view>
+    <ion-nav-title>
+        <div class="nav-title">
+            <div class="nav-title-main">{{"Segnalazione"|translate}}</div>
+            <div class="nav-title-sub">{{selectedProfile.name}}</div>
+        </div>
+    </ion-nav-title>
+
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
             <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div class="wrap-title">
-                <span class="main-title">{{"Segnalazione"|translate}}</span>
-                <div class="sub-title">{{selectedProfile.name}}</div>
-            </div>
         </button>
     </ion-nav-buttons>
 

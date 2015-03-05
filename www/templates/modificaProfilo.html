@@ -1,7 +1,13 @@
 <ion-view>
+    <ion-nav-title>
+        <div class="nav-title">
+            <div class="nav-title-single">{{"Profili"|translate}}</div>
+        </div>
+    </ion-nav-title>
+
     <ion-nav-buttons side="left">
-        <button ng-click="back()" class="button button-clear button-light ion-ios7-arrow-back">
-            <span class="bar-back-center">{{"Profili"|translate}}</span>
+        <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
+            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">

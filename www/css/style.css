@@ -539,20 +539,20 @@
 
 .wrap-title {}
 
+.main-title-center {
+    display: block;
+    position: absolute;
+    padding-left: 3px;
+    width: 180px;
+    text-align: left
+}
+
 .main-title {
     display: block;
     position: absolute;
     padding-left: 3px;
     top: -5px;
     width: 280px;
-    text-align: left
-}
-
-.main-title-center {
-    display: block;
-    position: absolute;
-    padding-left: 3px;
-    width: 180px;
     text-align: left
 }
 
@@ -564,6 +564,22 @@
     width: 280px;
     text-align: left;
     font-size: 13px;
+}
+
+.nav-title {
+    line-height: 22px;
+    /*font-size: smaller;*/
+}
+
+.nav-title-single {
+    line-height: 44px;
+}
+
+.nav-title-main {
+}
+
+.nav-title-sub {
+    font-size: smaller;
 }
 
 .centre-displayed {
