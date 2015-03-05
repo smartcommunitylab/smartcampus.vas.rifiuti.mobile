@@ -1,18 +1,8 @@
 angular.module('rifiuti.services.calendar', [])
 
 .factory('Calendar', function ($rootScope, $q, $filter, Raccolta, Utili) {
-    var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-    var giorni = ["DOM", "LUN", "MAR", "MER", "GIO", "VEN", "SAB"];
-    var giorniC = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
-
-  
-    var DOW = {"DOM":6, "LUN":0, "MAR":1, "MER":2, "GIO":3, "VEN":4, "SAB":5};
-
     var daysInMonth = function(month, year) {
         return new Date(year, month + 1, 0).getDate();
-    };
-    var dayIndex = function(day) {
-            return DOW[day];
     };
 
     var appendToCalendarCell = function(cell, calItem, puntoDiRaccolta) {
@@ -50,13 +40,6 @@ angular.module('rifiuti.services.calendar', [])
     };
   
     return {
-        dayIndex: dayIndex,
-        textToDOW: function(txt) {
-          return DOW[giorni[giorniC.indexOf(txt)]];
-        },
-        dayToDOW: function(day) {
-          return dayIndex(giorni[day]);
-        },
         dayArrayHorizon: function(y, m, d) {
             var currDate = (!y || !m || !d) ? new Date() : new Date(y,m,d,0,0,0,0);
             var TYear = currDate.getFullYear();
@@ -66,12 +49,6 @@ angular.module('rifiuti.services.calendar', [])
             var DayCount = (TDay - currDate) / (1000 * 60 * 60 * 24);
             DayCount = Math.round(DayCount) + 14;
             return DayCount;
-        },
-        isLastDayInMonth : function(dt) { 
-            return new Date(dt.getTime() + 86400000).getDate() === 1;
-        },
-        monthYear: function(a, b) {
-            return mesi[a] + " " + b
         },
         fillWeeks: function(date, utenza, aree) {
             var deferred = $q.defer();
@@ -87,7 +64,7 @@ angular.module('rifiuti.services.calendar', [])
                   var week = weeks[weekNumber];
                   var runningDate = new Date(date.getFullYear(), date.getMonth(), i, 0, 0, 0, 0);
                   if (runningDate.getDay() == 0) weekNumber++;
-                  var day = giorni[runningDate.getDay()];
+                  var day = Utili.jsDOWToShortText(runningDate.getDay());
                   week.push({
                       date: runningDate,
                       dateString: runningDate.toLocaleDateString(),
@@ -97,34 +74,28 @@ angular.module('rifiuti.services.calendar', [])
                   });
               }
               
-//              var firstDateStr = $filter('date')(new Date(date.getFullYear(),date.getMonth(),1), 'yyyy-MM-dd');//d.getFullYear() +'-'+d.getMonth()+'-01';
-//              var lastDateStr = $filter('date')(new Date(date.getFullYear(),date.getMonth(),totalDays), 'yyyy-MM-dd');//d.getFullYear() +'-'+d.getMonth()+'-01';
               var firstDate = new Date(date.getFullYear(),date.getMonth(),1);
-              var firstDay = dayIndex(giorni[firstDate.getDay()]);
+              firstDate.setHours(0);
+              var firstDay = Utili.jsDOWToDOW(firstDate.getDay());
               var lastDate = new Date(date.getFullYear(),date.getMonth(),totalDays);
+              lastDate.setHours(0);
               
               var d = data;
               for (var i = 0; i < d.length; i++) {
                 if (d[i].orarioApertura) {
                   for (var j = 0; j < d[i].orarioApertura.length; j++) {
                     calItem = d[i].orarioApertura[j];
-                    var calDa = new Date(Date.parse(calItem.dataDa));
-                    var calA = new Date(Date.parse(calItem.dataA));
-                    // restrict interval
-                    if (calDa.getTime() < firstDate.getTime()) calDa = firstDate;
-                    if (calA.getTime() > lastDate.getTime()) calA = lastDate;
-                    if (calDa.getTime() <= calA.getTime()) {
-                      // which DOW the current item is
-                      var calDow = DOW[giorni[giorniC.indexOf(calItem.il)]];
-                      for (var w = 0; w < weeks.length; w++) {
-                        // find pos in week corresponding to the specified DOW
-                        var idx = w == 0 ? calDow - firstDay : calDow;
-                        if (idx >= 0) {
-                          var cell = weeks[w][idx];
-                          // if this is the date of the interval of interest
-                          if (cell != null && cell.date.getDate() >= calDa.getDate() && cell.date.getDate() <= calA.getDate()) {
-                            appendToCalendarCell(cell,calItem,d[i]);
-                          }
+                    for (var k = 0; k < calItem.dates.length; k++) {
+                      var currDate = new Date(Date.parse( calItem.dates[k]));
+                      currDate.setHours(0);
+                      if (currDate.getTime() >= firstDate.getTime() && currDate.getTime() <= lastDate.getTime()) {
+                        var w = Math.floor((currDate.getDate()+firstDay) / 7);
+                        var idx = Utili.jsDOWToDOW(currDate.getDay());
+                        if (w == 0) idx = idx - firstDay;
+                        var cell = weeks[w][idx];
+                        // if this is the date of the interval of interest
+                        if (cell != null) {
+                          appendToCalendarCell(cell,calItem,d[i]);
                         }
                       }
                     }
@@ -134,9 +105,6 @@ angular.module('rifiuti.services.calendar', [])
               deferred.resolve(weeks);
             });
             return deferred.promise;
-        },
-        lastDateOfMonth: function(date) {
-            return new Date(date.getFullYear(), date.getMonth() + 1, 0);
         },
         toListData: function(weeks) {
             var list = [];

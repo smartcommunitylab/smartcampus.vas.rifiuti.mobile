@@ -32,36 +32,25 @@ angular.module('rifiuti.services.profili', [])
 
               data.forEach(function(n) {
                 n.orarioApertura.forEach(function(cal) {
-                  // considered DOW
-                  var dow = Calendar.textToDOW(cal.il);
-                  // upper bound of notifications interval for this calendar
-                  var max = new Date(Date.parse(cal.dataA));
-                  if (max.getTime() > dTo.getTime()) max.setTime(dTo.getTime());
-                  // lower bound of notifications interval for this calendar
-                  var min = new Date(Date.parse(cal.dataDa));
-                  if (min.getTime() < dFrom.getTime()) min.setTime(dFrom.getTime());
-                  // running date
-                  var currFrom = new Date();
-                  currFrom.setDate(currFrom.getDate()-Calendar.dayToDOW(currFrom.getDay())+dow);
-                  while (currFrom.getTime() < max.getTime()) {
-                    // running date is ok?
-                    var targetDate = new Date(currFrom.getFullYear(),currFrom.getMonth(),currFrom.getDate()-1,15,0,0,0);
-                    if (targetDate.getTime() > dFrom.getTime()) {
-                      var dStr = currFrom.toLocaleString();
-                      if (!(dStr in daymap)) {
-                        daymap[dStr] = {
-                          id: n.id+'_'+dStr,
-                          title: 'Domani a '+n.comune,
-                          message: {},
-                          repeat:  null,
-                          date: targetDate,
-                          autoCancel: true
-                        };
+                  for (var i = 0; i < cal.dates.length; i++) {
+                    var dStr = cal.dates[i];
+                    var currDate = new Date(Date.parse(dStr));
+                    if (currDate.getTime() >= dFrom.getTime() && currDate.getTime() < dTo.getTime()) {
+                      var targetDate = new Date(currDate.getFullYear(),currDate.getMonth(),currDate.getDate()-1,15,0,0,0);
+                      if (targetDate.getTime() > dFrom.getTime()) {
+                        if (!(dStr in daymap)) {
+                          daymap[dStr] = {
+                            id: n.id+'_'+dStr,
+                            title: 'Domani a '+n.comune,
+                            message: {},
+                            repeat:  null,
+                            date: targetDate,
+                            autoCancel: true
+                          };
+                        }
+                        daymap[dStr].message[n.tipologiaPuntiRaccolta] = 1;
                       }
-                      daymap[dStr].message[n.tipologiaPuntiRaccolta] = 1;
                     }
-                    // move to next week
-                    currFrom.setDate(currFrom.getDate()+7);
                   }
                 });
               });

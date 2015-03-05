@@ -74,6 +74,7 @@ angular.module('rifiuti.services.data', [])
       profili.forEach(function(p) {
         completeData['puntiRaccolta_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
           if (Utili.belongsTo(pr,p) && profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1) {
+            if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
             profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].push(pr);
           }
         });
@@ -81,6 +82,7 @@ angular.module('rifiuti.services.data', [])
           completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
             if (Utili.belongsTo(pr,p) && profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1)
             {
+              if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
               profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].push(pr);
             }
           });

@@ -210,7 +210,7 @@ angular.module('rifiuti.controllers.home', [])
   };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout) {
   $rootScope.noteSelected = false;
 
   $scope.switchView = function () {
@@ -235,10 +235,10 @@ angular.module('rifiuti.controllers.home', [])
         
     
   $scope.firstDayIndex = function (week) {
-    return Calendar.dayIndex(week[0].day);
+    return Utili.DOWTextToDOW(week[0].day);
   };
   $scope.lastDayIndex = function (week) {
-    return Calendar.dayIndex(week[week.length - 1].day);
+    return Utili.DOWTextToDOW(week[week.length - 1].day);
   };
 
   $scope.getEmptyArrayByLength = function(length) {
@@ -248,17 +248,39 @@ angular.module('rifiuti.controllers.home', [])
       array.push(i - 1);
     }
     return array;
-  }
-    
-  var buildMonthData = function() {
-    $scope.loaded = false;
-    Calendar.fillWeeks($scope.showDate, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data){
-      $scope.month = {
-        name: Calendar.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
-        weeks: data
-      };
-      $scope.loaded = true;
-    });
+  };
+   
+  var scrollToday = function() {
+    if ($scope.calendarView == true) {
+      var time = 0;
+      var i = 0;
+      while (i < $scope.dayList.length && time < $scope.currDate.getTime()) {
+        time = $scope.dayList[i++].date.getTime();
+      }
+      if (i - 2 >= 0 && i-2 <=$scope.dayList.length) {
+        $location.hash($scope.dayList[i-2].dateString);
+        $scope.currListItem = $scope.dayList[i-2];
+        $ionicScrollDelegate.anchorScroll(true);
+      } else {
+        $ionicScrollDelegate.scrollTop();
+      }
+    }
+  };
+  
+  var buildMonthData = function(gotoday) {
+    if (!$scope.month || $scope.month.name != Utili.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear())) {
+      $scope.loaded = false;
+      Calendar.fillWeeks($scope.showDate, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data){
+        $scope.month = {
+          name: Utili.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
+          weeks: data
+        };
+        $scope.loaded = true;
+        if (gotoday) $timeout(scrollToday,500);
+      });
+    } else {
+      if (gotoday) scrollToday();
+    }
   };
   
   var init = function() {
@@ -285,13 +307,13 @@ angular.module('rifiuti.controllers.home', [])
   $scope.$watch('month', function(a,b){
     if (a !=null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
       $scope.dayList = Calendar.toListData($scope.month.weeks);     
-      $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.showDate);
+      $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
     }
   });
     
   $scope.loadMoreDays = function() {
     $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate()+1);
-    $scope.dayListLastMonth = Calendar.lastDateOfMonth($scope.dayListLastMonth);
+    $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.dayListLastMonth);
     Calendar.fillWeeks($scope.dayListLastMonth, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function(data) {
       var newWeeks = data;
       $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
@@ -307,23 +329,8 @@ angular.module('rifiuti.controllers.home', [])
   }
 
   $scope.goToToday = function () {
-    if ($scope.calendarView == false) {
-      $scope.showDate = new Date();
-      buildMonthData();
-    } else if ($scope.calendarView == true) {
-      var time = 0;
-      var i = 0;
-      while (i < $scope.dayList.length && time < $scope.currDate.getTime()) {
-        time = $scope.dayList[i++].date.getTime();
-      }
-      if (i - 2 >= 0 && i-2 <=$scope.dayList.length) {
-        $location.hash($scope.dayList[i-2].dateString);
-        $scope.currListItem = $scope.dayList[i-2];
-        $ionicScrollDelegate.anchorScroll(true);
-      } else {
-        $ionicScrollDelegate.scrollToTop();
-      }
-    }
+    $scope.showDate = new Date();
+    buildMonthData(true);
   };
   $scope.nextMonth = function () {
     $scope.showDate.setDate(1);
