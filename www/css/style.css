@@ -571,15 +571,18 @@
     /*font-size: smaller;*/
 }
 
-.nav-title-single {
+.nav-title .nav-title-single {
     line-height: 44px;
 }
 
-.nav-title-main {
+.nav-title .nav-title-main {
 }
 
-.nav-title-sub {
+.nav-title .nav-title-sub {
     font-size: smaller;
+    white-space: nowrap;
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .centre-displayed {
