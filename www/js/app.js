@@ -39,12 +39,21 @@ angular.module('rifiuti', [
 //  });
 //}])
 
-.config(['$ionicTabsConfig', function ($ionicTabsConfig) {
+/*
+.config(function ($ionicTabsConfig) {
     // Override the Android platform default to add "tabs-striped" class to "ion-tabs" elements.
     $ionicTabsConfig.type = '';
-}])
+})
+*/
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
+/* NEW in beta14*/
+.config(function ($ionicConfigProvider) {
+    $ionicConfigProvider.tabs.position('top');
+    //$ionicConfigProvider.tabs.style('striped');
+    $ionicConfigProvider.tabs.style('standard');
+})
+
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
     $rootScope.version = '2.0';
 
     DataManager.setDataURL('data/data.zip');
@@ -52,7 +61,8 @@ angular.module('rifiuti', [
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
     $rootScope.back = function () {
-        $ionicNavBarDelegate.$getByHandle('navBar').back();
+        //$ionicNavBarDelegate.$getByHandle('navBar').back();
+        $ionicHistory.goBack();
     };
 
     $ionicPlatform.ready(function () {
@@ -77,22 +87,22 @@ angular.module('rifiuti', [
         }
 
         $ionicPlatform.registerBackButtonAction(function (event) {
-//            console.log('going back in ' + $state.current.name);
-            switch($state.current.name){
-              case "app.home.tipidirifiuti":
-//              case "app.home":
-//              case "app.home.note":
-//              case "app.home.calendario":
-//              case "app.puntiDiRaccolta":
-//              case "app.tipiDiRaccolta":
-//              case "app.rifiuti":
-//              case "app.profili":
-//              case "app.segnala":
-//              case "app.contatti":
-//              case "app.info":
+            //            console.log('going back in ' + $state.current.name);
+            switch ($state.current.name) {
+            case "app.home.tipidirifiuti":
+                //              case "app.home":
+                //              case "app.home.note":
+                //              case "app.home.calendario":
+                //              case "app.puntiDiRaccolta":
+                //              case "app.tipiDiRaccolta":
+                //              case "app.rifiuti":
+                //              case "app.profili":
+                //              case "app.segnala":
+                //              case "app.contatti":
+                //              case "app.info":
                 $rootScope.reallyexitapp();
                 break;
-              default:
+            default:
                 navigator.app.backHistory();
             }
         }, 100);
@@ -108,10 +118,10 @@ angular.module('rifiuti', [
         }
     };
 
-    $rootScope.clickLink = function(link) {
-      window.open(link,"_system");
+    $rootScope.clickLink = function (link) {
+        window.open(link, "_system");
     };
-  
+
     $rootScope.distance = function (pt1, pt2) {
         var d = false;
         if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
@@ -179,7 +189,7 @@ angular.module('rifiuti', [
 
         'ad esempio': "Ad esempio:",
         Invia: "Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
-        Progetto: '"'+APP_NAME+'"',
+        Progetto: '"' + APP_NAME + '"',
         Progetto_DESC: 'Tutto quesllo che devi sapere sulla raccolta differenziata nel tuo Comune',
         Progetto_di: 'Un progetto di:',
         Collaborazione: "In collaborazione con:",
@@ -776,13 +786,6 @@ angular.module('rifiuti', [
       CRM: "Dump",
       Rivenditore: "Seller",
       'Cosa vuoi ricordare?': "What do you want to remember?",
-
-
-
-
-
-
-
     });
     */
     $translateProvider.preferredLanguage(current_lang);
@@ -796,55 +799,53 @@ angular.module('rifiuti', [
 
 
 
-
-
-
-
     $stateProvider
-
         .state('app', {
-        url: "/app",
-        abstract: true,
-        templateUrl: "templates/menu.html",
-        controller: 'AppCtrl'
-    })
+            url: "/app",
+            abstract: true,
+            templateUrl: "templates/menu.html",
+            controller: 'AppCtrl'
+        })
 
     .state('app.home', {
-            url: "/home",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/home.html",
-                    controller: 'HomeCtrl'
-                }
+        url: "/home",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/home.html",
+                controller: 'HomeCtrl'
             }
-        })
-        .state('app.home.note', {
-            url: "/note",
-            views: {
-                'note': {
-                    templateUrl: "templates/home/note.html",
-                    controller: 'noteCtrl'
-                }
+        }
+    })
+
+    .state('app.home.note', {
+        url: "/note",
+        views: {
+            'note': {
+                templateUrl: "templates/home/note.html",
+                controller: 'noteCtrl'
             }
-        })
-        .state('app.home.tipidirifiuti', {
-            url: "/tipidirifiuti",
-            views: {
-                'tipidirifiuti': {
-                    templateUrl: "templates/home/tipidirifiuti.html",
-                    controller: 'tipidirifiutiCtrl'
-                }
+        }
+    })
+
+    .state('app.home.tipidirifiuti', {
+        url: "/tipidirifiuti",
+        views: {
+            'tipidirifiuti': {
+                templateUrl: "templates/home/tipidirifiuti.html",
+                controller: 'tipidirifiutiCtrl'
             }
-        })
-        .state('app.home.calendario', {
-            url: "/calendario",
-            views: {
-                'calendario': {
-                    templateUrl: "templates/home/calendario.html",
-                    controller: 'calendarioCtrl'
-                }
+        }
+    })
+
+    .state('app.home.calendario', {
+        url: "/calendario",
+        views: {
+            'calendario': {
+                templateUrl: "templates/home/calendario.html",
+                controller: 'calendarioCtrl'
             }
-        })
+        }
+    })
 
     .state('app.puntiDiRaccolta', {
         url: "/puntiDiRaccolta/:id",
@@ -947,23 +948,24 @@ angular.module('rifiuti', [
     })
 
     .state('app.contatti', {
-            url: "/contatti",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/contatti.html",
-                    controller: 'ContattiCtrl'
-                }
+        url: "/contatti",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/contatti.html",
+                controller: 'ContattiCtrl'
             }
-        })
-        .state('app.contatto', {
-            url: "/contatti/:id",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/contatto.html",
-                    controller: 'ContattoCtrl'
-                }
+        }
+    })
+
+    .state('app.contatto', {
+        url: "/contatti/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/contatto.html",
+                controller: 'ContattoCtrl'
             }
-        })
+        }
+    })
 
     .state('app.info', {
         url: "/info",
@@ -974,5 +976,6 @@ angular.module('rifiuti', [
             }
         }
     });
+
     $urlRouterProvider.otherwise('/app/home/tipidirifiuti');
 });

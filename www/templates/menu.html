@@ -1,89 +1,96 @@
 <ion-side-menus>
-	<ion-pane ion-side-menu-content edge-drag-threshold="30">
-		<ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-	</ion-pane>
-	<ion-side-menu side="left">
-<!--		<ion-content class="background-grey-dark" scroll="false">-->
-			<ion-content class="background-grey-dark" has-bouncing="false">
-              <ion-list class="menu-list">
-                  <ion-item ng-repeat="item in profili track by $index" ng-click="selectProfile($index)" class="no-border no-padding">
-                      <div class="row row-center no-vertical-padding">
-                          <div class="col col-10 position-relative no-vertical-padding">
-                              <img ng-src="{{item.image}}" class="menu-size"/>
-                          </div>
-                          <div class="col no-vertical-padding">
-                              {{item.name}}
-                          </div>
-                      </div>
-                  </ion-item>
-              </ion-list>
-				<ion-list class="menu-list">
-					<ion-item nav-clear menu-close href="#/app/home/tipidirifiuti">
-						<div class="row row-center"> 
-							<div class="col col-15 position-relative">
-								<img src="img/ic_home.png" class="menu-size" />
-							</div>
-							<div class="col">Home</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/puntiDiRaccolta/!">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_punti_raccolta.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Punti di raccolta" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/tipiDiRaccolta">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_tipi_raccolta.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Tipi di raccolta" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/profili">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_profilo.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Gestione profili" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/segnala">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_segnala.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Segnala" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/contatti">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_contatti.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Contatti" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close  href="#/app/home/tipidirifiuti" ng-click="showTutorial()">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_tutorial.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Tutorial" | translate}}</div>
-						</div>
-					</ion-item>
-					<ion-item nav-clear menu-close href="#/app/info">
-						<div class="row row-center">
-							<div class="col col-15 position-relative">
-								<img src="img/ic_info.png" class="menu-size" />
-							</div>
-							<div class="col">{{"Info" | translate}}</div>
-						</div>
-					</ion-item>
-				</ion-list>
-			</ion-content>
-<!--		</ion-content>-->
-	</ion-side-menu>
+    <!-- enable-menu-with-back-views="true" -->
+    <ion-side-menu-content edge-drag-threshold="30">
+        <ion-nav-bar class="bar-balanced background-green-middle" delegate-handle="navBar"></ion-nav-bar>
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-balanced background-green-middle">
+            <h1 class="title">{{app_name}}</h1>
+        </ion-header-bar>
+
+        <!-- <ion-content class="background-grey-dark" scroll="false"> -->
+        <ion-content class="background-grey-dark" has-bouncing="false">
+            <ion-list class="menu-list">
+                <ion-item ng-repeat="item in profili track by $index" ng-click="selectProfile($index)" class="no-border no-padding">
+                    <div class="row row-center no-vertical-padding">
+                        <div class="col col-10 position-relative no-vertical-padding">
+                            <img ng-src="{{item.image}}" class="menu-size" />
+                        </div>
+                        <div class="col no-vertical-padding">
+                            {{item.name}}
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <ion-list class="menu-list">
+                <ion-item nav-clear menu-close href="#/app/home/tipidirifiuti">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_home.png" class="menu-size" />
+                        </div>
+                        <div class="col">Home</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/puntiDiRaccolta/!">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_punti_raccolta.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Punti di raccolta" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/tipiDiRaccolta">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_tipi_raccolta.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Tipi di raccolta" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/profili">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_profilo.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Gestione profili" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/segnala">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_segnala.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Segnala" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/contatti">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_contatti.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Contatti" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/home/tipidirifiuti" ng-click="showTutorial()">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_tutorial.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Tutorial" | translate}}</div>
+                    </div>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/info">
+                    <div class="row row-center">
+                        <div class="col col-15 position-relative">
+                            <img src="img/ic_info.png" class="menu-size" />
+                        </div>
+                        <div class="col">{{"Info" | translate}}</div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+        <!-- </ion-content>-->
+    </ion-side-menu>
 </ion-side-menus>

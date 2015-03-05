@@ -1,29 +1,28 @@
 <ion-view>
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
-          <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-              <div  class="wrap-title">
-                  <span class="main-title">{{"Tipologie di raccolta"| translate}}</span>
-                  <div class="sub-title">{{selectedProfile.name}}</div>
-              </div>
-      <!--<span class="bar-title">TIPOLOGIE DI RACCOLTA</span>
-          <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
-    </button>
-  </ion-nav-buttons>
-  <ion-content class="background-grey-light" has-bouncing="false">
-    <ion-list class="contatti-item-list">
-      <ion-item ng-repeat="(tipo,items) in tipi" ng-href="#/app/raccolta/{{tipo}}" class="no-vertical-padding">
-        <div class="row no-vertical-padding">
-          <div class="col only-top-vertical-padding">
-            {{tipo | translate}}
-          </div>
-        </div>
-        <div class="row only-top-vertical-padding">
-          <div class="col col-10" ng-repeat="(key, item) in items">
-            <img ng-src="{{icon(item)}}" height="30" width="30">
-          </div>
-        </div>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <div class="wrap-title">
+                <span class="main-title">{{"Tipologie di raccolta"| translate}}</span>
+                <span class="sub-title">{{selectedProfile.name}}</span>
+            </div>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="background-grey-light" has-bouncing="false">
+        <ion-list class="contatti-item-list">
+            <ion-item ng-repeat="(tipo,items) in tipi" ng-href="#/app/raccolta/{{tipo}}" class="no-vertical-padding">
+                <div class="row no-vertical-padding">
+                    <div class="col only-top-vertical-padding">
+                        {{tipo | translate}}
+                    </div>
+                </div>
+                <div class="row only-top-vertical-padding">
+                    <div class="col col-10" ng-repeat="(key, item) in items">
+                        <img ng-src="{{icon(item)}}" height="30" width="30">
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

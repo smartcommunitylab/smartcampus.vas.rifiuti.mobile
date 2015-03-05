@@ -413,6 +413,7 @@
 
 .pdr-dettaglio {
     text-decoration: bold;
+    white-space: nowrap;
 }
 
 .pdr-specifica {
@@ -539,28 +540,29 @@
 .wrap-title {}
 
 .main-title {
-    padding-left: 3px;
-    position: absolute;
     display: block;
+    position: absolute;
+    padding-left: 3px;
     top: -5px;
-    width: 180px;
+    width: 280px;
     text-align: left
 }
 
 .main-title-center {
-    padding-left: 3px;
-    position: absolute;
     display: block;
+    position: absolute;
+    padding-left: 3px;
     width: 180px;
     text-align: left
 }
 
 .sub-title {
     display: block;
+    position: absolute;
     padding-left: 3px;
     top: 10px;
-    position: absolute;
-    height: 10px;
+    width: 280px;
+    text-align: left;
     font-size: 13px;
 }
 

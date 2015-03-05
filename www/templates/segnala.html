@@ -1,39 +1,41 @@
-<ion-nav-buttons side="left">
-	<button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
-        <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div  class="wrap-title">
+<ion-view>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <div class="wrap-title">
                 <span class="main-title">{{"Segnalazione"|translate}}</span>
                 <div class="sub-title">{{selectedProfile.name}}</div>
             </div>
-	</button>
-</ion-nav-buttons>
-<ion-content class="background-grey-light">
-	<div class="high-padding segnala-descrizione">
-        {{"Invia"|translate}}
-	</div>
-	<div class="item item-input-inset no-border background-grey-light" style="margin-top:7px">
-		<input type="search" ng-model="msg.text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light"  style="font-size:16px">
-	</div>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="background-grey-light">
+        <div class="high-padding segnala-descrizione">
+            {{"Invia"|translate}}
+        </div>
+        <div class="item item-input-inset no-border background-grey-light" style="margin-top:7px">
+            <input type="search" ng-model="msg.text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light" style="font-size:16px">
+        </div>
         <div class="row" ng-click="takePicture()" style="margin-top:10px">
-            <button  style="background-image: url('img/ic_camera.png');background-size: 35px 35px; background-repeat: no-repeat; padding-right:25px;" class="button-clear"></button>
+            <button style="background-image: url('img/ic_camera.png');background-size: 35px 35px; background-repeat: no-repeat; padding-right:25px;" class="button-clear"></button>
             <div class="col segnala-testo" style="margin-top:7px">{{"Scatta una foto"|translate}}</div>
         </div>
-    <div ng-show="imgURI !== undefined" style="background-color:#cecece; margin-left:3%; width:94%" class="row" style="height:150px">
-        <img class="centre-displayed" ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
-    </div>
-    <div class="row no-padding" style="margin-top:10px;" ng-click="toggleCheck()">
-		<div class="no-vertical-padding position-relative" style="margin-left:8px">
-			<img ng-src="{{checkboxImage}}" class="menu-size" />
-		</div>
-		<div class="segnala-testo no-vertical-padding" style="margin-top:6px">
-            {{"Allega la tua posizione"|translate}}
-		</div>
-	</div>
-</ion-content>
+        <div ng-show="imgURI !== undefined" style="background-color:#cecece; margin-left:3%; width:94%" class="row" style="height:150px">
+            <img class="centre-displayed" ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+        </div>
+        <div class="row no-padding" style="margin-top:10px;" ng-click="toggleCheck()">
+            <div class="no-vertical-padding position-relative" style="margin-left:8px">
+                <img ng-src="{{checkboxImage}}" class="menu-size" />
+            </div>
+            <div class="segnala-testo no-vertical-padding" style="margin-top:6px">
+                {{"Allega la tua posizione"|translate}}
+            </div>
+        </div>
+    </ion-content>
 
     <div class="bar bar-footer">
-        <button class="button button-balanced button-block background-green-dark segnala-button"  ng-click="sendEmail()">
-          <a style="text-decoration:none; color:white">
-            {{"Segnala!"|translate }}
-          </a></button>
+        <button class="button button-balanced button-block background-green-dark segnala-button" ng-click="sendEmail()">
+            <a style="text-decoration:none; color:white">{{"Segnala!"|translate }}</a>
+        </button>
     </div>
+</ion-view>

@@ -1,23 +1,22 @@
 <ion-view>
-	<ion-nav-buttons side="left">
-		<button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
             <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
-            <div  class="wrap-title">
+            <div class="wrap-title">
                 <span class="main-title">Contatti</span>
                 <div class="sub-title">{{selectedProfile.name}}</div>
-        </div>
-			<!--<span class="bar-title">Contatti</span>
-            <div class= "title-subtext1">{{selectedProfile.name}}</div>-->
-		</button>
-	</ion-nav-buttons>
-    <ion-content class="contatti-content background-grey-light"  has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
-        <div class="expandable-list-items" ng-repeat="item in contatti">
-			<a class="hidden-link" ng-href="#app/contatti/{{$index}}">
-            <div class="row background-grey-middle">
-                <div class="col" ng-if="item.ufficio">{{item.ufficio}}</div>
-                <div class="col" ng-if="item.ragioneSociale">{{item.ragioneSociale}}</div>
             </div>
-            </a>    
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="contatti-content background-grey-light" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+        <div class="expandable-list-items" ng-repeat="item in contatti">
+            <a class="hidden-link" ng-href="#app/contatti/{{$index}}">
+                <div class="row background-grey-middle">
+                    <div class="col" ng-if="item.ufficio">{{item.ufficio}}</div>
+                    <div class="col" ng-if="item.ragioneSociale">{{item.ragioneSociale}}</div>
+                </div>
+            </a>
         </div>
     </ion-content>
 </ion-view>

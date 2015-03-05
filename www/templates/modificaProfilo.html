@@ -1,36 +1,42 @@
-<ion-nav-buttons side="left">
-	<button ng-click="back()" class="button button-clear button-light ion-chevron-left">
-		<span class="bar-back-center">{{"Profili"|translate}}</span>
-	</button>
-</ion-nav-buttons>
-<ion-nav-buttons side="right">
-	<button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment">
-		<img ng-src="{{editIMG}}" class="standard-size" />
-	</button>
-	<button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button" ng-show="!editMode">
-		<img ng-src="img/ic_menu_delete.png" class="standard-size" />
-	</button>
-</ion-nav-buttons>
-<ion-content class="background-grey-light" has-bouncing="false">
-	<div class="high-padding profili-titolo">{{"Nome del profilo"|translate}}</div>
-	<div class="item item-input-inset no-border background-grey-light" ng-show="editMode">
-		<input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
-	</div>
-	<p class="low-padding" ng-show="!editMode">{{profilo.name}}</p>
-	<div class="list background-grey-light">
-        <div class="high-padding profili-titolo">{{"Tipo di utenza"|translate}}<a ng-click="help()"><img ng-src="img/ic_help.png" class="standard-size" style="vertical-align:middle;"/></a></div>
-		<label class="item background-grey-light no-border" ng-show="editMode"  ng-repeat="item in tipologiaUtenza">
-		  <input type="radio" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item"><span class="high-padding">{{item.profilo}}</span>
-		</label>
-		<p class="low-padding"  ng-show="!editMode">{{profilo.utenza.profilo|translate}}</p>
-	</div>
-	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">{{"Comune o Località"|translate}}</div>
-		<label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
-			<select ng-model="profilo.area" ng-options="item.localita for item in aree" class="background-grey-light max-width">
-				<option value="">{{"Selezionare"|translate}}</option>
-			</select>
-		</label>
-		<p class="low-padding"  ng-show="!editMode">{{profilo.area.localita}}</p>
-	</div>
-</ion-content>
+<ion-view>
+    <ion-nav-buttons side="left">
+        <button ng-click="back()" class="button button-clear button-light ion-ios7-arrow-back">
+            <span class="bar-back-center">{{"Profili"|translate}}</span>
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button ng-click="edit()" class="button button-clear button-light icon-left menu-edit-button nav-bar-buttons-alignment">
+            <img ng-src="{{editIMG}}" class="standard-size" />
+        </button>
+        <button ng-click="click()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button" ng-show="!editMode">
+            <img ng-src="img/ic_menu_delete.png" class="standard-size" />
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="background-grey-light" has-bouncing="false">
+        <div class="high-padding profili-titolo">{{"Nome del profilo"|translate}}</div>
+        <div class="item item-input-inset no-border background-grey-light" ng-show="editMode">
+            <input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
+        </div>
+        <p class="low-padding" ng-show="!editMode">{{profilo.name}}</p>
+        <div class="list background-grey-light">
+            <div class="high-padding profili-titolo">{{"Tipo di utenza"|translate}}
+                <a ng-click="help()"><img ng-src="img/ic_help.png" class="standard-size" style="vertical-align:middle;" />
+                </a>
+            </div>
+            <label class="item background-grey-light no-border" ng-show="editMode" ng-repeat="item in tipologiaUtenza">
+                <input type="radio" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item"><span class="high-padding">{{item.profilo}}</span>
+            </label>
+            <p class="low-padding" ng-show="!editMode">{{profilo.utenza.profilo|translate}}</p>
+        </div>
+        <div class="list background-grey-light">
+            <div class="high-padding profili-titolo">{{"Comune o Località"|translate}}</div>
+            <label class="item item-input item-select background-grey-light no-border fixed-height" ng-show="editMode">
+                <select ng-model="profilo.area" ng-options="item.localita for item in aree" class="background-grey-light max-width">
+                    <option value="">{{"Selezionare"|translate}}</option>
+                </select>
+            </label>
+            <p class="low-padding" ng-show="!editMode">{{profilo.area.localita}}</p>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,73 +1,73 @@
 <ion-view>
-  <ion-nav-buttons side="left">
-    <button ng-click="back()" class="button button-clear button-light ion-chevron-left sub-page-button">
-      <span class="bar-back">{{"Tipo di rifiuto"|translate}}</span>
-      </br>
-      <p class="title-subtext">{{tipo|translate}}</p>
-    </button>
-<!--
-    <a href="#/app/home/tipidirifiuti" class="button button-clear button-light ion-chevron-left sub-page-button">
-      <span class="bar-back">{{"Tipo di rifiuto"|translate}}</span>
-      </br>
-      <div class="title-subtext">{{tipo|translate}}</div>
-    </a>
--->
-  </ion-nav-buttons>
-  <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
-    <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
-      <ion-content class="background-grey-light" scroll="false">
-        <div class="expandable-list-items" ng-repeat="item in raccolta">
-          <div class="row row-center background-grey-middle" ng-click="item.aperto=!item.aperto">
-            <div class="col col-10">
-              <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+    <ion-nav-buttons side="left">
+        <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
+            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <div class="wrap-title">
+                <span class="main-title">{{"Tipo di rifiuto"|translate}}</span>
+                <span class="sub-title">{{tipo|translate}}</span>
             </div>
-            <div class="col col-80">
-              <div class="row only-bottom-vertical-padding expandable-list-title">
-                <div class="col no-vertical-padding">
-                  {{item.tipologiaPuntoRaccolta|translate}}
-                </div>
-              </div>
-              <div class="row only-bottom-vertical-padding">
-                <div class="col no-vertical-padding">
-                  {{item.tipologiaRaccolta|translate}}
-                </div>
-              </div>
-              <div class="row no-vertical-padding expandable-list-desc">
-                <div class="col no-vertical-padding">
-                  {{item.infoRaccolta|translate}}
-                </div>
-              </div>
-            </div>
-            <div class="col col-10 col-top a_right">
-              <img ng-src="{{item.icon}}" width="25" height="25">
-            </div>
-          </div>
-          <div ng-show="item.aperto">
-            <a ng-repeat="punto in item.punti" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{punto.dettaglioIndirizzo || punto.indirizzo}}">
-              <div class="row background-grey-light">
-                <div class="col col-80">
-                  {{punto.dettaglioIndirizzo || punto.indirizzo}}
-                </div>
-                <div class="col col-20 a_right" ng-if="punto.distance">
-                  {{punto.distance | number:1}} Km
-                </div>
-              </div>
-            </a>
-            <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
-              {{'empty_elem'|translate}}
-            </div>  
-          </div>
-        </div>
-      </ion-content>
-    </ion-tab>
-    <ion-tab title="{{'LISTA RIFIUTI'|translate}}">
-      <ion-content class="background-grey-light" has-bouncing="false">
-        <ion-list class="background-grey-light">
-          <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
-            {{item.nome|translate}}
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-tab>       
-  </ion-tabs>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-tabs class="tabs-balanced contatti-tabs">
+        <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
+            <ion-view>
+                <ion-content class="background-grey-light" scroll="false">
+                    <div class="expandable-list-items" ng-repeat="item in raccolta">
+                        <div class="row row-center background-grey-middle" ng-click="item.aperto=!item.aperto">
+                            <div class="col col-10">
+                                <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
+                            </div>
+                            <div class="col col-80">
+                                <div class="row only-bottom-vertical-padding expandable-list-title">
+                                    <div class="col no-vertical-padding">
+                                        {{item.tipologiaPuntoRaccolta|translate}}
+                                    </div>
+                                </div>
+                                <div class="row only-bottom-vertical-padding">
+                                    <div class="col no-vertical-padding">
+                                        {{item.tipologiaRaccolta|translate}}
+                                    </div>
+                                </div>
+                                <div class="row no-vertical-padding expandable-list-desc">
+                                    <div class="col no-vertical-padding">
+                                        {{item.infoRaccolta|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-10 col-top a_right">
+                                <img ng-src="{{item.icon}}" width="25" height="25">
+                            </div>
+                        </div>
+                        <div ng-show="item.aperto">
+                            <a ng-repeat="punto in item.punti" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{punto.dettaglioIndirizzo || punto.indirizzo}}">
+                                <div class="row background-grey-light">
+                                    <div class="col col-80">
+                                        {{punto.dettaglioIndirizzo || punto.indirizzo}}
+                                    </div>
+                                    <div class="col col-20 a_right" ng-if="punto.distance">
+                                        {{punto.distance | number:1}} Km
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
+                                {{'empty_elem'|translate}}
+                            </div>
+                        </div>
+                    </div>
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+        <ion-tab title="{{'LISTA RIFIUTI'|translate}}">
+            <ion-view>
+                <ion-content class="background-grey-light" has-bouncing="false">
+                    <ion-list class="background-grey-light">
+                        <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
+                            {{item.nome|translate}}
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+    </ion-tabs>
 </ion-view>

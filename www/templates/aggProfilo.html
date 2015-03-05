@@ -1,36 +1,38 @@
-<ion-nav-buttons side="left">
-	<button ng-click="back()" class="row button button-clear button-light ion-chevron-left">
-        <img class="img-menu" style="position:absolute;display:block;top:-0px;" src="img/ic_launcher.png">
-        <div  class="wrap-title" style="margin-left:36px">
-            <span class="main-title">{{"Profili"|translate}}</span>
-            <div class="sub-title">{{selectedProfile.name}}
+<ion-view>
+    <ion-nav-buttons side="left">
+        <button ng-click="back()" class="row button button-clear button-light ion-ios7-arrow-back">
+            <img class="img-menu" src="img/ic_launcher.png">
+            <div class="wrap-title" style="margin-left:36px">
+                <span class="main-title">{{"Profili"|translate}}</span>
+                <span class="sub-title">{{selectedProfile.name}}</span>
             </div>
-        </div> 
-	</button>
-</ion-nav-buttons>
-<ion-nav-buttons side="right">
-	<button ng-click="save()" class="button button-clear button-light icon-left nav-bar-buttons-alignment">
-		<img src="img/ic_save.png" class="standard-size" />
-	</button>
-</ion-nav-buttons>
-<ion-content class="background-grey-light" has-bouncing="false">
-	<div class="high-padding profili-titolo">{{"Nome del profilo" | translate}}</div>
-	<div class="item item-input-inset no-border background-grey-light">
-		<input type="search" ng-model="profilo.name" placeholder="{{'Nome del profilo'|translate}}" class="border-underline background-grey-light">
-	</div>
-	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">{{"Tipo di utenza" | translate}}</div>
-		<label class="item item-input item-select background-grey-light no-border fixed-height">
-			<select ng-model="profilo.utenza" ng-options="item.profilo|translate for item in tipologiaUtenza" class="background-grey-light max-width">
-			</select>
-		</label>
-	</div>
-	<div class="list background-grey-light">
-		<div class="high-padding profili-titolo">{{"Comune o Località" | translate}}</div>
-		<label class="item item-input item-select background-grey-light no-border fixed-height">
-			<select ng-model="profilo.localita" ng-options="item for item in locs" class="background-grey-light max-width">
-				<option value="">{{"Selezionare" | translate}}</option>
-			</select>
-		</label>
-	</div>
-</ion-content>
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button ng-click="save()" class="button button-clear button-light icon-left nav-bar-buttons-alignment">
+            <img src="img/ic_save.png" class="standard-size" />
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="background-grey-light" has-bouncing="false">
+        <div class="high-padding profili-titolo">{{"Nome del profilo" | translate}}</div>
+        <div class="item item-input-inset no-border background-grey-light">
+            <input type="search" ng-model="profilo.name" placeholder="{{'Nome del profilo'|translate}}" class="border-underline background-grey-light">
+        </div>
+        <div class="list background-grey-light">
+            <div class="high-padding profili-titolo">{{"Tipo di utenza" | translate}}</div>
+            <label class="item item-input item-select background-grey-light no-border fixed-height">
+                <select ng-model="profilo.utenza" ng-options="item.profilo|translate for item in tipologiaUtenza" class="background-grey-light max-width">
+                </select>
+            </label>
+        </div>
+        <div class="list background-grey-light">
+            <div class="high-padding profili-titolo">{{"Comune o Località" | translate}}</div>
+            <label class="item item-input item-select background-grey-light no-border fixed-height">
+                <select ng-model="profilo.localita" ng-options="item for item in locs" class="background-grey-light max-width">
+                    <option value="">{{"Selezionare" | translate}}</option>
+                </select>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>
