@@ -566,8 +566,15 @@
     font-size: 13px;
 }
 
+.nav-bar-title {
+  display: table;
+  height: 100%;
+}
+
 .nav-title {
-    line-height: 22px;
+    display:table-cell;
+    vertical-align:middle;
+    /*line-height: 22px;*/
     /*font-size: smaller;*/
 }
 
@@ -576,9 +583,11 @@
 }
 
 .nav-title .nav-title-main {
+  line-height: 1 !important;
 }
 
 .nav-title .nav-title-sub {
+    line-height: 1 !important;
     font-size: smaller;
     white-space: nowrap;
 	overflow: hidden;
@@ -604,4 +613,8 @@
 .item {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.nowrap {
+  white-space: nowrap
 }

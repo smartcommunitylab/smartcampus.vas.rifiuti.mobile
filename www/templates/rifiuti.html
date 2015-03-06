@@ -1,9 +1,5 @@
 <ion-view view-title="CIAO">
     <ion-nav-title>
-        <!--<div class="wrap-title">
-            <span class="main-title">{{"Tipo di rifiuto"|translate}}</span>
-            <span class="sub-title">{{tipo|translate}}</span>
-        </div>-->
         <div class="nav-title">
             <div class="nav-title-main">{{"Tipo di rifiuto"|translate}}</div>
             <div class="nav-title-sub">{{tipo|translate}}</div>
@@ -57,7 +53,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
+                            <div class="row row-center background-grey-light nowrap" ng-show="!item.punti || item.punti.length==0">
                                 {{'empty_elem'|translate}}
                             </div>
                         </div>

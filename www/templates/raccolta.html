@@ -12,8 +12,9 @@
         </button>
     </ion-nav-buttons>
 
-    <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
+    <ion-tabs class="tabs-balanced contatti-tabs">
         <ion-tab title="{{'LISTA RIFIUTI'|translate}}">
+          <ion-view>
             <ion-content class="background-grey-light" has-bouncing="false">
                 <ion-list class="background-grey-light">
                     <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
@@ -21,8 +22,10 @@
                     </ion-item>
                 </ion-list>
             </ion-content>
+          </ion-view>    
         </ion-tab>
         <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
+          <ion-view>
             <ion-content class="background-grey-light" has-bouncing="false">
                 <div class="bottom-border">
                     <div class="expandable-list-items" ng-repeat="item in raccolta">
@@ -63,13 +66,14 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
+                            <div class="row row-center background-grey-light nowrap" ng-show="!item.punti || item.punti.length==0">
                                 {{'empty_elem'|translate}}
                             </div>
                         </div>
                     </div>
                 </div>
             </ion-content>
+          </ion-view>  
         </ion-tab>
     </ion-tabs>
 </ion-view>

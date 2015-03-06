@@ -14,6 +14,7 @@
 
     <ion-tabs class="tabs-balanced tabs-top contatti-tabs">
         <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
+          <ion-view>
             <ion-content class="background-grey-light" scroll="false">
                 <div class="expandable-list-items" ng-repeat="item in raccolta">
                     <div class="row background-grey-middle no-vertical-padding" ng-click="item.aperto=!item.aperto">
@@ -53,12 +54,13 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="row row-center background-grey-light" ng-show="!item.punti || item.punti.length==0">
+                        <div class="row row-center background-grey-light nowrap" ng-show="!item.punti || item.punti.length==0">
                             {{'empty_elem'|translate}}
                         </div>
                     </div>
                 </div>
             </ion-content>
+          </ion-view>  
         </ion-tab>
     </ion-tabs>
 </ion-view>
