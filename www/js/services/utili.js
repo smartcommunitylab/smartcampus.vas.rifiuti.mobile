@@ -120,8 +120,8 @@ angular.module('rifiuti.services.utili', [])
       var icona = iconType(tipologia);
       return (!!icona?'img/ic_poi_'+icona+'.png':null);
     },
-    belongsTo: function(pr, profile) {
-      return profile.aree.indexOf(pr.area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || pr.tipologiaPuntiRaccolta=='CRZ' || !pr.indirizzo || profile.comuni.indexOf(pr.indirizzo)!=-1);
+    belongsTo: function(pr, area, profile) {
+      return profile.aree.indexOf(area) != -1 && (pr.tipologiaPuntiRaccolta=='CRM' || pr.tipologiaPuntiRaccolta=='CRZ' || !pr.indirizzo || profile.comuni.indexOf(pr.indirizzo)!=-1);
     },
     isPaP: function(tipologia) {
       return !!tipologia && tipologia.toLowerCase().indexOf('porta a porta') == 0;

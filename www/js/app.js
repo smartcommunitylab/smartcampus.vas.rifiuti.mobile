@@ -56,8 +56,8 @@ angular.module('rifiuti', [
 .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
     $rootScope.version = '2.0';
 
-    DataManager.setDataURL('data/data.zip');
-
+    DataManager.checkVersion();
+  
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
     $rootScope.back = function () {

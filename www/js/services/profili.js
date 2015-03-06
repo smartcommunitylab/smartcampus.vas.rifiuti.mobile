@@ -77,7 +77,7 @@ angular.module('rifiuti.services.profili', [])
       } else {
         profileIndex=0;
       }
-      DataManager.updataProfiles($rootScope.profili);
+      DataManager.updateProfiles($rootScope.profili);
       updateNotifications();
       select(profileIndex);
     };

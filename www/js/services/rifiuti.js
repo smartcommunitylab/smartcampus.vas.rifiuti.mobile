@@ -22,7 +22,7 @@ angular.module('rifiuti.services.rifiuti', [])
               var optionsOK=true;
               if (options && options.indirizzo && punto.dettaglioIndirizzo!=options.indirizzo) optionsOK=false;
               if (options && options.tipo && punto.tipologiaPuntiRaccolta!=options.tipo) optionsOK=false;
-              if (optionsOK && punto.indirizzo && Utili.belongsTo(punto, $rootScope.selectedProfile)) {
+              if (optionsOK && punto.indirizzo && Utili.belongsTo(punto, punto.area, $rootScope.selectedProfile)) {
                 if (myPuntiDone.indexOf(punto.dettaglioIndirizzo)==-1) {
 //                  var extcheckOK=true;
 //                  if (punto.caratteristiche!="" && punto.gettoniera!="True" && punto.residuo!="" && punto.residuo!="True" && punto.tipologiaPuntiRaccolta=="Residuo") extcheckOK=false;

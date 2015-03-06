@@ -1,8 +1,17 @@
 angular.module('rifiuti.services.data', [])
 
 .factory('DataManager', function ($http, $q, Utili) {
-
-  var dataURL = null;
+  var ENDPOINT_URL = '';
+  
+  // TODO handle
+  var USE_DRAFT = false;
+  
+  var LOCAL_DATA_URL = 'data/data.zip';
+  var VERSION_URL = ENDPOINT_URL+'/'+APP_ID+'/version';
+  
+  
+  var dataURL = LOCAL_DATA_URL;
+  
   var completeData = null;
   var profili = null;
   var profileData = null;
@@ -27,29 +36,33 @@ angular.module('rifiuti.services.data', [])
     var prMap = {};
     var prCalMap = {};
     data.puntiRaccolta.forEach(function(pr){
-      var arr = prMap['puntiRaccolta_'+pr.tipologiaUtenza];
-      if (arr==null) {
-        arr = [];
-        prMap['puntiRaccolta_'+pr.tipologiaUtenza] = arr;
+      for (var i = 0; i < pr.utenzaArea.length; i++) {
+        var ua = pr.utenzaArea[i];
+        ua.colore = colorMap[ua.tipologiaUtenza + '--'+ pr.tipologiaPuntiRaccolta];
       }
-      arr.push(pr);
+//      var arr = prMap['puntiRaccolta_'+pr.tipologiaUtenza];
+//      if (arr==null) {
+//        arr = [];
+//        prMap['puntiRaccolta_'+pr.tipologiaUtenza] = arr;
+//      }
+//      arr.push(pr);
+//      if (pr.orarioApertura) {
+//        var arrCal = prCalMap['puntiRaccoltaCalendar_'+pr.tipologiaUtenza]; 
+//        if (arrCal == null) {
+//          arrCal = [];
+//          prCalMap['puntiRaccoltaCalendar_'+pr.tipologiaUtenza] = arrCal;
+//        }
+//        pr.colore = colorMap[pr.tipologiaUtenza + '--'+ pr.tipologiaPuntiRaccolta];
+//        arrCal.push(pr);
+//      }
       
-      if (pr.orarioApertura) {
-        var arrCal = prCalMap['puntiRaccoltaCalendar_'+pr.tipologiaUtenza]; 
-        if (arrCal == null) {
-          arrCal = [];
-          prCalMap['puntiRaccoltaCalendar_'+pr.tipologiaUtenza] = arrCal;
-        }
-        pr.colore = colorMap[pr.tipologiaUtenza + '--'+ pr.tipologiaPuntiRaccolta];
-        arrCal.push(pr);
-      }
     });
-    for (var key in prMap) {
-      data[key] = prMap[key];
-    }
-    for (var key in prCalMap) {
-      data[key] = prCalMap[key];
-    }
+//    for (var key in prMap) {
+//      data[key] = prMap[key];
+//    }
+//    for (var key in prCalMap) {
+//      data[key] = prCalMap[key];
+//    }
 
     return data;
   }
@@ -67,26 +80,49 @@ angular.module('rifiuti.services.data', [])
     profileData.riciclabolario = completeData.riciclabolario;
     profileData.categorie = completeData.categorie;
     if (profili) {
+      var map = {};
       profili.forEach(function(p) {
         profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza] = [];
         profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza] = [];
       });
       profili.forEach(function(p) {
-        completeData['puntiRaccolta_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
-          if (Utili.belongsTo(pr,p) && profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1) {
-            if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
-            profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].push(pr);
+        completeData.puntiRaccolta.forEach(function(pr) {
+          var prKey = pr.tipologiaPuntiRaccolta +' '+pr.dettaglioIndirizzo;
+          for (var i = 0; i < pr.utenzaArea.length;i++) {
+            var ua = pr.utenzaArea[i];
+            if (ua.tipologiaUtenza !== p.utenza.tipologiaUtenza) continue;
+            
+            if (Utili.belongsTo(pr,ua.area,p) && !map[prKey + ua.tipologiaUtenza]) {
+              var newPr = angular.copy(pr);
+              delete newPr.utenzaArea;
+              newPr.area = ua.area;
+              newPr.tipologiaUtenza = ua.tipologiaUtenza;
+              newPr.colore = ua.colore;
+              profileData['puntiRaccolta_'+ua.tipologiaUtenza].push(newPr);
+              map[prKey + ua.tipologiaUtenza] = true;
+              
+              if (newPr.orarioApertura) {
+                newPr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
+                profileData['puntiRaccoltaCalendar_'+ua.tipologiaUtenza].push(newPr);
+              }
+            }
           }
         });
-        if (completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza]) {
-          completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
-            if (Utili.belongsTo(pr,p) && profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1)
-            {
-              if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
-              profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].push(pr);
-            }
-          });
-        }
+//        completeData['puntiRaccolta_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
+//          if (Utili.belongsTo(pr,p) && profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1) {
+//            if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
+//            profileData['puntiRaccolta_'+p.utenza.tipologiaUtenza].push(pr);
+//          }
+//        });
+//        if (completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza]) {
+//          completeData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].forEach(function(pr) {
+//            if (Utili.belongsTo(pr,p) && profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].indexOf(pr) == -1)
+//            {
+//              if (pr.orarioApertura) pr.orarioApertura.forEach(function(cal){Utili.expandOrarioApertura(cal)});
+//              profileData['puntiRaccoltaCalendar_'+p.utenza.tipologiaUtenza].push(pr);
+//            }
+//          });
+//        }
       });
     }
     localStorage.profileData = JSON.stringify(profileData);
@@ -96,7 +132,7 @@ angular.module('rifiuti.services.data', [])
     var deferred = $q.defer();
     JSZipUtils.getBinaryContent(url, function(err, data) {
       if(err) {
-        deferred.reject(err); // or handle err
+        deferred.reject(false); // or handle err
       }
       var zip = new JSZip(data);
       var jsons = zip.filter(function(relativePath, file) {
@@ -163,14 +199,56 @@ angular.module('rifiuti.services.data', [])
     return deferred.promise;
   };
   
+  var getDataURL = function(remote) {
+    if (remote) {
+      if (USE_DRAFT) {
+        return ENDPOINT_URL+'/draft/'+APP_ID+'/zip';
+      } else {
+        return ENDPOINT_URL+'/'+APP_ID+'/zip';
+      }
+    } else {
+      return LOCAL_DATA_URL;
+    }
+  }
+
+  var doWithVersion = function(v, remote) {
+    var storedVersion = localStorage.version;
+    if (storedVersion && storedVersion >= v) return;
+    
+    process(getDataURL(remote)).then(function(result){
+      if (result) localStorage.version = v;
+    });
+  }
+  
   return {
     get : get,
-    setDataURL: function(url) {
-      dataURL = url;
-    },
-    updataProfiles: function(newProfiles) {
+    updateProfiles: function(newProfiles) {
       profili = newProfiles;
       updateProfileData();
+    },
+    checkVersion: function() {
+      
+      $http.get(VERSION_URL)
+      .success(function(data) {
+        var obj = JSON.parse(data);
+        if (obj.version) {
+          doWithVersion(obj.version, true);
+        } else {
+          doWithVersion(DATA_VERSION);
+        }
+      })
+      .error(function(e) {
+          doWithVersion(DATA_VERSION);
+      });
+      // TODO
+      // - check data version online if available
+      // - else check data version from global var
+      // - if version is newer than that in local props, update data and profiles from web or from local file
+    }, 
+    reset: function() {
+      // TODO
+      // - clean profileData, objectData, version
+      // - check version
     },
     getSync : function(key) {
       return profileData[key];
