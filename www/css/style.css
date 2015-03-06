@@ -442,7 +442,7 @@
 }
 
 .fixed-height {
-    height: 44px;
+    height: 49px;
 }
 
 .max-width {
@@ -537,35 +537,6 @@
     width: 5px;
 }
 
-.wrap-title {}
-
-.main-title-center {
-    display: block;
-    position: absolute;
-    padding-left: 3px;
-    width: 180px;
-    text-align: left
-}
-
-.main-title {
-    display: block;
-    position: absolute;
-    padding-left: 3px;
-    top: -5px;
-    width: 280px;
-    text-align: left
-}
-
-.sub-title {
-    display: block;
-    position: absolute;
-    padding-left: 3px;
-    top: 10px;
-    width: 280px;
-    text-align: left;
-    font-size: 13px;
-}
-
 .nav-bar-title {
     display: table;
     height: 100%;
@@ -574,7 +545,7 @@
 .nav-title {
     display: table-cell;
     vertical-align: middle;
-    line-height: 1.1;
+    line-height: 1.2;
 }
 
 .nav-title .nav-title-single {}
@@ -632,5 +603,46 @@
 }
 
 .nowrap {
-    white-space: nowrap
+    white-space: nowrap;
+}
+
+/* PROFILE */
+.profile {
+    padding: 10px 10px 0 10px;
+    background-color: #eeeeee !important;
+}
+
+.profile .profile-block {
+    padding-top: 20px;
+}
+
+.profile .profile-block:first-child {
+    padding-top: 0;
+}
+
+.profile .profile-title {
+    font-weight: bold;
+}
+
+.profile .profile-block p {
+    padding-top: 5px;
+}
+
+.profile .profile-name input {
+    background-color: #eeeeee;
+    border: none;
+    border-bottom: thin solid #cccccc;
+    padding: 0;
+}
+
+.profile .profile-types .profile-type {
+    padding: 5px 0;
+}
+
+.profile .profile-types .profile-type span {
+    padding-left: 5px;
+}
+
+.profile .profile-where select {
+    width: 100%;
 }

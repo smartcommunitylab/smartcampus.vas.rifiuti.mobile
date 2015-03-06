@@ -44,5 +44,62 @@
             </label>
             <p class="low-padding" ng-show="!editMode">{{profilo.area.localita}}</p>
         </div>
+
+        <!-- WEB STYLE -->
+        <!--<div class="profile-block profile-name">
+            <div class="profile-title">{{"Nome del profilo"|translate}}</div>
+            <input type="text" ng-model="profilo.name" placeholder="Nome del profilo" ng-show="editMode">
+            <p class="" ng-show="!editMode">{{profilo.name}}</p>
+        </div>
+
+        <div class="profile-block profile-types">
+            <div class="profile-title">{{"Tipo di utenza"|translate}}
+                <a ng-click="help()"><img ng-src="img/ic_help.png" class="standard-size" style="vertical-align:middle;" />
+                </a>
+            </div>
+            <div class="" ng-show="editMode">
+                <div class="profile-type" ng-repeat="item in tipologiaUtenza">
+                    <input type="radio" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item"><span class="">{{item.profilo}}</span>
+                </div>
+            </div>
+            <p class="" ng-show="!editMode">{{profilo.utenza.profilo|translate}}</p>
+        </div>
+
+        <div class="profile-block profile-where">
+            <div class="profile-title">{{"Comune o Località"|translate}}</div>
+            <div class="">
+                <select class="" ng-model="profilo.area" ng-options="item.localita for item in aree" ng-show="editMode">
+                    <option value="">{{"Selezionare"|translate}}</option>
+                </select>
+            </div>
+            <p class="" ng-show="!editMode">{{profilo.area.localita}}</p>
+        </div>-->
+
+        <!-- IONIC STYLE -->
+        <!--<div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">{{"Nome del profilo"|translate}}</span>
+                <input type="search" ng-show="editMode" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light" />
+                <p ng-show="!editMode">{{profilo.name}}</p>
+            </label>
+
+            <div class="item">
+                <span class="input-label">{{"Tipo di utenza"|translate}} <a ng-click="help()"><img ng-src="img/ic_help.png" class="standard-size" style="vertical-align:middle;" /></a></span>
+                <div class="list" ng-show="editMode">
+                    <ion-radio ng-repeat="item in tipologiaUtenza" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item">{{item.profilo}}</ion-radio>
+                </div>
+                <p ng-show="!editMode">{{profilo.utenza.profilo|translate}}</p>
+            </div>
+
+            <div class="item">
+                <span class="input-label">{{"Comune o Località"|translate}}</span>
+                <label class="item item-input item-select fixed-height" ng-show="editMode">
+                    <select ng-model="profilo.area" ng-selected="profilo.area" ng-options="item.localita for item in aree">
+                        <option value="">{{"Selezionare"|translate}}</option>
+                    </select>
+                </label>
+                <p ng-show="!editMode">{{profilo.area.localita}}</p>
+            </div>
+        </div>-->
     </ion-content>
 </ion-view>
