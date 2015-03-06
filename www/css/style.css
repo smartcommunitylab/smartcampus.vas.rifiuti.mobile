@@ -594,6 +594,11 @@
 }
 */
 
+.nav-bar-title {
+    position: absolute;
+    height: 100%;
+}
+
 .nav-title {
     line-height: 1em;
     position: relative;
