@@ -566,7 +566,6 @@
     font-size: 13px;
 }
 
-/*
 .nav-bar-title {
     display: table;
     height: 100%;
@@ -575,26 +574,20 @@
 .nav-title {
     display: table-cell;
     vertical-align: middle;
+    line-height: 1.1;
 }
 
-.nav-title .nav-title-single {
-    line-height: 44px;
-}
+.nav-title .nav-title-single {}
 
-.nav-title .nav-title-main {
-    line-height: 1 !important;
-}
+.nav-title .nav-title-main {}
 
 .nav-title .nav-title-sub {
-    line-height: 1 !important;
     font-size: smaller;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-*/
-
-.nav-bar-title {
+/*.nav-bar-title {
     position: absolute;
     height: 100%;
 }
@@ -615,7 +608,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
+}*/
 
 .centre-displayed {
     display: block;
