@@ -16,37 +16,10 @@ angular.module('rifiuti.services.utili', [])
           return DOW[day];
   };
 
-  var iconType = function(tipologia) {
-      var icona;
-      switch (tipologia) {
-        case 'Isola ecologica':
-          icona = 'isola_eco';
-          break;
-        case 'CRM':
-          icona = 'crm';
-          break;
-        case 'CRZ':
-          icona = 'crz';
-          break;
-        case 'Farmacia':
-          icona = 'farmacia';
-          break;
-        case 'Rivenditore':
-          icona = 'rivenditore';
-          break;
-        default:
-          if (tipologia.indexOf('Porta a porta')==0) {
-            icona = 'porta_a_porta';
-          }
-          break;
-      }
-      return icona;
-  }; 
-  
   var format = function(date) {
     return date.getFullYear()+'-'+(date.getMonth() < 9 ? '0'+(date.getMonth()+1):(date.getMonth()+1))+'-'+(date.getDate() < 10 ? '0'+date.getDate():date.getDate());
   };
-;  
+
   var generateDOWDates = function(da, a, dow, ecc) {
       var res = [];
       var currFrom = new Date(da.getTime());
@@ -60,38 +33,44 @@ angular.module('rifiuti.services.utili', [])
         currFrom.setDate(currFrom.getDate()+7);
       }
       return res;
-    };
+  };
   
-    /**
-     * generate a list of date string for the specified period, date, definition, and list of exceptions (format dd/MM[/yyyy])
-     * definition is space-separated elements, where element is either DOW (e.g., lunedi) or date (format dd/MM[/yyyy])
-     */
-    var calToDates = function(da, a, il, ecc) {
-      if (!il) return [];
-      
-      var arr = il.split(' ');
-      var dates = [];  
-      var eccDates = calToDates(da, a, ecc, null);
-      for (var i = 0; i < arr.length; i++) {
-        var elem = arr[i];
-        var idx = giorniC.indexOf(elem);          
-        // DOW case
-        if (idx >= 0) {
-          dates = dates.concat(generateDOWDates(da, a, DOW[giorni[idx]], eccDates));
-        // date case
-        } else {
-          var dElems = elem.split('/');
-          if (dElems.length < 2 || dElems.length > 3) return;
-          if (dElems.length == 2) dElems.push(''+da.getFullYear());
-          var dStr = format(new Date(dElems[2], dElems[1], dElems[0]));
-          if (!ecc || ecc.indexOf(dStr) < 0) dates.push(dStr);
-        }
-      }
-      dates.sort();
-      return dates;
-    };
+  /**
+   * generate a list of date string for the specified period, date, definition, and list of exceptions (format dd/MM[/yyyy])
+   * definition is space-separated elements, where element is either DOW (e.g., lunedi) or date (format dd/MM[/yyyy])
+   */
+  var calToDates = function(da, a, il, ecc) {
+    if (!il) return [];
 
+    var arr = il.split(' ');
+    var dates = [];  
+    var eccDates = calToDates(da, a, ecc, null);
+    for (var i = 0; i < arr.length; i++) {
+      var elem = arr[i];
+      var idx = giorniC.indexOf(elem);          
+      // DOW case
+      if (idx >= 0) {
+        dates = dates.concat(generateDOWDates(da, a, DOW[giorni[idx]], eccDates));
+      // date case
+      } else {
+        var dElems = elem.split('/');
+        if (dElems.length < 2 || dElems.length > 3) return;
+        if (dElems.length == 2) dElems.push(''+da.getFullYear());
+        var dStr = format(new Date(dElems[2], dElems[1]-1, dElems[0]));
+        if (!ecc || ecc.indexOf(dStr) < 0) dates.push(dStr);
+      }
+    }
+    dates.sort();
+    return dates;
+  };
+
+
+  var iconType = function(tipologia) {
+    if (tipologia in ICON_POINT_MAP) return ICON_POINT_MAP[tipologia];
+    return null;
+  }; 
   
+
   return {
     jsDOWToShortText: function(dow) {
       return giorni[dow];
@@ -127,27 +106,8 @@ angular.module('rifiuti.services.utili', [])
     }, 
 
     getRGBColor: function(colore) {
-      switch (colore) {
-        case 'ARANCIONE':
-          return 'orange';
-        //TODO: manca l'azzurro, e per ora ho uso la versione BLUE
-        case 'AZZURRO':
-          return 'blue';
-        case 'BLU':
-          return 'blue';
-        case 'GIALLO':
-          return 'yellow';
-        case 'MARRONE':
-          return 'brown';
-        case 'ROSSO':
-          return 'red';
-        case 'VERDE':
-          return 'green';
-        case 'VERDE SCURO':
-          return 'darkgreen';
-        default:
-          return 'grey';
-      }
+      if (colore in ICON_COLOR_MAP) return ICON_COLOR_MAP[colore];
+      return 'grey';
     },
     iconFromRegola: function(regola) {
       return this.icon(regola.tipologiaPuntoRaccolta, regola.colore);
