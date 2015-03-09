@@ -8,12 +8,12 @@
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
-            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
 
-    <ion-content class="contatti-content background-grey-light" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
-        <div class="expandable-list-items" ng-repeat="item in contatti">
+    <ion-content class="expandable-list-item" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+        <div class="expandable-list-item" ng-repeat="item in contatti">
             <a class="hidden-link" ng-href="#app/contatti/{{$index}}">
                 <div class="row background-grey-middle">
                     <div class="col" ng-if="item.ufficio">{{item.ufficio}}</div>

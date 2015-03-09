@@ -8,32 +8,32 @@
 
     <ion-nav-buttons side="left">
         <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
-            <img ng-if="!noteSelected" class="img-menu" src="img/ic_launcher.png">
+            <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
 
-    <ion-tabs class="tabs-balanced contatti-tabs">
+    <ion-tabs class="tabs-balanced tabs-100r">
         <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
             <ion-view>
-                <ion-content class="background-grey-light" scroll="false">
-                    <div class="expandable-list-items" ng-repeat="item in raccolta">
-                        <div class="row row-center background-grey-middle" ng-click="item.aperto=!item.aperto">
+                <ion-content class="expandable-list-items" scroll="false">
+                    <div class="expandable-list-item" ng-repeat="item in raccolta">
+                        <div class="row row-center expandable-list-item-header" ng-click="item.aperto=!item.aperto">
                             <div class="col col-10">
                                 <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
                             </div>
                             <div class="col col-80">
-                                <div class="row only-bottom-vertical-padding expandable-list-title">
-                                    <div class="col no-vertical-padding">
+                                <div class="row expandable-list-item-title">
+                                    <div class="col">
                                         {{item.tipologiaPuntoRaccolta|translate}}
                                     </div>
                                 </div>
-                                <div class="row only-bottom-vertical-padding">
-                                    <div class="col no-vertical-padding">
+                                <div class="row expandable-list-item-subtitle">
+                                    <div class="col">
                                         {{item.tipologiaRaccolta|translate}}
                                     </div>
                                 </div>
-                                <div class="row no-vertical-padding expandable-list-desc">
-                                    <div class="col no-vertical-padding">
+                                <div class="row expandable-list-item-desc">
+                                    <div class="col">
                                         {{item.infoRaccolta|translate}}
                                     </div>
                                 </div>

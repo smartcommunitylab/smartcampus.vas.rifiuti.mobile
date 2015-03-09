@@ -8,6 +8,49 @@
     height: 800px;
 }
 
+.nav-button-app-logo {
+    margin-left: 5px;
+    height: 30px;
+    width: 30px;
+}
+
+.navigation-drawer {
+    background-color: #3c3c3b;
+}
+
+.navigation-drawer ion-list ion-item {
+    background-color: #3c3c3b !important;
+    color: white !important;
+}
+
+.navigation-drawer ion-list ion-item a {
+    background-color: #3c3c3b !important;
+    padding: 0 !important;
+}
+
+.navigation-drawer ion-list ion-item i {
+    margin-right: 10px;
+}
+
+.navigation-drawer ion-list ion-item img {
+    width: 30px;
+    height: 30px;
+}
+
+.navigation-drawer ion-list.profiles-list ion-item {
+    border: 0;
+    padding: 0;
+}
+
+.bar-100r {
+    background-color: #63ac3d !important;
+}
+
+.tabs-100r .tabs {
+    background-color: #47772b;
+    border-color: #47772b;
+}
+
 .bar-back {
     padding-left: 35px;
     padding-bottom: 10px;
@@ -43,12 +86,6 @@
     width: 30px;
 }
 
-.img-menu {
-    margin-left: 5px;
-    height: 30px;
-    width: 30px;
-}
-
 .bar-button::after {
     position: relative;
 }
@@ -80,10 +117,6 @@
     background-color: #cecece !important;
 }
 
-.background-grey-dark {
-    background-color: #3c3c3b !important;
-}
-
 .background-white {
     background-color: white;
     color: black;
@@ -110,20 +143,6 @@
 
 .text-white {
     color: white !important;
-}
-
-.menu-list ion-item,
-.menu-list ion-item a {
-    background-color: #3c3c3b !important;
-    color: white !important;
-}
-
-.menu-list ion-item a {
-    padding: 0 !important;
-}
-
-.menu-list ion-item i {
-    margin-right: 10px;
 }
 
 .menu-edit-button {
@@ -153,8 +172,6 @@
 .home-tabs .tabs {
     height: 30px;
     line-height: 30px;
-    background-color: #47772b;
-    border-color: #47772b;
 }
 
 .home-tabs .tab-item {
@@ -225,29 +242,36 @@
     left: auto;
 }
 
-.contatti-tabs .tabs {
-    background-color: #47772b !important;
+.expandable-list-items {
+    background-color: #eeeeee;
 }
 
-.contatti-title {
-    background-color: #cecece !important;
+.expandable-list-item:not(:first-child) {
+    padding-top: 1px;
 }
 
-.contatti-title h1,
-.expandable-list-title {
-    color: #47772b !important;
-    text-align: left !important;
+.expandable-list-item-header {
+    background-color: #cecece;
+}
+
+.expandable-list-item-title {
+    color: #47772b;
     font-weight: bold;
+    font-size: larger;
+    padding-bottom: 0;
+}
+
+.expandable-list-item-subtitle {
+    padding-bottom: 0;
+}
+
+.expandable-list-item-desc {
+    line-height: 1;
 }
 
 .note-text {
     color: #BFBFBF;
     text-align: center;
-}
-
-.expandable-list-desc {
-    font-size: 10px;
-    line-height: 12px;
 }
 
 .bottom-border {
@@ -263,14 +287,6 @@
 
 .contatti-icon-color {
     color: #47772b !important;
-}
-
-.contatti-content {
-    margin-top: 0px;
-}
-
-.expandable-list-items {
-    padding-bottom: 1px;
 }
 
 .info-button {
