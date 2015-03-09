@@ -19,7 +19,8 @@
         </button>
     </ion-nav-buttons>
 
-    <ion-content class="background-grey-light" has-bouncing="false">
+    <!-- OLD STYLE -->
+    <!--<ion-content class="background-grey-light" has-bouncing="false">
         <div class="high-padding profili-titolo">{{"Nome del profilo"|translate}}</div>
         <div class="item item-input-inset no-border background-grey-light" ng-show="editMode">
             <input type="search" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light">
@@ -43,10 +44,11 @@
                 </select>
             </label>
             <p class="low-padding" ng-show="!editMode">{{profilo.area.localita}}</p>
-        </div>
+        </div>-->
 
-        <!-- WEB STYLE -->
-        <!--<div class="profile-block profile-name">
+    <!-- WEB STYLE -->
+    <ion-content class="profile" has-bouncing="false">
+        <div class="profile-block profile-name">
             <div class="profile-title">{{"Nome del profilo"|translate}}</div>
             <input type="text" ng-model="profilo.name" placeholder="Nome del profilo" ng-show="editMode">
             <p class="" ng-show="!editMode">{{profilo.name}}</p>
@@ -68,12 +70,14 @@
         <div class="profile-block profile-where">
             <div class="profile-title">{{"Comune o Località"|translate}}</div>
             <div class="">
-                <select class="" ng-model="profilo.area" ng-options="item.localita for item in aree" ng-show="editMode">
-                    <option value="">{{"Selezionare"|translate}}</option>
-                </select>
+                <label class="item item-input item-select" ng-show="editMode">
+                    <select class="" ng-model="profilo.area" ng-options="item.localita for item in aree" ng-show="editMode">
+                        <option value="">{{"Selezionare"|translate}}</option>
+                    </select>
+                </label>
             </div>
             <p class="" ng-show="!editMode">{{profilo.area.localita}}</p>
-        </div>-->
+        </div>
 
         <!-- IONIC STYLE -->
         <!--<div class="list">

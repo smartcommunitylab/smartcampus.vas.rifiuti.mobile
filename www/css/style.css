@@ -605,11 +605,12 @@
 .nowrap {
     white-space: nowrap;
 }
-
 /* PROFILE */
+
 .profile {
     padding: 10px 10px 0 10px;
     background-color: #eeeeee !important;
+    font-size: 16px;
 }
 
 .profile .profile-block {
@@ -633,6 +634,7 @@
     border: none;
     border-bottom: thin solid #cccccc;
     padding: 0;
+    font-size: 16px;
 }
 
 .profile .profile-types .profile-type {
@@ -643,6 +645,17 @@
     padding-left: 5px;
 }
 
+.profile .profile-where .profile-title {
+    padding-bottom: 5px;
+}
+
+.profile .profile-where label,
+.profile .profile-where label select {
+    height: 52px;
+    background-color: #eeeeee;
+}
+
 .profile .profile-where select {
     width: 100%;
+    font-size: 16px;
 }
