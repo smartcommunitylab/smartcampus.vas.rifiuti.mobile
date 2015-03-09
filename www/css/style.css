@@ -13,6 +13,7 @@
     height: 30px;
     width: 30px;
 }
+/* Navigation drawer and menus */
 
 .navigation-drawer {
     background-color: #3c3c3b;
@@ -41,14 +42,89 @@
     border: 0;
     padding: 0;
 }
+/* Bar and buttons */
 
 .bar-100r {
     background-color: #63ac3d !important;
 }
 
+.bar-100r .btn img {
+    width: 35px;
+    height: 35px;
+}
+
+.bar-100r .btn-edit {
+    left: auto;
+}
+
+.bar-100r .btn-delete {
+    left: auto;
+}
+
+.bar-100r .btn-variable::after {
+    position: relative;
+}
+/* Tabs */
+
 .tabs-100r .tabs {
     background-color: #47772b;
     border-color: #47772b;
+}
+/* Home - Tipi di rifiuti */
+
+.home-tipidirifiuti {
+    background-color: #eeeeee;
+}
+
+.home-searchbar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.home-searchbar button {
+    font-size: 20px;
+}
+
+.home-grid {
+    height: 80px;
+    text-align: center;
+    line-height: 14px;
+    /*font-size: 12px;*/
+}
+
+.home-grid img {
+    height: 40px;
+    margin: 0 auto;
+    display: block;
+}
+
+.home-grid:hover {
+    background-color: #8de058;
+}
+/* Home - Notes */
+
+.home-notes {
+    background-color: #eeeeee;
+    background-position: center;
+}
+
+.home-notes .home-notes-none {
+    position: relative;
+    color: #BFBFBF;
+    text-align: center;
+}
+
+.home-notes .home-notes-none img {
+    position: relative;
+}
+
+.home-notes .home-notes-item {
+    padding: 10px;
+    /*!important*/
+}
+
+.home-notes .home-notes-item.home-notes-item-selected {
+    background-color: #8de058;
 }
 
 .bar-back {
@@ -79,15 +155,6 @@
     margin-bottom: 10px;
     height: 50px;
     width: 50px;
-}
-
-.menu-size {
-    height: 30px;
-    width: 30px;
-}
-
-.bar-button::after {
-    position: relative;
 }
 
 .border-underline {
@@ -122,18 +189,6 @@
     color: black;
 }
 
-.background-note {
-    /*background-image: url("");
-    background-repeat: no-repeat;*/
-
-    background-position: center;
-    background-color: #eeeeee;
-}
-
-.background-note-noimg {
-    background-color: #eeeeee;
-}
-
 .fill-div {
     display: block;
     height: 100%;
@@ -143,14 +198,6 @@
 
 .text-white {
     color: white !important;
-}
-
-.menu-edit-button {
-    left: -70px;
-}
-
-.menu-delete-button {
-    left: -35px;
 }
 
 .visible {
@@ -197,39 +244,6 @@
 }
 */
 
-.home-search-bar {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.home-search-bar button {
-    font-size: 20px;
-}
-
-.home-content {
-    background-color: #eeeeee;
-}
-
-.home-grid {
-    background-color: #eeeeee;
-    height: 80px;
-    font-family: sans-serif;
-    /*font-size: 12px;*/
-
-    text-align: center;
-    line-height: 14px;
-}
-
-.home-grid img {
-    height: 40px;
-    margin: 0 auto;
-    display: block;
-}
-
-.home-grid:hover {
-    background-color: #8de058;
-}
-
 .centred-text {
     text-align: center;
 }
@@ -269,10 +283,7 @@
     line-height: 1;
 }
 
-.note-text {
-    color: #BFBFBF;
-    text-align: center;
-}
+.note-text {}
 
 .bottom-border {
     border-style: solid !important;
