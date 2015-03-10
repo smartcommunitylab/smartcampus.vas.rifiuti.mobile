@@ -12,10 +12,10 @@
         </button>
     </ion-nav-buttons>
 
-    <ion-content class="expandable-list-item" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+    <ion-content class="expandable-list-items" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
         <div class="expandable-list-item" ng-repeat="item in contatti">
             <a class="hidden-link" ng-href="#app/contatti/{{$index}}">
-                <div class="row background-grey-middle">
+                <div class="row expandable-list-item-header">
                     <div class="col" ng-if="item.ufficio">{{item.ufficio}}</div>
                     <div class="col" ng-if="item.ragioneSociale">{{item.ragioneSociale}}</div>
                 </div>

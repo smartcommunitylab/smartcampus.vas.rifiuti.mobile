@@ -13,6 +13,42 @@
     height: 30px;
     width: 30px;
 }
+/* Expandable list */
+
+.expandable-list-items {
+    background-color: #eeeeee;
+}
+
+.expandable-list-item:not(:first-child) {
+    padding-top: 1px;
+}
+
+.expandable-list-item-header {
+    background-color: #cecece;
+}
+
+.expandable-list-item-title {
+    color: #47772b;
+    font-weight: bold;
+    font-size: larger;
+    padding-bottom: 0;
+}
+
+.expandable-list-item-subtitle {
+    padding-bottom: 0;
+}
+
+.expandable-list-item-desc {
+    line-height: 1;
+}
+
+.expandable-list-item-content div > div.sub {
+    text-align: right;
+}
+
+.expandable-list-item-empty {
+    background-color: #eeeeee;
+}
 /* Navigation drawer and menus */
 
 .navigation-drawer {
@@ -478,6 +514,35 @@
     text-decoration: none;
     color: white;
 }
+/* Contatti */
+
+.contatto {
+    background-color: #eeeeee;
+}
+
+.contatto .row {
+    padding: 10px;
+    border-style: solid !important;
+    border-bottom-width: 1px;
+    border-color: #cecece;
+    margin-bottom: 5px;
+}
+
+.contatto button.icon {
+    color: #47772b !important;
+    position: relative;
+}
+
+.contatto button.icon img {
+    width: 35px;
+    height: 35px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
 
 .standard-size {
     height: 35px;
@@ -558,41 +623,6 @@
 
 .nav-bar-buttons-alignment {
     left: auto;
-}
-
-.expandable-list-items {
-    background-color: #eeeeee;
-}
-
-.expandable-list-item:not(:first-child) {
-    padding-top: 1px;
-}
-
-.expandable-list-item-header {
-    background-color: #cecece;
-}
-
-.expandable-list-item-title {
-    color: #47772b;
-    font-weight: bold;
-    font-size: larger;
-    padding-bottom: 0;
-}
-
-.expandable-list-item-subtitle {
-    padding-bottom: 0;
-}
-
-.expandable-list-item-desc {
-    line-height: 1;
-}
-
-.expandable-list-item-content div > div.sub {
-    text-align: right;
-}
-
-.expandable-list-item-empty {
-    background-color: #eeeeee;
 }
 
 .note-text {}

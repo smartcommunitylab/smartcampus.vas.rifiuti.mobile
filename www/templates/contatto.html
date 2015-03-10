@@ -1,83 +1,83 @@
 <ion-view>
-    <ion-nav-title>
-        <div class="nav-title">
-            <div class="nav-title-main" ng-if="contatto.ufficio">{{contatto.ufficio}}</div>
-            <div class="nav-title-main" ng-if="contatto.ragioneSociale">{{contatto.ragioneSociale}}</div>
-            <div class="nav-title-sub">{{selectedProfile.name}}</div>
-        </div>
-    </ion-nav-title>
+  <ion-nav-title>
+    <div class="nav-title">
+      <div class="nav-title-main" ng-if="contatto.ufficio">{{contatto.ufficio}}</div>
+      <div class="nav-title-main" ng-if="contatto.ragioneSociale">{{contatto.ragioneSociale}}</div>
+      <div class="nav-title-sub">{{selectedProfile.name}}</div>
+    </div>
+  </ion-nav-title>
 
-    <ion-nav-buttons side="left">
-        <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
-            <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
+  <ion-nav-buttons side="left">
+    <button ng-click="back()" class="row button button-clear button-light icon-left ion-ios7-arrow-back">
+      <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="contatto" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
+    <div class="row">
+      <div class="col">
+        {{contatto.descrizione}}
+      </div>
+    </div>
+    <a class="hidden-link" ng-click="clickLink('http://maps.google.com?daddr='+contatto.coords)" ng-if="!!contatto.indirizzo">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_directions.png">
         </button>
-    </ion-nav-buttons>
-
-    <ion-content class="contatti-content background-grey-light" has-bouncing="false" delegate-handle="mainScroll" on-scroll-complete="mainScrollResize()">
-        <div class="row high-padding">
-            <div class="col background-grey-light">
-                {{contatto.descrizione}}
-            </div>
-        </div>
-        <a class="hidden-link" ng-click="clickLink('http://maps.google.com?daddr='+contatto.coords)" ng-if="!!contatto.indirizzo">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_directions.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.indirizzo}}</div>
-            </div>
-        </a>
-        <div class="row bottom-border high-padding" ng-if="!!contatto.orarioUfficio">
-            <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                <img src="img/calendar.png" class="standard-size absolute-center">
-            </button>
-            <div class="col col-90 col-center">{{contatto.orarioUfficio}}</div>
-        </div>
-        <a class="hidden-link" ng-click="clickLink(contatto.sitoIstituzionale)" ng-if="!!contatto.sitoIstituzionale">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_web.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.sitoIstituzionale}}</div>
-            </div>
-        </a>
-        <a class="hidden-link" ng-click="clickLink(contatto.sitoWeb)" ng-if="!!contatto.sitoWeb">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_web.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.sitoWeb}}</div>
-            </div>
-        </a>
-        <a class="hidden-link" ng-click="clickLink('tel:'+contatto.telefono)" ng-if="!!contatto.telefono">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_call.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.telefono}}</div>
-            </div>
-        </a>
-        <div class="row bottom-border high-padding" ng-if="!!contatto.fax">
-            <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                <img src="img/ic_fax.png" class="standard-size absolute-center">
-            </button>
-            <div class="col col-90 col-center">{{contatto.fax}}</div>
-        </div>
-        <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.email)" ng-if="!!contatto.email">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_mail.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.email}}</div>
-            </div>
-        </a>
-        <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.pec)" ng-if="!!contatto.pec">
-            <div class="row bottom-border high-padding">
-                <button class="col icon button-balanced contatti-icon-color button-clear position-relative">
-                    <img src="img/ic_pec.png" class="standard-size absolute-center">
-                </button>
-                <div class="col col-90 col-center">{{contatto.pec}}</div>
-            </div>
-        </a>
-    </ion-content>
+        <div class="col col-90 col-center">{{contatto.indirizzo}}</div>
+      </div>
+    </a>
+    <div class="row" ng-if="!!contatto.orarioUfficio">
+      <button class="col icon button-balanced button-clear">
+        <img src="img/calendar.png">
+      </button>
+      <div class="col col-90 col-center">{{contatto.orarioUfficio}}</div>
+    </div>
+    <a class="hidden-link" ng-click="clickLink(contatto.sitoIstituzionale)" ng-if="!!contatto.sitoIstituzionale">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_web.png">
+        </button>
+        <div class="col col-90 col-center">{{contatto.sitoIstituzionale}}</div>
+      </div>
+    </a>
+    <a class="hidden-link" ng-click="clickLink(contatto.sitoWeb)" ng-if="!!contatto.sitoWeb">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_web.png">
+        </button>
+        <div class="col col-90 col-center">{{contatto.sitoWeb}}</div>
+      </div>
+    </a>
+    <a class="hidden-link" ng-click="clickLink('tel:'+contatto.telefono)" ng-if="!!contatto.telefono">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_call.png">
+        </button>
+        <div class="col col-90 col-center">{{contatto.telefono}}</div>
+      </div>
+    </a>
+    <div class="row" ng-if="!!contatto.fax">
+      <button class="col icon button-balanced button-clear">
+        <img src="img/ic_fax.png">
+      </button>
+      <div class="col col-90 col-center">{{contatto.fax}}</div>
+    </div>
+    <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.email)" ng-if="!!contatto.email">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_mail.png">
+        </button>
+        <div class="col col-90 col-center">{{contatto.email}}</div>
+      </div>
+    </a>
+    <a class="hidden-link" ng-click="clickLink('mailto:'+contatto.pec)" ng-if="!!contatto.pec">
+      <div class="row">
+        <button class="col icon button-balanced button-clear">
+          <img src="img/ic_pec.png">
+        </button>
+        <div class="col col-90 col-center">{{contatto.pec}}</div>
+      </div>
+    </a>
+  </ion-content>
 </ion-view>
