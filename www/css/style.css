@@ -410,6 +410,74 @@
     width: 100%;
     font-size: 16px;
 }
+/* SEGNALA */
+
+.segnala {
+    background-color: #eeeeee;
+}
+
+.segnala .segnala-desc {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.segnala .segnala-text-input {
+    border-style: none;
+    background-color: #eeeeee;
+    margin-top: 7px;
+}
+
+.segnala .segnala-text-input input {
+    background-color: #eeeeee;
+    border-bottom: #cecece !important;
+    border-bottom-style: solid !important;
+    border-bottom-width: thin !important;
+    font-size: 16px;
+}
+
+.segnala .segnala-photo,
+.segnala .segnala-position {
+    margin-top: 10px;
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 35px;
+}
+
+.segnala .segnala-photo button img,
+.segnala .segnala-position button img {
+    width: 35px;
+    height: 35px;
+}
+
+.segnala .segnala-image {
+    background-color: #cecece;
+    margin-left: 3%;
+    width: 94%;
+    height: 150px;
+}
+
+.segnala .segnala-image img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.segnala .segnala-position {
+    padding: 0;
+    margin-top: 1opx;
+}
+
+.segnala-send {
+    top: -15px;
+    height: 35px;
+    background-color: #47772b !important;
+}
+
+.segnala-send a {
+    text-decoration: none;
+    color: white;
+}
 
 .standard-size {
     height: 35px;
@@ -652,20 +720,6 @@
 
 .no-link-padding a {
     padding: 0 !important;
-}
-
-.segnala-descrizione {
-    font-size: 14px;
-    line-height: 17px;
-}
-
-.segnala-testo {
-    font-size: 17px;
-}
-
-.segnala-button {
-    top: -15px;
-    height: 35px;
 }
 
 .profili-titolo {

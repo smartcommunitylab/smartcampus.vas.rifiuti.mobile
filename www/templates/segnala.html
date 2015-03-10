@@ -12,33 +12,35 @@
         </button>
     </ion-nav-buttons>
 
-    <ion-content class="background-grey-light">
-        <div class="high-padding segnala-descrizione">
+    <ion-content class="segnala">
+        <div class="segnala-desc">
             {{"Invia"|translate}}
         </div>
-        <div class="item item-input-inset no-border background-grey-light" style="margin-top:7px">
-            <input type="search" ng-model="msg.text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}" class="border-underline background-grey-light" style="font-size:16px">
+        <div class="item item-input-inset segnala-text-input">
+            <input type="text" ng-model="msg.text" placeholder="{{'Inserisci qui il testo della segnalazione'|translate}}">
         </div>
-        <div class="row" ng-click="takePicture()" style="margin-top:10px">
-            <button style="background-image: url('img/ic_camera.png');background-size: 35px 35px; background-repeat: no-repeat; padding-right:25px;" class="button-clear"></button>
-            <div class="col segnala-testo" style="margin-top:7px">{{"Scatta una foto"|translate}}</div>
+        <div class="row segnala-photo" ng-click="takePicture()">
+            <button class="button-clear">
+                <img src="img/ic_camera.png" />
+            </button>
+            <div class="col">{{"Scatta una foto"|translate}}</div>
         </div>
-        <div ng-show="imgURI !== undefined" style="background-color:#cecece; margin-left:3%; width:94%" class="row" style="height:150px">
-            <img class="centre-displayed" ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+        <div ng-show="imgURI !== undefined" class="row segnala-image">
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
         </div>
-        <div class="row no-padding" style="margin-top:10px;" ng-click="toggleCheck()">
-            <div class="no-vertical-padding position-relative" style="margin-left:8px">
-                <img ng-src="{{checkboxImage}}" style="height:30px;width: 30px;" />
-            </div>
-            <div class="segnala-testo no-vertical-padding" style="margin-top:6px">
+        <div class="row segnala-position" ng-click="toggleCheck()">
+            <button class="button-clear">
+                <img ng-src="{{checkboxImage}}" />
+            </button>
+            <div>
                 {{"Allega la tua posizione"|translate}}
             </div>
         </div>
     </ion-content>
 
     <div class="bar bar-footer">
-        <button class="button button-balanced button-block background-green-dark segnala-button" ng-click="sendEmail()">
-            <a style="text-decoration:none; color:white">{{"Segnala!"|translate }}</a>
+        <button class="button button-balanced button-block segnala-send" ng-click="sendEmail()">
+            <a>{{"Segnala!"|translate }}</a>
         </button>
     </div>
 </ion-view>
