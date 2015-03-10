@@ -17,7 +17,8 @@
         </button>
     </ion-nav-buttons>
 
-    <ion-content class="background-grey-light" has-bouncing="false">
+    <!-- OLD STYLE -->
+    <!--<ion-content class="background-grey-light" has-bouncing="false">
         <div class="high-padding profili-titolo">{{"Nome del profilo" | translate}}</div>
         <div class="item item-input-inset no-border background-grey-light">
             <input type="search" ng-model="profilo.name" placeholder="{{'Nome del profilo'|translate}}" class="border-underline background-grey-light">
@@ -36,6 +37,36 @@
                     <option value="">{{"Selezionare" | translate}}</option>
                 </select>
             </label>
+        </div>
+    </ion-content>-->
+
+    <ion-content class="profile" has-bouncing="false">
+        <div class="profile-block profile-name">
+            <div class="profile-title">{{"Nome del profilo"|translate}}</div>
+            <input type="text" ng-model="profilo.name" placeholder="Nome del profilo">
+        </div>
+
+        <div class="profile-block profile-types">
+            <div class="profile-title">{{"Tipo di utenza"|translate}}
+                <a ng-click="help()"><img ng-src="img/ic_help.png" />
+                </a>
+            </div>
+            <div>
+                <div class="profile-type" ng-repeat="item in tipologiaUtenza">
+                    <input type="radio" ng-model="profilo.utenza" ng-change="updateLocations()" ng-value="item"><span class="">{{item.profilo}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-block profile-where">
+            <div class="profile-title">{{"Comune o Località"|translate}}</div>
+            <div class="">
+                <label class="item item-input item-select">
+                    <select class="" ng-model="profilo.area" ng-options="item.localita for item in aree">
+                        <option value="">{{"Selezionare"|translate}}</option>
+                    </select>
+                </label>
+            </div>
         </div>
     </ion-content>
 </ion-view>
