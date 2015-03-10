@@ -7,7 +7,7 @@
     </ion-nav-title>
 
     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon btn">
+        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
             <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
@@ -37,7 +37,7 @@
                     <div class="col col-80 expandable-list-item-title">
                         {{item.tipologiaPuntoRaccolta | translate}}
                     </div>
-                    <div class="col col-10 col-top a_right">
+                    <div class="col col-10 col-top sub">
                         <img ng-src="{{item.icon}}" width="25" height="25">
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <div class="col col-80">
                                 {{loc.dettaglioIndirizzo || loc.indirizzo}}
                             </div>
-                            <div class="col col-20 km" ng-if="loc.distance">
+                            <div class="col col-20 sub" ng-if="loc.distance">
                                 {{loc.distance | number:1}} Km
                             </div>
                         </div>

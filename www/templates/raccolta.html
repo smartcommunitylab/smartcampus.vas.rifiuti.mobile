@@ -15,9 +15,9 @@
     <ion-tabs class="tabs-balanced tabs-100r">
         <ion-tab title="{{'LISTA RIFIUTI'|translate}}">
             <ion-view>
-                <ion-content class="background-grey-light" has-bouncing="false">
-                    <ion-list class="background-grey-light">
-                        <ion-item ng-repeat="item in rifiuti" class="background-grey-light" ng-href="#/app/rifiuto/{{item.nome}}">
+                <ion-content class="tipodiraccolta" has-bouncing="false">
+                    <ion-list class="">
+                        <ion-item ng-repeat="item in rifiuti" class="" ng-href="#/app/rifiuto/{{item.nome}}">
                             {{item.nome|translate}}
                         </ion-item>
                     </ion-list>
@@ -59,14 +59,14 @@
                                 </div>
                             </div>
                             <div ng-show="item.aperto">
-                                <a ng-repeat="punto in item.punti" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{punto.dettaglioIndirizzo || punto.indirizzo}}">
-                                    <div class="row background-grey-light">
+                                <a ng-repeat="punto in item.punti" class="hidden-link expandable-list-item-content" ng-href="#/app/puntoDiRaccolta/{{punto.dettaglioIndirizzo || punto.indirizzo}}">
+                                    <div class="row">
                                         <div class="col">
                                             {{punto.dettaglioIndirizzo || punto.indirizzo}}
                                         </div>
                                     </div>
                                 </a>
-                                <div class="row row-center background-grey-light nowrap" ng-show="!item.punti || item.punti.length==0">
+                                <div class="row row-center nowrap expandable-list-item-empty" ng-show="!item.punti || item.punti.length==0">
                                     {{'empty_elem'|translate}}
                                 </div>
                             </div>

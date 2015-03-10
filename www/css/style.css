@@ -70,6 +70,30 @@
     background-color: #47772b;
     border-color: #47772b;
 }
+
+.home-tabs .tabs {
+    height: 30px;
+    line-height: 30px;
+}
+
+.home-tabs .tab-item {
+    font-size: 12px;
+}
+
+.home-tabs .has-tabs-top {
+    top: 74px;
+}
+/*
+.home-tabs.tabs-striped .tab-item-active,
+.home-tabs.tabs-striped .tab-item.active,
+.home-tabs.tabs-striped .tab-item.activated {
+    border-color: transparent !important;
+}
+
+.home-tabs.tabs-striped .tab-item + .tab-item:before {
+    border-left: 0;
+}
+*/
 /* Home - Tipi di rifiuti */
 
 .home-tipidirifiuti {
@@ -227,23 +251,164 @@
     background-color: #eeeeee;
 }
 
-.bar-back {
-    padding-left: 35px;
-    padding-bottom: 10px;
-    background-image: url("../img/ic_launcher.png");
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    vertical-align: top;
+.puntodiraccolta .dettagli {
+    padding: 5px;
 }
 
-.bar-back-center {
-    padding-left: 35px;
+.puntodiraccolta .dettagli .pdr-dettaglio {
+    padding-left: 0;
+    text-decoration: bold;
+    white-space: nowrap;
+}
+
+.puntodiraccolta .dettagli .pdr-specifica {
+    padding-left: 0;
+    font-size: 10px;
+    line-height: 11px;
+}
+
+.puntodiraccolta .dettagli .action {
+    padding: 0;
+    text-align: right;
+}
+
+.puntodiraccolta .dettagli .action img {
+    width: 35px;
+    height: 35px;
+}
+
+.puntodiraccolta .tipologie ion-item {
+    padding: 0;
+    background-color: #eeeeee;
+}
+
+.puntodiraccolta .tipologie ion-item a {
+    padding: 5px 10px;
+    background-color: #eeeeee;
+}
+
+.tipodiraccolta,
+.tipodiraccolta ion-list ion-item,
+.tipodiraccolta ion-list ion-item a {
+    background-color: #eeeeee !important;
+}
+
+.tipologiediraccolta {
+    background-color: #eeeeee;
+}
+
+.tipologiediraccolta ion-item {
+    border-color: #cecece !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.tipologiediraccolta ion-item a {
+    background-color: #eeeeee !important;
+    padding: 0 !important;
+}
+
+.tipologiediraccolta .tipologiediraccolta-icons {
+    padding: 0 5px;
+}
+
+.tipologiediraccolta .tipologiediraccolta-icons div {}
+
+.contatti-item-list ion-item {
+    border-color: #cecece !important;
+}
+
+.contatti-item-list ion-item a {
+    background-color: #eeeeee !important;
+    padding: 0 !important;
+}
+/* PROFILES, PROFILE */
+
+.profiles {
+    background-color: #eeeeee;
+}
+
+.profiles .profile-card {
+    padding: 5px;
+}
+
+.profiles .profile-card-content {
+    background-color: white;
+    color: black;
+}
+
+.profiles .profile-card .title {
+    padding-top: 0;
+    font-size: 18px;
+}
+
+.profiles .profile-card .info {
+    padding-bottom: 0;
+    font-size: 14px;
+}
+
+.profiles .profile-card .title div,
+.profiles .profile-card .info div {
+    border: none;
+}
+
+.profile {
+    padding: 10px 10px 0 10px;
+    background-color: #eeeeee !important;
+    font-size: 16px;
+}
+
+.profile .profile-block {
+    padding-top: 20px;
+}
+
+.profile .profile-block:first-child {
+    padding-top: 0;
+}
+
+.profile .profile-title {
+    font-weight: bold;
+}
+
+.profile .profile-block p {
     padding-top: 5px;
+}
+
+.profile .profile-name input {
+    background-color: #eeeeee;
+    border: none;
+    border-bottom: thin solid #cccccc;
+    padding: 0;
+    font-size: 16px;
+}
+
+.profile .profile-types a img {
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+}
+
+.profile .profile-types .profile-type {
+    padding: 5px 0;
+}
+
+.profile .profile-types .profile-type span {
+    padding-left: 5px;
+}
+
+.profile .profile-where .profile-title {
     padding-bottom: 5px;
-    background-image: url("../img/ic_launcher.png");
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    vertical-align: top;
+}
+
+.profile .profile-where label,
+.profile .profile-where label select {
+    height: 52px;
+    background-color: #eeeeee;
+}
+
+.profile .profile-where select {
+    width: 100%;
+    font-size: 16px;
 }
 
 .standard-size {
@@ -311,33 +476,9 @@
     opacity: 1;
 }
 
-.home-tabs .tabs {
-    height: 30px;
-    line-height: 30px;
-}
-
-.home-tabs .tab-item {
-    font-size: 12px;
-}
-
-.home-tabs .has-tabs-top {
-    top: 74px;
-}
-
 .tabs-striped .tab-item {
     color: white !important;
 }
-/*
-.home-tabs.tabs-striped .tab-item-active,
-.home-tabs.tabs-striped .tab-item.active,
-.home-tabs.tabs-striped .tab-item.activated {
-    border-color: transparent !important;
-}
-
-.home-tabs.tabs-striped .tab-item + .tab-item:before {
-    border-left: 0;
-}
-*/
 
 .centred-text {
     text-align: center;
@@ -378,7 +519,7 @@
     line-height: 1;
 }
 
-.expandable-list-item-content div > div.km {
+.expandable-list-item-content div > div.sub {
     text-align: right;
 }
 
@@ -406,15 +547,6 @@
 .info-button {
     color: #63ac3d !important;
     width: 60px;
-}
-
-.contatti-item-list ion-item {
-    border-color: #cecece !important;
-}
-
-.contatti-item-list ion-item a {
-    background-color: #eeeeee !important;
-    padding: 0 !important;
 }
 
 .no-vertical-padding {
@@ -518,32 +650,8 @@
     margin: auto;
 }
 
-.profili-title {
-    padding-top: 0;
-    font-size: 17px;
-}
-
-.profili-info {
-    padding-bottom: 0;
-    font-size: 11px;
-}
-
-.profili-profilo {
-    padding-top: 5px !important;
-}
-
 .no-link-padding a {
     padding: 0 !important;
-}
-
-.pdr-dettaglio {
-    text-decoration: bold;
-    white-space: nowrap;
-}
-
-.pdr-specifica {
-    font-size: 10px;
-    line-height: 11px;
 }
 
 .segnala-descrizione {
@@ -674,58 +782,4 @@
 
 .nowrap {
     white-space: nowrap;
-}
-/* PROFILE */
-
-.profile {
-    padding: 10px 10px 0 10px;
-    background-color: #eeeeee !important;
-    font-size: 16px;
-}
-
-.profile .profile-block {
-    padding-top: 20px;
-}
-
-.profile .profile-block:first-child {
-    padding-top: 0;
-}
-
-.profile .profile-title {
-    font-weight: bold;
-}
-
-.profile .profile-block p {
-    padding-top: 5px;
-}
-
-.profile .profile-name input {
-    background-color: #eeeeee;
-    border: none;
-    border-bottom: thin solid #cccccc;
-    padding: 0;
-    font-size: 16px;
-}
-
-.profile .profile-types .profile-type {
-    padding: 5px 0;
-}
-
-.profile .profile-types .profile-type span {
-    padding-left: 5px;
-}
-
-.profile .profile-where .profile-title {
-    padding-bottom: 5px;
-}
-
-.profile .profile-where label,
-.profile .profile-where label select {
-    height: 52px;
-    background-color: #eeeeee;
-}
-
-.profile .profile-where select {
-    width: 100%;
-    font-size: 16px;
 }

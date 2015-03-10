@@ -13,23 +13,22 @@
     </ion-nav-buttons>
 
     <ion-content class="puntodiraccolta" has-bouncing="false">
+        <!-- DETTAGLI -->
         <div class="subpage-title">
             <h1>{{"DETTAGLI"|translate}}</h1>
         </div>
-        <div class="row row-center low-padding no-vertical-padding">
-            <div class="col col-67 no-left-padding no-vertical-padding">
-                <div class="row no-left-padding pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
-                <div class="row no-left-padding pdr-specifica"></div>
+        <div class="row row-center dettagli">
+            <div class="col col-67">
+                <div class="row pdr-dettaglio">{{pdr.dettaglioIndirizzo || pdr.indirizzo}}</div>
+                <div class="row pdr-specifica"></div>
                 <!--per ora niente...-->
             </div>
-            <div class="col no-left-padding no-vertical-padding position-relative">
+            <div class="col action">
                 <a class="hidden-link" href="#/app/puntiDiRaccolta/{{pdr.dettaglioIndirizzo || pdr.indirizzo}}">
-                    <img src="img/ic_map_green.png" class="standard-size">
+                    <img src="img/ic_map_green.png">
                 </a>
-            </div>
-            <div class="col no-left-padding no-vertical-padding position-relative">
                 <a class="hidden-link" target="_system" ng-click="clickNav()">
-                    <img src="img/ic_directions.png" class="standard-size">
+                    <img src="img/ic_directions.png">
                 </a>
             </div>
         </div>
@@ -37,17 +36,18 @@
             <div class="subpage-title">
                 <h1 class="title">ORARIO</h1>
             </div>
-            <div class="low-padding">
-                <div class="no-padding" ng-repeat="item in orari">
+            <div>
+                <div ng-repeat="item in orari">
                     <span>{{item.giorno}}: </span><span ng-repeat="orario in item.orari"><span ng-if="$index>0">, </span>{{orario}}</span>
                 </div>
             </div>
         </div>
+        <!-- TIPOLOGIE DI RACCOLTA -->
         <div class="subpage-title">
             <h1 class="title">{{"TIPOLOGIE DI RACCOLTA"|translate}}</h1>
         </div>
-        <ion-list>
-            <ion-item class="low-padding no-link-padding" ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
+        <ion-list class="tipologie">
+            <ion-item ng-repeat="rifiuto in rifiuti" href="#/app/raccolta/{{rifiuto}}">
                 {{rifiuto|translate}}
             </ion-item>
         </ion-list>
