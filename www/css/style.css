@@ -126,6 +126,99 @@
 .home-notes .home-notes-item.home-notes-item-selected {
     background-color: #8de058;
 }
+/* Home - Calendar */
+
+.home-calendar {
+    background-color: #eeeeee;
+}
+
+.home-calendar .month-bar .month-name {
+    text-align: center;
+    color: #63ac3d;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: bold;
+}
+
+.home-calendar .month-bar .btn-next {
+    float: right;
+}
+
+.home-calendar .week-days {
+    text-align: center;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: bold;
+}
+
+.home-calendar .week {
+    padding-right: 0;
+    margin-bottom: 5px;
+}
+
+.home-calendar .week .day {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 13%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 13%;
+    -ms-flex: 0 0 13%;
+    flex: 0 0 13%;
+    max-width: 13%;
+    margin-right: 1.2%;
+    background-color: white;
+    color: black;
+}
+
+.home-calendar .week .day.today {
+    padding: 0px;
+    margin-right: 1.2%;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #47772b;
+}
+
+.home-calendar .week .day .day-date {
+    text-align: left;
+    font-size: 11px;
+    line-height: 11px;
+    padding-bottom: 5px;
+}
+
+.home-calendar .week .day .day-slots {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.home-calendar .week .day .day-slots .day-slot {
+    padding: 1px;
+}
+
+.home-calendar .week .day .day-slots .day-slot > div {
+    height: 5px;
+    width: 5px;
+}
+
+.home-calendar .agenda .day .day-title {
+    background-color: #eeeeee;
+    text-align: center;
+}
+
+.home-calendar .agenda .day .day-content {}
+
+.home-calendar .agenda .day .day-content-active {
+    background-color: #8de058 !important;
+}
+
+.home-calendar .agenda .day .day-content .content-title {
+    color: #47772b !important;
+    text-align: left !important;
+    font-weight: bold;
+}
+
+.home-calendar .agenda .day .day-content .content-event,
+.home-calendar .agenda .day .day-content .content-event .event-desc {
+    padding: 0 !important;
+}
 
 .bar-back {
     padding-left: 35px;
@@ -182,11 +275,6 @@
 
 .background-grey-middle {
     background-color: #cecece !important;
-}
-
-.background-white {
-    background-color: white;
-    color: black;
 }
 
 .fill-div {
@@ -317,11 +405,6 @@
 .no-vertical-padding {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-}
-
-.no-orizontal-padding {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
 }
 
 .only-bottom-vertical-padding {
@@ -507,61 +590,6 @@
 .fill {
     width: 100%;
     height: 100%;
-}
-
-.week {
-    padding-right: 0;
-    margin-bottom: 5px;
-}
-
-.month-name {
-    text-align: center;
-    color: #63ac3d;
-    font-size: 16px;
-    line-height: 16px;
-    font-weight: bold;
-}
-
-.week-day {
-    text-align: center;
-    font-size: 12px;
-    line-height: 12px;
-    font-weight: bold;
-}
-
-.day-date {
-    text-align: left;
-    font-size: 11px;
-    line-height: 11px;
-    padding-bottom: 5px;
-}
-
-.day {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 13%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 13%;
-    -ms-flex: 0 0 13%;
-    flex: 0 0 13%;
-    max-width: 13%;
-    margin-right: 1.2%;
-}
-
-.today {
-    padding: 0px;
-    margin-right: 1.2%;
-    border-style: solid;
-    border-width: 3px;
-    border-color: #47772b;
-}
-
-.separation-padding {
-    padding: 1px;
-}
-
-.fixed-size {
-    height: 5px;
-    width: 5px;
 }
 
 .nav-bar-title {

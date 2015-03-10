@@ -12,27 +12,27 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <div style="white-space:nowrap;">
-            <button ng-click="goToToday()" class="button button-clear button-light menu-edit-button nav-bar-buttons-alignment">
-                <img src="img/today.png" class="standard-size" />
+        <div class="nowrap">
+            <button ng-click="goToToday()" class="button button-clear button-light icon-left btn btn-edit">
+                <img src="img/today.png" />
             </button>
-            <button ng-click="switchView()" class="button button-clear button-light icon-left nav-bar-buttons-alignment bar-button">
-                <img ng-src="{{variableIMG2}}" class="standard-size" />
+            <button ng-click="switchView()" class="button button-clear button-light icon-left btn btn-variable">
+                <img ng-src="{{variableIMG2}}" />
             </button>
         </div>
     </ion-nav-buttons>
 
-    <ion-content has-bouncing="false" class="home-tabs-content background-grey-light">
-        <div ng-if="!calendarView" class="month">
-            <div class="row">
-                <div ng-click="lastMonth()" class="col col-10"><i class="icon icon-left ion-chevron-left"></i>
+    <ion-content has-bouncing="false" class="home-calendar">
+        <div ng-if="!calendarView" class="calendar">
+            <div class="row month-bar">
+                <div ng-click="lastMonth()" class="col col-10 btn-prev"><i class="icon icon-left ion-chevron-left"></i>
                 </div>
                 <div class="col month-name">{{month.name.split(" ")[0] |translate}} {{month.name.split(" ")[1] |translate}}</div>
                 <!--da aggiungere lo stile-->
-                <div ng-click="nextMonth()" class="col col-10"><i style="float:right" class="icon icon-right ion-chevron-right"></i>
+                <div ng-click="nextMonth()" class="col col-10 btn-next"><i style="float:right" class="icon icon-right ion-chevron-right"></i>
                 </div>
             </div>
-            <div class="row week-day">
+            <div class="row week-days">
                 <div class="col">{{ "LUN" | translate}}</div>
                 <div class="col">{{ "MAR" | translate}}</div>
                 <div class="col">{{ "MER" | translate}}</div>
@@ -43,34 +43,34 @@
             </div>
             <div class="row week" ng-repeat="week in month.weeks">
                 <div class="col day" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
-                <div ng-click="selectDay(day)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString(), 'background-white' : true}" ng-repeat="day in week">
+                <div ng-click="selectDay(day)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString()}" ng-repeat="day in week">
                     <div ng-if="day.date!=null" class="day-date">
                         {{day.date.getDate()}}
                     </div>
-                    <div class="row no-orizontal-padding">
-                        <div class="separation-padding" ng-repeat="colore in day.colors">
-                            <div class="fixed-size" style="background-color:{{getColor(colore)}};"></div>
+                    <div class="row day-slots">
+                        <div class="day-slot" ng-repeat="colore in day.colors">
+                            <div style="background-color:{{getColor(colore)}};"></div>
                         </div>
-                        <div class="separation-padding" ng-if="day.events.length == 0">
-                            <div class="fixed-size"></div>
+                        <div class="day-slot" ng-if="day.events.length == 0">
+                            <div></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div ng-if="calendarView">
-            <ion-list id="listaCalendario" ng-repeat="day in dayList">
-                <ion-item id="{{day.dateString}}" style="text-align:center;" class="my-item background-grey-light" ng-if="day.colors.length > 0">
+        <div ng-if="calendarView" class="agenda">
+            <ion-list class="day" ng-repeat="day in dayList">
+                <ion-item id="{{day.dateString}}" class="day-title" ng-if="day.colors.length > 0">
                     {{day.date | date:'EEEE d MMMM y'}}
                 </ion-item>
-                <ion-item ng-if="day.colors.length > 0" ng-class="{'background-green-light':day.dateString==currListItem.dateString}">
+                <ion-item ng-if="day.colors.length > 0" class="day-content" ng-class="{'day-content-active':day.dateString==currListItem.dateString}">
                     <div ng-repeat="(key, block) in day.events">
-                        <span class="expandable-list-title">{{block.type | translate}}</span>
-                        <div ng-repeat="elem in block.events" class="row no-padding">
+                        <span class="content-title">{{block.type | translate}}</span>
+                        <div ng-repeat="elem in block.events" class="row content-event">
                             <div class="col-10 col-center">
                                 <img ng-src="{{getIcon(elem)}}" height="30" width="30">
                             </div>
-                            <div class="col col-center no-padding">
+                            <div class="col col-center event-desc">
                                 <span class="row" ng-repeat="d in elem.descr">{{d}}</span>
                             </div>
                         </div>
