@@ -7,12 +7,12 @@
     </ion-nav-title>
 
     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon">
+        <button menu-toggle="left" class="row button button-clear button-light icon-left ion-navicon btn">
             <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <button ng-click="click()" class="button button-clear button-light icon-left">
+        <button ng-click="click()" class="button button-clear button-light icon-left btn">
             <img ng-src="{{variableIMG}}" />
         </button>
     </ion-nav-buttons>
@@ -28,34 +28,32 @@
         </ion-content>
     </div>
     <div ng-if="!mapView">
-        <ion-content class="has-header background-grey-light" has-bouncing="false">
-            <div class="bottom-border">
-                <div class="expandable-list-items" ng-repeat="item in list">
-                    <div class="row row-center background-grey-middle" ng-click="item.aperto=!item.aperto">
-                        <div class="col col-10">
-                            <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
-                        </div>
-                        <div class="col col-80">
-                            {{item.tipologiaPuntoRaccolta | translate}}
-                        </div>
-                        <div class="col col-10 col-top a_right">
-                            <img ng-src="{{item.icon}}" width="25" height="25">
-                        </div>
+        <ion-content class="has-header puntidiraccolta expandable-list-items" has-bouncing="false">
+            <div class="expandable-list-item" ng-repeat="item in list">
+                <div class="row row-center expandable-list-item-header" ng-click="item.aperto=!item.aperto">
+                    <div class="col col-10">
+                        <i ng-class="{'ion-chevron-up':item.aperto, 'ion-chevron-down':!item.aperto}"></i>
                     </div>
-                    <div ng-show="item.aperto">
-                        <a ng-repeat="loc in item.locs" class="hidden-link" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
-                            <div class="row row-center background-grey-light">
-                                <div class="col col-80">
-                                    {{loc.dettaglioIndirizzo || loc.indirizzo}}
-                                </div>
-                                <div class="col col-20 a_right" ng-if="loc.distance">
-                                    {{loc.distance | number:1}} Km
-                                </div>
+                    <div class="col col-80 expandable-list-item-title">
+                        {{item.tipologiaPuntoRaccolta | translate}}
+                    </div>
+                    <div class="col col-10 col-top a_right">
+                        <img ng-src="{{item.icon}}" width="25" height="25">
+                    </div>
+                </div>
+                <div ng-show="item.aperto">
+                    <a ng-repeat="loc in item.locs" class="hidden-link expandable-list-item-content" ng-href="#/app/puntoDiRaccolta/{{loc.dettaglioIndirizzo || loc.indirizzo}}">
+                        <div class="row row-center">
+                            <div class="col col-80">
+                                {{loc.dettaglioIndirizzo || loc.indirizzo}}
                             </div>
-                        </a>
-                        <div class="row row-center background-grey-light nowrap" ng-if="!item.locs || item.locs.length==0">
-                            {{'empty_elem'|translate}}
+                            <div class="col col-20 km" ng-if="loc.distance">
+                                {{loc.distance | number:1}} Km
+                            </div>
                         </div>
+                    </a>
+                    <div class="row row-center nowrap expandable-list-item-empty" ng-if="!item.locs || item.locs.length==0">
+                        {{'empty_elem'|translate}}
                     </div>
                 </div>
             </div>

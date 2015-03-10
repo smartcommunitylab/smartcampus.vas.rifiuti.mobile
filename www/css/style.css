@@ -219,6 +219,13 @@
 .home-calendar .agenda .day .day-content .content-event .event-desc {
     padding: 0 !important;
 }
+/* Punti di raccolta */
+
+.puntidiraccolta {}
+
+.puntodiraccolta {
+    background-color: #eeeeee;
+}
 
 .bar-back {
     padding-left: 35px;
@@ -369,6 +376,14 @@
 
 .expandable-list-item-desc {
     line-height: 1;
+}
+
+.expandable-list-item-content div > div.km {
+    text-align: right;
+}
+
+.expandable-list-item-empty {
+    background-color: #eeeeee;
 }
 
 .note-text {}
