@@ -279,6 +279,14 @@
 .home-calendar .agenda .day .day-content .content-event .event-desc {
     padding: 0 !important;
 }
+/* Tipi di rifiuto */
+
+.tipidirifiuto,
+.tipidirifiuto ion-list,
+.tipidirifiuto ion-list ion-item,
+.tipidirifiuto ion-list ion-item a {
+    background-color: #eeeeee !important;
+}
 /* Punti di raccolta */
 
 .puntidiraccolta {}
@@ -543,148 +551,68 @@
     bottom: 0;
     right: 0;
 }
+/* INFO */
 
-.standard-size {
-    height: 35px;
-    width: 35px;
-}
-
-.big-size {
-    margin-bottom: 10px;
-    height: 50px;
-    width: 50px;
-}
-
-.border-underline {
-    border-bottom: #cecece !important;
-    border-bottom-style: solid !important;
-    border-bottom-width: thin !important;
-}
-
-.background-green-middle {
-    background-color: #63ac3d !important;
-}
-
-.background-green-light {
-    background-color: #8de058 !important;
-}
-
-.background-green-dark {
-    background-color: #47772b !important;
-}
-
-.background-grey-light,
-.background-grey-light a {
-    background-color: #eeeeee !important;
-}
-
-.background-grey-middle {
-    background-color: #cecece !important;
-}
-
-.fill-div {
-    display: block;
-    height: 100%;
-    width: 100%;
-    text-decoration: none;
-}
-
-.text-white {
-    color: white !important;
-}
-
-.visible {
-    visibility: visible;
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-.tab-item {
-    opacity: 0.4;
-}
-
-.tab-item-active {
-    opacity: 1;
-}
-
-.tabs-striped .tab-item {
-    color: white !important;
-}
-
-.centred-text {
+.info {
     text-align: center;
+    background-color: #eeeeee;
 }
 
-.left-text {
-    text-align: left;
+.info .project {
+    color: #63ac3d;
+    font-size: 18px;
+    margin-top: 40px;
 }
 
-.nav-bar-buttons-alignment {
-    left: auto;
+.info .project-desc {
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-.note-text {}
-
-.bottom-border {
-    border-style: solid !important;
-    border-bottom-width: 1px;
-    border-color: #cecece;
-    margin-bottom: 5px;
+.info .version {
+    color: #cecece;
+    margin-top: 10px;
 }
 
-.no-border {
-    border-style: none;
+.info .subtitle {
+    color: #63ac3d;
+    margin-top: 40px;
+    font-size: 16px;
 }
 
-.contatti-icon-color {
-    color: #47772b !important;
+.info .mail {
+    text-decoration: underline;
+    color: black;
+    font-size: 18px;
+}
+/* Tutorial */
+
+.position-absolute {
+    position: absolute !important;
 }
 
-.info-button {
-    color: #63ac3d !important;
-    width: 60px;
+.position-relative {
+    position: relative !important;
+}
+/* Nav title */
+
+.nav-title {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 1.2;
 }
 
-.no-vertical-padding {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
+.nav-title .nav-title-single {}
 
-.only-bottom-vertical-padding {
-    padding-top: 0 !important;
-}
+.nav-title .nav-title-main {}
 
-.only-top-vertical-padding {
-    padding-bottom: 0 !important;
-}
-
-.no-padding {
-    padding: 0 !important;
-}
-
-.sub-page-button {
-    line-height: 12px !important;
-}
-
-.title-subtext {
-    font-size: 12px;
-    position: absolute;
-    top: 19px;
-    left: 52px;
-    text-align: left;
+.nav-title .nav-title-sub {
+    font-size: smaller;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-.title-subtext1 {
-    font-size: 11px;
-    position: absolute;
-    top: 12px;
-    left: 72px;
-    text-align: left;
-    white-space: nowrap;
-}
+/* Others */
 
 .subpage-title {
     background-color: #47772b !important;
@@ -703,76 +631,6 @@
     text-decoration: inherit !important;
 }
 
-.low-padding {
-    padding: 5px !important;
-}
-
-.high-padding {
-    padding: 10px !important;
-}
-
-.no-left-padding {
-    padding-left: 0 !important;
-}
-
-.no-margin {
-    margin: 0 !important;
-}
-
-.position-absolute {
-    position: absolute !important;
-}
-
-.position-relative {
-    position: relative !important;
-}
-
-.dock-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.absolute-center {
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.auto-center {
-    margin: auto;
-}
-
-.no-link-padding a {
-    padding: 0 !important;
-}
-
-.profili-titolo {
-    font-weight: bold;
-    font-size: 14px;
-    color: #444444;
-}
-
-.fixed-height {
-    height: 49px;
-}
-
-.max-width {
-    max-width: 100% !important;
-}
-
-.popup-title {
-    color: teal;
-    text-align: left;
-    font-size: 16px;
-    padding-left: 10px;
-}
-
 .tutorial-button {
     width: 105px;
 }
@@ -785,68 +643,6 @@
     -ms-flex: 0 0 15%;
     flex: 0 0 15%;
     max-width: 15%;
-}
-
-.loading-container .loading {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    background-color: transparent;
-}
-
-.fill {
-    width: 100%;
-    height: 100%;
-}
-
-.nav-bar-title {
-    display: table;
-    height: 100%;
-}
-
-.nav-title {
-    display: table-cell;
-    vertical-align: middle;
-    line-height: 1.2;
-}
-
-.nav-title .nav-title-single {}
-
-.nav-title .nav-title-main {}
-
-.nav-title .nav-title-sub {
-    font-size: smaller;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-/*.nav-bar-title {
-    position: absolute;
-    height: 100%;
-}
-
-.nav-title {
-    line-height: 1em;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.nav-title .nav-title-single {}
-
-.nav-title .nav-title-main {}
-
-.nav-title .nav-title-sub {
-    font-size: smaller;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}*/
-
-.centre-displayed {
-    display: block;
-    margin-left: auto;
-    margin-right: auto
 }
 
 .a_right {
