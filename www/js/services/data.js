@@ -1,13 +1,12 @@
 angular.module('rifiuti.services.data', [])
 
 .factory('DataManager', function ($http, $q, Utili) {
-  var ENDPOINT_URL = '';
-  
+  var ENDPOINT_URL = 'https://dev.smartcommunitylab.it/riciclo';
   // TODO handle
   var USE_DRAFT = false;
   
   var LOCAL_DATA_URL = 'data/data.zip';
-  var VERSION_URL = ENDPOINT_URL+'/'+APP_ID+'/version';
+  var VERSION_URL = ENDPOINT_URL+'/appDescriptor/'+APP_ID;
   
   
   var dataURL = LOCAL_DATA_URL;
@@ -204,7 +203,7 @@ angular.module('rifiuti.services.data', [])
       if (USE_DRAFT) {
         return ENDPOINT_URL+'/draft/'+APP_ID+'/zip';
       } else {
-        return ENDPOINT_URL+'/'+APP_ID+'/zip';
+        return ENDPOINT_URL+'/zip/'+APP_ID;
       }
     } else {
       return LOCAL_DATA_URL;
@@ -220,19 +219,25 @@ angular.module('rifiuti.services.data', [])
     });
   }
   
+  var extractVersion = function(data) {
+    var obj = data;
+    if (USE_DRAFT) return obj.draftState.version;
+    return obj.publishState.version;
+  };
+  
   return {
     get : get,
     updateProfiles: function(newProfiles) {
       profili = newProfiles;
       updateProfileData();
     },
-    checkVersion: function() {
-      
+    checkVersion: function(currentProfiles) {
+      profili = currentProfiles;
       $http.get(VERSION_URL)
       .success(function(data) {
-        var obj = JSON.parse(data);
-        if (obj.version) {
-          doWithVersion(obj.version, true);
+        var version = extractVersion(data);
+        if (version) {
+          doWithVersion(version, true);
         } else {
           doWithVersion(DATA_VERSION);
         }
@@ -240,10 +245,6 @@ angular.module('rifiuti.services.data', [])
       .error(function(e) {
           doWithVersion(DATA_VERSION);
       });
-      // TODO
-      // - check data version online if available
-      // - else check data version from global var
-      // - if version is newer than that in local props, update data and profiles from web or from local file
     }, 
     reset: function() {
       // TODO

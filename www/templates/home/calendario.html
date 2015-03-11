@@ -42,7 +42,7 @@
                 <div class="col">{{ "DOM" | translate}}</div>
             </div>
             <div class="row week" ng-repeat="week in month.weeks">
-                <div class="col day" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
+                <div class="col" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
                 <div ng-click="selectDay(day)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString()}" ng-repeat="day in week">
                     <div ng-if="day.date!=null" class="day-date">
                         {{day.date.getDate()}}
