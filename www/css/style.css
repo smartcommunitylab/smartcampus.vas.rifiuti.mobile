@@ -199,6 +199,11 @@
     background-color: #eeeeee;
 }
 
+.home-calendar .month-bar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .home-calendar .month-bar .month-name {
     text-align: center;
     color: #63ac3d;
