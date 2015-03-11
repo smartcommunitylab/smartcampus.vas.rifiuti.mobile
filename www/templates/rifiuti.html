@@ -15,7 +15,7 @@
     <ion-tabs class="tabs-balanced tabs-100r">
         <ion-tab title="{{'PUNTI DI RACCOLTA'|translate}}">
             <ion-view>
-                <ion-content class="expandable-list-items" scroll="false">
+                <ion-content class="expandable-list-items tipodirifiuto" scroll="false">
                     <div class="expandable-list-item" ng-repeat="item in raccolta">
                         <div class="row row-center expandable-list-item-header" ng-click="item.aperto=!item.aperto">
                             <div class="col col-10">
@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col col-10 col-top a_right">
+                            <div class="col col-10 col-top tipodirifiuto-icon">
                                 <img ng-src="{{item.icon}}" width="25" height="25">
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                     <div class="col col-80">
                                         {{punto.dettaglioIndirizzo || punto.indirizzo}}
                                     </div>
-                                    <div class="col col-20 a_right" ng-if="punto.distance">
+                                    <div class="col col-20 distance" ng-if="punto.distance">
                                         {{punto.distance | number:1}} Km
                                     </div>
                                 </div>

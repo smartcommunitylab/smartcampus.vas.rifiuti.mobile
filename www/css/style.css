@@ -287,6 +287,12 @@
 .tipidirifiuto ion-list ion-item a {
     background-color: #eeeeee !important;
 }
+/* Tipo di rifiuto */
+.tipodirifiuto .tipodirifiuto-icon,
+.tipodirifiuto .distance {
+    text-align: right;
+}
+
 /* Punti di raccolta */
 
 .puntidiraccolta {}
@@ -453,7 +459,11 @@
 .profile .profile-where select {
     width: 100%;
     font-size: 16px;
+    right: auto;
+    padding: 13px 45px 15px 0px;
+    direction: ltr;
 }
+
 /* SEGNALA */
 
 .segnala {
@@ -594,6 +604,10 @@
 .position-relative {
     position: relative !important;
 }
+
+.tutorial-button {
+    width: 105px;
+}
 /* Nav title */
 
 .nav-title {
@@ -631,10 +645,6 @@
     text-decoration: inherit !important;
 }
 
-.tutorial-button {
-    width: 105px;
-}
-
 .col-15 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 15%;
@@ -643,16 +653,6 @@
     -ms-flex: 0 0 15%;
     flex: 0 0 15%;
     max-width: 15%;
-}
-
-.a_right {
-    text-align: right;
-}
-
-.item-select select {
-    right: auto;
-    padding: 13px 45px 15px 0px;
-    direction: ltr;
 }
 
 .item {
