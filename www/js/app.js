@@ -152,7 +152,8 @@ angular.module('rifiuti', [
                     text: $filter('translate')('cancel')
                 },
                 {
-                    text: $filter('translate')('exitapp_ok'),
+                    text: '<b>' + $filter('translate')('exitapp_ok') + '</b>',
+                    type: 'button-100r',
                     onTap: function (e) {
                         return true;
                     }
@@ -175,6 +176,8 @@ angular.module('rifiuti', [
         hello_message: "ciao",
         goodbye_message: "arrivederci",
         exitapp_template: "Sei sicuro di uscire dall'app?",
+        what_remember: "Cosa vuoi ricordare?",
+        save: "Salva",
         cancel: "Annulla",
         exitapp_ok: "OK",
         LUN: "LUN",

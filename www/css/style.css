@@ -100,6 +100,13 @@
 .bar-100r .btn-variable::after {
     position: relative;
 }
+/* Buttons */
+
+.button.button-100r {
+    border-color: #47772b;
+    background-color: #47772b;
+    color: #fff;
+}
 /* Tabs */
 
 .tabs-100r .tabs {
@@ -288,11 +295,11 @@
     background-color: #eeeeee !important;
 }
 /* Tipo di rifiuto */
+
 .tipodirifiuto .tipodirifiuto-icon,
 .tipodirifiuto .distance {
     text-align: right;
 }
-
 /* Punti di raccolta */
 
 .puntidiraccolta {}
@@ -387,18 +394,18 @@
     color: black;
 }
 
-.profiles .profile-card .title {
+.profiles .profile-card .profile-name {
     padding-top: 0;
     font-size: 18px;
 }
 
-.profiles .profile-card .info {
+.profiles .profile-card .profile-info {
     padding-bottom: 0;
     font-size: 14px;
 }
 
-.profiles .profile-card .title div,
-.profiles .profile-card .info div {
+.profiles .profile-card .profile-name div,
+.profiles .profile-card .profile-info div {
     border: none;
 }
 
@@ -463,7 +470,6 @@
     padding: 13px 45px 15px 0px;
     direction: ltr;
 }
-
 /* SEGNALA */
 
 .segnala {
@@ -610,6 +616,11 @@
 }
 /* Nav title */
 
+.nav-bar-title {
+    display: table;
+    height: 100%;
+}
+
 .nav-title {
     display: table-cell;
     vertical-align: middle;
@@ -662,4 +673,9 @@
 
 .nowrap {
     white-space: nowrap;
+}
+
+.splashscreen {
+    width: 100%;
+    height: 100%;
 }
