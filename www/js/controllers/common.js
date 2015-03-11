@@ -1,7 +1,7 @@
 angular.module('rifiuti.controllers.common', [])
 
 
-.controller('AppCtrl', function ($scope, $rootScope, $location, Profili) {
+.controller('AppCtrl', function ($scope, $rootScope, $location, Profili, DataManager) {
     $scope.app_name = APP_NAME;
 
     $scope.showTutorial = function () {
@@ -16,6 +16,7 @@ angular.module('rifiuti.controllers.common', [])
             Profili.select(index);
         };
         Profili.read();
+        DataManager.checkVersion($rootScope.profili);
         Profili.select(Profili.selectedProfileIndex());
     }
 })

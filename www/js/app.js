@@ -53,11 +53,9 @@ angular.module('rifiuti', [
     $ionicConfigProvider.tabs.style('standard');
 })
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, DataManager) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili) {
     $rootScope.version = '2.0';
 
-    DataManager.checkVersion();
-  
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
     $rootScope.back = function () {
