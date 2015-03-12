@@ -49325,7 +49325,7 @@ function headerFooterBarDirective(isHeader) {
         tElement.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
         // top style tabs? if so, remove bottom border for seamless display
         $timeout(function() {
-          if (isHeader && $document[0].getElementsByClassName('tabs-top').length) tElement.addClass('has-tabs-top');
+//          if (isHeader && $document[0].getElementsByClassName('tabs-top').length) tElement.addClass('has-tabs-top');
         });
 
         return { pre: prelink };
