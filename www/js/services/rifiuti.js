@@ -1,6 +1,6 @@
 angular.module('rifiuti.services.rifiuti', [])
 
-.factory('Raccolta', function (DataManager, $rootScope, $q, $cordovaGeolocation, Utili) {
+.factory('Raccolta', function (DataManager, $rootScope, $q, GeoLocate, Utili) {
 
   return {
     aree: function() {
@@ -40,25 +40,35 @@ angular.module('rifiuti.services.rifiuti', [])
               }
             });
           }
-
-          $cordovaGeolocation.getCurrentPosition({ timeout:10000,enableHighAccuracy:true }).then(function (position) {
-            position={ coords:{ latitude:'46.0', longitude:'11.0' } };
-
-            if (position.coords && position.coords.latitude && position.coords.longitude) {
-              myPunti.forEach(function(punto){
-                if (punto.localizzazione) {
-                  var distance=$rootScope.distance([position.coords.latitude,position.coords.longitude],punto.localizzazione.split(','));
-                  punto['distance']=distance;
-                } else {
-                  console.log('invalid location for: '+punto.dettaglioIndirizzo);
-                }
+          myPunti.forEach(function(punto){
+            if (punto.localizzazione) {
+              GeoLocate.distanceTo(punto.localizzazione.split(',')).then(function (distance) {
+                //console.log('distance: ' + distance);
+                punto['distance'] = distance;
               });
             } else {
-              console.log('invalid pos: '+JSON.stringify(position));
+              console.log('invalid location for: '+punto.dettaglioIndirizzo);
             }
-          }, function(err) {
-            console.log('cannot geolocate!');
           });
+          
+//          $cordovaGeolocation.getCurrentPosition({ timeout:10000,enableHighAccuracy:true }).then(function (position) {
+//            position={ coords:{ latitude:'46.0', longitude:'11.0' } };
+//
+//            if (position.coords && position.coords.latitude && position.coords.longitude) {
+//              myPunti.forEach(function(punto){
+//                if (punto.localizzazione) {
+//                  var distance=$rootScope.distance([position.coords.latitude,position.coords.longitude],punto.localizzazione.split(','));
+//                  punto['distance']=distance;
+//                } else {
+//                  console.log('invalid location for: '+punto.dettaglioIndirizzo);
+//                }
+//              });
+//            } else {
+//              console.log('invalid pos: '+JSON.stringify(position));
+//            }
+//          }, function(err) {
+//            console.log('cannot geolocate!');
+//          });
           
           ptdeferred.resolve(myPunti);
         });

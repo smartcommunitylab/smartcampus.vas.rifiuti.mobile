@@ -19,7 +19,8 @@ angular.module('rifiuti.services.profili', [])
       return null;
     };
     var updateNotifications = function() {
-      if (window.plugin && window.plugin.notification) {
+      if (cordova && cordova.plugins && cordova.plugins.notification) {
+        console.log('initializing notifications...');
 //        window.plugin.notification.local.cancelAll();
         $rootScope.profili.forEach(function(p) {
           Raccolta.notificationCalendar(p.aree, p.utenza.tipologiaUtenza, p.id, p.area.comune).then(function(data){
@@ -42,13 +43,12 @@ angular.module('rifiuti.services.profili', [])
                           daymap[dStr] = {
                             id: n.id+'_'+dStr,
                             title: 'Domani a '+n.comune,
-                            message: {},
-                            repeat:  null,
-                            date: targetDate,
+                            text: {},
+                            at: targetDate,
                             autoCancel: true
                           };
                         }
-                        daymap[dStr].message[n.tipologiaPuntiRaccolta] = 1;
+                        daymap[dStr].text[n.tipologiaPuntiRaccolta] = 1;
                       }
                     }
                   }
@@ -56,9 +56,9 @@ angular.module('rifiuti.services.profili', [])
               });
               for (var d in daymap) {
                 var n = daymap[d];
-                n.message = toMessage(n.message);
-                if (n.message) {
-                  window.plugin.notification.local.add(n);
+                n.text = toMessage(n.text);
+                if (n.text) {
+                  cordova.plugins.notification.local.schedule(n);
                 }
               }
             }

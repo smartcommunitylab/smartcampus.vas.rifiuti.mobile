@@ -18,6 +18,7 @@ angular.module('rifiuti.controllers.common', [])
         Profili.read();
         DataManager.checkVersion($rootScope.profili);
         Profili.select(Profili.selectedProfileIndex());
+        Profili.updateNotifications();
     }
 })
 
@@ -25,21 +26,21 @@ angular.module('rifiuti.controllers.common', [])
 
 .controller('SegnalaCtrl', function ($scope, $rootScope, $cordovaCamera) {
 
-    $scope.GPScoords = null;
-    var GPScoordsTmp = null;
-
-    var posizioneG = function () {
-        //navigator.geolocation.getCurrentPosition(success);
-        //if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
-            GPScoordsTmp = "[ " + position.coords.latitude + ", " + position.coords.longitude + " ]";
-            $scope.GPScoords = GPScoordsTmp;
-        });
-        // } else {
-        //  showError("Your browser does not support Geolocation!");
-        // }
-    };
+//    $scope.GPScoords = null;
+//    var GPScoordsTmp = null;
+//
+//    var posizioneG = function () {
+//        //navigator.geolocation.getCurrentPosition(success);
+//        //if (navigator.geolocation) {
+//        navigator.geolocation.getCurrentPosition(function (position) {
+//            //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
+//            GPScoordsTmp = "[ " + position.coords.latitude + ", " + position.coords.longitude + " ]";
+//            $scope.GPScoords = GPScoordsTmp;
+//        });
+//        // } else {
+//        //  showError("Your browser does not support Geolocation!");
+//        // }
+//    };
 
     $scope.checked = true;
     $scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
@@ -82,7 +83,7 @@ angular.module('rifiuti.controllers.common', [])
         }
         if (emailPlugin) {
             var body = $scope.msg.text ? ($scope.msg.text + ' ') : '';
-            body += $scope.GPScoords ? $scope.GPScoords : '';
+            body += $scope.checked ? $scope.GPScoords : '';
             window.plugin.email.open({
                 to: [SEGNALA_EMAIL],
                 subject: "segnalazione dalla app '" + APP_NAME + "'", // subject of the email
@@ -97,7 +98,10 @@ angular.module('rifiuti.controllers.common', [])
         }
     };
 
-    posizioneG();
+    if ($rootScope.myPosition) {
+      $scope.GPScoords = "[ " + $rootScope.myPosition.join(', ')+" ]";
+    }
+//    posizioneG();
 
 })
 
