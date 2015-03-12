@@ -53,7 +53,7 @@ angular.module('rifiuti', [
     $ionicConfigProvider.tabs.style('standard');
 })
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, $cordovaSplashscreen) {
     $rootScope.version = '2.0';
 
     $rootScope.profili = [];
@@ -62,6 +62,10 @@ angular.module('rifiuti', [
         //$ionicNavBarDelegate.$getByHandle('navBar').back();
         $ionicHistory.goBack();
     };
+
+    setTimeout(function() {
+      $cordovaSplashscreen.hide()
+    }, 3000);
 
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

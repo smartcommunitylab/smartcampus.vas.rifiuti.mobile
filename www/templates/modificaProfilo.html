@@ -11,12 +11,14 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <button ng-click="edit()" class="button button-clear button-light icon-left btn btn-edit">
-            <img ng-src="{{editIMG}}" />
-        </button>
-        <button ng-click="click()" class="button button-clear button-light icon-left btn btn-variable" ng-show="!editMode">
-            <img ng-src="img/ic_menu_delete.png" />
-        </button>
+        <div class="nowrap">
+            <button ng-click="edit()" class="button button-clear button-light icon-left btn btn-edit">
+                <img ng-src="{{editIMG}}" />
+            </button>
+            <button ng-click="click()" class="button button-clear button-light icon-left btn btn-variable" ng-show="!editMode">
+                <img ng-src="img/ic_menu_delete.png" />
+            </button>
+        </div>
     </ion-nav-buttons>
 
     <!-- OLD STYLE -->
