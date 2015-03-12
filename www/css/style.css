@@ -537,6 +537,8 @@
     top: -15px;
     height: 35px;
     background-color: #47772b !important;
+    border-color: #47772b !important;
+    font-size: larger !important;
 }
 
 .segnala-send a {

@@ -189,7 +189,7 @@ angular.module('rifiuti', [
         empty_elem: "Nessun elemento da visualizzare",
 
         'ad esempio': "Ad esempio:",
-        Invia: "Invia una email per segnalare un problema direttamente all'ente che si ocupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
+        Invia: "Invia una email per segnalare un problema direttamente all'ente che si occupa della gestione dei rifiuti. Puoi allegare una foto e le coordinate GPS della tua posizione.",
         Progetto: '"' + APP_NAME + '"',
         Progetto_DESC: 'Tutto quesllo che devi sapere sulla raccolta differenziata nel tuo Comune',
         Progetto_di: 'Un progetto di:',
