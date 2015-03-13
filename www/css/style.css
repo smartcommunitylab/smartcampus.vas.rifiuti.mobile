@@ -124,8 +124,13 @@
 }
 
 .home-tabs .has-tabs-top {
-    top: 74px;
+    top: 74px !important;
 }
+
+.platform-ios:not(.fullscreen) .home-tabs .has-tabs-top {
+    top: 93px !important;
+}
+
 /*
 .home-tabs.tabs-striped .tab-item-active,
 .home-tabs.tabs-striped .tab-item.active,
