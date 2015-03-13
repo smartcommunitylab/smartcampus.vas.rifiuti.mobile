@@ -1,6 +1,6 @@
 angular.module('rifiuti.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, DataManager, $ionicLoading) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, DataManager, $ionicLoading, $ionicScrollDelegate) {
     $rootScope.noteSelected = false;
 
     $scope.height = window.innerHeight;
@@ -86,6 +86,7 @@ angular.module('rifiuti.controllers.home', [])
         if (!!!$rootScope.showTutorial) {
             return;
         }
+        $ionicScrollDelegate.scrollTop();
         $ionicLoading.show({
             templateUrl: 'templates/tutorial.html',
         });
