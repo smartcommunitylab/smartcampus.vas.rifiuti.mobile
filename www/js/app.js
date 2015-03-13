@@ -59,9 +59,14 @@ angular.module('rifiuti', [
 
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
+    
     $rootScope.back = function () {
-        //$ionicNavBarDelegate.$getByHandle('navBar').back();
-        $ionicHistory.goBack();
+      if ($rootScope.profili == null || $rootScope.profili.length == 0) {
+        ionic.Platform.exitApp();      
+        return;
+      }
+      //$ionicNavBarDelegate.$getByHandle('navBar').back();
+      $ionicHistory.goBack();
     };
 
     setTimeout(function() {
