@@ -19,7 +19,7 @@ angular.module('rifiuti.services.profili', [])
       return null;
     };
     var updateNotifications = function() {
-      if (cordova && cordova.plugins && cordova.plugins.notification) {
+      if (window.plugin && cordova.plugins && cordova.plugins.notification) {
         console.log('initializing notifications...');
 //        window.plugin.notification.local.cancelAll();
         $rootScope.profili.forEach(function(p) {
