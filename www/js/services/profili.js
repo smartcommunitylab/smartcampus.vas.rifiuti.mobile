@@ -147,7 +147,7 @@ angular.module('rifiuti.services.profili', [])
     var treeWalkUp=function(tree,parentName,key,results) {
       if (!parentName || parentName=="") return;
       tree.forEach(function(node){
-        if (node[key]==parentName) {
+        if (node['name']==parentName) {
 //        var utenzaOK = node.utenza[$rootScope.selectedProfile.utenza.tipologiaUtenza];
 //        if (utenzaOK) {
           results.push(node[key]);
@@ -160,8 +160,8 @@ angular.module('rifiuti.services.profili', [])
     var aree = function(p) {
       var myAree = [];
       var myComuni = [];
-      var aree = DataManager.getSync('aree');
-      aree.forEach(function(area,ai,dbAree){
+      var areeList = DataManager.getSync('aree');
+      areeList.forEach(function(area,ai,dbAree){
             if (area.nome==p.area.nome) {
               var utenzaOK = area.utenza[p.utenza.tipologiaUtenza];
               if (utenzaOK) {
