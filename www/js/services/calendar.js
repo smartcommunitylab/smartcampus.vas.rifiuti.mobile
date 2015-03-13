@@ -18,7 +18,7 @@ angular.module('rifiuti.services.calendar', [])
           descr : [puntoDiRaccolta.tipologiaPuntiRaccolta.substr(14)]
         };
       } else  {
-        key = puntoDiRaccolta.tipologiaPuntiRaccolta + puntoDiRaccolta.indirizzo;
+        key = puntoDiRaccolta.tipologiaPuntiRaccolta + puntoDiRaccolta.dettaglioIndirizzo;
         t = puntoDiRaccolta.tipologiaPuntiRaccolta;
         if (!!cell.events[key] && cell.events[key].events.length > 0) {
           proto = cell.events[key].events[0];
