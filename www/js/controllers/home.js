@@ -113,6 +113,7 @@ angular.module('rifiuti.controllers.home', [])
             $scope.selectedNotes = [];
             $scope.multipleNoteSelected = false;
         }
+        updateIMG();
     });
 
     var init = function () {
@@ -134,10 +135,15 @@ angular.module('rifiuti.controllers.home', [])
     };
 
     $scope.removeNotes = function (idx) {
-        $scope.notes = Profili.deleteNotes(idx);
-        $scope.selectedNotes = [];
-        $scope.multipleNoteSelected = false;
-        $rootScope.noteSelected = false;
+      $ionicPopup.show(popupDelete()).then(function (res) {
+        if (res) {
+          $scope.notes = Profili.deleteNotes(idx);
+          $scope.selectedNotes = [];
+          $scope.multipleNoteSelected = false;
+          $rootScope.noteSelected = false;
+          updateIMG();
+        }
+       });
     };
 
     $scope.noteSelect = function (idx) {
@@ -156,38 +162,57 @@ angular.module('rifiuti.controllers.home', [])
         updateIMG();
     };
 
-    $scope.click = function () {
-        if ($rootScope.noteSelected) {
-            $scope.removeNotes($scope.selectedNotes);
-        } else {
-            $scope.data = {};
-            $ionicPopup.show({
-                template: '<input type="text" ng-model="data.nota">',
-                title: $filter('translate')('what_remember'),
-                scope: $scope,
-                buttons: [
-                    {
-                        text: $filter('translate')('cancel')
-                    },
-                    {
-                        text: '<b>' + $filter('translate')('save') + '</b>',
-                        type: 'button-100r',
-                        onTap: function (e) {
-                            if (!$scope.data.nota) {
-                                return null;
-                            } else {
-                                return $scope.data.nota;
-                            }
-                        }
-                    }
-                ]
-            }).then(function (res) {
-                if (res != null && res != undefined) {
-                    $scope.addNote(res);
-                }
-            });
-        }
-    };
+    var popupDelete = function() {
+    return {
+        template: "Confermi l'eleminazione della nota?",
+        title: 'Avviso',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Conferma',
+            onTap: function (e) {
+              return true;
+            }
+          }
+        ]
+      }
+  };
+  var popupCreate = function() {
+    return {
+          template: '<input type="text" ng-model="data.nota">',
+          title: $filter('translate')('what_remember'),
+          scope: $scope,
+          buttons: [
+              {
+                  text: $filter('translate')('cancel')
+              },
+              {
+                  text: '<b>' + $filter('translate')('save') + '</b>',
+                  type: 'button-100r',
+                  onTap: function (e) {
+                      if (!$scope.data.nota) {
+                          return null;
+                      } else {
+                          return $scope.data.nota;
+                      }
+                  }
+              }
+          ]
+      };
+  };
+  $scope.click = function () {
+      if ($rootScope.noteSelected) {
+          $scope.removeNotes($scope.selectedNotes);
+      } else {
+        $scope.data = {};
+        $ionicPopup.show(popupCreate()).then(function (res) {
+          if (res != null && res != undefined) {
+            $scope.addNote(res);
+          }        
+        });
+      }
+  };
 
     $scope.edit = function () {
         $scope.data = {
@@ -195,27 +220,7 @@ angular.module('rifiuti.controllers.home', [])
             idx: $scope.selectedNotes[0]
         };
 
-        var popup = $ionicPopup.show({
-            template: '<input type="text" ng-model="data.nota">',
-            title: $filter('translate')('what_remember'),
-            scope: $scope,
-            buttons: [
-                {
-                    text: $filter('translate')('cancel')
-                },
-                {
-                    text: '<b>' + $filter('translate')('save') + '</b>',
-                    type: 'button-100r',
-                    onTap: function (e) {
-                        if (!$scope.data.nota) {
-                            return null;
-                        } else {
-                            return $scope.data.nota;
-                        }
-                    }
-                }
-            ]
-        }).then(function (res) {
+        var popup = $ionicPopup.show(popupCreate()).then(function (res) {
             if (res != null && res != undefined) {
                 $scope.notes = Profili.updateNote($scope.data.idx, res);
                 $scope.selectedNotes = [];
