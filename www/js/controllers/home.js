@@ -308,6 +308,7 @@ angular.module('rifiuti.controllers.home', [])
     };
 
     var init = function () {
+		$scope.month = {};
         $scope.calendarView = false;
         $scope.loaded = false;
         $scope.currDate = new Date();
