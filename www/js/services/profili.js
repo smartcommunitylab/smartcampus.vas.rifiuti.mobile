@@ -147,7 +147,7 @@ angular.module('rifiuti.services.profili', [])
     var treeWalkUp=function(tree,parentName,key,results) {
       if (!parentName || parentName=="") return;
       tree.forEach(function(node){
-        if (node['name']==parentName) {
+        if (node['nome']==parentName && results.indexOf(node[key]) < 0) {
 //        var utenzaOK = node.utenza[$rootScope.selectedProfile.utenza.tipologiaUtenza];
 //        if (utenzaOK) {
           results.push(node[key]);

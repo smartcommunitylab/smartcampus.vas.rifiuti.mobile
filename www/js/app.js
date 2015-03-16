@@ -60,6 +60,11 @@ angular.module('rifiuti', [
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
     
+	$rootScope.selectProfile = function (index) {
+		Profili.select(index);
+	};
+
+
     $rootScope.back = function () {
       if ($rootScope.profili == null || $rootScope.profili.length == 0) {
         ionic.Platform.exitApp();      

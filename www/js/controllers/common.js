@@ -12,9 +12,6 @@ angular.module('rifiuti.controllers.common', [])
         $rootScope.promptedToProfile = true;
         $location.url("app/aggProfilo");
     } else {
-        $scope.selectProfile = function (index) {
-            Profili.select(index);
-        };
         Profili.read();
         DataManager.checkVersion($rootScope.profili);
         Profili.select(Profili.selectedProfileIndex());
