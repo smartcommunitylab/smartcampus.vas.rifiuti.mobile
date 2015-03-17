@@ -72,19 +72,23 @@
 
         <div class="profile-block profile-where">
             <div class="profile-title">{{"Comune o Località"|translate}}</div>
-            <div class="">
+            <button class="button button-100r-select button-block button-outline icon-right ion-arrow-down-b" ng-click="localitaPopup()" ng-show="editMode">
+                <span ng-if="!!profilo.area">{{profilo.area.localita}}</span>
+                <span ng-if="!!!profilo.area">{{"Selezionare"|translate}}</span>
+            </button>
+            <!--<div class="">
                 <label class="item item-input item-select" ng-show="editMode">
                     <select class="" ng-model="profilo.area" ng-options="item.localita for item in aree" ng-show="editMode">
                         <option value="">{{"Selezionare"|translate}}</option>
                     </select>
                 </label>
-            </div>
+            </div>-->
             <p class="" ng-show="!editMode">{{profilo.area.localita}}</p>
         </div>
     </ion-content>
 
-        <!-- IONIC STYLE -->
-        <!--<div class="list">
+    <!-- IONIC STYLE -->
+    <!--<div class="list">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">{{"Nome del profilo"|translate}}</span>
                 <input type="search" ng-show="editMode" ng-model="profilo.name" placeholder="Nome del profilo" class="border-underline background-grey-light" />

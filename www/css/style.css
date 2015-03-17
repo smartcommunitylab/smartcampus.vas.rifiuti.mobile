@@ -80,6 +80,15 @@
 }
 /* Bar and buttons */
 
+.button-100r-select {
+    text-align: left;
+    color: black !important;
+}
+
+.button-100r-select.icon-right:before {
+    color: #b2b2b2;
+}
+
 .bar-100r {
     background-color: #63ac3d !important;
 }

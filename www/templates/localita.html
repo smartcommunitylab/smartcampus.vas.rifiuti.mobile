@@ -1,0 +1,6 @@
+<ion-list>
+    <ion-item class="item-icon-right" ng-repeat="item in aree" ng-click="localitaSelected(item)">
+        {{item.localita}}
+        <i class="icon ion-checkmark" ng-if="item.localita == profilo.area.localita"></i>
+    </ion-item>
+</ion-list>
