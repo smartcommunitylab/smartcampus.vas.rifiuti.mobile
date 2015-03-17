@@ -111,7 +111,7 @@ angular.module('rifiuti.controllers.profilo', [])
       ]
     }).then(function (res) {
       if (!!res) {
-        Profili.delete($scope.id);
+        Profili.remove($scope.id);
         $scope.back();
       }
     });

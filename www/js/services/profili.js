@@ -211,7 +211,7 @@ angular.module('rifiuti.services.profili', [])
           }
           return null;    
         },
-        delete: function(id) {
+        remove: function(id) {
           var v = $rootScope.profili;
           v.splice(indexof(id), 1);
           $rootScope.profili = v;
