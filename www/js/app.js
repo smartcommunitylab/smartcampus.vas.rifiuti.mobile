@@ -54,58 +54,70 @@ angular.module('rifiuti', [
     $ionicConfigProvider.tabs.style('standard');
 })
 
-.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, GeoLocate, $cordovaSplashscreen) {
+.run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $ionicHistory, $translate, $ionicPopup, $filter, $state, Profili, GeoLocate, $cordovaSplashscreen, $ionicLoading) {
     $rootScope.version = '2.0';
+
+    $rootScope.loadingShow = function () {
+        $ionicLoading.show({
+            template: '<i class="ion-loading-c"></i>'
+        });
+    };
+
+    $rootScope.loadingHide = function () {
+        $ionicLoading.hide();
+    };
 
     $rootScope.profili = [];
     $rootScope.selectedProfile = null;
-    
-	$rootScope.selectProfile = function (index) {
-		Profili.select(index);
-	};
+
+    $rootScope.selectProfile = function (index) {
+        Profili.select(index);
+    };
 
 
     $rootScope.back = function () {
-      if ($rootScope.profili == null || $rootScope.profili.length == 0) {
-        ionic.Platform.exitApp();      
-        return;
-      }
-      //$ionicNavBarDelegate.$getByHandle('navBar').back();
-      $ionicHistory.goBack();
+        if ($rootScope.profili == null || $rootScope.profili.length == 0) {
+            ionic.Platform.exitApp();
+            return;
+        }
+        //$ionicNavBarDelegate.$getByHandle('navBar').back();
+        $ionicHistory.goBack();
     };
 
-    setTimeout(function() {
-      $cordovaSplashscreen.hide()
+    // for BlackBerry 10, WP8, iOS
+    setTimeout(function () {
+        $cordovaSplashscreen.hide();
+        //navigator.splashscreen.hide();
     }, 3000);
 
     $rootScope.locationWatchID = undefined;
     //  ionic.Platform.fullScreen(false,true);
     if (typeof (Number.prototype.toRad) === "undefined") {
-      Number.prototype.toRad = function () {
-        return this * Math.PI / 180;
-      }
+        Number.prototype.toRad = function () {
+            return this * Math.PI / 180;
+        }
     }
     document.addEventListener("pause", function () {
-      console.log('app paused');
-      if (typeof $rootScope.locationWatchID != 'undefined') {
-        navigator.geolocation.clearWatch($rootScope.locationWatchID);
-        $rootScope.locationWatchID = undefined;
-        GeoLocate.reset();
-        console.log('geolocation reset');
-      }
+        console.log('app paused');
+        if (typeof $rootScope.locationWatchID != 'undefined') {
+            navigator.geolocation.clearWatch($rootScope.locationWatchID);
+            $rootScope.locationWatchID = undefined;
+            GeoLocate.reset();
+            console.log('geolocation reset');
+        }
     }, false);
     document.addEventListener("resume", function () {
-      console.log('app resumed');
-      GeoLocate.locate();
+        console.log('app resumed');
+        GeoLocate.locate();
     }, false);
     GeoLocate.locate().then(function (position) {
-      $rootScope.myPosition = position;
-      //console.log('first geolocation: ' + position);
+        $rootScope.myPosition = position;
+        //console.log('first geolocation: ' + position);
     }, function () {
-      console.log('CANNOT LOCATE!');
+        console.log('CANNOT LOCATE!');
     });
-  
-  
+
+
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -163,26 +175,26 @@ angular.module('rifiuti', [
         window.open(link, "_system");
     };
 
-//    $rootScope.distance = function (pt1, pt2) {
-//        var d = false;
-//        if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
-//            var lat1 = parseFloat(pt1[0]);
-//            var lon1 = parseFloat(pt1[1]);
-//            var lat2 = parseFloat(pt2[0]);
-//            var lon2 = parseFloat(pt2[1]);
-//
-//            var R = 6371; // km
-//            //var R = 3958.76; // miles
-//            var deg2rad = Math.PI / 180;
-//            var dLat = (lat2 - lat1) * deg2rad; // deg2rad below
-//            var dLon = (lon2 - lon1) * deg2rad;
-//            var a = 0.5 - Math.cos(dLat) / 2 + Math.cos(lat1 * deg2rad) * Math.cos(lat2 * deg2rad) * (1 - Math.cos(dLon)) / 2;
-//            d = R * 2 * Math.asin(Math.sqrt(a));
-//        } else {
-//            console.log('cannot calculate distance!');
-//        }
-//        return d;
-//    };
+    //    $rootScope.distance = function (pt1, pt2) {
+    //        var d = false;
+    //        if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
+    //            var lat1 = parseFloat(pt1[0]);
+    //            var lon1 = parseFloat(pt1[1]);
+    //            var lat2 = parseFloat(pt2[0]);
+    //            var lon2 = parseFloat(pt2[1]);
+    //
+    //            var R = 6371; // km
+    //            //var R = 3958.76; // miles
+    //            var deg2rad = Math.PI / 180;
+    //            var dLat = (lat2 - lat1) * deg2rad; // deg2rad below
+    //            var dLon = (lon2 - lon1) * deg2rad;
+    //            var a = 0.5 - Math.cos(dLat) / 2 + Math.cos(lat1 * deg2rad) * Math.cos(lat2 * deg2rad) * (1 - Math.cos(dLon)) / 2;
+    //            d = R * 2 * Math.asin(Math.sqrt(a));
+    //        } else {
+    //            console.log('cannot calculate distance!');
+    //        }
+    //        return d;
+    //    };
 
     $rootScope.reallyexitapp = function () {
         $ionicPopup.show({

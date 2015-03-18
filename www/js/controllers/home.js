@@ -299,6 +299,9 @@ angular.module('rifiuti.controllers.home', [])
                     name: Utili.monthYear($scope.showDate.getMonth(), $scope.showDate.getFullYear()),
                     weeks: data
                 };
+                $scope.dayList = Calendar.toListData($scope.month.weeks);
+                $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
+
                 $scope.loaded = true;
                 if (gotoday) $timeout(scrollToday, 500);
             });
@@ -327,12 +330,12 @@ angular.module('rifiuti.controllers.home', [])
         }
     });
 
-    $scope.$watch('month', function (a, b) {
+    /*$scope.$watch('month', function (a, b) {
         if (a != null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
             $scope.dayList = Calendar.toListData($scope.month.weeks);
             $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
         }
-    });
+    });*/
 
     $scope.loadMoreDays = function () {
         $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate() + 1);

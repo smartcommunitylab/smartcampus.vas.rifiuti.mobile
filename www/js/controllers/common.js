@@ -4,16 +4,22 @@ angular.module('rifiuti.controllers.common', [])
 .controller('AppCtrl', function ($scope, $rootScope, $location, Profili, DataManager) {
     $scope.app_name = APP_NAME;
 
+    $rootScope.loadingShow();
+
     $scope.showTutorial = function () {
         $rootScope.showTutorial = true;
     };
+
+    DataManager.checkVersion($rootScope.profili).then(function () {
+        $rootScope.loadingHide();
+    });
+
     //localStorage.removeItem('profiles');
     if (!localStorage.profiles || localStorage.profiles.length == 0) {
         $rootScope.promptedToProfile = true;
         $location.url("app/aggProfilo");
     } else {
         Profili.read();
-        DataManager.checkVersion($rootScope.profili);
         Profili.select(Profili.selectedProfileIndex());
         Profili.updateNotifications();
     }
@@ -23,21 +29,21 @@ angular.module('rifiuti.controllers.common', [])
 
 .controller('SegnalaCtrl', function ($scope, $rootScope, $cordovaCamera) {
 
-//    $scope.GPScoords = null;
-//    var GPScoordsTmp = null;
-//
-//    var posizioneG = function () {
-//        //navigator.geolocation.getCurrentPosition(success);
-//        //if (navigator.geolocation) {
-//        navigator.geolocation.getCurrentPosition(function (position) {
-//            //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
-//            GPScoordsTmp = "[ " + position.coords.latitude + ", " + position.coords.longitude + " ]";
-//            $scope.GPScoords = GPScoordsTmp;
-//        });
-//        // } else {
-//        //  showError("Your browser does not support Geolocation!");
-//        // }
-//    };
+    //    $scope.GPScoords = null;
+    //    var GPScoordsTmp = null;
+    //
+    //    var posizioneG = function () {
+    //        //navigator.geolocation.getCurrentPosition(success);
+    //        //if (navigator.geolocation) {
+    //        navigator.geolocation.getCurrentPosition(function (position) {
+    //            //alert("your position is: " + position.coords.latitude + ", " + position.coords.longitude);
+    //            GPScoordsTmp = "[ " + position.coords.latitude + ", " + position.coords.longitude + " ]";
+    //            $scope.GPScoords = GPScoordsTmp;
+    //        });
+    //        // } else {
+    //        //  showError("Your browser does not support Geolocation!");
+    //        // }
+    //    };
 
     $scope.checked = true;
     $scope.checkboxImage = "img/rifiuti_btn_check_on_holo_light.png";
@@ -96,9 +102,9 @@ angular.module('rifiuti.controllers.common', [])
     };
 
     if ($rootScope.myPosition) {
-      $scope.GPScoords = "[ " + $rootScope.myPosition.join(', ')+" ]";
+        $scope.GPScoords = "[ " + $rootScope.myPosition.join(', ') + " ]";
     }
-//    posizioneG();
+    //    posizioneG();
 
 })
 
