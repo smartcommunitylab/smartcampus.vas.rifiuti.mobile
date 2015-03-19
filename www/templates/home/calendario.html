@@ -7,16 +7,16 @@
     </ion-nav-title>
 
     <ion-nav-buttons side="left">
-        <button id="menuId" ng-click="leftClick()" class="row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
+        <button id="menuId" ng-click="leftClick()" class="row button button-icon" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
             <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
         <div class="nowrap">
-            <button ng-click="goToToday()" class="button button-clear button-light icon-left btn btn-edit">
+            <button ng-click="goToToday()" class="button button-icon btn btn-edit">
                 <img src="img/today.png" />
             </button>
-            <button ng-click="switchView()" class="button button-clear button-light icon-left btn btn-variable">
+            <button ng-click="switchView()" class="button button-icon btn btn-variable">
                 <img ng-src="{{variableIMG2}}" />
             </button>
         </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col month-name">{{month.name.split(" ")[0] |translate}} {{month.name.split(" ")[1] |translate}}</div>
                 <!--da aggiungere lo stile-->
-                <div ng-click="nextMonth()" class="col col-10 btn-next"><i style="float:right" class="icon icon-right ion-chevron-right"></i>
+                <div ng-click="nextMonth()" class="col col-10 btn-next"><i class="icon icon-right ion-chevron-right"></i>
                 </div>
             </div>
             <div class="row week-days">

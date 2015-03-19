@@ -93,6 +93,10 @@
     background-color: #63ac3d !important;
 }
 
+.bar-100r .btn {
+    padding: 0;
+}
+
 .bar-100r .btn img {
     width: 35px;
     height: 35px;
@@ -227,7 +231,7 @@
 }
 
 .home-calendar .month-bar .btn-next {
-    float: right;
+    text-align: right;
 }
 
 .home-calendar .week-days {

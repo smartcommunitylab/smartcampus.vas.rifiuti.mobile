@@ -7,7 +7,8 @@
     </ion-nav-title>
 
     <ion-nav-buttons side="left">
-        <button id="menuId" ng-click="leftClick()" class="row button button-clear button-light icon-left" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': noteSelected}">
+        <!--class="row button button-icon"-->
+        <button id="menuId" ng-click="leftClick()" class="row button button-icon" ng-class="{'ion-navicon': !noteSelected, 'ion-checkmark': !!noteSelected}">
             <img ng-if="!noteSelected" class="nav-button-app-logo" src="img/ic_launcher.png">
         </button>
     </ion-nav-buttons>
