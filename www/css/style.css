@@ -255,6 +255,16 @@
     color: black;
 }
 
+.home-calendar .week .noday {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 13%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 13%;
+    -ms-flex: 0 0 13%;
+    flex: 0 0 13%;
+    max-width: 13%;
+    margin-right: 1.2%;
+}
 .home-calendar .week .day.today {
     padding: 0px;
     margin-right: 1.2%;

@@ -245,6 +245,7 @@ angular.module('rifiuti.controllers.home', [])
         if (i.colors.length == 0) return;
         $location.hash(i.dateString);
         $scope.currListItem = i;
+        $scope.daySubList = Calendar.toWeek($scope.dayList, i.date);
 
         $ionicScrollDelegate.anchorScroll(true);
         $scope.calendarView = !$scope.calendarView;
@@ -301,11 +302,13 @@ angular.module('rifiuti.controllers.home', [])
                 };
                 $scope.dayList = Calendar.toListData($scope.month.weeks);
                 $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
+                $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate);
 
                 $scope.loaded = true;
-                if (gotoday) $timeout(scrollToday, 500);
+                if (gotoday) $timeout(scrollToday, 300);
             });
         } else {
+            $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate);
             if (gotoday) scrollToday();
         }
     };
@@ -316,6 +319,7 @@ angular.module('rifiuti.controllers.home', [])
         $scope.loaded = false;
         $scope.currDate = new Date();
         $scope.currListItem = null;
+        $scope.daySubList = null;
         $scope.dayList = []; //$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
         $scope.dayListLastMonth = null;
         $scope.showDate = new Date();
@@ -340,11 +344,11 @@ angular.module('rifiuti.controllers.home', [])
     $scope.loadMoreDays = function () {
         $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate() + 1);
         $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.dayListLastMonth);
-        Calendar.fillWeeks($scope.dayListLastMonth, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
-            var newWeeks = data;
-            $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+//        Calendar.fillWeeks($scope.dayListLastMonth, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
+//            var newWeeks = data;
+//            $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
+//            $scope.$broadcast('scroll.infiniteScrollComplete');
+//        });
     };
 
     $scope.getColor = function (colorString) {

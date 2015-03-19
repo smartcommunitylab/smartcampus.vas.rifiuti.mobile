@@ -114,6 +114,24 @@ angular.module('rifiuti.services.calendar', [])
                 }
             }
             return list;
+        },
+        toWeek: function(fullList, date) {
+            var list = [];
+            var first = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+
+            var start = 0, end = 0;
+            if ((first.getDate() - date.getDay() +1) >= 1) {
+                first = first.getDate() - date.getDay() + 1;
+                end = first + 6;
+            } else {
+                end = 6 + first.getDate() - date.getDay() +1;
+                first = 1;
+            }
+            for(var i = first-1; i < fullList.length && i < end; i++) {
+                list.push(fullList[i]);
+            }
+            return list;
         }
+
     };
 })

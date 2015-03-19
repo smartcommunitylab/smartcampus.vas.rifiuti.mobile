@@ -42,7 +42,7 @@
                 <div class="col">{{ "DOM" | translate}}</div>
             </div>
             <div class="row week" ng-repeat="week in month.weeks">
-                <div class="col" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
+                <div class="col noday" ng-repeat="item in getEmptyArrayByLength(firstDayIndex(week))"></div>
                 <div ng-click="selectDay(day)" class="col day" ng-class="{'today' : day.dateString == currDate.toLocaleDateString()}" ng-repeat="day in week">
                     <div ng-if="day.date!=null" class="day-date">
                         {{day.date.getDate()}}
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div ng-if="calendarView" class="agenda">
-            <ion-list class="day" ng-repeat="day in dayList">
+            <ion-list class="day" ng-repeat="day in daySubList">
                 <ion-item id="{{day.dateString}}" class="day-title" ng-if="day.colors.length > 0">
                     {{day.date | date:'EEEE d MMMM y'}}
                 </ion-item>
