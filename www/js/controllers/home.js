@@ -232,7 +232,7 @@ angular.module('rifiuti.controllers.home', [])
     };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout, $filter) {
     $rootScope.noteSelected = false;
 
     $scope.switchView = function () {
@@ -245,9 +245,10 @@ angular.module('rifiuti.controllers.home', [])
         if (i.colors.length == 0) return;
         $location.hash(i.dateString);
         $scope.currListItem = i;
-        $scope.daySubList = Calendar.toWeek($scope.dayList, i.date);
+		$scope.showDate = i.date;
+        $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate,$scope.daySubListRunningEnd);
 
-        $ionicScrollDelegate.anchorScroll(true);
+		$timeout(function(){$ionicScrollDelegate.anchorScroll(true);}, 200);
         $scope.calendarView = !$scope.calendarView;
         $scope.updateIMG2();
     }
@@ -301,14 +302,14 @@ angular.module('rifiuti.controllers.home', [])
                     weeks: data
                 };
                 $scope.dayList = Calendar.toListData($scope.month.weeks);
-                $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
-                $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate);
+				$scope.daySubListRunningEnd = null;
+                $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate, $scope.daySubListRunningEnd);
 
                 $scope.loaded = true;
-                if (gotoday) $timeout(scrollToday, 300);
+                if (gotoday) $timeout(scrollToday, 200);
             });
         } else {
-            $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate);
+            $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate,$scope.daySubListRunningEnd);
             if (gotoday) scrollToday();
         }
     };
@@ -321,8 +322,8 @@ angular.module('rifiuti.controllers.home', [])
         $scope.currListItem = null;
         $scope.daySubList = null;
         $scope.dayList = []; //$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
-        $scope.dayListLastMonth = null;
         $scope.showDate = new Date();
+		$scope.daySubListRunningEnd = null;
         buildMonthData();
     }
 
@@ -334,6 +335,9 @@ angular.module('rifiuti.controllers.home', [])
         }
     });
 
+	$scope.fullDate = function(d) {
+		return Utili.fullDateFormat(d,$filter('translate'));
+	}
     /*$scope.$watch('month', function (a, b) {
         if (a != null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
             $scope.dayList = Calendar.toListData($scope.month.weeks);
@@ -342,13 +346,11 @@ angular.module('rifiuti.controllers.home', [])
     });*/
 
     $scope.loadMoreDays = function () {
-        $scope.dayListLastMonth.setDate($scope.dayListLastMonth.getDate() + 1);
-        $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.dayListLastMonth);
-//        Calendar.fillWeeks($scope.dayListLastMonth, $rootScope.selectedProfile.utenza.tipologiaUtenza, $rootScope.selectedProfile.aree).then(function (data) {
-//            var newWeeks = data;
-//            $scope.dayList = $scope.dayList.concat(Calendar.toListData(newWeeks));
-//            $scope.$broadcast('scroll.infiniteScrollComplete');
-//        });
+		if ($scope.daySubListRunningEnd <= $scope.dayList.length) {
+			$scope.daySubListRunningEnd += 7;
+			$scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate,$scope.daySubListRunningEnd);
+		}
+        $scope.$broadcast('scroll.infiniteScrollComplete');
     };
 
     $scope.getColor = function (colorString) {

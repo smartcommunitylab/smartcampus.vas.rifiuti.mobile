@@ -5,6 +5,7 @@ angular.module('rifiuti.services.utili', [])
   var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   var giorni = ["DOM", "LUN", "MAR", "MER", "GIO", "VEN", "SAB"];
   var giorniC = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
+  var giorniShort = ["dom", "lun", "mar", "mer", "gio", "ven", "sab"];
 
 
   var DOW = {"DOM":6, "LUN":0, "MAR":1, "MER":2, "GIO":3, "VEN":4, "SAB":5};
@@ -125,6 +126,9 @@ angular.module('rifiuti.services.utili', [])
     },
     isPaP: function(tipologia) {
       return !!tipologia && tipologia.toLowerCase().indexOf('porta a porta') == 0;
-    }
+    },
+	fullDateFormat: function(d,transf) {
+		return transf(giorniShort[d.getDay()])+ ' ' +d.getDate()+' '+transf(mesi[d.getMonth()])+' '+d.getFullYear();
+	}
   }
 })

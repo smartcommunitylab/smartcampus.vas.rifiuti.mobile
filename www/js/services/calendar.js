@@ -115,7 +115,7 @@ angular.module('rifiuti.services.calendar', [])
             }
             return list;
         },
-        toWeek: function(fullList, date) {
+        toWeek: function(fullList, date, runningEnd) {
             var list = [];
             var first = new Date(date.getFullYear(),date.getMonth(),date.getDate());
 
@@ -127,6 +127,7 @@ angular.module('rifiuti.services.calendar', [])
                 end = 6 + first.getDate() - date.getDay() +1;
                 first = 1;
             }
+			if (runningEnd && end < runningEnd) end = runningEnd;
             for(var i = first-1; i < fullList.length && i < end; i++) {
                 list.push(fullList[i]);
             }
