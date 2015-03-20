@@ -59,8 +59,11 @@
             </div>
         </div>
         <div ng-if="calendarView" class="agenda">
-            <ion-list class="day" ng-repeat="day in daySubList">
-                <ion-item id="{{day.dateString}}" class="day-title" ng-if="day.colors.length > 0">
+            <ion-list id="agendaview" class="day" ng-repeat="day in daySubList">
+                <!--id="{{day.dateString}}"-->
+                <!--id="{{'pippo' + $index}}"-->
+                <!--id="{{'id' + day.date.getTime()}}"-->
+                <ion-item id="{{'id' + day.date.getTime()}}" class="day-title" ng-if="day.colors.length > 0">
                     {{fullDate(day.date)}}
                 </ion-item>
                 <ion-item ng-if="day.colors.length > 0" class="day-content" ng-class="{'day-content-active':day.dateString==currListItem.dateString}">
@@ -77,7 +80,7 @@
                     </div>
                 </ion-item>
             </ion-list>
-<!--            <ion-infinite-scroll on-infinite="loadMoreDays()" distance="1%"></ion-infinite-scroll>-->
+            <!--            <ion-infinite-scroll on-infinite="loadMoreDays()" distance="1%"></ion-infinite-scroll>-->
         </div>
     </ion-content>
 </ion-view>

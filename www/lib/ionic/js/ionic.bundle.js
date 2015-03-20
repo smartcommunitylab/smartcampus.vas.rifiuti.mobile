@@ -47542,7 +47542,9 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
   self.anchorScroll = function(shouldAnimate) {
     ionic.DomUtil.blurAll();
     self.resize().then(function() {
-      var hash = $location.hash();
+      //var hash = $location.hash();
+      var hash = window._globalscrollid;
+      console.log('========== _globalscrollid: ' + hash);
       var elm = hash && $document[0].getElementById(hash);
       if (!(hash && elm)) {
         scrollView.scrollTo(0,0, !!shouldAnimate);

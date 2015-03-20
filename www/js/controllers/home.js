@@ -136,15 +136,15 @@ angular.module('rifiuti.controllers.home', [])
     };
 
     $scope.removeNotes = function (idx) {
-      $ionicPopup.show(popupDelete()).then(function (res) {
-        if (res) {
-          $scope.notes = Profili.deleteNotes(idx);
-          $scope.selectedNotes = [];
-          $scope.multipleNoteSelected = false;
-          $rootScope.noteSelected = false;
-          updateIMG();
-        }
-       });
+        $ionicPopup.show(popupDelete()).then(function (res) {
+            if (res) {
+                $scope.notes = Profili.deleteNotes(idx);
+                $scope.selectedNotes = [];
+                $scope.multipleNoteSelected = false;
+                $rootScope.noteSelected = false;
+                updateIMG();
+            }
+        });
     };
 
     $scope.noteSelect = function (idx) {
@@ -163,57 +163,59 @@ angular.module('rifiuti.controllers.home', [])
         updateIMG();
     };
 
-    var popupDelete = function() {
-    return {
-        template: "Confermi l'eleminazione della nota?",
-        title: 'Avviso',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: 'Conferma',
-            onTap: function (e) {
-              return true;
-            }
+    var popupDelete = function () {
+        return {
+            template: "Confermi l'eleminazione della nota?",
+            title: 'Avviso',
+            scope: $scope,
+            buttons: [
+                {
+                    text: 'Cancel'
+                },
+                {
+                    text: 'Conferma',
+                    onTap: function (e) {
+                        return true;
+                    }
           }
         ]
-      }
-  };
-  var popupCreate = function() {
-    return {
-          template: '<input type="text" ng-model="data.nota">',
-          title: $filter('translate')('what_remember'),
-          scope: $scope,
-          buttons: [
-              {
-                  text: $filter('translate')('cancel')
+        }
+    };
+    var popupCreate = function () {
+        return {
+            template: '<input type="text" ng-model="data.nota">',
+            title: $filter('translate')('what_remember'),
+            scope: $scope,
+            buttons: [
+                {
+                    text: $filter('translate')('cancel')
               },
-              {
-                  text: '<b>' + $filter('translate')('save') + '</b>',
-                  type: 'button-100r',
-                  onTap: function (e) {
-                      if (!$scope.data.nota) {
-                          return null;
-                      } else {
-                          return $scope.data.nota;
-                      }
-                  }
+                {
+                    text: '<b>' + $filter('translate')('save') + '</b>',
+                    type: 'button-100r',
+                    onTap: function (e) {
+                        if (!$scope.data.nota) {
+                            return null;
+                        } else {
+                            return $scope.data.nota;
+                        }
+                    }
               }
           ]
-      };
-  };
-  $scope.click = function () {
-      if ($rootScope.noteSelected) {
-          $scope.removeNotes($scope.selectedNotes);
-      } else {
-        $scope.data = {};
-        $ionicPopup.show(popupCreate()).then(function (res) {
-          if (res != null && res != undefined) {
-            $scope.addNote(res);
-          }        
-        });
-      }
-  };
+        };
+    };
+    $scope.click = function () {
+        if ($rootScope.noteSelected) {
+            $scope.removeNotes($scope.selectedNotes);
+        } else {
+            $scope.data = {};
+            $ionicPopup.show(popupCreate()).then(function (res) {
+                if (res != null && res != undefined) {
+                    $scope.addNote(res);
+                }
+            });
+        }
+    };
 
     $scope.edit = function () {
         $scope.data = {
@@ -232,7 +234,9 @@ angular.module('rifiuti.controllers.home', [])
     };
 })
 
-.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout, $filter) {
+.controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout, $filter, $document) {
+    $scope.calendarView = false;
+
     $rootScope.noteSelected = false;
 
     $scope.switchView = function () {
@@ -243,12 +247,16 @@ angular.module('rifiuti.controllers.home', [])
 
     $scope.selectDay = function (i) {
         if (i.colors.length == 0) return;
-        $location.hash(i.dateString);
         $scope.currListItem = i;
-		$scope.showDate = i.date;
-        $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate,$scope.daySubListRunningEnd);
+        $scope.showDate = i.date;
+        $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate, $scope.daySubListRunningEnd);
 
-		$timeout(function(){$ionicScrollDelegate.anchorScroll(true);}, 200);
+        $timeout(function () {
+            //$location.hash('id' + i.date.getTime());
+            window._globalscrollid = 'id' + i.date.getTime();
+            $ionicScrollDelegate.anchorScroll(true);
+        }, 200);
+
         $scope.calendarView = !$scope.calendarView;
         $scope.updateIMG2();
     }
@@ -277,15 +285,20 @@ angular.module('rifiuti.controllers.home', [])
     };
 
     var scrollToday = function () {
+        // TODO
+        //return;
+
         if ($scope.calendarView == true) {
             var time = 0;
             var i = 0;
             while (i < $scope.dayList.length && time < $scope.currDate.getTime()) {
                 time = $scope.dayList[i++].date.getTime();
+                console.log(time);
             }
             if (i - 2 >= 0 && i - 2 <= $scope.dayList.length) {
-                $location.hash($scope.dayList[i - 2].dateString);
+                //$location.hash('id' + $scope.dayList[i - 2].date.getTime());
                 $scope.currListItem = $scope.dayList[i - 2];
+                window._globalscrollid = 'id' + $scope.currListItem.date.getTime();
                 $ionicScrollDelegate.anchorScroll(true);
             } else {
                 $ionicScrollDelegate.scrollTop();
@@ -302,20 +315,24 @@ angular.module('rifiuti.controllers.home', [])
                     weeks: data
                 };
                 $scope.dayList = Calendar.toListData($scope.month.weeks);
-				$scope.daySubListRunningEnd = null;
-                $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate, $scope.daySubListRunningEnd);
+                $scope.daySubListRunningEnd = null;
+                $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate, $scope.daySubListRunningEnd);
 
                 $scope.loaded = true;
-                if (gotoday) $timeout(scrollToday, 200);
+                if (gotoday) {
+                    $timeout(scrollToday, 200);
+                }
             });
         } else {
-            $scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate,$scope.daySubListRunningEnd);
-            if (gotoday) scrollToday();
+            $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate, $scope.daySubListRunningEnd);
+            if (gotoday) {
+                scrollToday();
+            }
         }
     };
 
     var init = function () {
-		$scope.month = {};
+        $scope.month = {};
         $scope.calendarView = false;
         $scope.loaded = false;
         $scope.currDate = new Date();
@@ -323,7 +340,7 @@ angular.module('rifiuti.controllers.home', [])
         $scope.daySubList = null;
         $scope.dayList = []; //$scope.getEmptyArrayByLength(Calendar.dayArrayHorizon($scope.currDate.getFullYear(),$scope.currDate.getMonth(), $scope.currDate.getDate()));
         $scope.showDate = new Date();
-		$scope.daySubListRunningEnd = null;
+        $scope.daySubListRunningEnd = null;
         buildMonthData();
     }
 
@@ -335,21 +352,21 @@ angular.module('rifiuti.controllers.home', [])
         }
     });
 
-	$scope.fullDate = function(d) {
-		return Utili.fullDateFormat(d,$filter('translate'));
-	}
-    /*$scope.$watch('month', function (a, b) {
-        if (a != null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
-            $scope.dayList = Calendar.toListData($scope.month.weeks);
-            $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
+    $scope.fullDate = function (d) {
+            return Utili.fullDateFormat(d, $filter('translate'));
         }
-    });*/
+        /*$scope.$watch('month', function (a, b) {
+            if (a != null && (b == null || a.name !== b.name || $scope.dayList.length == 0)) {
+                $scope.dayList = Calendar.toListData($scope.month.weeks);
+                $scope.dayListLastMonth = Utili.lastDateOfMonth($scope.showDate);
+            }
+        });*/
 
     $scope.loadMoreDays = function () {
-		if ($scope.daySubListRunningEnd <= $scope.dayList.length) {
-			$scope.daySubListRunningEnd += 7;
-			$scope.daySubList = Calendar.toWeek($scope.dayList,$scope.showDate,$scope.daySubListRunningEnd);
-		}
+        if ($scope.daySubListRunningEnd <= $scope.dayList.length) {
+            $scope.daySubListRunningEnd += 7;
+            $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate, $scope.daySubListRunningEnd);
+        }
         $scope.$broadcast('scroll.infiniteScrollComplete');
     };
 
