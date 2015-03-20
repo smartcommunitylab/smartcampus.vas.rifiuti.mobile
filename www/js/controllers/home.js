@@ -237,6 +237,13 @@ angular.module('rifiuti.controllers.home', [])
 .controller('calendarioCtrl', function ($scope, $rootScope, $ionicScrollDelegate, $location, Calendar, Utili, $timeout, $filter, $document) {
     $scope.calendarView = false;
 
+	$location.hash = function(val) {
+		if (!!val) {
+			window._globalscrollid = val;
+		}
+		return window._globalscrollid;
+	};
+
     $rootScope.noteSelected = false;
 
     $scope.switchView = function () {
@@ -252,8 +259,8 @@ angular.module('rifiuti.controllers.home', [])
         $scope.daySubList = Calendar.toWeek($scope.dayList, $scope.showDate, $scope.daySubListRunningEnd);
 
         $timeout(function () {
-            //$location.hash('id' + i.date.getTime());
-            window._globalscrollid = 'id' + i.date.getTime();
+            $location.hash('id' + i.date.getTime());
+            //window._globalscrollid = 'id' + i.date.getTime();
             $ionicScrollDelegate.anchorScroll(true);
         }, 200);
 
@@ -293,12 +300,11 @@ angular.module('rifiuti.controllers.home', [])
             var i = 0;
             while (i < $scope.dayList.length && time < $scope.currDate.getTime()) {
                 time = $scope.dayList[i++].date.getTime();
-                console.log(time);
             }
             if (i - 2 >= 0 && i - 2 <= $scope.dayList.length) {
-                //$location.hash('id' + $scope.dayList[i - 2].date.getTime());
+                $location.hash('id' + $scope.dayList[i - 2].date.getTime());
                 $scope.currListItem = $scope.dayList[i - 2];
-                window._globalscrollid = 'id' + $scope.currListItem.date.getTime();
+                //window._globalscrollid = 'id' + $scope.currListItem.date.getTime();
                 $ionicScrollDelegate.anchorScroll(true);
             } else {
                 $ionicScrollDelegate.scrollTop();
