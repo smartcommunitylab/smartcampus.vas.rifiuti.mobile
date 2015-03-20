@@ -58,6 +58,7 @@ angular.module('rifiuti.services.profili', [])
                 var n = daymap[d];
                 n.text = toMessage(n.text);
                 if (n.text) {
+				  console.log('scheduling '+n.text);
                   cordova.plugins.notification.local.schedule(n);
                 }
               }
