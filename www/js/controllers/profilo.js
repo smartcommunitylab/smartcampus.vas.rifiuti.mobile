@@ -2,7 +2,7 @@ angular.module('rifiuti.controllers.profilo', [])
 
 .controller('ProfiliCtrl', function ($scope, $rootScope) {})
 
-.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $filter, DataManager, $stateParams, $ionicPopup, Profili, Raccolta) {
+.controller('ModificaProfiloCtrl', function ($scope, $rootScope, $ionicNavBarDelegate, $filter, DataManager, $stateParams, $ionicPopup, $ionicModal, Profili, Raccolta) {
     $scope.aree = [];
 
     $scope.profilo = {
@@ -154,23 +154,34 @@ angular.module('rifiuti.controllers.profilo', [])
         $scope.isCurrentProfile = false;
     }
 
-    var localitaPopup = null;
+    /* MODAL */
+    $ionicModal.fromTemplateUrl('templates/localitaModal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.localitaModal = modal;
+    });
 
-    $scope.localitaPopup = function () {
-        localitaPopup = $ionicPopup.show({
-            title: $filter('translate')('Selezionare'),
-            templateUrl: 'templates/localita.html',
-            scope: $scope,
-            buttons: [
-                {
-                    text: $filter('translate')('cancel')
-                }
-            ]
-        });
+    $scope.openLocalitaModal = function () {
+        $scope.localitaModal.show();
     };
 
-    $scope.localitaSelected = function (item) {
-        $scope.profilo.area = item;
-        localitaPopup.close();
+    $scope.closeLocalitaModal = function () {
+        $scope.localitaModal.hide();
     };
+
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function () {
+        $scope.localitaModal.remove();
+    });
+
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function () {
+        // Execute action
+    });
+
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function () {
+        // Execute action
+    });
 })

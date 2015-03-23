@@ -503,6 +503,10 @@
     padding: 13px 45px 15px 0px;
     direction: ltr;
 }
+
+.localita-modal ion-footer-bar button{
+    margin: 0 !important;
+}
 /* SEGNALA */
 
 .segnala {

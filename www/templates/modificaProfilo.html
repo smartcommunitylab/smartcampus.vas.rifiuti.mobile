@@ -72,7 +72,8 @@
 
         <div class="profile-block profile-where">
             <div class="profile-title">{{"Comune o Località"|translate}}</div>
-            <button class="button button-100r-select button-block button-outline icon-right ion-arrow-down-b" ng-click="localitaPopup()" ng-if="editMode">
+            <button class="button button-100r-select button-block button-outline icon-right ion-arrow-down-b" ng-click="openLocalitaModal()" ng-if="editMode">
+                <!--localitaPopup()-->
                 <span ng-if="!!profilo.area">{{profilo.area.localita}}</span>
                 <span ng-if="!!!profilo.area">{{"Selezionare"|translate}}</span>
             </button>
